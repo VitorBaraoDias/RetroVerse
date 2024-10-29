@@ -58,3 +58,7 @@ frontend
 vendor/                  contains dependent 3rd-party packages
 environments/            contains environment-based overrides
 ```
+=======
+# RetroVerse
+Loja de roupa Vintage, com marketplace
+>>>>>>> 18448825944b7c3fb8c9d07b90e86f35201c6d1a
