@@ -49,6 +49,7 @@ return [
                 //mudar nome do controller
 
                 ['class' => 'yii\rest\UrlRule','controller' => 'api/user'],
+
             ],
         ],
 
