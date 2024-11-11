@@ -62,76 +62,202 @@ class RbacController extends Controller
         $auth->add($alterarInformacoesMembro);
 
         // admin permission #11
-        $desativarMembro = $auth->createPermission('desativarMembro');
-        $desativarMembro->description = 'Desativar membro';
-        $auth->add($desativarMembro);
+        $alterarEstadoEncomendaLoja = $auth->createPermission('alterarEstadoEncomendaLoja');
+        $alterarEstadoEncomendaLoja->description = 'Alterar estado encomenda loja';
+        $auth->add($alterarEstadoEncomendaLoja);
 
         // admin permission #12
-        $promoverMembro = $auth->createPermission('promoverMembro');
-        $promoverMembro->description = 'Promover membro';
-        $auth->add($promoverMembro);
-
-        // admin permission #13
-        $desativarArtigoMembro = $auth->createPermission('desativarArtigoMembro');
-        $desativarArtigoMembro->description = 'Desativar artigo membro';
-        $auth->add($desativarArtigoMembro);
-
-        // admin permission #14
-        $editarEstadoEncomendaLoja = $auth->createPermission('editarEstadoEncomendaLoja');
-        $editarEstadoEncomendaLoja->description = 'Editar estado encomenda loja';
-        $auth->add($editarEstadoEncomendaLoja);
-
-        // admin permission #15
         $verDetalhesEncomendaLoja = $auth->createPermission('verDetalhesEncomendaLoja');
         $verDetalhesEncomendaLoja->description = 'Ver Detalhes Encomenda Loja';
         $auth->add($verDetalhesEncomendaLoja);
 
-        // admin permission #16
+        // admin permission #13
         $criarPlanoPremium = $auth->createPermission('criarPlanoPremium');
         $criarPlanoPremium->description = 'Criar Plano Premium';
         $auth->add($criarPlanoPremium);
 
-        // admin permission #17
+        // admin permission #14
         $desativarPlanoPremium = $auth->createPermission('desativarPlanoPremium');
         $desativarPlanoPremium->description = 'Desativar Plano Premium';
         $auth->add($desativarPlanoPremium);
 
+        // admin permission #15
         $criarMarcas = $auth->createPermission('criarMarcas');
         $criarMarcas->description = 'Criar marcas';
         $auth->add($criarMarcas);
 
+        // admin permission #16
         $alterarMarcas = $auth->createPermission('alterarMarcas');
         $criarMarcas->description = 'Alterar marcas';
         $auth->add($alterarMarcas);
 
+        // admin permission #17
         $eliminarMarcas = $auth->createPermission('eliminarMarcas');
         $eliminarMarcas->description = 'Eliminar marcas';
         $auth->add($eliminarMarcas);
 
-        //MEMBER PERMISSIONS
 
+
+        //MODERATOR PERMISSIONS
+        // moderator permission #1
+        $desativarMembro = $auth->createPermission('desativarMembro');
+        $desativarMembro->description = 'Desativar membro';
+        $auth->add($desativarMembro);
+
+        // moderator permission #2
+        $promoverMembro = $auth->createPermission('promoverMembro');
+        $promoverMembro->description = 'Promover membro';
+        $auth->add($promoverMembro);
+
+        // moderator permission #3
+        $desativarArtigoMembro = $auth->createPermission('desativarArtigoMembro');
+        $desativarArtigoMembro->description = 'Desativar artigo membro';
+        $auth->add($desativarArtigoMembro);
+
+
+
+
+        //MEMBER PERMISSIONS
         // member permission #1
         $criarArtigoMarketplace = $auth->createPermission('criarArtigoMarketplace');
         $criarArtigoMarketplace->description = 'Criar Artigo Marketplace';
         $auth->add($criarArtigoMarketplace);
 
+        // member permission #2
+        $alterarArtigoMarketplace = $auth->createPermission('alterarArtigoMarketplace');
+        $alterarArtigoMarketplace->description = 'Alterar Artigo Marketplace';
+        $auth->add($alterarArtigoMarketplace);
+
+        // member permission #3
+        $eliminarArtigoMarketplace = $auth->createPermission('eliminarArtigoMarketplace');
+        $eliminarArtigoMarketplace->description = 'Eliminar Artigo Marketplace';
+        $auth->add($eliminarArtigoMarketplace);
+
+        // member permission #4
+        $adicionarArtigoCarrinho = $auth->createPermission('adicionarArtigoCarrinho');
+        $adicionarArtigoCarrinho->description = 'Adicionar Artigo Carrinho';
+        $auth->add($adicionarArtigoCarrinho);
+
+        // member permission #5
+        $eliminarArtigoCarrinho = $auth->createPermission('eliminarArtigoCarrinho');
+        $eliminarArtigoCarrinho->description = 'Eliminar Artigo Carrinho';
+        $auth->add($eliminarArtigoCarrinho);
+
+        // member permission #6
+        $alterarDetalhesPerfil = $auth->createPermission('alterarDetalhesPerfil');
+        $alterarDetalhesPerfil->description = 'Alterar Detalhes Perfil';
+        $auth->add($alterarDetalhesPerfil);
+
+        // member permission #7
+        $adicionarDetalhesPerfil = $auth->createPermission('adicionarDetalhesPerfil');
+        $adicionarDetalhesPerfil->description = 'Adicionar Detalhes Perfil';
+        $auth->add($adicionarDetalhesPerfil);
+
+        // member permission #8
+        $criarFaq = $auth->createPermission('criarFaq');
+        $criarFaq->description = 'criar FAQ';
+        $auth->add($criarFaq);
+
+        // member permission #9
+        $eliminarFaq = $auth->createPermission('eliminarFaq');
+        $eliminarFaq->description = 'Eliminar FAQ';
+        $auth->add($eliminarFaq);
+
+
+        //VIEW PERMISSIONS
+        // member permission
+        $verProdutosLoja = $auth->createPermission('verProdutosLoja');
+        $verProdutosLoja->description = 'Ver Produtos Loja';
+        $auth->add($verProdutosLoja);
+
+        // member permission
+        $verProdutosLojaPremium = $auth->createPermission('verProdutosLojaPremium');
+        $verProdutosLojaPremium->description = 'Ver Produtos Loja Premium';
+        $auth->add($verProdutosLojaPremium);
+
+        // member permission
+        $verProdutosMarketplace = $auth->createPermission('verProdutosMarketplace');
+        $verProdutosMarketplace->description = 'Ver Produtos Marketplace';
+        $auth->add($verProdutosMarketplace);
+
+        // member permission
+        $verMeuPrefil = $auth->createPermission('verMeuPrefil');
+        $verMeuPrefil->description = 'Ver o Meu Perfil';
+        $auth->add($verMeuPrefil);
+
+        // member permission
+        $verPerfilMembro = $auth->createPermission('verPerfilMembro');
+        $verPerfilMembro->description = 'Ver Perfil Membro';
+        $auth->add($verPerfilMembro);
+
+        // member permission
+        $verDetalhesArtigoLoja = $auth->createPermission('verDetalhesArtigoLoja');
+        $verDetalhesArtigoLoja->description = 'Ver Detalhes Artigo Loja';
+        $auth->add($verDetalhesArtigoLoja);
+
+        // member permission
+        $verDetalhesArtigoMarketplace = $auth->createPermission('verDetalhesArtigoMarketplace');
+        $verDetalhesArtigoMarketplace->description = 'Ver Detalhes Artigo Marketplace';
+        $auth->add($verDetalhesArtigoMarketplace);
+
+        // member permission
+        $verArtigosCarrinho = $auth->createPermission('verArtigosCarrinho');
+        $verArtigosCarrinho->description = 'Ver Artigos Carrinho';
+        $auth->add($verArtigosCarrinho);
+
+        //member permission
+        $verHistoricoCompras = $auth->createPermission('verHistoricoCompras');
+        $verHistoricoCompras->description = 'Ver Historico Compras';
+        $auth->add($verHistoricoCompras);
+
+        //member permission
+        $verHistoricoVendas = $auth->createPermission('verHistoricoVendas');
+        $verHistoricoVendas->description = 'Ver Historico Vendas';
+        $auth->add($verHistoricoVendas);
+
+        //member permission
+        $verDetalhesVenda = $auth->createPermission('verDetalhesVenda');
+        $verDetalhesVenda->description = 'Ver Detalhes Venda';
+        $auth->add($verDetalhesVenda);
+
+        //member permission
+        $verDetalhesCompra = $auth->createPermission('verDetalhesVenda');
+        $verDetalhesCompra->description = 'Ver Detalhes Venda';
+        $auth->add($verDetalhesCompra);
+
+        //member permission
+        $verArtigosFavoritos = $auth->createPermission('verArtigosFavoritos');
+        $verArtigosFavoritos->description = 'Ver Artigos Favoritos';
+        $auth->add($verArtigosFavoritos);
+
+        //member permission
+        $verPlanosPremium = $auth->createPermission('verPlanosPremium');
+        $verPlanosPremium->description = 'Ver Planos Premium';
+        $auth->add($verPlanosPremium);
+
+        //member permission
+        $verFaq = $auth->createPermission('verFaq');
+        $verFaq->description = 'Ver FAQ';
+        $auth->add($verFaq);
+
+        //member permission
+        $verCheckout = $auth->createPermission('verCheckout');
+        $verCheckout->description = 'Ver Checkout';
+        $verCheckout->add($verCheckout);
+
+        //member permission
+        $verListaChats = $auth->createPermission('verListaChats');
+        $verListaChats->description = 'Ver Lista Chats';
+        $verListaChats->add($verListaChats);
+
+        //member permission
+        $verChat = $auth->createPermission('verChat');
+        $verChat->description = 'Ver Chat';
+        $verChat->add($verChat);
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-        //criação das roles
+        //CRIAÇÃO DAS ROLES
         $admin = $auth->createRole('admin');
         $moderador = $auth->createRole('moderador');
         $membro = $auth->createRole('membro');
@@ -141,12 +267,63 @@ class RbacController extends Controller
         $auth->add($membro);
 
 
-        //adicionar as permissoes Às roles
-        $auth->addChild($admin, $moderador);
-        $auth->addChild($moderador, $membro);
 
-        // Assign roles to users. 1 and 2 are IDs returned by IdentityInterface::getId()
-        // usually implemented in your User model.
+        //ASSOCIAR PERMISSÕES AO MEMBRO
+        $auth->addChild($membro, $criarArtigoMarketplace);
+        $auth->addChild($membro, $alterarArtigoMarketplace);
+        $auth->addChild($membro, $eliminarArtigoMarketplace);
+        $auth->addChild($membro, $adicionarArtigoCarrinho);
+        $auth->addChild($membro, $eliminarArtigoCarrinho);
+        $auth->addChild($membro, $alterarDetalhesPerfil);
+        $auth->addChild($membro, $adicionarDetalhesPerfil);
+        $auth->addChild($membro, $criarFaq);
+        $auth->addChild($membro, $eliminarFaq);
+        $auth->addChild($membro, $verProdutosLoja);
+        $auth->addChild($membro, $verProdutosLojaPremium);
+        $auth->addChild($membro, $verProdutosMarketplace);
+        $auth->addChild($membro, $verMeuPrefil);
+        $auth->addChild($membro, $verPerfilMembro);
+        $auth->addChild($membro, $verDetalhesArtigoLoja);
+        $auth->addChild($membro, $verDetalhesArtigoMarketplace);
+        $auth->addChild($membro, $verArtigosCarrinho);
+        $auth->addChild($membro, $verHistoricoCompras);
+        $auth->addChild($membro, $verHistoricoVendas);
+        $auth->addChild($membro, $verDetalhesVenda);
+        $auth->addChild($membro, $verDetalhesCompra);
+        $auth->addChild($membro, $verArtigosFavoritos);
+        $auth->addChild($membro, $verPlanosPremium);
+        $auth->addChild($membro, $verFaq);
+        $auth->addChild($membro, $verCheckout);
+        $auth->addChild($membro, $verListaChats);
+        $auth->addChild($membro, $verChat);
+
+        //ASSOCIAR PERMISSÕES AO MODERADOR
+        $auth->addChild($moderador, $membro);
+        $auth->addChild($moderador, $desativarMembro);
+        $auth->addChild($moderador, $promoverMembro);
+        $auth->addChild($moderador, $desativarArtigoMembro);
+
+        //ASSOCIAR PERMISSÕES AO ADMIN
+        $auth->addChild($admin, $moderador);
+        $auth->addChild($admin, $criarArtigosLoja);
+        $auth->addChild($admin, $alterarArtigosLoja);
+        $auth->addChild($admin, $eliminarArtigosLoja);
+        $auth->addChild($admin, $criarBannerLoja);
+        $auth->addChild($admin, $alterarBannerLoja);
+        $auth->addChild($admin, $criarFaqLoja);
+        $auth->addChild($admin, $alterarFaqLoja);
+        $auth->addChild($admin, $eliminarFaqLoja);
+        $auth->addChild($admin, $alterarInformacoesMembro);
+        $auth->addChild($admin, $alterarEstadoEncomendaLoja);
+        $auth->addChild($admin, $verDetalhesEncomendaLoja);
+        $auth->addChild($admin, $criarPlanoPremium);
+        $auth->addChild($admin, $desativarPlanoPremium);
+        $auth->addChild($admin, $criarMarcas);
+        $auth->addChild($admin, $alterarMarcas);
+        $auth->addChild($admin, $eliminarMarcas);
+
+
+        // ASSOCIAR AS ROLES A UTILIZADORES (ID)
         $auth->assign($admin, 1);
         $auth->assign($moderador, 2);
     }
