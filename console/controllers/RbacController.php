@@ -81,6 +81,9 @@ class RbacController extends Controller
         $editarEstadoEncomendaLoja->description = 'Editar estado encomenda loja';
         $auth->add($editarEstadoEncomendaLoja);
 
+        $verEncomendasLoja = $auth->createPermission('verListaEncomendasLoja');
+        $verEncomendasLoja->description = 'Ver lista de encomendas da Loja';
+        $auth->add($verEncomendasLoja);
         // admin permission #15
         $verDetalhesEncomendaLoja = $auth->createPermission('verDetalhesEncomendaLoja');
         $verDetalhesEncomendaLoja->description = 'Ver Detalhes Encomenda Loja';
@@ -108,6 +111,46 @@ class RbacController extends Controller
         $eliminarMarcas->description = 'Eliminar marcas';
         $auth->add($eliminarMarcas);
 
+
+        $criarCategorias = $auth->createPermission('criarCategorias');
+        $criarCategorias->description = 'Criar categorias';
+        $auth->add($criarCategorias);
+
+        $alterarCategorias = $auth->createPermission('alterarCategorias');
+        $alterarCategorias->description = 'Alterar categorias';
+        $auth->add($alterarCategorias);
+
+        $eliminarCategorias = $auth->createPermission('eliminarCategorias');
+        $eliminarCategorias->description = 'Eliminar categorias';
+        $auth->add($eliminarCategorias);
+
+        $criarTamanhos = $auth->createPermission('criarTamanho');
+        $criarTamanhos->description = 'Criar tamanhos';
+        $auth->add($criarTamanhos);
+
+        $alterarTamanhos = $auth->createPermission('alterarTamanhos');
+        $alterarTamanhos->description = 'Alterar tamanhos';
+        $auth->add($alterarTamanhos);
+
+        $eliminarTamanhos = $auth->createPermission('eliminarTamanhos');
+        $eliminarTamanhos->description = 'Eliminar tamanhos';
+        $auth->add($eliminarTamanhos);
+
+        $criarCondicao = $auth->createPermission('criarCondicao');
+        $criarCondicao->description = 'Criar condicao';
+        $auth->add($criarCondicao);
+
+        $alterarCondicao = $auth->createPermission('alterarCondicao');
+        $alterarCondicao->description = 'Alterar condicao';
+        $auth->add($alterarCondicao);
+
+        $eliminarCondicao = $auth->createPermission('eliminarCondicao');
+        $eliminarCondicao->description = 'Eliminar condicao';
+        $auth->add($eliminarCondicao);
+
+        $verDenuncias = $auth->createPermission('verDenuncias');
+        $verDenuncias->description = 'Eliminar condicao';
+        $auth->add($verDenuncias);
         //MEMBER PERMISSIONS
 
         // member permission #1
