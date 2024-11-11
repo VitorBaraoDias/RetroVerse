@@ -100,6 +100,17 @@ class RbacController extends Controller
 
 
 
+        //MEMBER PERMISSIONS
+
+        // member permission #1
+        $criarArtigoMarketplace = $auth->createPermission('criarArtigoMarketplace');
+        $criarArtigoMarketplace->description = 'Criar Artigo Marketplace';
+        $auth->add($criarArtigoMarketplace);
+
+
+
+
+
 
 
 
