@@ -1,11 +1,16 @@
 <?php
-namespace app\commands;
+namespace console\controllers;
 
 use Yii;
+use yii\base\Exception;
 use yii\console\Controller;
+use yii\rbac\Permission;
 
 class RbacController extends Controller
 {
+    /**
+     * @throws Exception
+     */
     public function actionInit()
     {
         $auth = Yii::$app->authManager;
@@ -66,17 +71,6 @@ class RbacController extends Controller
         $alterarEstadoEncomendaLoja->description = 'Alterar estado encomenda loja';
         $auth->add($alterarEstadoEncomendaLoja);
 
-
-        $promoverMembro = $auth->createPermission('promoverMembro');
-        $promoverMembro->description = 'Promover membro';
-        $auth->add($promoverMembro);
-
-
-        $desativarArtigoMembro = $auth->createPermission('desativarArtigoMembro');
-        $desativarArtigoMembro->description = 'Desativar artigo membro';
-        $auth->add($desativarArtigoMembro);
-
-
         $editarEstadoEncomendaLoja = $auth->createPermission('editarEstadoEncomendaLoja');
         $editarEstadoEncomendaLoja->description = 'Editar estado encomenda loja';
         $auth->add($editarEstadoEncomendaLoja);
@@ -107,7 +101,7 @@ class RbacController extends Controller
 
 
         $alterarMarcas = $auth->createPermission('alterarMarcas');
-        $criarMarcas->description = 'Alterar marcas';
+        $alterarMarcas->description = 'Alterar marcas';
         $auth->add($alterarMarcas);
 
 
@@ -279,8 +273,8 @@ class RbacController extends Controller
         $auth->add($verDetalhesVenda);
 
         //member permission
-        $verDetalhesCompra = $auth->createPermission('verDetalhesVenda');
-        $verDetalhesCompra->description = 'Ver Detalhes Venda';
+        $verDetalhesCompra = $auth->createPermission('verDetalhesCompra');
+        $verDetalhesCompra->description = 'Ver Detalhes compra';
         $auth->add($verDetalhesCompra);
 
         //member permission
@@ -301,7 +295,7 @@ class RbacController extends Controller
         //member permission
         $verCheckout = $auth->createPermission('verCheckout');
         $verCheckout->description = 'Ver Checkout';
-        $verCheckout->add($verCheckout);
+        $auth->add($verCheckout);
 
         //member permission
         $verListaChats = $auth->createPermission('verListaChats');
