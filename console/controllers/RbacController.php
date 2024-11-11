@@ -71,6 +71,7 @@ class RbacController extends Controller
         $alterarEstadoEncomendaLoja->description = 'Alterar estado encomenda loja';
         $auth->add($alterarEstadoEncomendaLoja);
 
+
         $editarEstadoEncomendaLoja = $auth->createPermission('editarEstadoEncomendaLoja');
         $editarEstadoEncomendaLoja->description = 'Editar estado encomenda loja';
         $auth->add($editarEstadoEncomendaLoja);
@@ -292,20 +293,17 @@ class RbacController extends Controller
         $verFaq->description = 'Ver FAQ';
         $auth->add($verFaq);
 
-        //member permission
         $verCheckout = $auth->createPermission('verCheckout');
         $verCheckout->description = 'Ver Checkout';
         $auth->add($verCheckout);
 
-        //member permission
         $verListaChats = $auth->createPermission('verListaChats');
         $verListaChats->description = 'Ver Lista Chats';
-        $verListaChats->add($verListaChats);
+        $auth->add($verListaChats);
 
-        //member permission
         $verChat = $auth->createPermission('verChat');
         $verChat->description = 'Ver Chat';
-        $verChat->add($verChat);
+        $auth->add($verChat);
 
 
 

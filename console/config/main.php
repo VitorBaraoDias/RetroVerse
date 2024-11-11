@@ -23,9 +23,13 @@ return [
           ],
     ],
     'components' => [
+<<<<<<< HEAD
         'authManager' => [
             'class' => 'yii\rbac\DbManager',
         ],
+=======
+
+>>>>>>> ef165bf2a1b474034883b56ec7904329763ec68f
         'log' => [
             'targets' => [
                 [
