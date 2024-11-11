@@ -38,8 +38,8 @@ class RbacController extends Controller
 
         // admin permission #6
         $eliminarBannerLoja = $auth->createPermission('eliminarBannerLoja');
-        eliminarBannerLoja->description = 'Eliminar banner loja';
-        $auth->add(eliminarBannerLoja);
+        $eliminarBannerLoja->description = 'Eliminar banner loja';
+        $auth->add($eliminarBannerLoja);
 
         // admin permission #7
         $criarFaqLoja = $auth->createPermission('criarFaqLoja');
@@ -96,9 +96,17 @@ class RbacController extends Controller
         $desativarPlanoPremium->description = 'Desativar Plano Premium';
         $auth->add($desativarPlanoPremium);
 
+        $criarMarcas = $auth->createPermission('criarMarcas');
+        $criarMarcas->description = 'Criar marcas';
+        $auth->add($criarMarcas);
 
+        $alterarMarcas = $auth->createPermission('alterarMarcas');
+        $criarMarcas->description = 'Alterar marcas';
+        $auth->add($alterarMarcas);
 
-
+        $eliminarMarcas = $auth->createPermission('eliminarMarcas');
+        $eliminarMarcas->description = 'Eliminar marcas';
+        $auth->add($eliminarMarcas);
 
 
 
