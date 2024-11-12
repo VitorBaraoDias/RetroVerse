@@ -18,10 +18,11 @@ $users = $dataProvider->getModels(); // Obtém os modelos de usuários
 
 ?>
 <div class="user-index">
-<h1><?= Html::encode($this->title) ?></h1>
 
 <!-- Tabela personalizada -->
-    <div>
+    <div class="d-flex justify-content-between align-items-center">
+        <h1>List <?= Html::encode($this->title) ?></h1>
+
         <?= Html::a('Create User', ['user/create'], ['class' => 'btn btn-success']) ?>
     </div>
 
@@ -51,7 +52,7 @@ $users = $dataProvider->getModels(); // Obtém os modelos de usuários
 <!--        --><?php //endforeach; ?>
 <!--        </tbody>-->
 <!--    </table>-->
-    <div class="row">
+    <div class="row mt-4">
         <?php foreach ($users as $index => $user): ?>
             <div class="col-md-4 mb-4">
                 <div class="card h-100">
@@ -61,15 +62,29 @@ $users = $dataProvider->getModels(); // Obtém os modelos de usuários
                                 ['alt' => 'Example Image',
                                     'class' => 'rounded-circle img-thumbnail',
                                     'style' => 'width: 100px; height: 100px; object-fit: cover;',])?>
-                            <h2><?= Html::encode($user->username) ?></h2>
+                            <h4><?= Html::encode($user->username) ?></h4>
+                            <p class="text-secondary">Member ID: <?= Html::encode($user->id) ?></p>
                         </div>
-                        <p class="card-text">
-                            <strong>Email:</strong> <?= Html::encode($user->email) ?><br>
-                            <strong>ID:</strong> <?= Html::encode($user->id) ?>
+                        <hr>
+                        <p class="d-flex justify-content-between">
+                            <strong>Items:</strong>
+                            <?= Html::tag('span', Html::encode($user->email), ['class' => 'text-primary']) ?>
                         </p>
+                        <hr>
+                        <p class="d-flex justify-content-between">
+                            <strong>Orders:</strong>
+                            <?= Html::tag('span', Html::encode($user->email), ['class' => 'text-primary']) ?>
+                        </p>
+                        <hr>
+                        <p class="d-flex justify-content-between">
+                            <strong>Date:</strong>
+                            <?= Html::tag('span', Html::encode($user->email), ['class' => 'text-primary']) ?>
+                        </p>
+
                     </div>
-                    <div class="card-footer text-end">
-                        <?= Html::a('Delete member', ['user/view', 'id' => $user->id], ['class' => 'btn btn-danger btn-sm w-100']) ?>
+                    <div class="card-footer">
+                        <?= Html::a('Details', ['user/view', 'id' => $user->id], ['class' => 'btn btn-dark btn-sm w-100']) ?>
+                        <?= Html::a('Delete member', ['user/delete', 'id' => $user->id], ['class' => 'btn btn-danger btn-sm w-100 mt-2']) ?>
                     </div>
                 </div>
             </div>
