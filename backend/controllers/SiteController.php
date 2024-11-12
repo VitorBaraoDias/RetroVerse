@@ -26,13 +26,18 @@ class SiteController extends Controller
                     [
                         'actions' => ['login', 'error'],
                         'allow' => true,
+                        'roles' => ['?'],
                     ],
                     [
-                        'actions' => ['logout', 'index'],
+                        'actions' => ['logout', 'index','user/index'],
                         'allow' => true,
-                        'roles' => ['@'],
+                        'roles' => ['admin'],
                     ],
                 ],
+                'denyCallback' => function ($rule, $action) {
+                    throw new \Exception('Você não está autorizado a acessar esta página');
+                }
+
             ],
             'verbs' => [
                 'class' => VerbFilter::class,
@@ -60,6 +65,7 @@ class SiteController extends Controller
      *
      * @return string
      */
+
     public function actionIndex()
     {
         return $this->render('index');

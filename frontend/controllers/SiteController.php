@@ -109,10 +109,8 @@ class SiteController extends Controller
     public function actionLogout()
     {
         Yii::$app->user->logout();
-
         return $this->goHome();
     }
-
     /**
      * Displays contact page.
      *
@@ -135,7 +133,6 @@ class SiteController extends Controller
             'model' => $model,
         ]);
     }
-
     /**
      * Displays about page.
      *

@@ -1,8 +1,7 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="index3.html" class="brand-link">
-        <img src="<?=$assetDir?>/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-        <span class="brand-text font-weight-light">AdminLTE 3</span>
+        <span class="brand-text font-weight-light">RetroVerse</span>
     </a>
 
     <!-- Sidebar -->
@@ -13,7 +12,7 @@
                 <img src="<?=$assetDir?>/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
             </div>
             <div class="info">
-                <a href="#" class="d-block">Alexander Pierce</a>
+                <a href="#" class="d-block"><?= Yii::$app->user->identity->username ?></a>
             </div>
         </div>
 
@@ -35,43 +34,46 @@
             <?php
             echo \hail812\adminlte\widgets\Menu::widget([
                 'items' => [
+                    ['label' => 'Dashboard', 'icon' => 'fa-solid fa-file-invoice',
+                        'url' => ['site/index'], 'active' => Yii::$app->controller->id === 'site' && Yii::$app->controller->action->id === 'index'
+                    ],
                     [
-                        'label' => 'Starter Pages',
-                        'icon' => 'tachometer-alt',
-                        'badge' => '<span class="right badge badge-info">2</span>',
+                        'label' => 'Store',
+                        'icon' => 'fa-solid fa-store',
                         'items' => [
-                            ['label' => 'Active Page', 'url' => ['site/index'], 'iconStyle' => 'far'],
-                            ['label' => 'Inactive Page', 'iconStyle' => 'far'],
+                            ['label' => 'Orders', 'url' => ['orders/index'], 'iconStyle' => 'far'],
+                            ['label' => 'Items', 'url' => ['items/index'], 'iconStyle' => 'far'],
+                            ['label' => 'Plans', 'url' => ['plans/index'], 'iconStyle' => 'far'],
+                            ['label' => 'Categories', 'url' => ['categories/index'], 'iconStyle' => 'far'],
+                            ['label' => 'Brands', 'url' => ['brands/index'], 'iconStyle' => 'far'],
+                            ['label' => 'Sizes', 'url' => ['brands/index'], 'iconStyle' => 'far'],
+                            ['label' => 'Conditions', 'url' => ['brands/index'], 'iconStyle' => 'far'],
                         ]
                     ],
-                    ['label' => 'Simple Link', 'icon' => 'th', 'badge' => '<span class="right badge badge-danger">New</span>'],
-                    ['label' => 'Yii2 PROVIDED', 'header' => true],
-                    ['label' => 'Login', 'url' => ['site/login'], 'icon' => 'sign-in-alt', 'visible' => Yii::$app->user->isGuest],
+                    [
+                        'label' => 'MarketPlace',
+                        'icon' => 'fa-solid fa-users',
+                        'items' => [
+                            ['label' => 'Members', 'url' => ['orders/index'], 'iconStyle' => 'far'],
+                            ['label' => 'Processed Orders', 'url' => ['items/index'], 'iconStyle' => 'far'],
+                            ['label' => 'Reports', 'url' => ['plans/index'], 'iconStyle' => 'far'],
+                        ]
+                    ],
+                    [
+                        'label' => 'General',
+                        'icon' => 'fa-solid fa-hammer',
+                        'items' => [
+                            ['label' => 'Store Banner', 'url' => ['orders/index'], 'iconStyle' => 'far'],
+                            ['label' => 'Shipping methods', 'url' => ['items/index'], 'iconStyle' => 'far'],
+                            ['label' => 'FAQS', 'url' => ['plans/index'], 'iconStyle' => 'far'],
+                            ['label' => 'Users', 'url' => ['user/index'], 'iconStyle' => 'far'],
+
+                        ]
+                    ],
+                    ['label' => 'Yii2 Tool', 'header' => true],
                     ['label' => 'Gii',  'icon' => 'file-code', 'url' => ['/gii'], 'target' => '_blank'],
                     ['label' => 'Debug', 'icon' => 'bug', 'url' => ['/debug'], 'target' => '_blank'],
-                    ['label' => 'MULTI LEVEL EXAMPLE', 'header' => true],
-                    ['label' => 'Level1'],
-                    [
-                        'label' => 'Level1',
-                        'items' => [
-                            ['label' => 'Level2', 'iconStyle' => 'far'],
-                            [
-                                'label' => 'Level2',
-                                'iconStyle' => 'far',
-                                'items' => [
-                                    ['label' => 'Level3', 'iconStyle' => 'far', 'icon' => 'dot-circle'],
-                                    ['label' => 'Level3', 'iconStyle' => 'far', 'icon' => 'dot-circle'],
-                                    ['label' => 'Level3', 'iconStyle' => 'far', 'icon' => 'dot-circle']
-                                ]
-                            ],
-                            ['label' => 'Level2', 'iconStyle' => 'far']
-                        ]
-                    ],
-                    ['label' => 'Level1'],
-                    ['label' => 'LABELS', 'header' => true],
-                    ['label' => 'Important', 'iconStyle' => 'far', 'iconClassAdded' => 'text-danger'],
-                    ['label' => 'Warning', 'iconClass' => 'nav-icon far fa-circle text-warning'],
-                    ['label' => 'Informational', 'iconStyle' => 'far', 'iconClassAdded' => 'text-info'],
+
                 ],
             ]);
             ?>

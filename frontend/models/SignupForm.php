@@ -48,15 +48,23 @@ class SignupForm extends Model
         if (!$this->validate()) {
             return null;
         }
-        
+
         $user = new User();
         $user->username = $this->username;
         $user->email = $this->email;
+        $user->status = 10;
         $user->setPassword($this->password);
         $user->generateAuthKey();
+        $user->save(false);
         $user->generateEmailVerificationToken();
 
-        return $user->save() && $this->sendEmail($user);
+
+        // foram adicionadas as seguintes três linhas:
+        $auth = Yii::$app->authManager;
+        $authorRole = $auth->getRole('membro');
+        $auth->assign($authorRole, $user->getId());
+
+        return $user->save();
     }
 
     /**
