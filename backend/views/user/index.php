@@ -83,6 +83,13 @@ $users = $dataProvider->getModels(); // Obtém os modelos de usuários
 
                     </div>
                     <div class="card-footer">
+                        <?= Html::a('Promote to moderator', ['promove', 'id' => $user->id], [
+                            'class' => 'btn btn-success',
+                            'data' => [
+                                'confirm' => 'Are you sure you want promote this item?',
+                                'method' => 'post',
+                            ],
+                        ]) ?>
                         <?= Html::a('Details', ['user/view', 'id' => $user->id], ['class' => 'btn btn-dark btn-sm w-100']) ?>
                         <?= Html::a('Delete member', ['user/delete', 'id' => $user->id], ['class' => 'btn btn-danger btn-sm w-100 mt-2']) ?>
                     </div>
