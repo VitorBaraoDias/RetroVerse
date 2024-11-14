@@ -5,7 +5,9 @@ namespace backend\controllers;
 use backend\models\UserForm;
 use common\models\User;
 use common\models\UserSearch;
+use Yii;
 use yii\data\ActiveDataProvider;
+use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -23,10 +25,29 @@ class UserController extends Controller
         return array_merge(
             parent::behaviors(),
             [
+                'access' => [
+                    'class' => AccessControl::class,
+                    'rules' => [
+                        [
+                            'actions' => [''],
+                            'allow' => true,
+                            'roles' => ['?'],
+                        ],
+                        [
+                            'actions' => ['index','view','delete', 'demote','promote'],
+                            'allow' => true,
+                            'roles' => ['admin'],
+                        ],
+                    ],
+                    'denyCallback' => function ($rule, $action) {
+                        throw new \Exception('Você não está autorizado a acessar esta página');
+                    }
+
+                ],
                 'verbs' => [
-                    'class' => VerbFilter::className(),
+                    'class' => VerbFilter::class,
                     'actions' => [
-                        'delete' => ['POST'],
+                        'logout' => ['post'],
                     ],
                 ],
             ]
@@ -104,7 +125,6 @@ class UserController extends Controller
             'model' => $model,
         ]);
     }
-
     /**
      * Deletes an existing User model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
@@ -119,6 +139,30 @@ class UserController extends Controller
         return $this->redirect(['index']);
     }
 
+    public function actionDemote($id){
+        $model = $this->findModel($id);
+        $auth = Yii::$app->authManager;
+
+        $auth->revokeAll($model->id);
+        $moderator = $auth->getRole('membro');
+
+        // Atribui o papel 'moderador' ao usuário
+        $auth->assign($moderator, $model->id);
+
+        return $this->redirect('index');
+    }
+    public function actionPromote($id){
+        $model = $this->findModel($id);
+        $auth = Yii::$app->authManager;
+
+        $auth->revokeAll($model->id);
+        $moderator = $auth->getRole('moderador');
+
+        // Atribui o papel 'moderador' ao usuário
+        $auth->assign($moderator, $model->id);
+
+        return $this->redirect('index');
+    }
     /**
      * Finds the User model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
