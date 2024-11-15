@@ -48,6 +48,10 @@
                             ['label' => 'Brands', 'url' => ['marca/index'], 'iconStyle' => 'far'],
                             ['label' => 'Sizes', 'url' => ['brands/index'], 'iconStyle' => 'far'],
                             ['label' => 'Conditions', 'url' => ['brands/index'], 'iconStyle' => 'far'],
+                            ['label' => 'Categories', 'url' => ['categoriaartigo/index'], 'iconStyle' => 'far'],
+                            ['label' => 'Brands', 'url' => ['brands/index'], 'iconStyle' => 'far'],
+                            ['label' => 'Sizes', 'url' => ['tamanho/index'], 'iconStyle' => 'far'],
+                            ['label' => 'Conditions', 'url' => ['condicao/index'], 'iconStyle' => 'far'],
                         ]
                     ],
                     [

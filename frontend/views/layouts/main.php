@@ -28,23 +28,29 @@ AppAsset::register($this);
 <header>
     <?php
     NavBar::begin([
-        'brandLabel' => Yii::$app->name,
+        'brandLabel' => Html::img(Yii::getAlias('@web/images/logo.svg'), [
+                'alt' => 'Logo',
+                'style' => 'height:60px; margin-right:10px;'
+            ]),
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
-            'class' => 'navbar navbar-expand-md navbar-dark bg-dark fixed-top',
+            'class' => 'navbar navbar-expand-md text-dark fixed-top justify-content-between', // Aqui adicionamos justify-content-between
         ],
     ]);
     $menuItems = [
         ['label' => 'Home', 'url' => ['/site/index']],
-        ['label' => 'About', 'url' => ['/site/about']],
-        ['label' => 'Contact', 'url' => ['/site/contact']],
+        ['label' => 'Collection', 'url' => ['/site/about']],
+        ['label' => 'Premium', 'url' => ['/site/contact']],
+        ['label' => 'About us', 'url' => ['/site/contact']],
+        ['label' => 'FAQS', 'url' => ['/site/contact']],
+
     ];
     if (Yii::$app->user->isGuest) {
         $menuItems[] = ['label' => 'Signup', 'url' => ['/site/signup']];
     }
 
     echo Nav::widget([
-        'options' => ['class' => 'navbar-nav me-auto mb-2 mb-md-0'],
+        'options' => ['class' => 'navbar-nav ms-auto mb-2 mb-md-0'],
         'items' => $menuItems,
     ]);
     if (Yii::$app->user->isGuest) {
@@ -60,8 +66,8 @@ AppAsset::register($this);
     NavBar::end();
     ?>
 </header>
-
 <main role="main" class="flex-shrink-0">
+
     <div class="container">
         <?= Breadcrumbs::widget([
             'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
