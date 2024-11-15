@@ -65,7 +65,7 @@
                         'items' => [
                             ['label' => 'Store Banner', 'url' => ['orders/index'], 'iconStyle' => 'far'],
                             ['label' => 'Shipping methods', 'url' => ['items/index'], 'iconStyle' => 'far'],
-                            ['label' => 'FAQS', 'url' => ['plans/index'], 'iconStyle' => 'far'],
+                            ['label' => 'FAQS', 'url' => ['faqs/index'], 'iconStyle' => 'far'],
                             ['label' => 'Users', 'url' => ['user/index'], 'iconStyle' => 'far'],
 
                         ]

@@ -4,7 +4,7 @@ use backend\models\Estado;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\ActionColumn;
-use yii\widgets\ListView;
+use yii\grid\GridView;
 
 /** @var yii\web\View $this */
 /** @var yii\data\ActiveDataProvider $dataProvider */
@@ -21,12 +21,22 @@ $this->params['breadcrumbs'][] = $this->title;
     </p>
 
 
-    <?= ListView::widget([
+    <?= GridView::widget([
         'dataProvider' => $dataProvider,
-        'itemOptions' => ['class' => 'item'],
-        'itemView' => function ($model, $key, $index, $widget) {
-            return Html::a(Html::encode($model->descricao), ['view', 'id' => $model->id]);},
-    ]) ?>
+        'columns' => [
+            ['class' => 'yii\grid\SerialColumn'],
+
+            'descricao',
+            [
+                'class' => ActionColumn::className(),
+                'urlCreator' => function ($action, Estado $model, $key, $index, $column) {
+                    return Url::toRoute([$action, 'id' => $model->id]);
+                }
+            ],
+        ],
+    ]); ?>
+
+
 
 
 </div>
