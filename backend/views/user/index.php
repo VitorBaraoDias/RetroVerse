@@ -131,7 +131,7 @@ $authManager = Yii::$app->authManager;
         <?php endforeach; ?>
     </div>
     <!-- Paginacao -->
-    <div class="pagination-container">
+    <div class="pagination-container pagination pagination-sm">
         <?= LinkPager::widget([
             'pagination' => $dataProvider->pagination,
             'nextPageLabel' => 'Próxima',
