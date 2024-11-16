@@ -8,17 +8,9 @@
                     <div class="row">
                         <div class="col-xl-5 col-lg-7 col-md-8">
                             <div class="hero__text">
-                                <h6>Summer Collection</h6>
-                                <h2>Fall - Winter Collections 2030</h2>
-                                <p>A specialist label creating luxury essentials. Ethically crafted with an unwavering
-                                commitment to exceptional quality.</p>
-                                <a href="#" class="primary-btn">Shop now <span class="arrow_right"></span></a>
-                                <div class="hero__social">
-                                    <a href="#"><i class="fa fa-facebook"></i></a>
-                                    <a href="#"><i class="fa fa-twitter"></i></a>
-                                    <a href="#"><i class="fa fa-pinterest"></i></a>
-                                    <a href="#"><i class="fa fa-instagram"></i></a>
-                                </div>
+                                <h2>WINTER DROP</h2>
+                                <p>Our latest winter drop is already available</p>
+                                <a href="#" class="primary-btn btn_banner">SHOP NOW<span class="arrow_right"></span></a>
                             </div>
                         </div>
                     </div>
@@ -32,12 +24,6 @@
                                 <h2>ADIDAS VINTAGE WINDBREAKERS</h2>
                                 <p>Our new Adidas Vintage Windbreakers are now available in our store!</p>
                                 <a href="#" class="primary-btn btn_banner">SHOW NOW <span class="arrow_right"></span></a>
-                                <div class="hero__social">
-                                    <a href="#"><i class="fa fa-facebook"></i></a>
-                                    <a href="#"><i class="fa fa-twitter"></i></a>
-                                    <a href="#"><i class="fa fa-pinterest"></i></a>
-                                    <a href="#"><i class="fa fa-instagram"></i></a>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -297,6 +283,7 @@
 
     </div>
 </article>
+
 
 <!-- Product Section Begin -->
     <section class="product spad">
