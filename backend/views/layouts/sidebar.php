@@ -64,10 +64,10 @@
                         'icon' => 'fa-solid fa-hammer',
                         'items' => [
                             ['label' => 'Store Banner', 'url' => ['orders/index'], 'iconStyle' => 'far'],
-                            ['label' => 'Shipping methods', 'url' => ['items/index'], 'iconStyle' => 'far'],
+                            ['label' => 'Shipping methods', 'url' => ['metodosexpedicao/index'], 'iconStyle' => 'far'],
                             ['label' => 'FAQS', 'url' => ['plans/index'], 'iconStyle' => 'far'],
                             ['label' => 'Users', 'url' => ['user/index'], 'iconStyle' => 'far'],
-
+                            ['label' => 'IVA', 'url' => ['iva/index'], 'iconStyle' => 'far'],
                         ]
                     ],
                     ['label' => 'Yii2 Tool', 'header' => true],

@@ -1,24 +1,24 @@
 <?php
 
-use common\models\Categoriaartigo;
+use common\models\Iva;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\ActionColumn;
 use yii\grid\GridView;
 
 /** @var yii\web\View $this */
-/** @var common\models\SearchCategoriaartigo $searchModel */
+/** @var backend\models\SearchIva $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = 'Categoriaartigos';
+$this->title = 'Ivas';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="categoriaartigo-index">
+<div class="iva-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Create Categoriaartigo', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Create Iva', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
@@ -28,10 +28,19 @@ $this->params['breadcrumbs'][] = $this->title;
         'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-            'nome',
+            'percentagem',
+            [
+                'attribute' => 'emvigor',
+                'format' => 'raw', // Exibir HTML se necessário
+                'value' => function($model) {
+                    return $model->emvigor
+                        ? Html::tag('span', 'Ativo', ['class' => 'badge bg-success'])
+                        : Html::tag('span', 'Inativo', ['class' => 'badge bg-danger']);
+                },
+            ],
             [
                 'class' => ActionColumn::className(),
-                'urlCreator' => function ($action, Categoriaartigo $model, $key, $index, $column) {
+                'urlCreator' => function ($action, Iva $model, $key, $index, $column) {
                     return Url::toRoute([$action, 'id' => $model->id]);
                  }
             ],

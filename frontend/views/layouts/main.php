@@ -34,7 +34,7 @@ AppAsset::register($this);
             ]),
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
-            'class' => 'navbar navbar-expand-md text-dark fixed-top justify-content-between', // Aqui adicionamos justify-content-between
+            'class' => 'navbar navbar-expand-md text-dark fixed-top justify-content-between',
         ],
     ]);
     $menuItems = [
