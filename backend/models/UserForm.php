@@ -1,6 +1,7 @@
 <?php
 
 namespace backend\models;
+use common\models\Perfil;
 use Yii;
 use yii\base\Model;
 use common\models\User;
@@ -48,23 +49,45 @@ class UserForm extends Model
             return null;
         }
 
-        $user = new User();
-        $user->username = $this->username;
-        $user->email = $this->email;
-        $user->status = 10;
-        $user->setPassword($this->password);
-        $user->generateAuthKey();
-        $user->save(false);
-        $user->generateEmailVerificationToken();
+        // Inicia a transação
+        $transaction = Yii::$app->db->beginTransaction();
+        try {
+            $user = new User();
+            $user->username = $this->username;
+            $user->email = $this->email;
+            $user->status = 10;
+            $user->setPassword($this->password);
+            $user->generateAuthKey();
+            $user->generateEmailVerificationToken();
+            $user->save(false);
 
 
-        // foram adicionadas as seguintes três linhas:
-        $auth = Yii::$app->authManager;
-        $authorRole = $auth->getRole('membro');
-        $auth->assign($authorRole, $user->getId());
+            $auth = Yii::$app->authManager;
+            $authorRole = $auth->getRole('membro');
+            if ($authorRole) {
+                $auth->assign($authorRole, $user->getId());
+            }
 
-        return $user->save();
+            $perfil = new Perfil();
+            $perfil->id = $user->getId();
+
+            if (!$perfil->save(false)) {
+                $transaction->rollBack();
+                return null;
+            }
+
+            // Confirma a transação se tudo foi bem-sucedido
+            $transaction->commit();
+            return $user->save();
+
+        } catch (\Exception $e) {
+            // Em caso de erro, faz o rollback da transação
+            $transaction->rollBack();
+            Yii::error($e->getMessage(), __METHOD__);
+            return null;
+        }
     }
+
 
     /**
      * Sends confirmation email to user

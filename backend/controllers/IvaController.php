@@ -2,20 +2,17 @@
 
 namespace backend\controllers;
 
-use backend\models\UserForm;
-use common\models\User;
-use common\models\UserSearch;
-use Yii;
-use yii\data\ActiveDataProvider;
+use common\models\Iva;
+use backend\models\SearchIva;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * UserController implements the CRUD actions for User model.
+ * IvaController implements the CRUD actions for Iva model.
  */
-class UserController extends Controller
+class IvaController extends Controller
 {
     /**
      * @inheritDoc
@@ -29,7 +26,7 @@ class UserController extends Controller
                     'class' => AccessControl::class,
                     'rules' => [
                         [
-                            'actions' => ['index','create','view','delete', 'demote','promote'],
+                            'actions' => ['index','create','view','update','delete', 'demote','promote'],
                             'allow' => true,
                             'roles' => ['admin'],
                         ],
@@ -47,45 +44,28 @@ class UserController extends Controller
                 ],
             ]
         );
+
     }
 
     /**
-     * Lists all User models.
+     * Lists all Iva models.
      *
      * @return string
      */
     public function actionIndex()
     {
-        $searchQuery = Yii::$app->request->get('searchQuery', null);
-
-        // Query básica para buscar usuários
-        $query = User::find();
-
-        // Se houver uma pesquisa, aplica o filtro por nome ou email
-        if (!empty($searchQuery)) {
-            $query->andFilterWhere(['or',
-                ['like', 'username', $searchQuery],
-                ['like', 'email', $searchQuery],
-            ]);
-        }
-
-        // Configurar o DataProvider com paginação
-        $dataProvider = new \yii\data\ActiveDataProvider([
-            'query' => $query,
-            'pagination' => [
-                'pageSize' => 6,  // Número de itens por página
-            ],
-        ]);
+        $searchModel = new SearchIva();
+        $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->render('index', [
+            'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
-            'searchQuery' => $searchQuery,
         ]);
     }
 
     /**
-     * Displays a single User model.
-     * @param int $id
+     * Displays a single Iva model.
+     * @param int $id ID
      * @return string
      * @throws NotFoundHttpException if the model cannot be found
      */
@@ -97,28 +77,31 @@ class UserController extends Controller
     }
 
     /**
-     * Creates a new User model.
+     * Creates a new Iva model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return string|\yii\web\Response
      */
     public function actionCreate()
     {
-        $model = new UserForm();
+        $model = new Iva();
 
         if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->createUser()) {
-                return $this->redirect('index');
+            if ($model->load($this->request->post()) && $model->validate() && $model->save()) {
+                return $this->redirect(['view', 'id' => $model->id]);
             }
+        } else {
+            $model->loadDefaultValues();
         }
+
         return $this->render('create', [
             'model' => $model,
         ]);
     }
 
     /**
-     * Updates an existing User model.
+     * Updates an existing Iva model.
      * If update is successful, the browser will be redirected to the 'view' page.
-     * @param int $id
+     * @param int $id ID
      * @return string|\yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
@@ -134,10 +117,11 @@ class UserController extends Controller
             'model' => $model,
         ]);
     }
+
     /**
-     * Deletes an existing User model.
+     * Deletes an existing Iva model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param int $id
+     * @param int $id ID
      * @return \yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
@@ -148,40 +132,16 @@ class UserController extends Controller
         return $this->redirect(['index']);
     }
 
-    public function actionDemote($id){
-        $model = $this->findModel($id);
-        $auth = Yii::$app->authManager;
-
-        $auth->revokeAll($model->id);
-        $moderator = $auth->getRole('membro');
-
-        // Atribui o papel 'moderador' ao usuário
-        $auth->assign($moderator, $model->id);
-
-        return $this->redirect('index');
-    }
-    public function actionPromote($id){
-        $model = $this->findModel($id);
-        $auth = Yii::$app->authManager;
-
-        $auth->revokeAll($model->id);
-        $moderator = $auth->getRole('moderador');
-
-        // Atribui o papel 'moderador' ao usuário
-        $auth->assign($moderator, $model->id);
-
-        return $this->redirect('index');
-    }
     /**
-     * Finds the User model based on its primary key value.
+     * Finds the Iva model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param int $id
-     * @return User the loaded model
+     * @param int $id ID
+     * @return Iva the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = User::findOne(['id' => $id])) !== null) {
+        if (($model = Iva::findOne(['id' => $id])) !== null) {
             return $model;
         }
 

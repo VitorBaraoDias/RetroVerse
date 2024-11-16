@@ -45,6 +45,7 @@ $action = Yii::$app->controller->id;
 
 <?php $this->beginBody() ?>
 
+
 <?= $this->render('navbar') ?>
 
 <main role="main" class="flex-shrink-0">

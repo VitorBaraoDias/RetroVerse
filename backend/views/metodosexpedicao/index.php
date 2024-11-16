@@ -1,24 +1,24 @@
 <?php
 
-use common\models\Categoriaartigo;
+use common\models\Metodosexpedicao;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\ActionColumn;
 use yii\grid\GridView;
 
 /** @var yii\web\View $this */
-/** @var common\models\SearchCategoriaartigo $searchModel */
+/** @var backend\models\SearchMetodosexpedicao $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = 'Categoriaartigos';
+$this->title = 'Metodosexpedicaos';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="categoriaartigo-index">
+<div class="metodosexpedicao-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Create Categoriaartigo', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Create Metodosexpedicao', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
@@ -31,7 +31,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'nome',
             [
                 'class' => ActionColumn::className(),
-                'urlCreator' => function ($action, Categoriaartigo $model, $key, $index, $column) {
+                'urlCreator' => function ($action, Metodosexpedicao $model, $key, $index, $column) {
                     return Url::toRoute([$action, 'id' => $model->id]);
                  }
             ],
