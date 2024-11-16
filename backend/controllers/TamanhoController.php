@@ -2,20 +2,17 @@
 
 namespace backend\controllers;
 
-use backend\models\UserForm;
-use common\models\User;
-use common\models\UserSearch;
-use Yii;
-use yii\data\ActiveDataProvider;
+use common\models\Tamanho;
+use common\models\SearchTamanho;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * UserController implements the CRUD actions for User model.
+ * TamanhoController implements the CRUD actions for Tamanho model.
  */
-class UserController extends Controller
+class TamanhoController extends Controller
 {
     /**
      * @inheritDoc
@@ -29,7 +26,7 @@ class UserController extends Controller
                     'class' => AccessControl::class,
                     'rules' => [
                         [
-                            'actions' => ['index','view','delete', 'demote','promote'],
+                            'actions' => ['index','view','delete', 'update','create'],
                             'allow' => true,
                             'roles' => ['admin'],
                         ],
@@ -50,28 +47,24 @@ class UserController extends Controller
     }
 
     /**
-     * Lists all User models.
+     * Lists all Tamanho models.
      *
      * @return string
      */
     public function actionIndex()
     {
-        // Criando o DataProvider com paginação
-        $dataProvider = new ActiveDataProvider([
-            'query' => User::find(),  // Query para buscar todos os usuários
-            'pagination' => [
-                'pageSize' => 3,  // Número de itens por página
-            ],
-        ]);
+        $searchModel = new SearchTamanho();
+        $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->render('index', [
+            'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
     }
 
     /**
-     * Displays a single User model.
-     * @param int $id
+     * Displays a single Tamanho model.
+     * @param int $id ID
      * @return string
      * @throws NotFoundHttpException if the model cannot be found
      */
@@ -83,28 +76,31 @@ class UserController extends Controller
     }
 
     /**
-     * Creates a new User model.
+     * Creates a new Tamanho model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return string|\yii\web\Response
      */
     public function actionCreate()
     {
-        $model = new UserForm();
+        $model = new Tamanho();
 
         if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->createUser()) {
-                return $this->redirect('index');
+            if ($model->load($this->request->post()) && $model->save()) {
+                return $this->redirect(['view', 'id' => $model->id]);
             }
+        } else {
+            $model->loadDefaultValues();
         }
+
         return $this->render('create', [
             'model' => $model,
         ]);
     }
 
     /**
-     * Updates an existing User model.
+     * Updates an existing Tamanho model.
      * If update is successful, the browser will be redirected to the 'view' page.
-     * @param int $id
+     * @param int $id ID
      * @return string|\yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
@@ -120,10 +116,11 @@ class UserController extends Controller
             'model' => $model,
         ]);
     }
+
     /**
-     * Deletes an existing User model.
+     * Deletes an existing Tamanho model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param int $id
+     * @param int $id ID
      * @return \yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
@@ -134,40 +131,16 @@ class UserController extends Controller
         return $this->redirect(['index']);
     }
 
-    public function actionDemote($id){
-        $model = $this->findModel($id);
-        $auth = Yii::$app->authManager;
-
-        $auth->revokeAll($model->id);
-        $moderator = $auth->getRole('membro');
-
-        // Atribui o papel 'moderador' ao usuário
-        $auth->assign($moderator, $model->id);
-
-        return $this->redirect('index');
-    }
-    public function actionPromote($id){
-        $model = $this->findModel($id);
-        $auth = Yii::$app->authManager;
-
-        $auth->revokeAll($model->id);
-        $moderator = $auth->getRole('moderador');
-
-        // Atribui o papel 'moderador' ao usuário
-        $auth->assign($moderator, $model->id);
-
-        return $this->redirect('index');
-    }
     /**
-     * Finds the User model based on its primary key value.
+     * Finds the Tamanho model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param int $id
-     * @return User the loaded model
+     * @param int $id ID
+     * @return Tamanho the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = User::findOne(['id' => $id])) !== null) {
+        if (($model = Tamanho::findOne(['id' => $id])) !== null) {
             return $model;
         }
 

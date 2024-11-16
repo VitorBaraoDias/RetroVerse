@@ -44,10 +44,10 @@
                             ['label' => 'Orders', 'url' => ['orders/index'], 'iconStyle' => 'far'],
                             ['label' => 'Items', 'url' => ['items/index'], 'iconStyle' => 'far'],
                             ['label' => 'Plans', 'url' => ['plans/index'], 'iconStyle' => 'far'],
-                            ['label' => 'Categories', 'url' => ['categories/index'], 'iconStyle' => 'far'],
-                            ['label' => 'Brands', 'url' => ['brands/index'], 'iconStyle' => 'far'],
-                            ['label' => 'Sizes', 'url' => ['brands/index'], 'iconStyle' => 'far'],
-                            ['label' => 'Conditions', 'url' => ['brands/index'], 'iconStyle' => 'far'],
+                            ['label' => 'Brands', 'url' => ['marca/index'], 'iconStyle' => 'far'],
+                            ['label' => 'Conditions', 'url' => ['estado/index'], 'iconStyle' => 'far'],
+                            ['label' => 'Categories', 'url' => ['categoriaartigo/index'], 'iconStyle' => 'far'],
+                            ['label' => 'Sizes', 'url' => ['tamanho/index'], 'iconStyle' => 'far'],
                         ]
                     ],
                     [
@@ -65,7 +65,7 @@
                         'items' => [
                             ['label' => 'Store Banner', 'url' => ['orders/index'], 'iconStyle' => 'far'],
                             ['label' => 'Shipping methods', 'url' => ['items/index'], 'iconStyle' => 'far'],
-                            ['label' => 'FAQS', 'url' => ['plans/index'], 'iconStyle' => 'far'],
+                            ['label' => 'FAQS', 'url' => ['faqs/index'], 'iconStyle' => 'far'],
                             ['label' => 'Users', 'url' => ['user/index'], 'iconStyle' => 'far'],
 
                         ]

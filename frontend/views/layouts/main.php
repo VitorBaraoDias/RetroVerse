@@ -44,9 +44,11 @@ $action = Yii::$app->controller->id;
 <body class="d-flex flex-column h-100">
 
 <?php $this->beginBody() ?>
+
 <?= $this->render('navbar') ?>
 
 <main role="main" class="flex-shrink-0">
+
     <div class="container">
         <?= Breadcrumbs::widget([
             'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
