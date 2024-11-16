@@ -30,6 +30,81 @@
 /* Template default CSS
 /*----------------------------------------*/
 
+/*retroverse vintage buttons*/
+.outline-retroverse-btn {
+	background: transparent;  /* Fundo transparente */
+	color: #0000FF;  /* Cor do texto em azul */
+	border: 2px solid #0000FF;  /* Borda azul */
+	padding: 10px 8px;  /* Espaçamento interno */
+	text-align: center;  /* Alinhar o texto no centro */
+	font-size: 16px;  /* Tamanho da fonte */
+	cursor: pointer;  /* Cursor de ponteiro ao passar sobre o botão */
+	transition: all 0.3s ease;  /* Transição suave para hover */
+}
+
+.card-product{
+	transition: all 0.3s ease;
+}
+.card-product:hover{
+	transform: scale(1.05); /* Aumenta o tamanho do card em 1.2 vezes */
+
+}
+.card-product:hover .retroverse-btn {
+	opacity: 1;
+	transform: translateY(0); /* Move o botão para sua posição original */
+}
+.retroverse-btn {
+	background: #0000FF;  /* Fundo transparente */
+	color: white;  /* Cor do texto em azul */
+	padding: 10px 25px;  /* Espaçamento interno */
+	text-align: center;  /* Alinhar o texto no centro */
+	font-size: 16px;  /* Tamanho da fonte */
+	cursor: pointer;  /* Cursor de ponteiro ao passar sobre o botão */
+	opacity: 0;
+	transform: translateY(20px); /* Move o botão 20px para baixo */
+	transition: opacity 0.4s ease, transform 0.4s ease;
+}
+.retroverse-btn:hover {
+	background: transparent;  /* Fundo transparente */
+	color: #0000FF;  /* Cor do texto em azul */
+	border: 2px solid #0000FF;  /* Borda azul */
+	padding: 10px 28px;  /* Espaçamento interno */
+	text-align: center;  /* Alinhar o texto no centro */
+	font-size: 16px;  /* Tamanho da fonte */
+	cursor: pointer;  /* Cursor de ponteiro ao passar sobre o botão */
+	transition: all 0.3s ease;
+}
+.outline-retroverse-btn:hover {
+	background-color: #0000FF;  /* Fundo azul ao passar o mouse */
+	color: white;  /* Cor do texto branca */
+	border-color: #0000FF;  /* Borda azul ao passar o mouse */
+}
+.container-like{
+	position: absolute;
+	height: 30px;
+	width: 30px;
+	bottom: 15px;
+	right: 15px;
+	background: #F2F4F8;
+	padding: 5px;
+}
+.icon-like{
+	height: 15px !important;
+	width: 15px !important;
+}
+
+
+
+.image-container {
+	width: 100%;
+	height: 260px; /* Tamanho fixo para todas as imagens */
+	overflow: hidden; /* Garante que a imagem que ultrapassar a altura seja cortada */
+}
+.image-container img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover; /* Faz a imagem preencher o contêiner sem distorcer e mantendo o corte */
+}
 html,
 body {
 	height: 100%;
@@ -521,8 +596,9 @@ ol {
 	z-index: 50;
 	right: 0;
 	width: 0px;
-	background: #000000;
+	background: white;
 	transition: 0.3s;
+	font-size: 16px;
 }
 
 .sidebar.active {
@@ -559,9 +635,9 @@ ol {
 	text-decoration: none;
 }
 
-.sidebar nav .active {
-	background-color: #f6f2f2;
-	color: rgb(23, 23, 23) !important;
+.sidebar nav .active,  .sidebar nav .active a{
+	background-color: #0000FF;
+	color: rgb(255, 255, 255) !important;
 }
 
 @media only screen and (max-width: 1350px) {
@@ -661,7 +737,6 @@ ol {
 	background-color: #0000FF;
 	box-shadow: #0000FF 2px;
 }
-
 #mane:checked ~ .texts {
 	border: 2px solid red;
 }
@@ -685,10 +760,10 @@ ol {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	height: 40px;
+	height: 100%;
 	padding: 0 10px;
 	color: #ffffff;
-	font-family: 'Roboto', sans-serif; /* Aplica a fonte Roboto */
+	font-family: 'Roboto', sans-serif;
 	font-weight: 700;
 }
 
@@ -702,7 +777,7 @@ ol {
 	border-radius: 36px;
 	height: 45px;
 	width: 280px;
-	border: 3px solid #ffffff;
+	border: 3px solid #0000FF;
 	position: relative;
 
 }
@@ -713,18 +788,17 @@ ol {
 	border-radius:36px;
 	height: 40px;
 	width: 140px;
-	background-color: #ffffff;
+	background-color: #0000FF;
 	transition: 0.4s;
 	justify-content: center;
 	align-items: center;
-	color: #000000;
+	color: white;
 	font-family: "Roboto", sans-serif;
 	top: 0;
 }
 #mane_hamburguer:checked +.container_active_hamburguer{
 	transform-style: flat;
 	transform: translateX(135px);
-	background-color: #FFFFFF;
 	box-shadow: #0000FF 2px;
 }
 
