@@ -2,11 +2,11 @@
 
 namespace backend\controllers;
 
-use backend\models\Estado;
+use common\models\Estado;
 use yii\data\ActiveDataProvider;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 
 /**
  * EstadoController implements the CRUD actions for Estado model.

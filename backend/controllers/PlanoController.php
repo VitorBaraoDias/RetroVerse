@@ -1,17 +1,19 @@
 <?php
 
 namespace backend\controllers;
-
-use backend\models\FaqsSearch;
-use common\models\Faqs;
+use Yii;
+use app\models\SearchPlano;
+use common\models\Plano;
+use common\models\Iva;
+use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 
 /**
- * FaqsController implements the CRUD actions for Faqs model.
+ * PlanoController implements the CRUD actions for Plano model.
  */
-class FaqsController extends Controller
+class PlanoController extends Controller
 {
     /**
      * @inheritDoc
@@ -21,10 +23,24 @@ class FaqsController extends Controller
         return array_merge(
             parent::behaviors(),
             [
+                'access' => [
+                    'class' => AccessControl::class,
+                    'rules' => [
+                        [
+                            'actions' => ['index','view','delete', 'update','create'],
+                            'allow' => true,
+                            'roles' => ['admin'],
+                        ],
+                    ],
+                    'denyCallback' => function ($rule, $action) {
+                        throw new \Exception('Você não está autorizado a acessar esta página');
+                    }
+
+                ],
                 'verbs' => [
-                    'class' => VerbFilter::className(),
+                    'class' => VerbFilter::class,
                     'actions' => [
-                        'delete' => ['POST'],
+                        'logout' => ['post'],
                     ],
                 ],
             ]
@@ -32,13 +48,13 @@ class FaqsController extends Controller
     }
 
     /**
-     * Lists all Faqs models.
+     * Lists all Plano models.
      *
      * @return string
      */
     public function actionIndex()
     {
-        $searchModel = new FaqsSearch();
+        $searchModel = new SearchPlano();
         $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->render('index', [
@@ -48,7 +64,7 @@ class FaqsController extends Controller
     }
 
     /**
-     * Displays a single Faqs model.
+     * Displays a single Plano model.
      * @param int $id ID
      * @return string
      * @throws NotFoundHttpException if the model cannot be found
@@ -61,13 +77,14 @@ class FaqsController extends Controller
     }
 
     /**
-     * Creates a new Faqs model.
+     * Creates a new Plano model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return string|\yii\web\Response
      */
     public function actionCreate()
     {
-        $model = new Faqs();
+        $model = new Plano();
+
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
@@ -83,7 +100,7 @@ class FaqsController extends Controller
     }
 
     /**
-     * Updates an existing Faqs model.
+     * Updates an existing Plano model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param int $id ID
      * @return string|\yii\web\Response
@@ -103,7 +120,7 @@ class FaqsController extends Controller
     }
 
     /**
-     * Deletes an existing Faqs model.
+     * Deletes an existing Plano model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param int $id ID
      * @return \yii\web\Response
@@ -117,15 +134,15 @@ class FaqsController extends Controller
     }
 
     /**
-     * Finds the Faqs model based on its primary key value.
+     * Finds the Plano model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param int $id ID
-     * @return Faqs the loaded model
+     * @return Plano the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Faqs::findOne(['id' => $id])) !== null) {
+        if (($model = Plano::findOne(['id' => $id])) !== null) {
             return $model;
         }
 

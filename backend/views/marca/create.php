@@ -3,7 +3,7 @@
 use yii\helpers\Html;
 
 /** @var yii\web\View $this */
-/** @var backend\models\Marca $model */
+/** @var \common\models\Marca $model */
 
 $this->title = 'Create Marca';
 $this->params['breadcrumbs'][] = ['label' => 'Marcas', 'url' => ['index']];

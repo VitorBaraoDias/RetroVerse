@@ -1,10 +1,9 @@
 <?php
 
-namespace backend\models;
+namespace common\models;
 
-use Yii;
-use yii\base\Model;
-use common\models\User;
+use backend\models\Artigos;
+
 /**
  * This is the model class for table "marcas".
  *

@@ -1,15 +1,15 @@
 <?php
 
-namespace backend\models;
+namespace app\models;
 
-use common\models\Faqs;
+use common\models\Plano;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 
 /**
- * FaqsSearch represents the model behind the search form of `backend\models\Faqs`.
+ * SearchPlano represents the model behind the search form of `app\models\Plano`.
  */
-class FaqsSearch extends Faqs
+class SearchPlano extends Plano
 {
     /**
      * {@inheritdoc}
@@ -17,8 +17,9 @@ class FaqsSearch extends Faqs
     public function rules()
     {
         return [
-            [['id'], 'integer'],
-            [['questao', 'resposta', 'categoria'], 'safe'],
+            [['id', 'idiva'], 'integer'],
+            [['precomensal'], 'number'],
+            [['descricao'], 'safe'],
         ];
     }
 
@@ -40,7 +41,7 @@ class FaqsSearch extends Faqs
      */
     public function search($params)
     {
-        $query = Faqs::find();
+        $query = Plano::find();
 
         // add conditions that should always apply here
 
@@ -59,11 +60,11 @@ class FaqsSearch extends Faqs
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
+            'precomensal' => $this->precomensal,
+            'idiva' => $this->idiva,
         ]);
 
-        $query->andFilterWhere(['like', 'questao', $this->questao])
-            ->andFilterWhere(['like', 'resposta', $this->resposta])
-            ->andFilterWhere(['like', 'categoria', $this->categoria]);
+        $query->andFilterWhere(['like', 'descricao', $this->descricao]);
 
         return $dataProvider;
     }

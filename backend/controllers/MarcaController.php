@@ -2,11 +2,11 @@
 
 namespace backend\controllers;
 
-use backend\models\Marca;
 use backend\models\MarcaSearch;
+use common\models\Marca;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 
 /**
  * MarcaController implements the CRUD actions for Marca model.

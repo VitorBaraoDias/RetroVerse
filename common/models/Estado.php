@@ -1,8 +1,8 @@
 <?php
 
-namespace backend\models;
+namespace common\models;
 
-use Yii;
+use backend\models\Artigos;
 
 /**
  * This is the model class for table "estados".

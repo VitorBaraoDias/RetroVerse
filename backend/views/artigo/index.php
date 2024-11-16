@@ -1,24 +1,24 @@
 <?php
 
-use common\models\Faqs;
-use yii\grid\ActionColumn;
-use yii\grid\GridView;
+use common\models\Artigo;
 use yii\helpers\Html;
 use yii\helpers\Url;
+use yii\grid\ActionColumn;
+use yii\grid\GridView;
 
 /** @var yii\web\View $this */
-/** @var backend\models\FaqsSearch $searchModel */
+/** @var app\models\SearchArtigo $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = 'Faqs';
+$this->title = 'Artigos';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="faqs-index">
+<div class="artigo-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Create Faqs', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Create Artigo', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
@@ -30,12 +30,20 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
 
             'id',
-            'questao',
-            'resposta',
-            'categoria',
+            'nome',
+            'descricao',
+            'precoanuncio',
+            'idcomissao',
+            //'idestado',
+            //'idmarca',
+            //'idcategoria',
+            //'idtamanho',
+            //'idperfil',
+            //'tipoartigo',
+            //'ativo',
             [
                 'class' => ActionColumn::className(),
-                'urlCreator' => function ($action, Faqs $model, $key, $index, $column) {
+                'urlCreator' => function ($action, Artigo $model, $key, $index, $column) {
                     return Url::toRoute([$action, 'id' => $model->id]);
                  }
             ],

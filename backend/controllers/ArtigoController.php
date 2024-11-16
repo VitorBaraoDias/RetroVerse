@@ -2,16 +2,16 @@
 
 namespace backend\controllers;
 
-use backend\models\FaqsSearch;
-use common\models\Faqs;
-use yii\filters\VerbFilter;
+use common\models\Artigo;
+use app\models\SearchArtigo;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
+use yii\filters\VerbFilter;
 
 /**
- * FaqsController implements the CRUD actions for Faqs model.
+ * ArtigoController implements the CRUD actions for Artigo model.
  */
-class FaqsController extends Controller
+class ArtigoController extends Controller
 {
     /**
      * @inheritDoc
@@ -32,13 +32,13 @@ class FaqsController extends Controller
     }
 
     /**
-     * Lists all Faqs models.
+     * Lists all Artigo models.
      *
      * @return string
      */
     public function actionIndex()
     {
-        $searchModel = new FaqsSearch();
+        $searchModel = new SearchArtigo();
         $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->render('index', [
@@ -48,7 +48,7 @@ class FaqsController extends Controller
     }
 
     /**
-     * Displays a single Faqs model.
+     * Displays a single Artigo model.
      * @param int $id ID
      * @return string
      * @throws NotFoundHttpException if the model cannot be found
@@ -61,13 +61,13 @@ class FaqsController extends Controller
     }
 
     /**
-     * Creates a new Faqs model.
+     * Creates a new Artigo model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return string|\yii\web\Response
      */
     public function actionCreate()
     {
-        $model = new Faqs();
+        $model = new Artigo();
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
@@ -83,7 +83,7 @@ class FaqsController extends Controller
     }
 
     /**
-     * Updates an existing Faqs model.
+     * Updates an existing Artigo model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param int $id ID
      * @return string|\yii\web\Response
@@ -103,7 +103,7 @@ class FaqsController extends Controller
     }
 
     /**
-     * Deletes an existing Faqs model.
+     * Deletes an existing Artigo model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param int $id ID
      * @return \yii\web\Response
@@ -117,15 +117,15 @@ class FaqsController extends Controller
     }
 
     /**
-     * Finds the Faqs model based on its primary key value.
+     * Finds the Artigo model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param int $id ID
-     * @return Faqs the loaded model
+     * @return Artigo the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Faqs::findOne(['id' => $id])) !== null) {
+        if (($model = Artigo::findOne(['id' => $id])) !== null) {
             return $model;
         }
 

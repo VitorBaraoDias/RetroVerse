@@ -1,10 +1,10 @@
 <?php
 
-use backend\models\Estado;
-use yii\helpers\Html;
-use yii\helpers\Url;
+use common\models\Estado;
 use yii\grid\ActionColumn;
 use yii\grid\GridView;
+use yii\helpers\Html;
+use yii\helpers\Url;
 
 /** @var yii\web\View $this */
 /** @var yii\data\ActiveDataProvider $dataProvider */

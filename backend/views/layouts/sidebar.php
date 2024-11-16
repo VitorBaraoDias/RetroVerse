@@ -42,12 +42,12 @@
                         'icon' => 'fa-solid fa-store',
                         'items' => [
                             ['label' => 'Orders', 'url' => ['orders/index'], 'iconStyle' => 'far'],
-                            ['label' => 'Items', 'url' => ['items/index'], 'iconStyle' => 'far'],
-                            ['label' => 'Plans', 'url' => ['plans/index'], 'iconStyle' => 'far'],
+                            ['label' => 'Items', 'url' => ['artigo/index'], 'iconStyle' => 'far'],
+                            ['label' => 'Plans', 'url' => ['plano/index'], 'iconStyle' => 'far'],
                             ['label' => 'Categories', 'url' => ['categoriaartigo/index'], 'iconStyle' => 'far'],
-                            ['label' => 'Brands', 'url' => ['brands/index'], 'iconStyle' => 'far'],
+                            ['label' => 'Brands', 'url' => ['marca/index'], 'iconStyle' => 'far'],
                             ['label' => 'Sizes', 'url' => ['tamanho/index'], 'iconStyle' => 'far'],
-                            ['label' => 'Conditions', 'url' => ['condicao/index'], 'iconStyle' => 'far'],
+                            ['label' => 'Conditions', 'url' => ['estado/index'], 'iconStyle' => 'far'],
                         ]
                     ],
                     [

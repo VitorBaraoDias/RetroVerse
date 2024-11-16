@@ -1,15 +1,15 @@
 <?php
 
-namespace backend\models;
+namespace app\models;
 
-use common\models\Faqs;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
+use common\models\Artigo;
 
 /**
- * FaqsSearch represents the model behind the search form of `backend\models\Faqs`.
+ * SearchArtigo represents the model behind the search form of `common\models\Artigo`.
  */
-class FaqsSearch extends Faqs
+class SearchArtigo extends Artigo
 {
     /**
      * {@inheritdoc}
@@ -17,8 +17,9 @@ class FaqsSearch extends Faqs
     public function rules()
     {
         return [
-            [['id'], 'integer'],
-            [['questao', 'resposta', 'categoria'], 'safe'],
+            [['id', 'nome', 'descricao', 'idcomissao', 'idestado', 'idmarca', 'idcategoria', 'idtamanho', 'idperfil', 'ativo'], 'integer'],
+            [['precoanuncio'], 'number'],
+            [['tipoartigo'], 'safe'],
         ];
     }
 
@@ -40,7 +41,7 @@ class FaqsSearch extends Faqs
      */
     public function search($params)
     {
-        $query = Faqs::find();
+        $query = Artigo::find();
 
         // add conditions that should always apply here
 
@@ -59,11 +60,19 @@ class FaqsSearch extends Faqs
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
+            'nome' => $this->nome,
+            'descricao' => $this->descricao,
+            'precoanuncio' => $this->precoanuncio,
+            'idcomissao' => $this->idcomissao,
+            'idestado' => $this->idestado,
+            'idmarca' => $this->idmarca,
+            'idcategoria' => $this->idcategoria,
+            'idtamanho' => $this->idtamanho,
+            'idperfil' => $this->idperfil,
+            'ativo' => $this->ativo,
         ]);
 
-        $query->andFilterWhere(['like', 'questao', $this->questao])
-            ->andFilterWhere(['like', 'resposta', $this->resposta])
-            ->andFilterWhere(['like', 'categoria', $this->categoria]);
+        $query->andFilterWhere(['like', 'tipoartigo', $this->tipoartigo]);
 
         return $dataProvider;
     }

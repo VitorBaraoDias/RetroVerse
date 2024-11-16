@@ -1,8 +1,6 @@
 <?php
 
-namespace backend\models;
-
-use Yii;
+namespace common\models;
 
 /**
  * This is the model class for table "faqs".

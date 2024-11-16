@@ -4,14 +4,14 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 
 /** @var yii\web\View $this */
-/** @var \common\models\Marca $model */
+/** @var \common\models\Plano $model */
 
-$this->title = $model->nome;
-$this->params['breadcrumbs'][] = ['label' => 'Brands', 'url' => ['index']];
+$this->title = $model->id;
+$this->params['breadcrumbs'][] = ['label' => 'Planos', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
-<div class="marca-view">
+<div class="plano-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
@@ -29,7 +29,16 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'nome',
+            'id',
+            'precomensal',
+            [
+                'attribute' => 'idiva',
+                'value' => function ($model) {
+                    return $model->iva ? $model->iva->percentagem . '%' : null;
+                },
+                'label' => 'IVA (%)', // Rótulo personalizado para a coluna
+            ],
+            'descricao',
         ],
     ]) ?>
 

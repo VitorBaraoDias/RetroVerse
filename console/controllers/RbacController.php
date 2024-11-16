@@ -285,7 +285,7 @@ class RbacController extends Controller
 
         //member permission
         $verPlanosPremium = $auth->createPermission('verPlanosPremium');
-        $verPlanosPremium->description = 'Ver Planos Premium';
+        $verPlanosPremium->description = 'Ver Plano Premium';
         $auth->add($verPlanosPremium);
 
         //member permission

@@ -3,7 +3,7 @@
 use yii\helpers\Html;
 
 /** @var yii\web\View $this */
-/** @var backend\models\Estado $model */
+/** @var \common\models\Estado $model */
 
 $this->title = 'Create Condition';
 $this->params['breadcrumbs'][] = ['label' => 'Conditions', 'url' => ['index']];

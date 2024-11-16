@@ -4,14 +4,14 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 
 /** @var yii\web\View $this */
-/** @var \common\models\Marca $model */
+/** @var common\models\Artigo $model */
 
-$this->title = $model->nome;
-$this->params['breadcrumbs'][] = ['label' => 'Brands', 'url' => ['index']];
+$this->title = $model->id;
+$this->params['breadcrumbs'][] = ['label' => 'Artigos', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
-<div class="marca-view">
+<div class="artigo-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
@@ -29,7 +29,18 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
+            'id',
             'nome',
+            'descricao',
+            'precoanuncio',
+            'idcomissao',
+            'idestado',
+            'idmarca',
+            'idcategoria',
+            'idtamanho',
+            'idperfil',
+            'tipoartigo',
+            'ativo',
         ],
     ]) ?>
 

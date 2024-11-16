@@ -50,7 +50,7 @@ class Iva extends \yii\db\ActiveRecord
     }
 
     /**
-     * Gets query for [[Planos]].
+     * Gets query for [[Plano]].
      *
      * @return \yii\db\ActiveQuery
      */
