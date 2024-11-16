@@ -248,11 +248,11 @@ document.addEventListener("DOMContentLoaded", function () {
     // Função que atualiza as cores dependendo do estado do checkbox
     function updateTextColor() {
         if (checkbox.checked) {
-            leftText.style.color = "#FFFFFF";
-            rightText.style.color = "#000000";
-        } else {
             leftText.style.color = "#000000";
             rightText.style.color = "#FFFFFF";
+        } else {
+            leftText.style.color = "#FFFFFF";
+            rightText.style.color = "#000000";
         }
     }
 
