@@ -774,15 +774,6 @@ ol {
 	opacity: 1;
 }
 
-.hero__slider.owl-carousel .owl-nav button {
-	font-size: 36px;
-	color: #333333;
-	position: absolute;
-	left: 75px;
-	top: 50%;
-	margin-top: -18px;
-	line-height: 29px;
-}
 
 .hero__slider.owl-carousel .owl-nav button.owl-next {
 	left: auto;
@@ -2147,8 +2138,9 @@ ol {
 -----------------------*/
 
 .footer {
-	background: #111111;
-	padding-top: 70px;
+	background: #ffffff;
+	padding: 70px;
+
 }
 
 .footer__about {
@@ -2170,10 +2162,11 @@ ol {
 
 .footer__widget {
 	margin-bottom: 30px;
+	gap: 60px;
 }
 
 .footer__widget h6 {
-	color: #ffffff;
+	color: #000000;
 	font-size: 15px;
 	font-weight: 700;
 	text-transform: uppercase;
