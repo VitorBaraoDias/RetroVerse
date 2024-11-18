@@ -41,7 +41,7 @@
                         <div class="navbar__icons">
                             <a href="#"><img src="<?= Yii::getAlias('@web') ?>/img/favourites.svg" alt=""></a>
                             <a href="#"><img src="<?= Yii::getAlias('@web') ?>/img/cart.svg" alt=""></a>
-                            <a href="#"><img src="<?= Yii::getAlias('@web') ?>/img/myaccount.svg" alt=""></a>
+                            <a href="<?= Yii::$app->urlManager->createUrl(['site/login']) ?>"><img src="<?= Yii::getAlias('@web') ?>/img/myaccount.svg" alt=""></a>
                             <a class="switch-button" href="#">
                                 <label for="mane" class="button-float">
                                     <div class="texts">
