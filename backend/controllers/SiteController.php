@@ -36,7 +36,7 @@ class SiteController extends Controller
                     ],
                 ],
                 'denyCallback' => function ($rule, $action) {
-                    throw new \Exception('Você não está autorizado a acessar esta página');
+                    return Yii::$app->response->redirect(['site/login']);
                 }
 
             ],
@@ -93,7 +93,6 @@ class SiteController extends Controller
             return $this->goHome();
 
         }
-
         $this->layout = 'blank';
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
@@ -104,7 +103,6 @@ class SiteController extends Controller
             'model' => $model,
         ]);
     }
-
     /**
      * Logout action.
      *

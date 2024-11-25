@@ -13,7 +13,7 @@ use yii\widgets\ListView;
 /** @var common\models\UserSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = 'Users';
+    $this->title = 'Users';
 $this->params['breadcrumbs'][] = $this->title;
 
 
