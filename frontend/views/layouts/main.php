@@ -116,6 +116,7 @@ $action = Yii::$app->controller->id;
 <!-- Js Plugins -->
 <script src="<?= Yii::getAlias('@web') ?>/js/jquery-3.3.1.min.js"></script>
 <script src="<?= Yii::getAlias('@web') ?>/js/bootstrap.min.js"></script>
+<script src="<?= Yii::getAlias('@web') ?>/js/bootstrap.bundle.min.js"></script>
 <script src="<?= Yii::getAlias('@web') ?>/js/jquery.nice-select.min.js"></script>
 <script src="<?= Yii::getAlias('@web') ?>/js/jquery.nicescroll.min.js"></script>
 <script src="<?= Yii::getAlias('@web') ?>/js/jquery.magnific-popup.min.js"></script>
@@ -124,5 +125,6 @@ $action = Yii::$app->controller->id;
 <script src="<?= Yii::getAlias('@web') ?>/js/mixitup.min.js"></script>
 <script src="<?= Yii::getAlias('@web') ?>/js/owl.carousel.min.js"></script>
 <script src="<?= Yii::getAlias('@web') ?>/js/main.js"></script>
+
 
 </html>

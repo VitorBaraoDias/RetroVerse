@@ -32,8 +32,8 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="<?= Yii::$app->urlManager->createUrl(['site/faq']) ?>"
-                                   class="<?= (Yii::$app->controller->id === 'faq' && Yii::$app->controller->action->id === 'contact') ? 'active' : '' ?>">
+                                <a href="<?= Yii::$app->urlManager->createUrl(['faqs/index']) ?>"
+                                   class="<?= (Yii::$app->controller->id === 'faqs' && Yii::$app->controller->action->id === 'index') ? 'active' : '' ?>">
                                     FAQ
                                 </a>
                             </li>
