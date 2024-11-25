@@ -51,6 +51,6 @@ class Tamanho extends \yii\db\ActiveRecord
      */
     public function getArtigos()
     {
-        return $this->hasMany(Artigos::class, ['idtamanho' => 'id']);
+            return $this->hasMany(Artigo::class, ['idtamanho' => 'id']);
     }
 }

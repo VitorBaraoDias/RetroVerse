@@ -776,7 +776,6 @@ ol {
 	cursor: pointer;
 	border-radius: 36px;
 	height: 45px;
-	width: 280px;
 	border: 3px solid #0000FF;
 	position: relative;
 
@@ -787,7 +786,6 @@ ol {
 	display: flex;
 	border-radius:36px;
 	height: 40px;
-	width: 140px;
 	background-color: #0000FF;
 	transition: 0.4s;
 	justify-content: center;

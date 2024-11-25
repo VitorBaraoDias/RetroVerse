@@ -2,7 +2,7 @@
 
         <header class="container-fluid container-header">
                     <div class="header__logo">
-                        <a href="<?= Yii::getAlias('@web') ?>"><img src="<?= Yii::getAlias('@web') ?>/img/retroverse-logo.svg" alt=""></a>
+                        <a href="<?= Yii::getAlias('@web/site/signup') ?>"><img src="<?= Yii::getAlias('@web') ?>/img/retroverse-logo.svg" alt=""></a>
                     </div>
 
                     <nav class="header__menu ">
