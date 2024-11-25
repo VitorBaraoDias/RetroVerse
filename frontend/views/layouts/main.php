@@ -3,12 +3,15 @@
 /** @var \yii\web\View $this */
 /** @var string $content */
 
+use yii\helpers\Url;
 use common\widgets\Alert;
 use frontend\assets\AppAsset;
 use yii\bootstrap5\Breadcrumbs;
 use yii\bootstrap5\Html;
 use yii\bootstrap5\Nav;
 use yii\bootstrap5\NavBar;
+
+
 
 AppAsset::register($this);
 
@@ -21,6 +24,9 @@ $action = Yii::$app->controller->id;
 <html lang="<?= Yii::$app->language ?>" class="h-100">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate, max-age=0" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
     <meta name="description" content="Retroverse second hand clothes">
     <meta name="keywords" content="Vintage clothing, retro, y2k, Retroverse, retroverse clothing">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">

@@ -29,10 +29,10 @@ class SiteController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::class,
-                'only' => ['logout', 'signup'],
+                'only' => ['logout', 'signup', 'login'],
                 'rules' => [
                     [
-                        'actions' => ['signup'],
+                        'actions' => ['signup', 'login'],
                         'allow' => true,
                         'roles' => ['?'],
                     ],
@@ -42,12 +42,16 @@ class SiteController extends Controller
                         'roles' => ['@'],
                     ],
                 ],
+                'denyCallback' => function ($rule, $action) {
+                    if (!Yii::$app->user->isGuest) {
+                        return Yii::$app->response->redirect(['site/index']);
+                    }
+                    // Exibe mensagem de erro padrão
+                    throw new \yii\web\ForbiddenHttpException('Você não tem permissão para realizar esta ação.');
+                },
             ],
             'verbs' => [
                 'class' => VerbFilter::class,
-                'actions' => [
-                    'logout' => ['post'],
-                ],
             ],
         ];
     }
@@ -86,7 +90,7 @@ class SiteController extends Controller
     public function actionLogin()
     {
 
-        //$this->layout = 'blank';
+        $this->layout = 'blank';
 
         if (!Yii::$app->user->isGuest) {
             return $this->goHome();
@@ -111,7 +115,9 @@ class SiteController extends Controller
      */
     public function actionLogout()
     {
+
         Yii::$app->user->logout();
+        Yii::$app->session->destroy();
         return $this->goHome();
     }
     /**
@@ -153,12 +159,14 @@ class SiteController extends Controller
      */
     public function actionSignup()
     {
+        $this->layout = 'blank';
         $model = new SignupForm();
         if ($model->load(Yii::$app->request->post()) && $model->signup()) {
             Yii::$app->session->setFlash('success', 'Thank you for registration. Please check your inbox for verification email.');
             return $this->goHome();
         }
 
+        Yii::error('Erro no envio do formulário.', __METHOD__);
         return $this->render('signup', [
             'model' => $model,
         ]);

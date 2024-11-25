@@ -47,6 +47,7 @@ class SignupForm extends Model
     public function signup()
     {
         if (!$this->validate()) {
+            Yii::error('Validation failed: ' . json_encode($this->getErrors()), __METHOD__);
             return null;
         }
 
@@ -69,10 +70,14 @@ class SignupForm extends Model
                 $auth->assign($authorRole, $user->getId());
             }
 
-            $perfil = new Perfil();
-            $perfil->id = $user->getId();
+            //ATRIBUICAO DO PERFIL DA PROBLEMAS
 
-            if (!$perfil->save(false)) {
+           $perfil = new Perfil();
+            $perfil->id = $user->getId();
+            $perfil->username = $user->username;
+
+
+             if (!$perfil->save(false)) {
                 $transaction->rollBack();
                 return null;
             }

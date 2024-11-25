@@ -10,26 +10,57 @@ use yii\bootstrap5\ActiveForm;
 $this->title = 'Signup';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="site-signup">
-    <h1><?= Html::encode($this->title) ?></h1>
 
-    <p>Please fill out the following fields to signup:</p>
-
-    <div class="row">
-        <div class="col-lg-5">
-            <?php $form = ActiveForm::begin(['id' => 'form-signup']); ?>
-
-                <?= $form->field($model, 'username')->textInput(['autofocus' => true]) ?>
-
-                <?= $form->field($model, 'email') ?>
-
-                <?= $form->field($model, 'password')->passwordInput() ?>
-
-                <div class="form-group">
-                    <?= Html::submitButton('Signup', ['class' => 'btn btn-primary', 'name' => 'signup-button']) ?>
+<div class="site-login">
+    <div class="login-container">
+        <div class="login-banner">
+            <img src="<?= Yii::getAlias('@web') ?>/img/login/login-banner.jpeg">
+        </div>
+        <div class="login-content">
+            <div class="login-form">
+                <div class="login-header">
+                    <img src="<?= Yii::getAlias('@web') ?>/img/login/login-retroverse-logo.png">
+                    <h1><?= Html::encode($this->title) ?></h1>
                 </div>
 
-            <?php ActiveForm::end(); ?>
+                <?php $form = ActiveForm::begin(['id' => 'login-form']); ?>
+
+                <div class="input-details">
+                    <?= $form->field($model, 'email')->textInput([
+                            'autofocus' => true,
+                        'id' => 'login-email',
+                        'placeholder' => 'Enter your username'
+                    ])->label('Email'); ?>
+                </div>
+
+                <div class="input-details">
+                    <?= $form->field($model, 'username')->textInput([
+                        'id' => 'login-username',
+                        'placeholder' => 'Enter your username'
+                    ])->label('Username'); ?>
+                </div>
+
+                <div class="input-details">
+                    <?= $form->field($model, 'password')->passwordInput([
+                        'id' => 'login-password',
+                        'placeholder' => 'Enter your password'
+                    ])->label('Password'); ?>
+
+                    <img id="login-show-password" src="<?= Yii::getAlias('@web') ?>/img/login/login-show-password.png" alt="Show Password">
+                </div>
+
+                <div class="input-details">
+                    <?= Html::submitButton('Sign Up', ['class' => 'btn-login', 'type' => 'submit']) ?>
+                </div>
+
+                <div class="diviser"></div>
+
+                <div class="input-details">
+                    <p>Already have an account? <?= Html::a('Login', ['site/login'], ['class' => 'link-login']) ?></p>
+                </div>
+
+                <?php ActiveForm::end(); ?>
+            </div>
         </div>
     </div>
 </div>
