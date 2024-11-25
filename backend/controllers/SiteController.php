@@ -83,6 +83,16 @@ class SiteController extends Controller
      */
     public function actionLogin()
     {
+        if (!Yii::$app->user->isGuest) {
+            $user_roles = Yii::$app->authManager->getRolesByUser(Yii::$app->user->id);
+            if (!isset($user_roles['admin'])) {
+                Yii::$app->user->logout();
+
+                return $this->render('login');
+            }
+            return $this->goHome();
+
+        }
         $this->layout = 'blank';
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
@@ -93,7 +103,6 @@ class SiteController extends Controller
             'model' => $model,
         ]);
     }
-
     /**
      * Logout action.
      *

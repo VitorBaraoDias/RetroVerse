@@ -82,12 +82,9 @@ class SignupForm extends Model
                 return null;
             }
 
-            // Confirma a transação se tudo foi bem-sucedido
             $transaction->commit();
             return $user->save();
-
         } catch (\Exception $e) {
-            // Em caso de erro, faz o rollback da transação
             $transaction->rollBack();
             Yii::error($e->getMessage(), __METHOD__);
             return null;

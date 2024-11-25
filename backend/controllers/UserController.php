@@ -58,10 +58,9 @@ class UserController extends Controller
     {
         $searchQuery = Yii::$app->request->get('searchQuery', null);
 
-        // Query básica para buscar usuários
         $query = User::find();
 
-        // Se houver uma pesquisa, aplica o filtro por nome ou email
+        // Se tiver parametros na url, aplica o filtro por nome ou email
         if (!empty($searchQuery)) {
             $query->andFilterWhere(['or',
                 ['like', 'username', $searchQuery],
@@ -69,11 +68,10 @@ class UserController extends Controller
             ]);
         }
 
-        // Configurar o DataProvider com paginação
         $dataProvider = new \yii\data\ActiveDataProvider([
             'query' => $query,
             'pagination' => [
-                'pageSize' => 6,  // Número de itens por página
+                'pageSize' => 6,
             ],
         ]);
 

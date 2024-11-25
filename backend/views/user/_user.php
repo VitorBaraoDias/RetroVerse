@@ -84,7 +84,14 @@ use yii\helpers\Html;
                 ]) ?>
             <?php endif; ?>
             <?= Html::a('Details', ['user/view', 'id' => $model->id], ['class' => 'btn btn-dark btn-sm w-100 mt-2']) ?>
-            <?= Html::a('Delete member', ['user/delete', 'id' => $model->id], ['class' => 'btn btn-danger btn-sm w-100 mt-2']) ?>
-        </div>
+            <?= Html::a(
+                'Delete member',
+                ['user/delete', 'id' => $model->id],
+                [
+                    'class' => 'btn btn-danger btn-sm w-100 mt-2',
+                    'data-confirm' => 'Tem certeza que deseja excluir este membro?',
+                    'data-method' => 'post', // Para garantir que o método de exclusão seja seguro
+                ]
+            ) ?>        </div>
     </div>
 
