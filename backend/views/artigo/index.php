@@ -62,7 +62,6 @@ $this->params['breadcrumbs'][] = $this->title;
                 )->label('Status') ?>
             </div>
         </div>
-
         <!-- Botões na parte inferior -->
         <div class="row g-3">
             <div class="col-md-3">
@@ -84,6 +83,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
         <?php ActiveForm::end(); ?>
     </div>
+
 
     <?= ListView::widget([
         'dataProvider' => $dataProvider,

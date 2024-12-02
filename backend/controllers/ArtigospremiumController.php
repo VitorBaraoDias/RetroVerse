@@ -2,18 +2,18 @@
 
 namespace backend\controllers;
 
-use backend\models\UploadForm;
+use common\models\Artigospremium;
+use common\models\Plano;
 use common\models\Artigo;
-use app\models\SearchArtigo;
-use Yii;
+use app\models\SearchArtigopremium;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * ArtigoController implements the CRUD actions for Artigo model.
+ * ArtigospremiumController implements the CRUD actions for Artigospremium model.
  */
-class ArtigoController extends Controller
+class ArtigospremiumController extends Controller
 {
     /**
      * @inheritDoc
@@ -34,19 +34,15 @@ class ArtigoController extends Controller
     }
 
     /**
-     * Lists all Artigo models.
+     * Lists all Artigospremium models.
      *
      * @return string
      */
     public function actionIndex()
     {
-        $searchModel = new SearchArtigo(); // Cria uma nova instância do SearchModel
-
-        //  padrão 'ativo'
-        if (!isset($this->request->queryParams['SearchArtigo']['ativo'])) {
-            $searchModel->ativo = 1;
-        }
+        $searchModel = new SearchArtigopremium();
         $dataProvider = $searchModel->search($this->request->queryParams);
+
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
@@ -54,50 +50,54 @@ class ArtigoController extends Controller
     }
 
     /**
-     * Displays a single Artigo model.
+     * Displays a single Artigospremium model.
      * @param int $id ID
      * @return string
      * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionView($id)
-
     {
-        $uploadForm = new UploadForm();
-
         return $this->render('view', [
             'model' => $this->findModel($id),
-            'uploadForm' => $uploadForm,
         ]);
     }
 
     /**
-     * Creates a new Artigo model.
+     * Creates a new Artigospremium model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return string|\yii\web\Response
      */
-    public function actionCreate()
+    public function actionCreate($id)
     {
-        $model = new Artigo();
+        $model = new Artigospremium();
 
-        if ($this->request->isPost) {
-            $model->idperfil = Yii::$app->user->id;
-            $model->tipoartigo = 'LOJA';
+        $planos = Plano::find()->all();
 
-            if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['fotoartigo/create', 'id' => $model->id]);
-            }
+        // Verificar se o artigo com o ID existe
+        $artigo = Artigo::findOne($id);
+        if (!$artigo) {
+            // Se o artigo não existir, retornar erro ou redirecionar
+            Yii::$app->session->setFlash('error', 'Artigo não encontrado.');
+            return $this->redirect(['artigo/index']); // Ou qualquer outra ação
+        }
 
-        } else {
-            $model->loadDefaultValues();
+        // Preencher o ID do artigo no modelo de Artigospremium
+        $model->id = $id;
+
+        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
+            return $this->redirect(['artigo/index']);
         }
 
         return $this->render('create', [
             'model' => $model,
+            'idartigo' => $id,
+            'planos' => $planos
         ]);
     }
 
+
     /**
-     * Updates an existing Artigo model.
+     * Updates an existing Artigospremium model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param int $id ID
      * @return string|\yii\web\Response
@@ -116,21 +116,8 @@ class ArtigoController extends Controller
         ]);
     }
 
-    public function actionPromotepremium($id)
-    {
-        $model = $this->findModel($id);
-
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        }
-
-        return $this->render('promotepremium', [
-            'model' => $model,
-        ]);
-    }
-
     /**
-     * Deletes an existing Artigo model.
+     * Deletes an existing Artigospremium model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param int $id ID
      * @return \yii\web\Response
@@ -138,23 +125,21 @@ class ArtigoController extends Controller
      */
     public function actionDelete($id)
     {
-        $model = $this->findModel($id);
+        $this->findModel($id)->delete();
 
-        $model->ativo = 0;
-        $model->save();
-        return $this->redirect(['index']);
+        return $this->redirect(['artigo/index']);
     }
 
     /**
-     * Finds the Artigo model based on its primary key value.
+     * Finds the Artigospremium model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param int $id ID
-     * @return Artigo the loaded model
+     * @return Artigospremium the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Artigo::findOne(['id' => $id])) !== null) {
+        if (($model = Artigospremium::findOne(['id' => $id])) !== null) {
             return $model;
         }
 

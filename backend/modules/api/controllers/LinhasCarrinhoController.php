@@ -1,11 +1,29 @@
 <?php
-namespace backend\modules\api\controllers;
-use Yii;
-use yii\rest\ActiveController;
 
-class MarcaController extends ActiveController
+namespace backend\modules\api\controllers;
+
+use Yii;
+use yii\filters\auth\QueryParamAuth;
+use yii\rest\ActiveController;
+use common\models\Linhascarrinho;
+
+/**
+ * Default controller for the `api` module
+ */
+class LinhasCarrinhoController extends ActiveController
 {
-    public $modelClass = 'common\models\Marca';
+    public $modelClass = 'common\models\Linhascarrinho';
+
+
+    public function behaviors()
+    {
+        $behaviors = parent::behaviors();
+        $behaviors['authenticator'] = [
+            'class' => QueryParamAuth::className(),
+        ];
+        return $behaviors;
+    }
+
 
 
     public function beforeAction($action)

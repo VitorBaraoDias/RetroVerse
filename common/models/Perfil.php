@@ -62,6 +62,13 @@ class Perfil extends \yii\db\ActiveRecord
         ];
     }
 
+    public function hasActivePremiumPlano()
+    {
+        return $this->getClientesplanos()
+            ->where(['>', 'expira', date('Y-m-d H:i:s')]) // Plano ainda ativo
+            ->exists(); // Verifica se existe pelo menos um registro
+    }
+
     /**
      * Gets query for [[Artigos]].
      *
@@ -69,7 +76,7 @@ class Perfil extends \yii\db\ActiveRecord
      */
     public function getArtigos()
     {
-        return $this->hasMany(Artigos::class, ['idperfil' => 'id']);
+        return $this->hasMany(Artigo::class, ['idperfil' => 'id']);
     }
 
     /**
@@ -79,7 +86,7 @@ class Perfil extends \yii\db\ActiveRecord
      */
     public function getAvaliacoes()
     {
-        return $this->hasMany(Avaliacoes::class, ['iddestinatario' => 'id']);
+        return $this->hasMany(Avaliacao::class, ['iddestinatario' => 'id']);
     }
 
     /**
@@ -89,7 +96,7 @@ class Perfil extends \yii\db\ActiveRecord
      */
     public function getAvaliacoes0()
     {
-        return $this->hasMany(Avaliacoes::class, ['idremetente' => 'id']);
+        return $this->hasMany(Avaliacao::class, ['idremetente' => 'id']);
     }
 
     /**
@@ -99,7 +106,7 @@ class Perfil extends \yii\db\ActiveRecord
      */
     public function getChats()
     {
-        return $this->hasMany(Chats::class, ['iddestinatario' => 'id']);
+        return $this->hasMany(Chat::class, ['iddestinatario' => 'id']);
     }
 
     /**
@@ -119,7 +126,7 @@ class Perfil extends \yii\db\ActiveRecord
      */
     public function getClientesplanos()
     {
-        return $this->hasMany(Clientesplanos::class, ['idperfil' => 'id']);
+        return $this->hasMany(Clientesplano::class, ['idperfil' => 'id']);
     }
 
     /**
@@ -129,7 +136,7 @@ class Perfil extends \yii\db\ActiveRecord
      */
     public function getCupoesutilizados()
     {
-        return $this->hasMany(Cupoesutilizados::class, ['idperfil' => 'id']);
+        return $this->hasMany(Cupoesutilizado::class, ['idperfil' => 'id']);
     }
 
     /**
@@ -139,7 +146,7 @@ class Perfil extends \yii\db\ActiveRecord
      */
     public function getDenuncias()
     {
-        return $this->hasMany(Denuncias::class, ['iddenunciado' => 'id']);
+        return $this->hasMany(Denuncia::class, ['iddenunciado' => 'id']);
     }
 
     /**
@@ -149,7 +156,7 @@ class Perfil extends \yii\db\ActiveRecord
      */
     public function getDenuncias0()
     {
-        return $this->hasMany(Denuncias::class, ['iddenunciante' => 'id']);
+        return $this->hasMany(Denuncia::class, ['iddenunciante' => 'id']);
     }
 
     /**
@@ -159,7 +166,7 @@ class Perfil extends \yii\db\ActiveRecord
      */
     public function getFavoritos()
     {
-        return $this->hasMany(Favoritos::class, ['idperfil' => 'id']);
+        return $this->hasMany(Favorito::class, ['idperfil' => 'id']);
     }
 
     /**
@@ -167,7 +174,7 @@ class Perfil extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getId0()
+    public function getUser()
     {
         return $this->hasOne(User::class, ['id' => 'id']);
     }
@@ -179,7 +186,7 @@ class Perfil extends \yii\db\ActiveRecord
      */
     public function getLinhavendas()
     {
-        return $this->hasMany(Linhavendas::class, ['idvendedor' => 'id']);
+        return $this->hasMany(Linhavenda::class, ['idvendedor' => 'id']);
     }
 
     /**
@@ -189,7 +196,7 @@ class Perfil extends \yii\db\ActiveRecord
      */
     public function getSeguidores()
     {
-        return $this->hasMany(Seguidores::class, ['idperfil' => 'id']);
+        return $this->hasMany(Seguidore::class, ['idperfil' => 'id']);
     }
 
     /**
@@ -199,7 +206,7 @@ class Perfil extends \yii\db\ActiveRecord
      */
     public function getSeguidores0()
     {
-        return $this->hasMany(Seguidores::class, ['idseguidor' => 'id']);
+        return $this->hasMany(Seguidore::class, ['idseguidor' => 'id']);
     }
 
     /**
@@ -209,6 +216,6 @@ class Perfil extends \yii\db\ActiveRecord
      */
     public function getVendas()
     {
-        return $this->hasMany(Vendas::class, ['idcomprador' => 'id']);
+        return $this->hasMany(Venda::class, ['idcomprador' => 'id']);
     }
 }

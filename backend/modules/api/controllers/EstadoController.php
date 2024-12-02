@@ -1,12 +1,16 @@
 <?php
+
 namespace backend\modules\api\controllers;
+
 use Yii;
 use yii\rest\ActiveController;
 
-class MarcaController extends ActiveController
+/**
+ * Default controller for the `api` module
+ */
+class EstadoController extends ActiveController
 {
-    public $modelClass = 'common\models\Marca';
-
+    public $modelClass = 'common\models\Estado';
 
     public function beforeAction($action)
     {
@@ -19,7 +23,6 @@ class MarcaController extends ActiveController
 
             Yii::$app->response->statusCode = 405;
             Yii::$app->response->data = [
-                'success' => false,
                 'message' => 'Este método não é permitido.',
             ];
             return false;
