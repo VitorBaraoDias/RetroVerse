@@ -12,8 +12,8 @@ use yii\helpers\Html;
             if ($firstPhoto && file_exists('../../common/uploads/img-artigos/' . $firstPhoto->caminhofoto)) {
                 echo Html::img(('../../../common/uploads/img-artigos/'). $firstPhoto->caminhofoto, [
                     'alt' => 'Article Image',
-                    'class' => 'img-thumbnail',
-                    'style' => ' object-fit: cover;',
+                    'class' => 'w-100',
+                    'style' => 'width: 400px; height: 270px; object-fit: cover;',
                 ]);
             } else {
                 // Se não houver imagem, exibir uma div cinza

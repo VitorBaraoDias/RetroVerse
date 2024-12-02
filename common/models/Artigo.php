@@ -41,19 +41,14 @@ class Artigo extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            // Campos obrigatórios
             [['nome', 'descricao', 'precoanuncio', 'idcomissao', 'idestado', 'idmarca', 'idcategoria', 'idtamanho', 'idperfil', 'tipoartigo', 'ativo'], 'required'],
-
-            // Validação de tipo
-            [['nome', 'descricao'], 'string', 'max' => 255], // Limite de caracteres para campos VARCHAR
+            [['nome', 'descricao'], 'string', 'max' => 255],
             [['idcomissao', 'idestado', 'idmarca', 'idcategoria', 'idtamanho', 'idperfil'], 'integer'],
             [['precoanuncio'], 'number'],
             [['ativo'], 'boolean'],
 
-            // Validação para tipoartigo
-            [['tipoartigo'], 'in', 'range' => ['MARKETPLACE', 'Loja'], 'message' => 'O tipo de artigo deve ser "MARKETPLACE" ou "Loja".'],
+            [['tipoartigo'], 'in', 'range' => ['MARKETPLACE', 'LOJA'], 'message' => 'O tipo de artigo deve ser "MARKETPLACE" ou "Loja".'],
 
-            // Validação de existência nas tabelas relacionadas
             [['idcategoria'], 'exist', 'skipOnError' => true, 'targetClass' => Categoriaartigo::class, 'targetAttribute' => ['idcategoria' => 'id']],
             [['idestado'], 'exist', 'skipOnError' => true, 'targetClass' => Estado::class, 'targetAttribute' => ['idestado' => 'id']],
             [['idmarca'], 'exist', 'skipOnError' => true, 'targetClass' => Marca::class, 'targetAttribute' => ['idmarca' => 'id']],

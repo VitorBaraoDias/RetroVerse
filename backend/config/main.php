@@ -17,6 +17,13 @@ return [
         ]
     ],
     'components' => [
+        'assetManager' => [
+            'bundles' => [
+                'kartik\form\ActiveFormAsset' => [
+                    'bsDependencyEnabled' => false // do not load bootstrap assets for a specific asset bundle
+                ],
+            ],
+        ],
         'request' => [
             'csrfParam' => '_csrf-backend',
         ],
@@ -53,11 +60,24 @@ return [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
-                //mudar nome do controller
+                ['class' => 'yii\rest\UrlRule', 'controller' => 'api/marca'],
+                ['class' => 'yii\rest\UrlRule', 'controller' => 'api/artigo',
+                    'extraPatterns' => [
+                        'GET {tipo}/{tamanho}/{marca}/{estado}' => 'artigofiltro',
+                        // Adicionar uma regra para parâmetros opcionais
+                        'GET {tipo}/{tamanho}/{marca}' => 'artigofiltro',
+                        'GET {tipo}/{tamanho}' => 'artigofiltro',
+                        'GET {tipo}' => 'artigofiltro',
+                    ],
+                    'tokens' => [
+                        '{tipo}' => '<tipo:\\w+>',
+                        '{tamanho}' => '<tamanho:\\w+>',
+                        '{marca}' => '<marca:\\w+>',
+                        '{estado}' => '<estado:\\w+>',
 
-                ['class' => 'yii\rest\UrlRule','controller' => 'api/user'],
-
-            ],
+                    ],
+                ],
+            ]
         ],
 
     ],

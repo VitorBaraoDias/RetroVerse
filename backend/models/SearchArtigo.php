@@ -17,7 +17,8 @@ class SearchArtigo extends Artigo
     public function rules()
     {
         return [
-            [['id', 'nome', 'descricao', 'idcomissao', 'idestado', 'idmarca', 'idcategoria', 'idtamanho', 'idperfil', 'ativo'], 'integer'],
+            [['id', 'idcomissao', 'idestado', 'idmarca', 'idcategoria', 'idtamanho', 'idperfil', 'ativo'], 'integer'],
+            [['nome', 'descricao'], 'string', 'max' => 255],
             [['precoanuncio'], 'number'],
             [['tipoartigo'], 'safe'],
         ];
