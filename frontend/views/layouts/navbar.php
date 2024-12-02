@@ -34,8 +34,8 @@ $isPremiumActive = $perfil ? $perfil->hasActivePremiumPlano() : false;
                                 </a>
                             </li>
                             <li>
-                                <a href="<?= Yii::$app->urlManager->createUrl(['site/aboutus']) ?>"
-                                   class="<?= (Yii::$app->controller->id === 'aboutus' && Yii::$app->controller->action->id === 'contact') ? 'active' : '' ?>">
+                                <a href="<?= Yii::$app->urlManager->createUrl(['site/about']) ?>"
+                                   class="<?= (Yii::$app->controller->id === 'site' && Yii::$app->controller->action->id === 'about') ? 'active' : '' ?>">
                                     ABOUT US
                                 </a>
                             </li>
