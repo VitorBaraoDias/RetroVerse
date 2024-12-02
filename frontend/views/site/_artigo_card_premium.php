@@ -12,7 +12,7 @@ use yii\widgets\ListView;
             $artigo = $model->artigo; // Acessa o artigo relacionado
             $firstPhoto = $artigo->fotosartigos[0];
             if ($firstPhoto && file_exists('../../common/uploads/img-artigos/' . $firstPhoto->caminhofoto)) {
-                echo Html::img(('../../../common/uploads/img-artigos/'). $firstPhoto->caminhofoto, [
+                echo Html::img(('../../common/uploads/img-artigos/'). $firstPhoto->caminhofoto, [
                     'alt' => 'Article Image',
                     'class' => 'w-100',
                     'style' => 'width: 370px; height: 270px; object-fit: cover;',
