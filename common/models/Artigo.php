@@ -2,19 +2,15 @@
 
 namespace common\models;
 
-use common\models\Categoriaartigo;
-use common\models\Comissao;
-use common\models\Estado;
-use common\models\Marca;
-use common\models\Perfil;
-use common\models\Tamanho;
+use Yii;
 
 /**
- * This is the model class for table "Artigos".
+ * This is the model class for table "artigos".
  *
  * @property int $id
- * @property int $nome
- * @property int $descricao
+ * @property string $datacriacao
+ * @property string $nome
+ * @property string $descricao
  * @property float $precoanuncio
  * @property int $idcomissao
  * @property int $idestado
@@ -24,6 +20,20 @@ use common\models\Tamanho;
  * @property int $idperfil
  * @property string $tipoartigo
  * @property int $ativo
+ *
+ * @property Artigospremium $artigospremium
+ * @property Chats[] $chats
+ * @property Denuncias[] $denuncias
+ * @property Favoritos[] $favoritos
+ * @property Fotosartigos[] $fotosartigos
+ * @property Categoriaartigos $idcategoria0
+ * @property Comissoes $idcomissao0
+ * @property Estados $idestado0
+ * @property Marcas $idmarca0
+ * @property Perfils $idperfil0
+ * @property Tamanhos $idtamanho0
+ * @property Linhascarrinhos[] $linhascarrinhos
+ * @property Linhavendas[] $linhavendas
  */
 class Artigo extends \yii\db\ActiveRecord
 {
@@ -32,7 +42,7 @@ class Artigo extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'Artigos';
+        return 'artigos';
     }
 
     /**
@@ -41,28 +51,20 @@ class Artigo extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            // Campos obrigatórios
+            [['datacriacao'], 'safe'],
             [['nome', 'descricao', 'precoanuncio', 'idcomissao', 'idestado', 'idmarca', 'idcategoria', 'idtamanho', 'idperfil', 'tipoartigo', 'ativo'], 'required'],
-
-            // Validação de tipo
-            [['nome', 'descricao'], 'string', 'max' => 255], // Limite de caracteres para campos VARCHAR
-            [['idcomissao', 'idestado', 'idmarca', 'idcategoria', 'idtamanho', 'idperfil'], 'integer'],
             [['precoanuncio'], 'number'],
-            [['ativo'], 'boolean'],
-
-            // Validação para tipoartigo
-            [['tipoartigo'], 'in', 'range' => ['MARKETPLACE', 'Loja'], 'message' => 'O tipo de artigo deve ser "MARKETPLACE" ou "Loja".'],
-
-            // Validação de existência nas tabelas relacionadas
-            [['idcategoria'], 'exist', 'skipOnError' => true, 'targetClass' => Categoriaartigo::class, 'targetAttribute' => ['idcategoria' => 'id']],
-            [['idestado'], 'exist', 'skipOnError' => true, 'targetClass' => Estado::class, 'targetAttribute' => ['idestado' => 'id']],
-            [['idmarca'], 'exist', 'skipOnError' => true, 'targetClass' => Marca::class, 'targetAttribute' => ['idmarca' => 'id']],
-            [['idperfil'], 'exist', 'skipOnError' => true, 'targetClass' => Perfil::class, 'targetAttribute' => ['idperfil' => 'id']],
-            [['idtamanho'], 'exist', 'skipOnError' => true, 'targetClass' => Tamanho::class, 'targetAttribute' => ['idtamanho' => 'id']],
-            [['idcomissao'], 'exist', 'skipOnError' => true, 'targetClass' => Comissao::class, 'targetAttribute' => ['idcomissao' => 'id']],
+            [['idcomissao', 'idestado', 'idmarca', 'idcategoria', 'idtamanho', 'idperfil', 'ativo'], 'integer'],
+            [['nome', 'descricao'], 'string', 'max' => 150],
+            [['tipoartigo'], 'string', 'max' => 30],
+            [['idcategoria'], 'exist', 'skipOnError' => true, 'targetClass' => Categoriaartigos::class, 'targetAttribute' => ['idcategoria' => 'id']],
+            [['idestado'], 'exist', 'skipOnError' => true, 'targetClass' => Estados::class, 'targetAttribute' => ['idestado' => 'id']],
+            [['idmarca'], 'exist', 'skipOnError' => true, 'targetClass' => Marcas::class, 'targetAttribute' => ['idmarca' => 'id']],
+            [['idperfil'], 'exist', 'skipOnError' => true, 'targetClass' => Perfils::class, 'targetAttribute' => ['idperfil' => 'id']],
+            [['idtamanho'], 'exist', 'skipOnError' => true, 'targetClass' => Tamanhos::class, 'targetAttribute' => ['idtamanho' => 'id']],
+            [['idcomissao'], 'exist', 'skipOnError' => true, 'targetClass' => Comissoes::class, 'targetAttribute' => ['idcomissao' => 'id']],
         ];
     }
-
 
     /**
      * {@inheritdoc}
@@ -71,6 +73,7 @@ class Artigo extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
+            'datacriacao' => 'Datacriacao',
             'nome' => 'Nome',
             'descricao' => 'Descricao',
             'precoanuncio' => 'Precoanuncio',
@@ -83,6 +86,16 @@ class Artigo extends \yii\db\ActiveRecord
             'tipoartigo' => 'Tipoartigo',
             'ativo' => 'Ativo',
         ];
+    }
+
+    /**
+     * Gets query for [[Artigospremium]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getArtigospremium()
+    {
+        return $this->hasOne(Artigospremium::class, ['id' => 'id']);
     }
 
     /**
@@ -102,7 +115,7 @@ class Artigo extends \yii\db\ActiveRecord
      */
     public function getDenuncias()
     {
-        return $this->hasMany(Denuncias::class, ['idartigo' => 'id']);
+        return $this->hasMany(Denuncia::class, ['idartigo' => 'id']);
     }
 
     /**
@@ -112,7 +125,7 @@ class Artigo extends \yii\db\ActiveRecord
      */
     public function getFavoritos()
     {
-        return $this->hasMany(Fotosartigo::class, ['idartigo' => 'id']);
+        return $this->hasMany(Favorito::class, ['idartigo' => 'id']);
     }
 
     /**
@@ -192,7 +205,7 @@ class Artigo extends \yii\db\ActiveRecord
      */
     public function getLinhascarrinhos()
     {
-        return $this->hasMany(Linhascarrinhos::class, ['idartigo' => 'id']);
+        return $this->hasMany(Linhascarrinho::class, ['idartigo' => 'id']);
     }
 
     /**
@@ -202,6 +215,6 @@ class Artigo extends \yii\db\ActiveRecord
      */
     public function getLinhavendas()
     {
-        return $this->hasMany(Linhavendas::class, ['idartigo' => 'id']);
+        return $this->hasMany(Linhavenda::class, ['idartigo' => 'id']);
     }
 }

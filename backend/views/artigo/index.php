@@ -25,19 +25,7 @@ $this->params['breadcrumbs'][] = $this->title;
         </p>
     </div>
 
-    <?php $form = ActiveForm::begin([
-        'method' => 'get',
-        'action' => ['index'],
-        'options' => ['class' => 'mb-4'],
-    ]); ?>
-    <div class="input-group" style="gap:30px;">
-        <?= Html::textInput('nome', $searchQuery, [
-            'class' => 'form-control',
-            'placeholder' => 'Search by name...',
-        ]) ?>
-        <button class="btn btn-primary" type="submit">Search</button>
-    </div>
-    <?php ActiveForm::end(); ?>
+
     <?= ListView::widget([
         'dataProvider' => $dataProvider,
         'itemView' => '_artigo',
