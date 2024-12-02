@@ -5,12 +5,16 @@ namespace frontend\controllers;
 use frontend\models\ResendVerificationEmailForm;
 use frontend\models\VerifyEmailForm;
 use Yii;
+use yii\data\ActiveDataProvider;
 use yii\base\InvalidArgumentException;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use common\models\LoginForm;
+use common\models\Artigo;
+use common\models\Artigospremium;
+use common\models\Perfil;
 use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
@@ -80,7 +84,38 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        //utilizador a navegar no index
+        $userId = Yii::$app->user->id;
+        $perfil = Perfil::findOne(['id' => $userId]);
+
+        //verificar se ele tem premium
+        $isPremiumActive = $perfil ? $perfil->hasActivePremiumPlano() : false;
+
+
+        $dataProvider1 = new ActiveDataProvider([
+            'query' => Artigo::find()
+                ->with('fotosartigos')
+                ->orderBy(['datacriacao' => SORT_DESC])
+                ->limit(4),
+            'pagination' => false,
+        ]);
+
+        $dataProvider2 = new ActiveDataProvider([
+            'query' => Artigospremium::find()
+                ->joinWith('plano') // Juntar com a tabela de planos para obter informações sobre o plano
+                ->orderBy(['id' => SORT_DESC]) // Ordenar por ID decrescente, ou pela data de criação, se for o caso
+                ->limit(4), // Pega apenas os últimos 4 artigos premium
+            'pagination' => [
+                'pageSize' => 4, // Tamanho da página (caso haja mais de 4 artigos, divide em páginas)
+            ],
+        ]);
+
+
+        return $this->render('index', [
+            'dataProvider1' => $dataProvider1,
+            'dataProvider2' => $dataProvider2,
+            'isPremiumActive' => $isPremiumActive
+        ]);
     }
 
     /**

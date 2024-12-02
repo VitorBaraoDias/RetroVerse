@@ -1,4 +1,9 @@
 
+<?php
+use yii\helpers\Html;
+use yii\widgets\ListView;
+use yii\data\ActiveDataProvider;
+?>
 
 <!-- Hero Section Begin -->
 <section class="hero">
@@ -35,120 +40,19 @@
 
     <!-- Banner Section Begin -->
 <article class="container" style="margin-top: 45px;">
-    <h2 class="text-center fw-bolder" style="font-weight: bold;">LATEST DROPS</h2>
-    <div class="row" style="margin-top: 35px;">
+    <h2 class="text-center fw-bolder mb-4 " style="font-weight: bold;">LATEST DROPS</h2>
         <!-- Card 1 -->
-        <div class="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 card-product">
-            <div class="card">
-                <div class="image-container bg-secondary position-relative" style="">
-                    <div class="rounded-circle container-like d-flex justify-content-center align-items-center">
-                        <img class="icon-like" src="<?=Yii::getAlias('@web/images/vector_like.svg') ?>">
-                    </div>
-                    <img src="/ipl-2semestre/app-retroverse/frontend/web/images/windbreaker.png" height="10">
-                </div>
-                <div class="card-body">
-                    <p class="card-title text-black" style="font-weight: bold; color: black">BRAND:<span class="text-secondary" style="font-weight: lighter">Adidas</span></p>
-                    <p class="card-title text-black" style="font-weight: bold; color: black">SIZE:<span class="text-secondary" style="font-weight: lighter">M</span></p>
-                    <div class="d-flex align-items-center justify-content-between">
-                        <div class="d-flex flex-column">
-                            <span style="font-weight: normal; font-size: small">25,99€</span>
-                            <span style="font-weight: bolder; font-size: small">26,99€
-                                <span style="font-weight: bold">(inc.)
-                                    <img src="<?=Yii::getAlias('@web/images/check_icon.svg"') ?> height="10">
-                                </span>
-                            </span>
-                        </div>
-                        <a href="#" class="retroverse-btn" style="font-size: x-small; gap: 10px">
-                            ADD TO CART</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 card-product">
-            <div class="card">
-                <div class="image-container bg-secondary position-relative" style="">
-                    <div class="rounded-circle container-like d-flex justify-content-center align-items-center">
-                        <img class="icon-like" src="<?=Yii::getAlias('@web/images/vector_like.svg') ?>">
-                    </div>
-                    <img src="/ipl-2semestre/app-retroverse/frontend/web/images/windbreaker.png" height="10">
-                </div>
-                <div class="card-body">
-                    <p class="card-title text-black" style="font-weight: bold; color: black">BRAND:<span class="text-secondary" style="font-weight: lighter">Adidas</span></p>
-                    <p class="card-title text-black" style="font-weight: bold; color: black">SIZE:<span class="text-secondary" style="font-weight: lighter">M</span></p>
-                    <div class="d-flex align-items-center justify-content-between">
-                        <div class="d-flex flex-column">
-                            <span style="font-weight: normal; font-size: small">25,99€</span>
-                            <span style="font-weight: bolder; font-size: small">26,99€
-                                <span style="font-weight: bold">(inc.)
-                                    <img src="<?=Yii::getAlias('@web/images/check_icon.svg"') ?> height="10">
-                                </span>
-                            </span>
-                        </div>
-                        <a href="#" class="retroverse-btn" style="font-size: x-small; gap: 10px">
-                            ADD TO CART</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Card 2 -->
-
-        <div class="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 card-product">
-            <div class="card">
-                <div class="image-container bg-secondary position-relative" style="">
-                    <div class="rounded-circle container-like d-flex justify-content-center align-items-center">
-                        <img class="icon-like" src="<?=Yii::getAlias('@web/images/vector_like.svg') ?>">
-                    </div>
-                    <img src="/ipl-2semestre/app-retroverse/frontend/web/images/windbreaker.png" height="10">
-                </div>
-                <div class="card-body">
-                    <p class="card-title text-black" style="font-weight: bold; color: black">BRAND:<span class="text-secondary" style="font-weight: lighter">Adidas</span></p>
-                    <p class="card-title text-black" style="font-weight: bold; color: black">SIZE:<span class="text-secondary" style="font-weight: lighter">M</span></p>
-                    <div class="d-flex align-items-center justify-content-between">
-                        <div class="d-flex flex-column">
-                            <span style="font-weight: normal; font-size: small">25,99€</span>
-                            <span style="font-weight: bolder; font-size: small">26,99€
-                                <span style="font-weight: bold">(inc.)
-                                    <img src="<?=Yii::getAlias('@web/images/check_icon.svg"') ?> height="10">
-                                </span>
-                            </span>
-                        </div>
-                        <a href="#" class="retroverse-btn" style="font-size: x-small; gap: 10px">
-                            ADD TO CART</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-
-        <div class="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 card-product">
-            <div class="card">
-                <div class="image-container bg-secondary position-relative" style="">
-                    <div class="rounded-circle container-like d-flex justify-content-center align-items-center">
-                        <img class="icon-like" src="<?=Yii::getAlias('@web/images/vector_like.svg') ?>">
-                    </div>
-                    <img src="/ipl-2semestre/app-retroverse/frontend/web/images/windbreaker.png" height="10">
-                </div>
-                <div class="card-body">
-                    <p class="card-title text-black" style="font-weight: bold; color: black">BRAND:<span class="text-secondary" style="font-weight: lighter">Adidas</span></p>
-                    <p class="card-title text-black" style="font-weight: bold; color: black">SIZE:<span class="text-secondary" style="font-weight: lighter">M</span></p>
-                    <div class="d-flex align-items-center justify-content-between">
-                        <div class="d-flex flex-column">
-                            <span style="font-weight: normal; font-size: small">25,99€</span>
-                            <span style="font-weight: bolder; font-size: small">26,99€
-                                <span style="font-weight: bold">(inc.)
-                                    <img src="<?=Yii::getAlias('@web/images/check_icon.svg"') ?> height="10">
-                                </span>
-                            </span>
-                        </div>
-                        <a href="#" class="retroverse-btn" style="font-size: x-small; gap: 10px">
-                            ADD TO CART</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-
+        <?= ListView::widget([
+            'dataProvider' => $dataProvider1,
+            'itemView' => '_artigo_card',  // Especifica o arquivo de item que criamos
+            'layout' => '<div class="row">{items}</div>{pager}',  // Layout com items e paginação
+            'options' => ['class' => 'list-view'],  // Classe opcional para estilização adicional
+            'itemOptions' => ['class' => 'col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 card-product'],  // Estilo para cada item
+            'pager' => [
+                'class' => \yii\bootstrap5\LinkPager::class,
+                'options' => ['class' => 'pagination justify-content-center'],
+            ],
+        ]) ?>
     </div>
 </article>
 
@@ -198,90 +102,24 @@
 </section S>
 
     <!-- Banner Section End -->
-<article class="container" style="margin-top: 45px;">
-    <h2 class="text-center fw-bolder" style="font-weight: bold;">LATEST PREMIUM DROPS</h2>
-    <div class="row" style="margin-top: 35px;">
-        <!-- Card 1 -->
-        <div class="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6">
-            <div class="card">
-                <div class="image-container">
-                    <img src="/ipl-2semestre/app-retroverse/frontend/web/images/windbreaker.png" class="card-img-top" alt="Card Image 1">
-                </div>
-                <div class="card-body">
-                    <p class="card-title text-black" style="font-weight: bold; color: black">BRAND:<span class="text-secondary" style="font-weight: lighter">Adidas</span></p>
-                    <p class="card-title text-black" style="font-weight: bold; color: black">SIZE:<span class="text-secondary" style="font-weight: lighter">M</span></p>
-                    <div class="d-flex align-items-center justify-content-between">
-                        <span style="font-weight: bolder">????</span>
+<article class="mb-4 container" style="margin-top: 45px;">
+    <h2 class="text-center fw-bolder mb-4 " style="font-weight: bold;" >LATEST PREMIUM DROPS</h2>
 
-                        <a href="#" class="outline-retroverse-btn d-flex justify-content-between align-items-center" style="font-size: x-small; gap: 10px">
-                            <img height="20px" src="/ipl-2semestre/app-retroverse/frontend/web/img/lock.svg" alt="Card Image 1">
-                            UNLOCK WITH PREMIUM</a>
-                    </div>
-                </div>
-            </div>
-        </div>
+    <?= ListView::widget([
+        'dataProvider' => $dataProvider2,
+        'itemView' => '_artigo_card_premium',  // Especifica o arquivo de item que criamos
+        'viewParams' => [
+            'isPremiumActive' => $isPremiumActive, // Passa a variável para o itemView
+        ],
+        'layout' => '<div class="row">{items}</div>{pager}',  // Layout com items e paginação
+        'options' => ['class' => 'list-view'],  // Classe opcional para estilização adicional
+        'itemOptions' => ['class' => 'col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 card-product'],  // Estilo para cada item
+        'pager' => [
+            'class' => \yii\bootstrap5\LinkPager::class,
+            'options' => ['class' => 'pagination justify-content-center'],
+        ],
+    ]) ?>
 
-        <div class="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6">
-            <div class="card">
-                <div class="image-container">
-                    <img src="/ipl-2semestre/app-retroverse/frontend/web/images/tshirt_corteiz.png" class="card-img-top" alt="Card Image 1">
-                </div>
-                <div class="card-body">
-                    <p class="card-title text-black" style="font-weight: bold; color: black">BRAND:<span class="text-secondary" style="font-weight: lighter">Adidas</span></p>
-                    <p class="card-title text-black" style="font-weight: bold; color: black">SIZE:<span class="text-secondary" style="font-weight: lighter">M</span></p>
-                    <div class="d-flex align-items-center justify-content-between">
-                        <span style="font-weight: bolder">????</span>
-
-                        <a href="#" class="outline-retroverse-btn d-flex justify-content-between align-items-center" style="font-size: x-small; gap: 10px">
-                            <img height="20px" src="/ipl-2semestre/app-retroverse/frontend/web/img/lock.svg" alt="Card Image 1">
-                            UNLOCK WITH PREMIUM</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Card 2 -->
-
-        <div class="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6">
-            <div class="card">
-                <div class="image-container">
-                    <img src="/ipl-2semestre/app-retroverse/frontend/web/images/tshirt_corteiz.png" class="card-img-top" alt="Card Image 1">
-                </div>
-                <div class="card-body">
-                    <p class="card-title text-black" style="font-weight: bold; color: black">BRAND:<span class="text-secondary" style="font-weight: lighter">Adidas</span></p>
-                    <p class="card-title text-black" style="font-weight: bold; color: black">SIZE:<span class="text-secondary" style="font-weight: lighter">M</span></p>
-                    <div class="d-flex align-items-center justify-content-between">
-                        <span style="font-weight: bolder">????</span>
-
-                        <a href="#" class="outline-retroverse-btn d-flex justify-content-between align-items-center" style="font-size: x-small; gap: 10px">
-                            <img height="20px" src="/ipl-2semestre/app-retroverse/frontend/web/img/lock.svg" alt="Card Image 1">
-                            UNLOCK WITH PREMIUM</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-
-        <div class="col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6">
-            <div class="card">
-                <div class="image-container">
-                    <img src="/ipl-2semestre/app-retroverse/frontend/web/images/windbreaker.png" class="card-img-top" alt="Card Image 1">
-                </div>
-                <div class="card-body">
-                    <p class="card-title text-black" style="font-weight: bold; color: black">BRAND:<span class="text-secondary" style="font-weight: lighter">Adidas</span></p>
-                    <p class="card-title text-black" style="font-weight: bold; color: black">SIZE:<span class="text-secondary" style="font-weight: lighter">M</span></p>
-                    <div class="d-flex align-items-center justify-content-between">
-                        <span style="font-weight: bolder">????</span>
-
-                        <a href="#" class="outline-retroverse-btn d-flex justify-content-between align-items-center" style="font-size: x-small; gap: 10px">
-                            <img height="20px" src="/ipl-2semestre/app-retroverse/frontend/web/img/lock.svg" alt="Card Image 1">
-                            UNLOCK WITH PREMIUM</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-    </div>
 </article>
 
 

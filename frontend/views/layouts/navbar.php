@@ -1,4 +1,12 @@
+<?php
+use common\models\Perfil;
 
+$userId = Yii::$app->user->id;
+$perfil = Perfil::findOne(['id' => $userId]);
+
+//verificar se ele tem premium
+$isPremiumActive = $perfil ? $perfil->hasActivePremiumPlano() : false;
+?>
 
         <header class="container-fluid container-header">
                     <div class="header__logo">
@@ -42,7 +50,18 @@
 
                             <a href="#"><img src="<?= Yii::getAlias('@web') ?>/img/favourites.svg" alt=""></a>
                             <a href="#"><img src="<?= Yii::getAlias('@web') ?>/img/cart.svg" alt=""></a>
-                            <a href="<?= Yii::$app->urlManager->createUrl(['site/signup']) ?>"><img src="<?= Yii::getAlias('@web') ?>/img/myaccount.svg" alt=""></a>
+
+                            <?php if (!$isPremiumActive) { ?>
+                                <a href="<?= Yii::$app->urlManager->createUrl(['site/signup']) ?>"><img src="<?= Yii::getAlias('@web') ?>/img/myaccount.svg" alt=""></a>
+                            <?php } else { ?>
+                                <a href="<?= Yii::$app->urlManager->createUrl(['site/perfil']) ?>"><img src="<?= Yii::getAlias('@web') ?>/img/myaccount-premium.svg" alt=""></a>
+                            <?php } ?>
+
+
+
+
+
+
                             <?php if (!Yii::$app->user->isGuest) : ?>
                                 <a href="<?= Yii::$app->urlManager->createUrl(['site/logout']) ?>"><img src="<?= Yii::getAlias('@web') ?>/img/logout.svg" alt=""></a>
                             <?php endif; ?>

@@ -14,7 +14,7 @@ return [
     'modules' => [
         'api' => [
             'class' => 'backend\modules\api\ModuleAPI',
-        ]
+        ],
     ],
     'components' => [
         'request' => [
@@ -33,7 +33,6 @@ return [
             'identityCookie' => ['name' => '_identity-backend', 'httpOnly' => true],
         ],
         'session' => [
-            // this is the name of the session cookie used for login on the backend
             'name' => 'advanced-backend',
         ],
         'log' => [
@@ -48,13 +47,41 @@ return [
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
-
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
-                ['class' => 'yii\rest\UrlRule', 'controller' => 'api/tamanho'],
-                ['class' => 'yii\rest\UrlRule', 'controller' => 'api/categoriaartigo'],
+                [
+                    'class' => 'yii\rest\UrlRule',
+                    'controller' => 'api/marca',
+                ],
+                [
+                    'class' => 'yii\rest\UrlRule',
+                    'controller' => 'api/estado',
+                ],
+                [
+                    'class' => 'yii\rest\UrlRule',
+                    'controller' => 'api/user',
+                ],
+                [
+                    'class' => 'yii\rest\UrlRule',
+                    'controller' => 'api/carrinho',
+                    'extraPatterns' => [
+                        'GET user/{id}' => 'user', // GET /api/carrinhos/user/{id} -> actionUser($id)
+                    ],
+                ],
+                [
+                    'class' => 'yii\rest\UrlRule',
+                    'controller' => 'api/venda',
+                ],
+                [
+                    'class' => 'yii\rest\UrlRule',
+                    'controller' => 'api/tamanho',
+                ],
+                [
+                    'class' => 'yii\rest\UrlRule',
+                    'controller' => 'api/categoriaartigo',
+                ],
                 [
                     'class' => 'yii\rest\UrlRule',
                     'controller' => 'api/favorito',
@@ -65,7 +92,6 @@ return [
                 ],
             ],
         ],
-
     ],
     'params' => $params,
 ];
