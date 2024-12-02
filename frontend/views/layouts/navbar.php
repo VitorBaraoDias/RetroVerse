@@ -21,7 +21,7 @@
                             </li>
                             <li>
                                 <a href="<?= Yii::$app->urlManager->createUrl(['site/premium']) ?>"
-                                   class="<?= (Yii::$app->controller->id === 'premium' && Yii::$app->controller->action->id === 'about') ? 'active' : '' ?>">
+                                   class="<?= (Yii::$app->controller->id === 'site' && Yii::$app->controller->action->id === 'premium') ? 'active' : '' ?>">
                                     PREMIUM
                                 </a>
                             </li>

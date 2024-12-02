@@ -15,6 +15,7 @@ use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
 use frontend\models\ContactForm;
+use common\models\Plano;
 
 /**
  * Site controller
@@ -151,6 +152,17 @@ class SiteController extends Controller
     {
         return $this->render('about');
     }
+
+    public function actionTerms()
+    {
+        return $this->render('terms');
+    }
+
+    public function actionPremium()
+    {
+        $plano = Plano::findOne(['id' => 2]);
+        return $this->render('premium', ['plano' => $plano,
+        ]);    }
 
     /**
      * Signs user up.

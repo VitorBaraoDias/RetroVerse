@@ -53,10 +53,16 @@ return [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
-                //mudar nome do controller
-
-                ['class' => 'yii\rest\UrlRule','controller' => 'api/user'],
-
+                ['class' => 'yii\rest\UrlRule', 'controller' => 'api/tamanho'],
+                ['class' => 'yii\rest\UrlRule', 'controller' => 'api/categoriaartigo'],
+                [
+                    'class' => 'yii\rest\UrlRule',
+                    'controller' => 'api/favorito',
+                    'extraPatterns' => [
+                        'GET {id}/favorito' => 'favorito',
+                        'DELETE {id}/favorito' => 'favorito'
+                    ],
+                ],
             ],
         ],
 
