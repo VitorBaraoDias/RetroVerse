@@ -1,6 +1,8 @@
 <?php
 return [
     'adminEmail' => 'admin@example.com',
+    'bsVersion' => '5.x', // Define o Bootstrap 5 para todas as extensões
+
     'hail812/yii2-adminlte3' => [
         'pluginMap' => [
             'sweetalert2' => [

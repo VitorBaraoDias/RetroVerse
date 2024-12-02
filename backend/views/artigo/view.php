@@ -1,11 +1,10 @@
 <?php
 
-use yii\bootstrap5\Carousel;
-use yii\grid\GridView;
+use kartik\file\FileInput;
+use yii\bootstrap5\BootstrapAsset;
 use yii\helpers\Html;
+use yii\widgets\ActiveForm;
 use yii\widgets\DetailView;
-use yii\widgets\ListView;
-
 /** @var yii\web\View $this */
 /** @var common\models\Artigo $model */
 
@@ -16,30 +15,34 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="artigo-view">
 
-    <?php if ($model->fotosartigos): ?>
-        <div class="alert alert-success d-flex justify-content-between align-items-center">
-            This article has photos.
-            <?= Html::a('Add', ['fotoartigo/create', 'id' => $model->id], [
-                'class' => 'btn btn-primary float-right',
-                'data' => [
-                    'method' => 'post',
-                ],
-            ]) ?>
-        </div>
-    <?php else: ?>
-        <div class="alert alert-warning d-flex justify-content-between align-items-center">
-            <div>
-                <strong>Attention:</strong> This article has no photos!
-            </div>
-            <?= Html::a('Add', ['fotoartigo/create', 'id' => $model->id], [
-                'class' => 'btn btn-primary float-right',
-                'data' => [
-                    'confirm' => 'This article has no photos!',
-                    'method' => 'post',
-                ],
-            ]) ?>
-        </div>
-    <?php endif; ?>
+
+
+    <?php $form = ActiveForm::begin([
+        'action' => ['fotoartigo/create', 'id' => $model->id],
+        'options' => ['enctype' => 'multipart/form-data'], // para permitir upload de arquivos
+    ]); ?>
+    <!-- Campo de upload usando FileInput -->
+    <?= $form->field($uploadForm, 'imageFiles[]')->widget(FileInput::classname(), [
+        'options' => [
+            'multiple' => true, // Permitir múltiplos uploads
+            'accept' => 'image/*', // Restringir para arquivos de imagem
+        ],
+        'pluginOptions' => [
+            'showUpload' => false, //
+            'browseOnZoneClick' => true, // Permitir abrir o seletor clicando na área
+            'initialPreviewAsData' => true,
+            'maxFileSize' => 2000,
+            'previewFileType' => 'image',
+        ],
+    ]); ?>
+
+    <!-- Botão de envio -->
+    <div class="form-group">
+        <?= Html::submitButton('Upload Photos', ['class' => 'btn btn-success']) ?>
+    </div>
+
+    <?php ActiveForm::end(); ?>
+
 
     <?php if (!empty($model->fotosartigos)): ?>
         <div class="mt-4">

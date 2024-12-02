@@ -51,18 +51,20 @@ class Artigo extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['datacriacao'], 'safe'],
             [['nome', 'descricao', 'precoanuncio', 'idcomissao', 'idestado', 'idmarca', 'idcategoria', 'idtamanho', 'idperfil', 'tipoartigo', 'ativo'], 'required'],
+            [['nome', 'descricao'], 'string', 'max' => 255],
+            [['idcomissao', 'idestado', 'idmarca', 'idcategoria', 'idtamanho', 'idperfil'], 'integer'],
             [['precoanuncio'], 'number'],
-            [['idcomissao', 'idestado', 'idmarca', 'idcategoria', 'idtamanho', 'idperfil', 'ativo'], 'integer'],
-            [['nome', 'descricao'], 'string', 'max' => 150],
-            [['tipoartigo'], 'string', 'max' => 30],
-            [['idcategoria'], 'exist', 'skipOnError' => true, 'targetClass' => Categoriaartigos::class, 'targetAttribute' => ['idcategoria' => 'id']],
-            [['idestado'], 'exist', 'skipOnError' => true, 'targetClass' => Estados::class, 'targetAttribute' => ['idestado' => 'id']],
-            [['idmarca'], 'exist', 'skipOnError' => true, 'targetClass' => Marcas::class, 'targetAttribute' => ['idmarca' => 'id']],
-            [['idperfil'], 'exist', 'skipOnError' => true, 'targetClass' => Perfils::class, 'targetAttribute' => ['idperfil' => 'id']],
-            [['idtamanho'], 'exist', 'skipOnError' => true, 'targetClass' => Tamanhos::class, 'targetAttribute' => ['idtamanho' => 'id']],
-            [['idcomissao'], 'exist', 'skipOnError' => true, 'targetClass' => Comissoes::class, 'targetAttribute' => ['idcomissao' => 'id']],
+            [['ativo'], 'boolean'],
+
+            [['idcategoria'], 'exist', 'skipOnError' => true, 'targetClass' => Categoriaartigo::class, 'targetAttribute' => ['idcategoria' => 'id']],
+            [['idestado'], 'exist', 'skipOnError' => true, 'targetClass' => Estado::class, 'targetAttribute' => ['idestado' => 'id']],
+            [['idmarca'], 'exist', 'skipOnError' => true, 'targetClass' => Marca::class, 'targetAttribute' => ['idmarca' => 'id']],
+            [['idperfil'], 'exist', 'skipOnError' => true, 'targetClass' => Perfil::class, 'targetAttribute' => ['idperfil' => 'id']],
+            [['idtamanho'], 'exist', 'skipOnError' => true, 'targetClass' => Tamanho::class, 'targetAttribute' => ['idtamanho' => 'id']],
+            [['idcomissao'], 'exist', 'skipOnError' => true, 'targetClass' => Comissao::class, 'targetAttribute' => ['idcomissao' => 'id']],
+            [['datacriacao'], 'safe'],
+
         ];
     }
 

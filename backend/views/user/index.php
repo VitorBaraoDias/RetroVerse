@@ -35,11 +35,13 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="input-group" style="gap:30px;">
         <?= Html::textInput('searchQuery', $searchQuery, [
             'class' => 'form-control',
-            'placeholder' => 'Search by name or email...',
+            'placeholder' => 'Search by name...',
         ]) ?>
         <button class="btn btn-primary" type="submit">Search</button>
     </div>
     <?php ActiveForm::end(); ?>
+
+
     <?= ListView::widget([
         'dataProvider' => $dataProvider,
         'itemView' => '_user',

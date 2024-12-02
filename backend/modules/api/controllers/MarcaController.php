@@ -1,16 +1,12 @@
 <?php
-
 namespace backend\modules\api\controllers;
-
 use Yii;
 use yii\rest\ActiveController;
 
-/**
- * Default controller for the `api` module
- */
 class MarcaController extends ActiveController
 {
     public $modelClass = 'common\models\Marca';
+
 
     public function beforeAction($action)
     {

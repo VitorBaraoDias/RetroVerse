@@ -48,7 +48,6 @@ $defaultComissaoId = $defaultComissao ? $defaultComissao->id : null;
     <?= $form->field($model, 'ativo')->checkbox([
         'label' => 'Active',
         'uncheck' => 0,
-        'checked' => 1,
     ]) ?>
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>

@@ -62,8 +62,14 @@
 	font-size: 16px;  /* Tamanho da fonte */
 	cursor: pointer;  /* Cursor de ponteiro ao passar sobre o botão */
 	opacity: 0;
-	transform: translateY(20px); /* Move o botão 20px para baixo */
 	transition: opacity 0.4s ease, transform 0.4s ease;
+}
+#retroverse-btn-active{
+	opacity: 100% !important;
+	padding: 20px 15px;
+	font-size: 18px !important;
+	width: -webkit-fill-available;
+
 }
 .retroverse-btn:hover {
 	background: transparent;  /* Fundo transparente */

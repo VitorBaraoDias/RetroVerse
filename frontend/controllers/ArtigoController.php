@@ -1,11 +1,8 @@
 <?php
 
-namespace backend\controllers;
-
-use backend\models\UploadForm;
+namespace frontend\controllers;
 use common\models\Artigo;
-use app\models\SearchArtigo;
-use Yii;
+use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -40,15 +37,21 @@ class ArtigoController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new SearchArtigo(); // Cria uma nova instância do SearchModel
+        $dataProvider = new ActiveDataProvider([
+            'query' => Artigo::find(),
+            /*
+            'pagination' => [
+                'pageSize' => 50
+            ],
+            'sort' => [
+                'defaultOrder' => [
+                    'id' => SORT_DESC,
+                ]
+            ],
+            */
+        ]);
 
-        //  padrão 'ativo'
-        if (!isset($this->request->queryParams['SearchArtigo']['ativo'])) {
-            $searchModel->ativo = 1;
-        }
-        $dataProvider = $searchModel->search($this->request->queryParams);
         return $this->render('index', [
-            'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
     }
@@ -60,13 +63,9 @@ class ArtigoController extends Controller
      * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionView($id)
-
     {
-        $uploadForm = new UploadForm();
-
         return $this->render('view', [
             'model' => $this->findModel($id),
-            'uploadForm' => $uploadForm,
         ]);
     }
 
@@ -80,13 +79,9 @@ class ArtigoController extends Controller
         $model = new Artigo();
 
         if ($this->request->isPost) {
-            $model->idperfil = Yii::$app->user->id;
-            $model->tipoartigo = 'LOJA';
-
             if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['fotoartigo/create', 'id' => $model->id]);
+                return $this->redirect(['view', 'id' => $model->id]);
             }
-
         } else {
             $model->loadDefaultValues();
         }
@@ -116,19 +111,6 @@ class ArtigoController extends Controller
         ]);
     }
 
-    public function actionPromotepremium($id)
-    {
-        $model = $this->findModel($id);
-
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        }
-
-        return $this->render('promotepremium', [
-            'model' => $model,
-        ]);
-    }
-
     /**
      * Deletes an existing Artigo model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
@@ -138,10 +120,8 @@ class ArtigoController extends Controller
      */
     public function actionDelete($id)
     {
-        $model = $this->findModel($id);
+        $this->findModel($id)->delete();
 
-        $model->ativo = 0;
-        $model->save();
         return $this->redirect(['index']);
     }
 
