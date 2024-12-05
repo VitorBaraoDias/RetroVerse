@@ -97,6 +97,22 @@ return [
                     'class' => 'yii\rest\UrlRule',
                     'controller' => 'api/venda',
                 ],
+                [
+                    'class' => 'yii\rest\UrlRule',
+                    'controller' => 'api/tamanho',
+                ],
+                [
+                    'class' => 'yii\rest\UrlRule',
+                    'controller' => 'api/categoriaartigo',
+                ],
+                [
+                    'class' => 'yii\rest\UrlRule',
+                    'controller' => 'api/favorito',
+                    'extraPatterns' => [
+                        'GET {id}/favorito' => 'favorito',
+                        'DELETE {id}/favorito' => 'favorito'
+                    ],
+                ],
             ],
         ],
     ],

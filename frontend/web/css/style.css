@@ -973,6 +973,14 @@ ol {
 
 }
 
+.offcanvas-menu-wrapper {
+	display: none;
+}
+
+.canvas__open {
+	display: none;
+}
+
 /* Login end */
 
 /* ABOUT */
@@ -983,9 +991,15 @@ ol {
 .abouttext-container{
 	width:60%;
 	padding: 20px;
-	text-align: center; /* Centraliza o texto dentro do contêiner */
-	margin: 0 auto; /* Centraliza o contêiner horizontalmente */
+	text-align: center;
+	margin: 0 auto;
 
+}
+.about-banner {
+	width:100%;
+	display: flex; /* Ativa o Flexbox */
+	justify-content: center; /* Opcional: centraliza horizontalmente */
+	align-items: center; /* Centraliza verticalmente */
 }
 
 
@@ -1001,11 +1015,17 @@ ol {
 /* FAQS */
 .faqs-banner{
 	width:100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 .faqs-container{
 	padding:100px;
 	background-color: #e5e5e5;
 	width:100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 .faqs-container{
 	padding:50px;
@@ -1017,15 +1037,151 @@ ol {
 
 /* FAQS end */
 
-
-
-.offcanvas-menu-wrapper {
-	display: none;
+/* Terms and Conditions */
+.terms-container-text{
+	width:75%;
+	padding: 60px;
+	margin: 0 auto;
 }
 
-.canvas__open {
-	display: none;
+.terms-container h5{
+	color: #002aff;
 }
+
+.terms-container h2{
+	font-weight:bold;
+}
+/* Terms and Conditions end */
+
+/* Premium */
+.premium-banner{
+	width:100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height:300px;
+	background-color: #dcdcdc;
+	text-align:center;
+}
+
+.premium-banner-text p{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	font-weight:bold;
+	font-size: 45px;
+	color:black;
+}
+
+.premium-container {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	text-align: center;
+	padding: 20px;
+}
+
+.premium-container-titles{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	padding-bottom:60px;
+	padding-top:80px;
+
+}
+.premium-container-titles h5{
+	font-weight:bold;
+	color: #0000af;
+}
+.premium-container-titles h2{
+	font-weight:bold;
+}
+
+
+
+.premium-plan {
+	position: relative;
+	border: 1px solid #dcdcdc;
+	border-radius: 8px;
+	padding: 20px;
+	width: 60%;
+	height:500px;
+	margin: 20px auto;
+	background-color: #ffffff;
+	text-align: center;
+}
+
+.premium-label {
+	position: absolute;
+	top: -15px;
+	left: 50%;
+	transform: translateX(-50%);
+	background-color: #dcdcdc;
+	color: #000000;
+	padding: 2px 10px;
+	border-radius: 12px;
+	font-size: 12px;
+	box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.premium-plan h2{
+	font-weight:bold;
+	margin-top:30px;
+}
+.premium-price{
+	padding-top:40px;
+	padding-bottom:20px;
+	font-size: 50px;
+	font-weight: bold;
+	color:black;
+}
+.premium-btn{
+	color:white;  /* Cor do texto em azul */
+	padding: 14px 30px;  /* Espaçamento interno */
+	text-align: center;  /* Alinhar o texto no centro */
+	font-size: 16px;  /* Tamanho da fonte */
+	cursor: pointer;  /* Cursor de ponteiro ao passar sobre o botão */
+	transform: translateY(20px); /* Move o botão 20px para baixo */
+	transition: opacity 0.4s ease, transform 0.4s ease;
+	background-color:#0000FF;
+	text-decoration:none;
+	font-weight:bold;
+}
+.premium-features {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	justify-content: center;
+	padding: 30px;
+	max-width: 600px;
+	margin: 0 auto;
+	text-align: left;
+}
+.premium-features h3{
+	color:grey;
+	font-size:15px;
+}
+.premium-features p {
+	position: relative;
+	padding-left: 25px;
+	margin-bottom: 1px;
+	font-size:15px;
+}
+
+.premium-features p::before {
+	content: '✔';
+	position: absolute;
+	left: 0;
+	color: green;
+	font-size: 16px;
+	line-height: 1;
+}
+
+
+
+
+/* Premium end */
+
 
 /*---------------------
   Hero

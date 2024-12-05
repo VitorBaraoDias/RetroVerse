@@ -104,7 +104,8 @@ $action = Yii::$app->controller->id;
                     <h6>LEGAL</h6>
                     <ul>
                         <li><a href="#">Privacy Policy</a></li>
-                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="<?= Yii::$app->urlManager->createUrl(['site/terms'])?>"> Terms of Service
+                            </a></li>
 
                     </ul>
                 </div>
