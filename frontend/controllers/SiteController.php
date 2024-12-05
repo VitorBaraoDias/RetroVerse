@@ -2,6 +2,7 @@
 
 namespace frontend\controllers;
 
+use common\models\Carrinho;
 use frontend\models\ResendVerificationEmailForm;
 use frontend\models\VerifyEmailForm;
 use Yii;
@@ -23,7 +24,7 @@ use frontend\models\ContactForm;
 /**
  * Site controller
  */
-class SiteController extends Controller
+class SiteController extends GlobalController
 {
     /**
      * {@inheritdoc}
@@ -90,7 +91,6 @@ class SiteController extends Controller
         //verificar se ele tem premium
         $isPremiumActive = $perfil ? $perfil->hasActivePremiumPlano() : false;
 
-
         $dataProvider1 = new ActiveDataProvider([
             'query' => Artigo::find()
                 ->with('fotosartigos')
@@ -110,10 +110,11 @@ class SiteController extends Controller
         ]);
 
 
+
         return $this->render('index', [
             'dataProvider1' => $dataProvider1,
             'dataProvider2' => $dataProvider2,
-            'isPremiumActive' => $isPremiumActive
+            'isPremiumActive' => $isPremiumActive,
         ]);
     }
 

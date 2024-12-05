@@ -3,6 +3,7 @@
 namespace common\models;
 
 use Yii;
+use common\models\Artigo;
 
 /**
  * This is the model class for table "linhascarrinhos".
@@ -11,8 +12,8 @@ use Yii;
  * @property int $idcarrinho
  * @property int $idartigo
  *
- * @property Artigos $idartigo0
- * @property Carrinhos $idcarrinho0
+ * @property Artigo $idartigo0
+ * @property Carrinho $idcarrinho0
  */
 class Linhascarrinho extends \yii\db\ActiveRecord
 {
@@ -32,8 +33,8 @@ class Linhascarrinho extends \yii\db\ActiveRecord
         return [
             [['idcarrinho', 'idartigo'], 'required'],
             [['idcarrinho', 'idartigo'], 'integer'],
-            [['idartigo'], 'exist', 'skipOnError' => true, 'targetClass' => Artigos::class, 'targetAttribute' => ['idartigo' => 'id']],
-            [['idcarrinho'], 'exist', 'skipOnError' => true, 'targetClass' => Carrinhos::class, 'targetAttribute' => ['idcarrinho' => 'id']],
+            [['idartigo'], 'exist', 'skipOnError' => true, 'targetClass' => Artigo::class, 'targetAttribute' => ['idartigo' => 'id']],
+            [['idcarrinho'], 'exist', 'skipOnError' => true, 'targetClass' => Carrinho::class, 'targetAttribute' => ['idcarrinho' => 'id']],
         ];
     }
 

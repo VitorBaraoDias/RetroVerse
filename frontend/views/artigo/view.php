@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
+use yii\widgets\ListView;
 
 /** @var yii\web\View $this */
 /** @var common\models\Artigo $model */
@@ -54,7 +55,7 @@ $this->title = $model->id;
             <h2><?= $model->precoanuncio ?>€</h2>
             <div class="d-flex">
                 <h2 style="font-size: 20px; font-weight: bolder">Brand:</h2>
-                <p style="font-size: 20px;"><?= $model->descricao ?></p>
+                <p style="font-size: 20px;"><?= $model->idmarca0->nome ?></p>
             </div>
 
             <div class="d-flex">
@@ -63,7 +64,7 @@ $this->title = $model->id;
             </div>
 
             <div class="d-flex">
-                <h2 style="font-size: 20px; font-weight: bolder">Condtion:</h2>
+                <h2 style="font-size: 20px; font-weight: bolder">Condition:</h2>
                 <p style="font-size: 20px;"><?= $model->idestado0->descricao ?></p>
             </div>
             <span style="font-weight: bold">
@@ -72,9 +73,11 @@ $this->title = $model->id;
 (All items have been checked before selling)
             </span>
             <div class="d-flex align-items-center justify-content-between mt-5 gap-5">
-                <a href="#" class="retroverse-btn active" id="retroverse-btn-active" style="font-size: x-small; gap: 10px">
-                    ADD TO CART
-                </a>
+                <?= Html::a('ADD TO CART', ['carrinho/create', 'id' => $model->id], [
+                    'class' => 'retroverse-btn active',
+                    'id' => 'retroverse-btn-active',
+                    'style' => 'font-size: x-small; gap: 10px',
+                ]) ?>
                 <img src="/ipl-2semestre/app-retroverse/frontend/web/images/icon_heart.svg" height="30">
             </div>
             <hr>
@@ -91,6 +94,18 @@ $this->title = $model->id;
     </div>
     <hr>
     <div>
-        <h2><strong>RELATED ITEMS</strong></h2>
+        <h2 class="mb-4"><strong>RELATED ITEMS</strong></h2>
+
+        <?= ListView::widget([
+            'dataProvider' => $relatedArticles,
+            'itemView' => '_artigo_card',  // Especifica o arquivo de item que criamos
+            'layout' => '<div class="row">{items}</div>{pager}',  // Layout com items e paginação
+            'options' => ['class' => 'list-view'],  // Classe opcional para estilização adicional
+            'itemOptions' => ['class' => 'col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 card-product'],  // Estilo para cada item
+            'pager' => [
+                'class' => \yii\bootstrap5\LinkPager::class,
+                'options' => ['class' => 'pagination justify-content-center'],
+            ],
+        ]) ?>
     </div>
 </div>

@@ -71,6 +71,16 @@
 	width: -webkit-fill-available;
 
 }
+#info-cart{
+	position: absolute;
+	top: -6px;
+	right: 11px;
+	background: red;
+	width: 20px;
+	border-radius: 50%;
+	font-size: 12px;
+	color: white;
+}
 .retroverse-btn:hover {
 	background: transparent;  /* Fundo transparente */
 	color: #0000FF;  /* Cor do texto em azul */

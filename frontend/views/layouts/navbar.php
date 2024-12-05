@@ -1,4 +1,6 @@
 <?php
+
+use common\models\Carrinho;
 use common\models\Perfil;
 
 $userId = Yii::$app->user->id;
@@ -6,6 +8,8 @@ $perfil = Perfil::findOne(['id' => $userId]);
 
 //verificar se ele tem premium
 $isPremiumActive = $perfil ? $perfil->hasActivePremiumPlano() : false;
+$carrinho = \common\models\Carrinho::findOne(['iduser' => Yii::$app->user->id]);
+
 ?>
 
         <header class="container-fluid container-header">
@@ -48,9 +52,13 @@ $isPremiumActive = $perfil ? $perfil->hasActivePremiumPlano() : false;
                         </ul>
                         <div class="navbar__icons">
 
-                            <a href="#"><img src="<?= Yii::getAlias('@web') ?>/img/favourites.svg" alt=""></a>
-                            <a href="#"><img src="<?= Yii::getAlias('@web') ?>/img/cart.svg" alt=""></a>
-
+                            <a href=""><img src="<?= Yii::getAlias('@web') ?>/img/favourites.svg" alt=""></a>
+                            <a href="<?= Yii::$app->urlManager->createUrl(['carrinho/index', 'id' => Yii::$app->user->id]) ?>" style="position: relative">
+                                    <img src="<?= Yii::getAlias('@web') ?>/img/cart.svg" alt="">
+                                    <div id="info-cart">
+                                        <?= $carrinho ? $carrinho->getLinhascarrinhos()->count() : 0 ?>
+                                    </div>
+                                </a>
                             <?php if (!$isPremiumActive) { ?>
                                 <a href="<?= Yii::$app->urlManager->createUrl(['site/signup']) ?>"><img src="<?= Yii::getAlias('@web') ?>/img/myaccount.svg" alt=""></a>
                             <?php } else { ?>

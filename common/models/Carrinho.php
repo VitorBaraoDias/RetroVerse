@@ -10,7 +10,7 @@ use Yii;
  * @property int $id
  * @property int $iduser
  *
- * @property Linhascarrinhos[] $linhascarrinhos
+ * @property Linhascarrinho[] $linhascarrinhos
  */
 class Carrinho extends \yii\db\ActiveRecord
 {

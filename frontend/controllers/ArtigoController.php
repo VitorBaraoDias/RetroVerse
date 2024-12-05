@@ -64,8 +64,27 @@ class ArtigoController extends Controller
      */
     public function actionView($id)
     {
+        $model = $this->findModel($id);
+
+        $query = Artigo::find()
+            ->where(['idmarca' => $model->idmarca, 'idcategoria' => $model->idcategoria])
+            ->andWhere(['<>', 'id', $model->id]) // Exclui o artigo atual
+            ->andWhere(['ativo' => 1]); // Apenas artigos ativos
+        //nao mostrar os premium
+
+
+
+        // Cria o ActiveDataProvider
+        $relatedArticles = new ActiveDataProvider([
+            'query' => $query,
+            'pagination' => [
+                'pageSize' => 4, // Limita a 4 resultados por página
+            ],
+        ]);
+
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => $model,
+            'relatedArticles' => $relatedArticles,
         ]);
     }
 
