@@ -61,6 +61,15 @@ $this->params['breadcrumbs'][] = $this->title;
                     ]
                 )->label('Status') ?>
             </div>
+                        <!-- Filtro por tipo de artigo (Premium ou Normal) -->
+                        <div class="col-md-3">
+                <?= $form->field($searchModel, 'tipo')->dropDownList(
+                    ['premium' => ' Artigo Premium', 'normal' => 'Artigo Normal'], // Opções do dropdown
+                    [
+                        'prompt' => 'Selecione o tipo de artigo',
+                    ]
+                )->label('Tipo de artigo') ?>
+            </div>
         </div>
         <!-- Botões na parte inferior -->
         <div class="row g-3">

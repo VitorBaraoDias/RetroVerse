@@ -20,6 +20,7 @@ use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
 use frontend\models\ContactForm;
 use common\models\Plano;
+use yii\db\Query;
 
 /**
  * Site controller
@@ -95,21 +96,25 @@ class SiteController extends Controller
         $dataProvider1 = new ActiveDataProvider([
             'query' => Artigo::find()
                 ->with('fotosartigos')
+                ->where(['not in', 'id', (new Query())->select('id')->from('artigospremium')]) // Exclui os artigos premium
+                ->andWhere(['ativo' => 1]) // Filtra para mostrar apenas artigos com "ativo" = 1
                 ->orderBy(['datacriacao' => SORT_DESC])
                 ->limit(4),
             'pagination' => false,
         ]);
 
+
         $dataProvider2 = new ActiveDataProvider([
             'query' => Artigospremium::find()
-                ->joinWith('plano') // Juntar com a tabela de planos para obter informações sobre o plano
-                ->orderBy(['id' => SORT_DESC]) // Ordenar por ID decrescente, ou pela data de criação, se for o caso
-                ->limit(4), // Pega apenas os últimos 4 artigos premium
+                ->joinWith('artigo AS artigo')
+                ->andWhere(['artigo.ativo' => 1])
+                ->orderBy(['id' => SORT_DESC])
+                ->limit(4),
             'pagination' => [
-                'pageSize' => 4, // Tamanho da página (caso haja mais de 4 artigos, divide em páginas)
+                'pageSize' => false,
             ],
         ]);
-
+        
 
         return $this->render('index', [
             'dataProvider1' => $dataProvider1,

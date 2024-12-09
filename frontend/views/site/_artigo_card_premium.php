@@ -9,22 +9,29 @@ use yii\widgets\ListView;
         <div class="image-container">
             <!-- Verifica se o artigo premium tem foto -->
             <?php
+
             $artigo = $model->artigo; // Acessa o artigo relacionado
-            $firstPhoto = $artigo->fotosartigos[0];
-            if ($firstPhoto && file_exists('../../common/uploads/img-artigos/' . $firstPhoto->caminhofoto)) {
-                echo Html::img(('../../common/uploads/img-artigos/'). $firstPhoto->caminhofoto, [
+            $firstPhoto = $artigo->fotosartigos[0] ?? null;
+
+            // Caminho para a imagem no frontend
+            $imagePath = Yii::getAlias('@web/uploads/img-artigos/') . ($firstPhoto->caminhofoto ?? '');
+
+            if ($firstPhoto && file_exists(Yii::getAlias('@frontend/web/uploads/img-artigos/') . $firstPhoto->caminhofoto)) {
+                // Renderiza a imagem
+                echo Html::img($imagePath, [
                     'alt' => 'Article Image',
                     'class' => 'w-100',
                     'style' => 'width: 370px; height: 270px; object-fit: cover;',
                 ]);
             } else {
-                // Se não houver imagem, exibir uma div cinza
+                // Exibe uma div cinza se não houver imagem
                 echo Html::tag('div', '', [
                     'class' => 'img-thumbnail',
                     'style' => 'width: 370px; height: 270px; background-color: grey; display: flex; align-items: center; justify-content: center;',
                 ]);
             }
             ?>
+
         </div>
 
         <div class="card-body">
@@ -43,16 +50,22 @@ use yii\widgets\ListView;
                 <?php if ($isPremiumActive): ?>
                     <!-- Exibe o preço real e botão de "Comprar Agora" -->
                     <span class="" style="font-weight: bolder; color: black;"><?= Html::encode($artigo->precoanuncio) ?>€</span>
-                    <a href="#" class="outline-retroverse-btn d-flex justify-content-between align-items-center" style="font-size: x-small; gap: 10px">
-                        BUY NOW
-                    </a>
+                    <?= Html::a('VIEW', ['artigo/view', 'id' => $model->id], [
+                        'class' => 'outline-retroverse-btn',
+                        'style' => 'font-size: x-small; gap: 10px',
+                    ]) ?>
                 <?php else: ?>
                     <!-- Exibe "???" no preço e botão de "Unlock With Premium" -->
                     <span class="" style="font-weight: bolder; color: black;">???</span>
-                    <a href="#" class="outline-retroverse-btn d-flex justify-content-between align-items-center" style="font-size: x-small; gap: 10px">
-                        <img height="20px" src="<?= Yii::getAlias('@web/img/lock.svg') ?>" alt="Lock Icon">
-                        UNLOCK WITH PREMIUM
-                    </a>
+                    <?= Html::a(
+                        '<span>UNLOCK WITH PREMIUM</span> <img height="20px" src="' . Yii::getAlias('@web/img/lock.svg') . '" alt="Lock Icon">',
+                        ['premium/index'],
+                        [
+                            'class' => 'outline-retroverse-btn d-flex justify-content-between align-items-center',
+                            'style' => 'font-size: x-small; gap: 10px',
+                            'encode' => false, // Permitir HTML no conteúdo
+                        ]
+                    ) ?>
                 <?php endif; ?>
             </div>
 

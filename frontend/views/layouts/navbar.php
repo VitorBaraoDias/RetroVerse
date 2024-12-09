@@ -26,7 +26,7 @@ $carrinho = \common\models\Carrinho::findOne(['iduser' => Yii::$app->user->id]);
                                 </a>
                             </li>
                             <li>
-                                <a href="<?= Yii::$app->urlManager->createUrl(['site/collection']) ?>"
+                                <a href="<?= Yii::$app->urlManager->createUrl(['artigo/index']) ?>"
                                    class="<?= (Yii::$app->controller->id === 'collection' && Yii::$app->controller->action->id === 'index') ? 'active' : '' ?>">
                                     COLLECTION
                                 </a>

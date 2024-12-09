@@ -1,6 +1,7 @@
 <?php
 
 namespace backend\models;
+
 use common\models\Fotosartigo;
 use Yii;
 use yii\base\Model;
@@ -12,6 +13,7 @@ class UploadForm extends Model
      * @var UploadedFile[]
      */
     public $imageFiles;
+
     public function rules()
     {
         return [
@@ -21,19 +23,39 @@ class UploadForm extends Model
 
     public function upload($id)
     {
-        $uploadDir = Yii::getAlias('@imageurl/img-artigos/');
+        // Diretório para o backend
+        $backendUploadDir = Yii::getAlias('@imageurl/img-artigos/');
+
+        // Diretório para o frontend
+        $frontendUploadDir = Yii::getAlias('@frontend/web/uploads/img-artigos/');
+
+        // Certificar-se de que as pastas existem, se não, criá-las
+        if (!is_dir($backendUploadDir)) {
+            mkdir($backendUploadDir, 0775, true);
+        }
+        if (!is_dir($frontendUploadDir)) {
+            mkdir($frontendUploadDir, 0775, true);
+        }
 
         if ($this->validate()) {
             foreach ($this->imageFiles as $file) {
+                // Gerar um nome único para o arquivo
+                $fileName = uniqid() . '.' . $file->extension;
 
-                //idunico
-                $fileName = uniqid()  . '.' . $file->extension;
-                $filePath = $uploadDir .  $fileName;
+                // Caminho para salvar no backend
+                $backendFilePath = $backendUploadDir . $fileName;
 
-                if ($file->saveAs($filePath)) {
+                // Caminho para salvar no frontend
+                $frontendFilePath = $frontendUploadDir . $fileName;
+
+                // Salvar nos dois locais
+                if ($file->saveAs($backendFilePath)) {
+                    copy($backendFilePath, $frontendFilePath);
+
+                    // Salvar o registro no banco de dados
                     $fotoModel = new Fotosartigo();
                     $fotoModel->idartigo = $id;
-                    $fotoModel->caminhofoto =  $fileName;
+                    $fotoModel->caminhofoto = $fileName;
                     $fotoModel->save(false);
                 }
             }
@@ -41,13 +63,25 @@ class UploadForm extends Model
         }
         return false;
     }
+
     public function removeFoto($fileName)
     {
-        $uploadDir = Yii::getAlias('@imageurl/img-artigos/');
-        $filePath = $uploadDir . $fileName;
-        if (file_exists($filePath)) {
-            return unlink($filePath);
+        $backendUploadDir = Yii::getAlias('@imageurl/img-artigos/');
+        $frontendUploadDir = Yii::getAlias('@frontend/web/uploads/img-artigos/');
+
+        $backendFilePath = $backendUploadDir . $fileName;
+        $frontendFilePath = $frontendUploadDir . $fileName;
+
+        // Remover a foto do backend
+        if (file_exists($backendFilePath)) {
+            unlink($backendFilePath);
         }
-        return false;
+
+        // Remover a foto do frontend
+        if (file_exists($frontendFilePath)) {
+            unlink($frontendFilePath);
+        }
+
+        return true;
     }
 }

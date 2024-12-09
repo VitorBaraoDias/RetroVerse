@@ -40,18 +40,24 @@ class ArtigoController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new SearchArtigo(); // Cria uma nova instância do SearchModel
+        // Cria uma nova instância do SearchModel
+        $searchModel = new SearchArtigo();
 
-        //  padrão 'ativo'
-        if (!isset($this->request->queryParams['SearchArtigo']['ativo'])) {
+        // Define o filtro padrão para 'ativo' caso não esteja nos parâmetros
+        if (!isset(Yii::$app->request->queryParams['SearchArtigo']['ativo'])) {
             $searchModel->ativo = 1;
         }
-        $dataProvider = $searchModel->search($this->request->queryParams);
+
+        // Gera o DataProvider com os parâmetros da requisição
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        // Renderiza a view com os parâmetros necessários
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
     }
+
 
     /**
      * Displays a single Artigo model.
@@ -84,7 +90,7 @@ class ArtigoController extends Controller
             $model->tipoartigo = 'LOJA';
 
             if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['fotoartigo/create', 'id' => $model->id]);
+                return $this->redirect(['artigo/view', 'id' => $model->id]);
             }
 
         } else {

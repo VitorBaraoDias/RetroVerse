@@ -64,13 +64,25 @@
 	opacity: 0;
 	transition: opacity 0.4s ease, transform 0.4s ease;
 }
+
 #retroverse-btn-active{
 	opacity: 100% !important;
 	padding: 20px 15px;
 	font-size: 18px !important;
 	width: -webkit-fill-available;
-
 }
+
+.retroverse-btn-2 {
+	background: #0000FF;  /* Fundo transparente */
+	color: white;  /* Cor do texto em azul */
+	padding: 10px 25px;  /* Espaçamento interno */
+	text-align: center;  /* Alinhar o texto no centro */
+	font-size: 16px;  /* Tamanho da fonte */
+	cursor: pointer;  /* Cursor de ponteiro ao passar sobre o botão */
+	opacity: 0;
+	transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
 .retroverse-btn:hover {
 	background: transparent;  /* Fundo transparente */
 	color: #0000FF;  /* Cor do texto em azul */
@@ -81,6 +93,7 @@
 	cursor: pointer;  /* Cursor de ponteiro ao passar sobre o botão */
 	transition: all 0.3s ease;
 }
+
 .outline-retroverse-btn:hover {
 	background-color: #0000FF;  /* Fundo azul ao passar o mouse */
 	color: white;  /* Cor do texto branca */
@@ -1177,12 +1190,56 @@ ol {
 	font-size: 16px;
 	line-height: 1;
 }
-
-
-
-
 /* Premium end */
 
+
+
+/* COLLECTION */
+.banner-collection {
+	display:flex;
+	background: url('../img/collection/collection-banner.png');
+	align-items: center;
+	justify-content: center;
+	height:300px;
+	background-cover: cover;
+}
+
+.banner-collection-text {
+	color:white;
+	font-weight:700;
+	font-size: 60px;
+}
+
+/* Filter Section */
+.filter-section {
+
+	padding: 20px;
+	border-radius: 8px;
+	display:flex;
+	flex-direction:column;
+	align-items:left;
+	justify-content:center;
+	width:25%;
+}
+
+.filter-dropdown {
+	box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1); /* Sombra leve */
+}
+
+.filter-dropdown span{
+	font-family: "Montserrat", sans-serif;
+	font-size: 14px; /* Define o tamanho geral */
+	font-weight:400;
+	color: black; /* Cor do texto padrão */
+}
+
+.filter-dropdown:focus span {
+	font-weight: 700;
+}
+
+
+
+/*COLLECTION END */
 
 /*---------------------
   Hero

@@ -12,14 +12,19 @@ use yii\widgets\ListView;
 
                 <?php
                 $firstPhoto = $model->fotosartigos[0] ?? null;
-                if ($firstPhoto && file_exists('../../common/uploads/img-artigos/' . $firstPhoto->caminhofoto)) {
-                    echo Html::img(('../../common/uploads/img-artigos/'). $firstPhoto->caminhofoto, [
+
+                // Caminho para a imagem no frontend
+                $imagePath = Yii::getAlias('@web/uploads/img-artigos/') . ($firstPhoto->caminhofoto ?? '');
+
+                if ($firstPhoto && file_exists(Yii::getAlias('@frontend/web/uploads/img-artigos/') . $firstPhoto->caminhofoto)) {
+                    // Renderiza a imagem
+                    echo Html::img($imagePath, [
                         'alt' => 'Article Image',
                         'class' => 'w-100',
                         'style' => 'width: 370px; height: 270px; object-fit: cover;',
                     ]);
                 } else {
-                    // Se não houver imagem, exibir uma div cinza
+                    // Exibe uma div cinza se não houver imagem
                     echo Html::tag('div', '', [
                         'class' => 'img-thumbnail',
                         'style' => 'width: 370px; height: 270px; background-color: grey; display: flex; align-items: center; justify-content: center;',

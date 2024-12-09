@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use Yii;
 use common\models\Artigospremium;
 use common\models\Plano;
 use common\models\Artigo;
@@ -9,6 +10,7 @@ use app\models\SearchArtigopremium;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+
 
 /**
  * ArtigospremiumController implements the CRUD actions for Artigospremium model.
@@ -69,31 +71,36 @@ class ArtigospremiumController extends Controller
      */
     public function actionCreate($id)
     {
-        $model = new Artigospremium();
-
-        $planos = Plano::find()->all();
-
         // Verificar se o artigo com o ID existe
         $artigo = Artigo::findOne($id);
         if (!$artigo) {
             // Se o artigo não existir, retornar erro ou redirecionar
             Yii::$app->session->setFlash('error', 'Artigo não encontrado.');
-            return $this->redirect(['artigo/index']); // Ou qualquer outra ação
-        }
-
-        // Preencher o ID do artigo no modelo de Artigospremium
-        $model->id = $id;
-
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
             return $this->redirect(['artigo/index']);
         }
 
-        return $this->render('create', [
-            'model' => $model,
-            'idartigo' => $id,
-            'planos' => $planos
-        ]);
+        // Obter um plano ativo (se houver)
+        $planoAtivo = Plano::find()->where(['ativo' => 1])->one();
+        if (!$planoAtivo) {
+            Yii::$app->session->setFlash('error', 'Nenhum plano ativo encontrado para associação.');
+            return $this->redirect(['artigo/index']);
+        }
+
+        // Criar o registro de Artigospremium
+        $model = new Artigospremium();
+        $model->id = $id;
+        $model->idPlano = $planoAtivo->id; // Associar ao plano ativo
+
+        if ($model->save()) {
+            Yii::$app->session->setFlash('success', 'Plano associado ao artigo com sucesso.');
+        } else {
+            Yii::$app->session->setFlash('error', 'Erro ao associar o plano ao artigo.');
+        }
+
+        // Redirecionar para artigo/index
+        return $this->redirect(['artigo/index']);
     }
+
 
 
     /**

@@ -1,6 +1,6 @@
 <?php
 
-namespace app\models;
+namespace frontend\models;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
@@ -12,6 +12,8 @@ use common\models\Artigo;
 class SearchArtigo extends Artigo
 {
     public $tipo; // Campo para filtro (premium ou normal)
+    public $preco_min;
+    public $preco_max;
 
     /**
      * {@inheritdoc}
@@ -23,7 +25,6 @@ class SearchArtigo extends Artigo
             [['nome', 'descricao'], 'string', 'max' => 255],
             [['precoanuncio'], 'number'],
             [['tipoartigo'], 'safe'],
-            [['tipo'], 'string'], // Adiciona o tipo (premium ou normal)
         ];
     }
 
@@ -74,6 +75,13 @@ class SearchArtigo extends Artigo
 
         $query->andFilterWhere(['like', 'nome', $this->nome])
             ->andFilterWhere(['like', 'descricao', $this->descricao]);
+
+        // Verifica se o filtro de preço foi definido
+        if ($this->preco_min !== null && $this->preco_max !== null) {
+            // Aplica filtro de intervalo de preço
+            $query->andFilterWhere(['>=', 'precoanuncio', $this->preco_min])
+                ->andFilterWhere(['<=', 'precoanuncio', $this->preco_max]);
+        }
 
         // Filtro para tipo de artigo
         if ($this->tipo === 'premium') {

@@ -1,11 +1,16 @@
 <?php
 
 namespace frontend\controllers;
+use Yii;
 use common\models\Artigo;
+use common\models\Artigospremium;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\db\Query;
+use frontend\models\SearchArtigo;
+
 
 /**
  * ArtigoController implements the CRUD actions for Artigo model.
@@ -37,24 +42,31 @@ class ArtigoController extends Controller
      */
     public function actionIndex()
     {
-        $dataProvider = new ActiveDataProvider([
-            'query' => Artigo::find(),
-            /*
-            'pagination' => [
-                'pageSize' => 50
-            ],
-            'sort' => [
-                'defaultOrder' => [
-                    'id' => SORT_DESC,
-                ]
-            ],
-            */
-        ]);
+        $searchModel = new SearchArtigo(); // Instancia o SearchModel
 
+        // Obtém os parâmetros da requisição
+        $queryParams = Yii::$app->request->queryParams;
+
+        // Define os valores padrão caso não estejam nos parâmetros
+        if (!isset($queryParams['SearchArtigo']['tipo'])) {
+            $searchModel->tipo = 'normal';
+        }
+        if (!isset($queryParams['SearchArtigo']['ativo'])) {
+            $searchModel->ativo = 1;
+        }
+
+        // Executa a pesquisa com os filtros
+        $dataProvider = $searchModel->search($queryParams);
+
+        // Renderiza a view com os dados
         return $this->render('index', [
+            'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
     }
+
+
+
 
     /**
      * Displays a single Artigo model.
@@ -64,8 +76,50 @@ class ArtigoController extends Controller
      */
     public function actionView($id)
     {
+
+        $model = $this->findModel($id);
+
+        // DataProvider para artigos normais relacionados
+        $relatedDataProviderNormal = new ActiveDataProvider([
+            'query' => Artigo::find()
+                ->where(['ativo' => 1]) // Apenas artigos ativos
+                ->andWhere(['not in', 'id', $id]) // Excluir o próprio artigo
+                ->andWhere(['not in', 'id', (new Query())->select('id')->from('artigospremium')]) // Excluir artigos premium
+                ->andWhere([
+                    'or',
+                    ['idcategoria' => $model->idcategoria], // Mesma categoria
+                    ['idmarca' => $model->idmarca],         // Mesma marca
+                    ['idtamanho' => $model->idtamanho]      // Mesmo tamanho
+                ])
+                ->limit(4), // Limitar a 4 artigos
+            'pagination' => false, // Sem paginação
+        ]);
+
+        // DataProvider para artigos premium relacionados
+        $relatedDataProviderPremium = new ActiveDataProvider([
+            'query' => Artigo::find()
+                ->where(['ativo' => 1]) // Apenas artigos ativos
+                ->andWhere(['not in', 'id', $id]) // Excluir o próprio artigo
+                ->andWhere(['id' => (new Query())->select('id')->from('artigospremium')]) // Apenas artigos premium
+                ->andWhere([
+                    'or',
+                    ['idcategoria' => $model->idcategoria], // Mesma categoria
+                    ['idmarca' => $model->idmarca],         // Mesma marca
+                    ['idtamanho' => $model->idtamanho]      // Mesmo tamanho
+                ])
+                ->limit(4), // Limitar a 4 artigos
+            'pagination' => false, // Sem paginação
+        ]);
+
+        // verifica se o artigo é premium
+        $isPremium = Artigospremium::find()->where(['id' => $id])->exists();
+
+        // se for premium relaciona a rtigos premium senao normais
+        $relatedDataProviderToUse = $isPremium ? $relatedDataProviderPremium : $relatedDataProviderNormal;
+
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => $model,
+            'relatedDataProvider' => $relatedDataProviderToUse,
         ]);
     }
 

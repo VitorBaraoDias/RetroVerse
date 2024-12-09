@@ -2,6 +2,8 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
+use yii\widgets\ListView;
+use yii\db\Query;
 
 /** @var yii\web\View $this */
 /** @var common\models\Artigo $model */
@@ -9,6 +11,7 @@ use yii\widgets\DetailView;
 $this->title = $model->id;
 
 \yii\web\YiiAsset::register($this);
+
 ?>
 <div class="artigo-view container-lg">
 
@@ -67,13 +70,12 @@ $this->title = $model->id;
                 <p style="font-size: 20px;"><?= $model->idestado0->descricao ?></p>
             </div>
             <span style="font-weight: bold">
-              <img src="/ipl-2semestre/app-retroverse/frontend/web/images/check_icon.svg" height="20">
-                This item is 100% autenthic.
-(All items have been checked before selling)
+              <img src= "<?php echo Yii::getAlias('@web') ?>/img/check_icon.svg" height="20">
+                This item is 100% autenthic.(All items have been checked before selling)
             </span>
             <div class="d-flex align-items-center justify-content-between mt-5 gap-5">
                 <?= Html::a('ADD TO CART', ['carrinho/create', 'id' => $model->id], [    'class' => 'retroverse-btn active',    'id' => 'retroverse-btn-active',    'style' => 'font-size: x-small; gap: 10px',]) ?>
-                <img src="/ipl-2semestre/app-retroverse/frontend/web/images/icon_heart.svg" height="30">
+                <img src="<?php echo Yii::getAlias('@web') ?>/img/icon_heart.svg" height="30">
             </div>
             <hr>
             <div class="bg-light outline p-2">
@@ -89,6 +91,17 @@ $this->title = $model->id;
     </div>
     <hr>
     <div>
-        <h2><strong>RELATED ITEMS</strong></h2>
+        <h2 class="text-center fw-bolder mb-4 " style="font-weight: bold;">RELATED ITEMS</h2>
+        <?= ListView::widget([
+            'dataProvider' => $relatedDataProvider,
+            'itemView' => '_related_items_card',
+            'layout' => '<div class="row">{items}</div>{pager}',
+            'options' => ['class' => 'list-view'],
+            'itemOptions' => ['class' => 'col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 card-product'],
+            'pager' => [
+                'class' => \yii\bootstrap5\LinkPager::class,
+                'options' => ['class' => 'pagination justify-content-center'],
+            ],
+        ]) ?>
     </div>
 </div>

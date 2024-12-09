@@ -55,7 +55,7 @@ use yii\widgets\ListView;
                             </span>
                     </div>
 
-                    <?= Html::a('VIEW', ['artigo/view', 'id' => $model->id], [
+                    <?= Html::a('BUY NOW', ['artigo/view', 'id' => $model->id], [
                         'class' => 'retroverse-btn',
                         'style' => 'font-size: x-small; gap: 10px',
                     ]) ?>
