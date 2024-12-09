@@ -2,7 +2,6 @@
 
 namespace frontend\controllers;
 
-use common\models\Carrinho;
 use frontend\models\ResendVerificationEmailForm;
 use frontend\models\VerifyEmailForm;
 use Yii;
@@ -25,7 +24,7 @@ use common\models\Plano;
 /**
  * Site controller
  */
-class SiteController extends GlobalController
+class SiteController extends Controller
 {
     /**
      * {@inheritdoc}
@@ -92,11 +91,13 @@ class SiteController extends GlobalController
         //verificar se ele tem premium
         $isPremiumActive = $perfil ? $perfil->hasActivePremiumPlano() : false;
 
+
         $dataProvider1 = new ActiveDataProvider([
             'query' => Artigo::find()
                 ->with('fotosartigos')
                 ->orderBy(['datacriacao' => SORT_DESC])
-                ->limit(4),
+                ->limit(4)
+                ->andWhere(['ativo' => 1]),
             'pagination' => false,
         ]);
 
@@ -104,18 +105,18 @@ class SiteController extends GlobalController
             'query' => Artigospremium::find()
                 ->joinWith('plano') // Juntar com a tabela de planos para obter informações sobre o plano
                 ->orderBy(['id' => SORT_DESC]) // Ordenar por ID decrescente, ou pela data de criação, se for o caso
-                ->limit(4), // Pega apenas os últimos 4 artigos premium
+                ->limit(4)
+                ->andWhere(['ativo' => 1]), // Pega apenas os últimos 4 artigos premium
             'pagination' => [
                 'pageSize' => 4, // Tamanho da página (caso haja mais de 4 artigos, divide em páginas)
             ],
         ]);
 
 
-
         return $this->render('index', [
             'dataProvider1' => $dataProvider1,
             'dataProvider2' => $dataProvider2,
-            'isPremiumActive' => $isPremiumActive,
+            'isPremiumActive' => $isPremiumActive
         ]);
     }
 

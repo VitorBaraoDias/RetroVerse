@@ -85,6 +85,7 @@ class ArtigoController extends Controller
         return $this->render('view', [
             'model' => $model,
             'relatedArticles' => $relatedArticles,
+            'id' => $model->id,
         ]);
     }
 

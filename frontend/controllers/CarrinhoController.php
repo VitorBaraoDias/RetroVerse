@@ -3,6 +3,7 @@
 namespace frontend\controllers;
 
 use common\models\Carrinho;
+use common\models\Iva;
 use common\models\Linhascarrinho;
 use Yii;
 use yii\data\ActiveDataProvider;
@@ -26,7 +27,7 @@ class CarrinhoController extends Controller
                 'verbs' => [
                     'class' => VerbFilter::className(),
                     'actions' => [
-                        'delete' => ['POST'],
+                        //'delete' => ['POST'],
                     ],
                 ],
             ]
@@ -41,6 +42,7 @@ class CarrinhoController extends Controller
     public function actionIndex($id)
     {
         $carrinho = Carrinho::findOne(['iduser' => $id]);
+        $iva = Iva::findOne(['emvigor' => 1]);
 
         if ($carrinho === null) {
             Yii::$app->session->setFlash('error', 'Não existe o carrinho');
@@ -49,9 +51,11 @@ class CarrinhoController extends Controller
 
         $dataProvider = new ActiveDataProvider([
             'query' => $carrinho->getLinhascarrinhos()]);
-        // Renderize a view com o modelo encontrado
+
+
         return $this->render('index', [
             'dataProvider' => $dataProvider,
+            'iva' => $iva->percentagem
         ]);
 
     }
@@ -74,6 +78,7 @@ class CarrinhoController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return string|\yii\web\Response
      */
+
     public function actionCreate($id)
     {
 
@@ -84,13 +89,15 @@ class CarrinhoController extends Controller
 
         if ($carrinho->isNewRecord && !$carrinho->save()) {
             Yii::$app->session->setFlash('error', 'Erro ao criar o carrinho.');
-            return $this->redirect(['index']); // Página de fallback
+            return $this->redirect(['site/index']); // Página de fallback
         }
         if (Linhascarrinho::findOne(['idcarrinho' => $carrinho->id, 'idartigo' => $id])) {
             Yii::$app->session->setFlash('info', 'Artigo já está no carrinho.');
         } else {
             $linhaCarrinho = new Linhascarrinho(['idcarrinho' => $carrinho->id, 'idartigo' => $id]);
             $linhaCarrinho->save();
+            //Yii::$app->session->setFlash('Info', 'The product has been added.');
+            Yii::$app->session->setFlash('success', 'Item successfully added to basket!!');
         }
 
         return $this->redirect(['site/index']); // Redireciona para o carrinho
@@ -103,19 +110,6 @@ class CarrinhoController extends Controller
      * @return string|\yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionUpdate($id)
-    {
-        $model = $this->findModel($id);
-
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        }
-
-        return $this->render('update', [
-            'model' => $model,
-        ]);
-    }
-
     /**
      * Deletes an existing Carrinho model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
@@ -125,6 +119,8 @@ class CarrinhoController extends Controller
      */
     public function actionDelete($id)
     {
+
+        //nao é remover carrinho, é remover linha de compra
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
