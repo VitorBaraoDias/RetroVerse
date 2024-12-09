@@ -4,7 +4,7 @@ return [
     'components' => [
         'db' => [
             'class' => \yii\db\Connection::class,
-            'dsn' => 'mysql:host=localhost;dbname=retroverse',
+            'dsn' => 'mysql:host=127.0.0.1;port=3306;dbname=appdb',
             'username' => 'root',
             'password' => 'root',
             'charset' => 'utf8',
