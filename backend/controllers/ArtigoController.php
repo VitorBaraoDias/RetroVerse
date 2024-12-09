@@ -84,7 +84,7 @@ class ArtigoController extends Controller
             $model->tipoartigo = 'LOJA';
 
             if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['fotoartigo/create', 'id' => $model->id]);
+                return $this->redirect(['view', 'id' => $model->id]);
             }
 
         } else {
