@@ -4,6 +4,10 @@ use yii\helpers\Html;
 
 /* @var $model \common\models\Linhascarrinho */
 
+$precoBase = $model->artigo->precoanuncio;
+$porcentagemIVA = Yii::$app->params['iva'] ?? 20; // Ou use $iva->porcentagem se o IVA for específico para este item
+$valorIVA = $precoBase * ($porcentagemIVA / 100);
+$precoComIVA = $precoBase + $valorIVA;
 ?>
 <div class="d-flex align-items-center gap-4">
     <div>
@@ -41,12 +45,12 @@ use yii\helpers\Html;
                 <strong><?= Yii::$app->formatter->asCurrency($model->artigo->precoanuncio, 'EUR') ?></strong>
             </h1>
             <h2 style="font-size: 20px">
-                <?= Yii::$app->formatter->asCurrency($model->artigo->precoanuncio * 1.2, 'EUR') ?>
+                <?= Yii::$app->formatter->asCurrency($precoComIVA, 'EUR') ?>
             </h2>
         </div>
         <p>WITH TAXES</p>
     </div>
-    <?= Html::a('Remove', ['carrinho/remove', 'id' => $model->id], [
+    <?= Html::a('Remove', ['linhascarrinho/delete', 'id' => $model->id], [
         'class' => 'retroverse-btn active w-100',
         'id' => 'retroverse-btn-active',
         'style' => 'font-size: x-small; gap: 10px',

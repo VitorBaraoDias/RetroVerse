@@ -10,7 +10,6 @@ use yii\widgets\ListView;
 /** @var yii\web\View $this */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-
 ?>
 <div class="carrinho-index">
 
@@ -26,5 +25,16 @@ use yii\widgets\ListView;
             'options' => ['class' => 'pagination justify-content-center'],
         ],
     ]) ?>
+    <div class="p-4" style="display: flex;
+    justify-content: flex-end;">
+        <div>
+            <p class="mb-4 text-center" style="font-size:12px; font-weight: bold">Total price and other fees calculated at checkout</p>
+            <?= Html::a('CHECKOUT', ['venda/create'], [
+                'class' => 'retroverse-btn active',
+                'id' => 'retroverse-btn-active',
+                'style' => 'font-size: x-small; padding: 21px 95px;',
+            ]) ?>
+        </div>
 
+    </div>
 </div>

@@ -43,9 +43,9 @@ use yii\widgets\ListView;
                 <?php if ($isPremiumActive): ?>
                     <!-- Exibe o preço real e botão de "Comprar Agora" -->
                     <span class="" style="font-weight: bolder; color: black;"><?= Html::encode($artigo->precoanuncio) ?>€</span>
-                    <?= Html::a('BUY NOW', ['artigo/view', 'id' => $artigo->id], [
-                        'class' => 'outline-retroverse-btn',
-                    ]) ?>
+                    <a href="#" class="outline-retroverse-btn d-flex justify-content-between align-items-center" style="font-size: x-small; gap: 10px">
+                        BUY NOW
+                    </a>
                 <?php else: ?>
                     <!-- Exibe "???" no preço e botão de "Unlock With Premium" -->
                     <span class="" style="font-weight: bolder; color: black;">???</span>

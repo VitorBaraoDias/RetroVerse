@@ -55,7 +55,7 @@ $this->title = $model->id;
             <h2><?= $model->precoanuncio ?>€</h2>
             <div class="d-flex">
                 <h2 style="font-size: 20px; font-weight: bolder">Brand:</h2>
-                <p style="font-size: 20px;"><?= $model->idmarca0->nome ?></p>
+                <p style="font-size: 20px;"><?= $model->descricao ?></p>
             </div>
 
             <div class="d-flex">
@@ -64,21 +64,18 @@ $this->title = $model->id;
             </div>
 
             <div class="d-flex">
-                <h2 style="font-size: 20px; font-weight: bolder">Condition:</h2>
+                <h2 style="font-size: 20px; font-weight: bolder">Condtion:</h2>
                 <p style="font-size: 20px;"><?= $model->idestado0->descricao ?></p>
             </div>
             <span style="font-weight: bold">
-              <img src="/ipl-2semestre/app-retroverse/frontend/web/images/check_icon.svg" height="20">
+              <img style="height: 30px" src="<?= Yii::getAlias('@web/images/check_icon.svg') ?>">
+
                 This item is 100% autenthic.
 (All items have been checked before selling)
             </span>
             <div class="d-flex align-items-center justify-content-between mt-5 gap-5">
-                <?= Html::a('ADD TO CART', ['carrinho/create', 'id' => $model->id], [
-                    'class' => 'retroverse-btn active',
-                    'id' => 'retroverse-btn-active',
-                    'style' => 'font-size: x-small; gap: 10px',
-                ]) ?>
-                <img src="/ipl-2semestre/app-retroverse/frontend/web/images/icon_heart.svg" height="30">
+                <?= Html::a('ADD TO CART', ['carrinho/create', 'id' => $model->id], [    'class' => 'retroverse-btn active',    'id' => 'retroverse-btn-active',    'style' => 'font-size: x-small; gap: 10px',]) ?>
+                <img style="height: 30px" src="<?= Yii::getAlias('@web/images/icon_heart.svg') ?>">
             </div>
             <hr>
             <div class="bg-light outline p-2">
@@ -95,7 +92,6 @@ $this->title = $model->id;
     <hr>
     <div>
         <h2 class="mb-4"><strong>RELATED ITEMS</strong></h2>
-
         <?= ListView::widget([
             'dataProvider' => $relatedArticles,
             'itemView' => '_artigo_card',  // Especifica o arquivo de item que criamos
