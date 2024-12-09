@@ -11,28 +11,10 @@ return [
     'basePath' => dirname(__DIR__),
     'controllerNamespace' => 'backend\controllers',
     'bootstrap' => ['log'],
-    'modules' => [
-        'api' => [
-            'class' => 'backend\modules\api\ModuleAPI',
-        ],
-    ],
+    'modules' => [],
     'components' => [
-        'assetManager' => [
-            'bundles' => [
-                'kartik\form\ActiveFormAsset' => [
-                    'bsDependencyEnabled' => false // do not load bootstrap assets for a specific asset bundle
-                ],
-            ],
-        ],
         'request' => [
             'csrfParam' => '_csrf-backend',
-        ],
-        'view' => [
-            'theme' => [
-                'pathMap' => [
-                    'backend/views' => '@vendor/hail812/yii2-adminlte3/src/views'
-                ],
-            ],
         ],
         'user' => [
             'identityClass' => 'common\models\User',
@@ -40,6 +22,7 @@ return [
             'identityCookie' => ['name' => '_identity-backend', 'httpOnly' => true],
         ],
         'session' => [
+            // this is the name of the session cookie used for login on the backend
             'name' => 'advanced-backend',
         ],
         'log' => [
@@ -58,61 +41,6 @@ return [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
-                ['class' => 'yii\rest\UrlRule', 'controller' => 'api/artigo',
-                    'extraPatterns' => [
-                        'GET {tipo}/{tamanho}/{marca}/{estado}' => 'artigofiltro',
-                        // Adicionar uma regra para parâmetros opcionais
-                        'GET {tipo}/{tamanho}/{marca}' => 'artigofiltro',
-                        'GET {tipo}/{tamanho}' => 'artigofiltro',
-                        'GET {tipo}' => 'artigofiltro',
-                    ],
-                    'tokens' => [
-                        '{tipo}' => '<tipo:\\w+>',
-                        '{tamanho}' => '<tamanho:\\w+>',
-                        '{marca}' => '<marca:\\w+>',
-                        '{estado}' => '<estado:\\w+>',
-
-                    ],
-                ],
-                [
-                    'class' => 'yii\rest\UrlRule',
-                    'controller' => 'api/marca',
-                ],
-                [
-                    'class' => 'yii\rest\UrlRule',
-                    'controller' => 'api/estado',
-                ],
-                [
-                    'class' => 'yii\rest\UrlRule',
-                    'controller' => 'api/user',
-                ],
-                [
-                    'class' => 'yii\rest\UrlRule',
-                    'controller' => 'api/carrinho',
-                    'extraPatterns' => [
-                        'GET user/{id}' => 'user', // GET /api/carrinhos/user/{id} -> actionUser($id)
-                    ],
-                ],
-                [
-                    'class' => 'yii\rest\UrlRule',
-                    'controller' => 'api/venda',
-                ],
-                [
-                    'class' => 'yii\rest\UrlRule',
-                    'controller' => 'api/tamanho',
-                ],
-                [
-                    'class' => 'yii\rest\UrlRule',
-                    'controller' => 'api/categoriaartigo',
-                ],
-                [
-                    'class' => 'yii\rest\UrlRule',
-                    'controller' => 'api/favorito',
-                    'extraPatterns' => [
-                        'GET {id}/favorito' => 'favorito',
-                        'DELETE {id}/favorito' => 'favorito'
-                    ],
-                ],
             ],
         ],
     ],
