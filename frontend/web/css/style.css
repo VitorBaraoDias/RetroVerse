@@ -83,6 +83,18 @@
 	transition: opacity 0.4s ease, transform 0.4s ease;
 }
 
+
+}
+#info-cart{
+	position: absolute;
+	top: -6px;
+	right: 11px;
+	background: red;
+	width: 20px;
+	border-radius: 50%;
+	font-size: 12px;
+	color: white;
+}
 .retroverse-btn:hover {
 	background: transparent;  /* Fundo transparente */
 	color: #0000FF;  /* Cor do texto em azul */
@@ -110,6 +122,8 @@
 	color:white;
 
 }
+=======
+>>>>>>> 6981a9ceabea1ba976ed3fb9ae0ff498a4f6d5df
 .container-like{
 	position: absolute;
 	height: 30px;
@@ -1190,6 +1204,7 @@ ol {
 	font-size: 16px;
 	line-height: 1;
 }
+<<<<<<< HEAD
 /* Premium end */
 
 
@@ -1241,6 +1256,15 @@ ol {
 
 /*COLLECTION END */
 
+=======
+
+
+
+
+/* Premium end */
+
+
+>>>>>>> 6981a9ceabea1ba976ed3fb9ae0ff498a4f6d5df
 /*---------------------
   Hero
 -----------------------*/

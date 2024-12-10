@@ -12,7 +12,6 @@ use yii\widgets\ListView;
 
                 <?php
                 $firstPhoto = $model->fotosartigos[0] ?? null;
-
                 // Caminho para a imagem no frontend
                 $imagePath = Yii::getAlias('@web/uploads/img-artigos/') . ($firstPhoto->caminhofoto ?? '');
 
@@ -24,14 +23,12 @@ use yii\widgets\ListView;
                         'style' => 'width: 370px; height: 270px; object-fit: cover;',
                     ]);
                 } else {
-                    // Exibe uma div cinza se não houver imagem
                     echo Html::tag('div', '', [
                         'class' => 'img-thumbnail',
                         'style' => 'width: 370px; height: 270px; background-color: grey; display: flex; align-items: center; justify-content: center;',
                     ]);
                 }
                 ?>
-
 
             </div>
             <div class="card-body">

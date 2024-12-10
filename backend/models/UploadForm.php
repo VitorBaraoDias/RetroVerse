@@ -1,7 +1,10 @@
 <?php
 
 namespace backend\models;
+<<<<<<< HEAD
 
+=======
+>>>>>>> 6981a9ceabea1ba976ed3fb9ae0ff498a4f6d5df
 use common\models\Fotosartigo;
 use Yii;
 use yii\base\Model;
@@ -13,7 +16,10 @@ class UploadForm extends Model
      * @var UploadedFile[]
      */
     public $imageFiles;
+<<<<<<< HEAD
 
+=======
+>>>>>>> 6981a9ceabea1ba976ed3fb9ae0ff498a4f6d5df
     public function rules()
     {
         return [
@@ -23,6 +29,7 @@ class UploadForm extends Model
 
     public function upload($id)
     {
+<<<<<<< HEAD
         // Diretório para o backend
         $backendUploadDir = Yii::getAlias('@imageurl/img-artigos/');
 
@@ -56,6 +63,21 @@ class UploadForm extends Model
                     $fotoModel = new Fotosartigo();
                     $fotoModel->idartigo = $id;
                     $fotoModel->caminhofoto = $fileName;
+=======
+        $uploadDir = Yii::getAlias('@imageurl/img-artigos/');
+
+        if ($this->validate()) {
+            foreach ($this->imageFiles as $file) {
+
+                //idunico
+                $fileName = uniqid()  . '.' . $file->extension;
+                $filePath = $uploadDir .  $fileName;
+
+                if ($file->saveAs($filePath)) {
+                    $fotoModel = new Fotosartigo();
+                    $fotoModel->idartigo = $id;
+                    $fotoModel->caminhofoto =  $fileName;
+>>>>>>> 6981a9ceabea1ba976ed3fb9ae0ff498a4f6d5df
                     $fotoModel->save(false);
                 }
             }
@@ -63,6 +85,7 @@ class UploadForm extends Model
         }
         return false;
     }
+<<<<<<< HEAD
 
     public function removeFoto($fileName)
     {
@@ -85,3 +108,15 @@ class UploadForm extends Model
         return true;
     }
 }
+=======
+    public function removeFoto($fileName)
+    {
+        $uploadDir = Yii::getAlias('@imageurl/img-artigos/');
+        $filePath = $uploadDir . $fileName;
+        if (file_exists($filePath)) {
+            return unlink($filePath);
+        }
+        return false;
+    }
+}
+>>>>>>> 6981a9ceabea1ba976ed3fb9ae0ff498a4f6d5df

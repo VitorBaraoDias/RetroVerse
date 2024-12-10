@@ -2,7 +2,10 @@
 
 namespace backend\controllers;
 
+<<<<<<< HEAD
 use Yii;
+=======
+>>>>>>> 6981a9ceabea1ba976ed3fb9ae0ff498a4f6d5df
 use common\models\Artigospremium;
 use common\models\Plano;
 use common\models\Artigo;
@@ -11,7 +14,10 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 6981a9ceabea1ba976ed3fb9ae0ff498a4f6d5df
 /**
  * ArtigospremiumController implements the CRUD actions for Artigospremium model.
  */
@@ -71,11 +77,19 @@ class ArtigospremiumController extends Controller
      */
     public function actionCreate($id)
     {
+<<<<<<< HEAD
+=======
+        $model = new Artigospremium();
+
+        $planos = Plano::find()->all();
+
+>>>>>>> 6981a9ceabea1ba976ed3fb9ae0ff498a4f6d5df
         // Verificar se o artigo com o ID existe
         $artigo = Artigo::findOne($id);
         if (!$artigo) {
             // Se o artigo não existir, retornar erro ou redirecionar
             Yii::$app->session->setFlash('error', 'Artigo não encontrado.');
+<<<<<<< HEAD
             return $this->redirect(['artigo/index']);
         }
 
@@ -103,6 +117,26 @@ class ArtigospremiumController extends Controller
 
 
 
+=======
+            return $this->redirect(['artigo/index']); // Ou qualquer outra ação
+        }
+
+        // Preencher o ID do artigo no modelo de Artigospremium
+        $model->id = $id;
+
+        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
+            return $this->redirect(['artigo/index']);
+        }
+
+        return $this->render('create', [
+            'model' => $model,
+            'idartigo' => $id,
+            'planos' => $planos
+        ]);
+    }
+
+
+>>>>>>> 6981a9ceabea1ba976ed3fb9ae0ff498a4f6d5df
     /**
      * Updates an existing Artigospremium model.
      * If update is successful, the browser will be redirected to the 'view' page.

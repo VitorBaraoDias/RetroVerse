@@ -4,6 +4,12 @@ use yii\helpers\Html;
 
 /* @var $model \common\models\Linhascarrinho */
 
+
+$precoBase = $model->artigo->precoanuncio;
+$porcentagemIVA = Yii::$app->params['iva'] ?? 20; // Ou use $iva->porcentagem se o IVA for específico para este item
+$valorIVA = $precoBase * ($porcentagemIVA / 100);
+$precoComIVA = $precoBase + $valorIVA;
+
 ?>
 <div class="d-flex align-items-center gap-4">
     <div>
@@ -12,18 +18,21 @@ use yii\helpers\Html;
             <strong><?= Html::encode($model->artigo->nome) ?></strong>
         </p>
         <?php
-        $firstPhoto = $model->fotosartigos[0] ?? null;
-        if ($firstPhoto && file_exists('../../common/uploads/img-artigos/' . $firstPhoto->caminhofoto)) {
-            echo Html::img(('../../common/uploads/img-artigos/'). $firstPhoto->caminhofoto, [
+        $firstPhoto = $model->artigo->fotosartigos[0] ?? null;
+        // Caminho para a imagem no frontend
+        $imagePath = Yii::getAlias('@web/uploads/img-artigos/') . ($firstPhoto->caminhofoto ?? '');
+
+        if ($firstPhoto && file_exists(Yii::getAlias('@frontend/web/uploads/img-artigos/') . $firstPhoto->caminhofoto)) {
+            // Renderiza a imagem
+            echo Html::img($imagePath, [
                 'alt' => 'Article Image',
                 'class' => 'w-100',
-                'style' => 'width: 230px; height: 200px; object-fit: cover;',
+                'style' => 'width: 370px; height: 270px; object-fit: cover;',
             ]);
         } else {
-            // Se não houver imagem, exibir uma div cinza
             echo Html::tag('div', '', [
                 'class' => 'img-thumbnail',
-                'style' => 'width: 230px; height: 200px; background-color: grey; display: flex; align-items: center; justify-content: center;',
+                'style' => 'width: 370px; height: 270px; background-color: grey; display: flex; align-items: center; justify-content: center;',
             ]);
         }
         ?>
@@ -41,12 +50,14 @@ use yii\helpers\Html;
                 <strong><?= Yii::$app->formatter->asCurrency($model->artigo->precoanuncio, 'EUR') ?></strong>
             </h1>
             <h2 style="font-size: 20px">
-                <?= Yii::$app->formatter->asCurrency($model->artigo->precoanuncio * 1.2, 'EUR') ?>
+                <?= Yii::$app->formatter->asCurrency($precoComIVA, 'EUR') ?>
+
             </h2>
         </div>
         <p>WITH TAXES</p>
     </div>
-    <?= Html::a('Remove', ['carrinho/delete', 'id' => $model->id], [
+
+    <?= Html::a('Remove', ['linhascarrinho/delete', 'id' => $model->id], [
         'class' => 'retroverse-btn active w-100',
         'id' => 'retroverse-btn-active',
         'style' => 'font-size: x-small; gap: 10px',

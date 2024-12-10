@@ -9,7 +9,6 @@ use yii\widgets\ListView;
         <div class="image-container">
             <!-- Verifica se o artigo premium tem foto -->
             <?php
-
             $artigo = $model->artigo; // Acessa o artigo relacionado
             $firstPhoto = $artigo->fotosartigos[0] ?? null;
 
@@ -24,7 +23,6 @@ use yii\widgets\ListView;
                     'style' => 'width: 370px; height: 270px; object-fit: cover;',
                 ]);
             } else {
-                // Exibe uma div cinza se não houver imagem
                 echo Html::tag('div', '', [
                     'class' => 'img-thumbnail',
                     'style' => 'width: 370px; height: 270px; background-color: grey; display: flex; align-items: center; justify-content: center;',
@@ -66,6 +64,7 @@ use yii\widgets\ListView;
                             'encode' => false, // Permitir HTML no conteúdo
                         ]
                     ) ?>
+
                 <?php endif; ?>
             </div>
 

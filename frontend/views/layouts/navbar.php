@@ -27,6 +27,7 @@ $carrinho = \common\models\Carrinho::findOne(['iduser' => Yii::$app->user->id]);
                             </li>
                             <li>
                                 <a href="<?= Yii::$app->urlManager->createUrl(['artigo/index']) ?>"
+
                                    class="<?= (Yii::$app->controller->id === 'collection' && Yii::$app->controller->action->id === 'index') ? 'active' : '' ?>">
                                     COLLECTION
                                 </a>
@@ -58,17 +59,12 @@ $carrinho = \common\models\Carrinho::findOne(['iduser' => Yii::$app->user->id]);
                                     <div id="info-cart">
                                         <?= $carrinho ? $carrinho->getLinhascarrinhos()->count() : 0 ?>
                                     </div>
-                                </a>
+                            </a>
                             <?php if (!$isPremiumActive) { ?>
                                 <a href="<?= Yii::$app->urlManager->createUrl(['site/signup']) ?>"><img src="<?= Yii::getAlias('@web') ?>/img/myaccount.svg" alt=""></a>
                             <?php } else { ?>
                                 <a href="<?= Yii::$app->urlManager->createUrl(['site/perfil']) ?>"><img src="<?= Yii::getAlias('@web') ?>/img/myaccount-premium.svg" alt=""></a>
                             <?php } ?>
-
-
-
-
-
 
                             <?php if (!Yii::$app->user->isGuest) : ?>
                                 <a href="<?= Yii::$app->urlManager->createUrl(['site/logout']) ?>"><img src="<?= Yii::getAlias('@web') ?>/img/logout.svg" alt=""></a>

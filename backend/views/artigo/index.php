@@ -70,6 +70,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     ]
                 )->label('Tipo de artigo') ?>
             </div>
+
         </div>
         <!-- Botões na parte inferior -->
         <div class="row g-3">

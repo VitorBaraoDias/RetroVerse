@@ -50,6 +50,7 @@ class SearchArtigo extends Artigo
         // Junta com a tabela Artigospremium para verificar os artigos premium
         $query->joinWith('artigospremium', false);
 
+
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
@@ -57,12 +58,17 @@ class SearchArtigo extends Artigo
         $this->load($params);
 
         if (!$this->validate()) {
+            // uncomment the following line if you do not want to return any records when validation fails
+            // $query->where('0=1');
             return $dataProvider;
         }
 
-        // Filtros existentes para os campos do artigo
+        // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
+            'nome' => $this->nome,
+            'descricao' => $this->descricao,
+            'precoanuncio' => $this->precoanuncio,
             'idcomissao' => $this->idcomissao,
             'idestado' => $this->idestado,
             'idmarca' => $this->idmarca,
@@ -81,6 +87,9 @@ class SearchArtigo extends Artigo
         } elseif ($this->tipo === 'normal') {
             $query->andWhere(['artigospremium.id' => null]); // Artigos normais (sem correspondência na tabela premium)
         }
+
+        $query->andFilterWhere(['like', 'tipoartigo', $this->tipoartigo]);
+
 
         return $dataProvider;
     }

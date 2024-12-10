@@ -10,17 +10,21 @@ use Yii;
  * @property int $id
  * @property int $idcomprador
  * @property int $idmetodoexpedicao
- * @property int $idmetodopagamento
+
+ * @property int $idtipopagamento
  * @property float $total
- * @property int $datavenda
- * @property int $idestadoencomenda
- *
+ * @property string $nome
+ * @property string $datavenda
+ * @property int|null $estadoencomenda
+ * @property string $codigopostal
+ * @property string $morada
+ * @property string $pais
+ * @property string $cidade
  * @property Avaliacoes[] $avaliacoes
  * @property Devolucoes[] $devolucoes
  * @property Perfils $idcomprador0
- * @property Estadoencomendas $idestadoencomenda0
  * @property Metodosexpedicoes $idmetodoexpedicao0
- * @property Metodopagamentos $idmetodopagamento0
+ * @property Tipopagamento $idtipopagamento0
  * @property Linhavendas[] $linhavendas
  */
 class Venda extends \yii\db\ActiveRecord
@@ -39,13 +43,16 @@ class Venda extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['idcomprador', 'idmetodoexpedicao', 'idmetodopagamento', 'total', 'datavenda', 'idestadoencomenda'], 'required'],
-            [['idcomprador', 'idmetodoexpedicao', 'idmetodopagamento', 'datavenda', 'idestadoencomenda'], 'integer'],
+            [['idcomprador', 'idmetodoexpedicao', 'idtipopagamento', 'nome', 'codigopostal', 'morada', 'pais', 'cidade', 'total'], 'required'],
+            [['idcomprador', 'idmetodoexpedicao', 'idtipopagamento', 'datavenda', 'estadoencomenda'], 'integer'],
             [['total'], 'number'],
-            [['idcomprador'], 'exist', 'skipOnError' => true, 'targetClass' => Perfils::class, 'targetAttribute' => ['idcomprador' => 'id']],
-            [['idestadoencomenda'], 'exist', 'skipOnError' => true, 'targetClass' => Estadoencomendas::class, 'targetAttribute' => ['idestadoencomenda' => 'id']],
-            [['idmetodoexpedicao'], 'exist', 'skipOnError' => true, 'targetClass' => Metodosexpedicoes::class, 'targetAttribute' => ['idmetodoexpedicao' => 'id']],
-            [['idmetodopagamento'], 'exist', 'skipOnError' => true, 'targetClass' => Metodopagamentos::class, 'targetAttribute' => ['idmetodopagamento' => 'id']],
+            [['datavenda'], 'safe'],
+            [['nome'], 'string', 'max' => 150],
+            [['codigopostal'], 'string', 'max' => 10],
+            [['morada'], 'string', 'max' => 350],
+            [['pais', 'cidade'], 'string', 'max' => 100],
+            [['idcomprador'], 'exist', 'skipOnError' => true, 'targetClass' => Perfil::class, 'targetAttribute' => ['idcomprador' => 'id']],
+            [['idtipopagamento'], 'exist', 'skipOnError' => true, 'targetClass' => Tipopagamento::class, 'targetAttribute' => ['idtipopagamento' => 'id']],
         ];
     }
 
@@ -58,10 +65,15 @@ class Venda extends \yii\db\ActiveRecord
             'id' => 'ID',
             'idcomprador' => 'Idcomprador',
             'idmetodoexpedicao' => 'Idmetodoexpedicao',
-            'idmetodopagamento' => 'Idmetodopagamento',
+            'idtipopagamento' => 'Idtipopagamento',
             'total' => 'Total',
+            'nome' => 'Nome',
             'datavenda' => 'Datavenda',
-            'idestadoencomenda' => 'Idestadoencomenda',
+            'estadoencomenda' => 'Estadoencomenda',
+            'codigopostal' => 'Codigopostal',
+            'morada' => 'Morada',
+            'pais' => 'Pais',
+            'cidade' => 'Cidade',
         ];
     }
 
@@ -96,16 +108,6 @@ class Venda extends \yii\db\ActiveRecord
     }
 
     /**
-     * Gets query for [[Idestadoencomenda0]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getIdestadoencomenda0()
-    {
-        return $this->hasOne(Estadoencomendas::class, ['id' => 'idestadoencomenda']);
-    }
-
-    /**
      * Gets query for [[Idmetodoexpedicao0]].
      *
      * @return \yii\db\ActiveQuery
@@ -116,13 +118,13 @@ class Venda extends \yii\db\ActiveRecord
     }
 
     /**
-     * Gets query for [[Idmetodopagamento0]].
+     * Gets query for [[Idtipopagamento0]].
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getIdmetodopagamento0()
+    public function getIdtipopagamento0()
     {
-        return $this->hasOne(Metodopagamentos::class, ['id' => 'idmetodopagamento']);
+        return $this->hasOne(Tipopagamento::class, ['id' => 'idtipopagamento']);
     }
 
     /**
@@ -132,6 +134,7 @@ class Venda extends \yii\db\ActiveRecord
      */
     public function getLinhavendas()
     {
-        return $this->hasMany(Linhavendas::class, ['idvenda' => 'id']);
+        return $this->hasMany(Linhavenda::class, ['idvenda' => 'id']);
     }
 }
+

@@ -108,13 +108,13 @@ class SiteController extends Controller
             'query' => Artigospremium::find()
                 ->joinWith('artigo AS artigo')
                 ->andWhere(['artigo.ativo' => 1])
-                ->orderBy(['id' => SORT_DESC])
+                ->orderBy(['datacriacao' => SORT_DESC])
                 ->limit(4),
             'pagination' => [
                 'pageSize' => false,
             ],
         ]);
-        
+
 
         return $this->render('index', [
             'dataProvider1' => $dataProvider1,

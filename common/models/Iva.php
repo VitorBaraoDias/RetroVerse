@@ -11,7 +11,11 @@ use Yii;
  * @property float $percentagem
  * @property int $emvigor
  *
+<<<<<<< HEAD
  * @property Planos[] $planos
+=======
+ * @property Plano[] $planos
+>>>>>>> 6981a9ceabea1ba976ed3fb9ae0ff498a4f6d5df
  */
 class Iva extends \yii\db\ActiveRecord
 {
@@ -70,6 +74,6 @@ class Iva extends \yii\db\ActiveRecord
     }
     public function getPlanos()
     {
-        return $this->hasMany(Planos::class, ['idiva' => 'id']);
+        return $this->hasMany(Plano::class, ['idiva' => 'id']);
     }
 }

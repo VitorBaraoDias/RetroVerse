@@ -52,6 +52,7 @@ class ArtigoController extends Controller
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         // Renderiza a view com os parâmetros necessários
+
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,

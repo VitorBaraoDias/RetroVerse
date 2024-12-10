@@ -5,6 +5,7 @@ use yii\widgets\DetailView;
 use yii\widgets\ListView;
 use yii\db\Query;
 
+
 /** @var yii\web\View $this */
 /** @var common\models\Artigo $model */
 
@@ -70,6 +71,8 @@ $this->title = $model->id;
                 <p style="font-size: 20px;"><?= $model->idestado0->descricao ?></p>
             </div>
             <span style="font-weight: bold">
+
+
               <img src= "<?php echo Yii::getAlias('@web') ?>/img/check_icon.svg" height="20">
                 This item is 100% autenthic.(All items have been checked before selling)
             </span>
@@ -98,6 +101,7 @@ $this->title = $model->id;
             'layout' => '<div class="row">{items}</div>{pager}',
             'options' => ['class' => 'list-view'],
             'itemOptions' => ['class' => 'col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 card-product'],
+
             'pager' => [
                 'class' => \yii\bootstrap5\LinkPager::class,
                 'options' => ['class' => 'pagination justify-content-center'],

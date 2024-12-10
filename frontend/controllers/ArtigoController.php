@@ -1,15 +1,17 @@
 <?php
 
 namespace frontend\controllers;
+
 use Yii;
-use common\models\Artigo;
 use common\models\Artigospremium;
+use common\models\Artigo;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\db\Query;
 use frontend\models\SearchArtigo;
+
 
 
 /**
@@ -42,6 +44,7 @@ class ArtigoController extends Controller
      */
     public function actionIndex()
     {
+
         $searchModel = new SearchArtigo(); // Instancia o SearchModel
 
         // Obtém os parâmetros da requisição
