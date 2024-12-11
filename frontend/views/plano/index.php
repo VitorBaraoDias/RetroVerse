@@ -13,7 +13,6 @@ $this->title = 'Planos';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="plano-index">
-
     <div class="premium-banner">
         <div class="premium-banner-text">
             <p>GET EXCLUSIVE ITEMS</p>
@@ -40,18 +39,9 @@ $this->params['breadcrumbs'][] = $this->title;
                 <p>GET ACCESS TO PREMIUM DROPS </p>
                 <p>NO EXTRA FEES ON ALL STORE ITEMS</p>
                 <p>SHIPPING PRIORITY</p>
-
-
             </div>
 
         </div>
-
-
     </div>
-
-
-
-
-
 
 </div>

@@ -61,9 +61,18 @@ class VendaController extends Controller
      */
     public function actionView($id)
     {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
+        $model = $this->findModel($id);
+
+        // Criação do dataProvider para listar as linhas de venda associadas à venda atual
+        $dataProvider = new ActiveDataProvider([
+            'query' => $model->getLinhavendas(),  // Método que traz as Linhavendas associadas à venda
         ]);
+
+        return $this->render('view', [
+            'model' => $model,
+            'dataProvider' => $dataProvider,  // Passa o dataProvider para a view
+        ]);
+
     }
 
     /**
@@ -186,4 +195,5 @@ class VendaController extends Controller
             return $this->redirect(['site/index']); // Redireciona para a página inicial, por exemplo
         }
     }
+
 }
