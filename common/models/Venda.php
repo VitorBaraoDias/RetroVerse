@@ -19,7 +19,11 @@ use Yii;
  * @property string $morada
  * @property string $pais
  * @property string $cidade
+<<<<<<< HEAD
  *
+=======
+ * @property string $codigo
+>>>>>>> fdff1d60d879f717b79b00aa022c7505e4147740
  * @property Avaliacoes[] $avaliacoes
  * @property Devolucoes[] $devolucoes
  * @property Perfils $idcomprador0
@@ -52,6 +56,7 @@ class Venda extends \yii\db\ActiveRecord
             [['codigopostal'], 'string', 'max' => 10],
             [['morada'], 'string', 'max' => 350],
             [['pais', 'cidade'], 'string', 'max' => 100],
+            [['codigo'], 'string', 'max' => 255],
             [['idcomprador'], 'exist', 'skipOnError' => true, 'targetClass' => Perfil::class, 'targetAttribute' => ['idcomprador' => 'id']],
             [['idmetodoexpedicao'], 'exist', 'skipOnError' => true, 'targetClass' => Metodosexpedicao::class, 'targetAttribute' => ['idmetodoexpedicao' => 'id']],
             [['idtipopagamento'], 'exist', 'skipOnError' => true, 'targetClass' => Tipopagamento::class, 'targetAttribute' => ['idtipopagamento' => 'id']],
@@ -77,6 +82,8 @@ class Venda extends \yii\db\ActiveRecord
             'morada' => 'Morada',
             'pais' => 'Pais',
             'cidade' => 'Cidade',
+            'codigo' => 'Codigo',
+
         ];
     }
 
@@ -128,7 +135,6 @@ class Venda extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Metodosexpedicao::class, ['id' => 'idmetodoexpedicao']);
     }
-
     /**
      * Gets query for [[Idtipopagamento0]].
      *
@@ -138,7 +144,6 @@ class Venda extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Tipopagamento::class, ['id' => 'idtipopagamento']);
     }
-
     /**
      * Gets query for [[Linhavendas]].
      *
@@ -148,6 +153,21 @@ class Venda extends \yii\db\ActiveRecord
     {
         return $this->hasMany(Linhavenda::class, ['idvenda' => 'id']);
     }
-
-
+    public function getIdartigo0()
+    {
+        return $this->hasOne(Artigo::class, ['id' => 'idartigo']);
+    }
+    public function beforeSave($insert)
+    {
+        if ($insert) {
+            // Gera o código automaticamente apenas ao criar o registo
+            $this->codigo = $this->gerarCodigoUnico();
+        }
+        return parent::beforeSave($insert);
+    }
+    private function gerarCodigoUnico()
+    {
+        // Gera um código único baseado no timestamp (apenas números)
+        return str_pad(mt_rand(1, 999999999), 10, '0', STR_PAD_LEFT);
+    }
 }

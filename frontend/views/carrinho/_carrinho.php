@@ -5,6 +5,7 @@ use yii\helpers\Html;
 /* @var $model \common\models\Linhascarrinho */
 
 
+
 $precoBase = $model->artigo->precoanuncio;
 $porcentagemIVA = Yii::$app->params['iva'] ?? 20; // Ou use $iva->porcentagem se o IVA for específico para este item
 $valorIVA = $precoBase * ($porcentagemIVA / 100);

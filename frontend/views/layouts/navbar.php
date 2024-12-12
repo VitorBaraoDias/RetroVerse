@@ -33,8 +33,8 @@ $carrinho = \common\models\Carrinho::findOne(['iduser' => Yii::$app->user->id]);
                                 </a>
                             </li>
                             <li>
-                                <a href="<?= Yii::$app->urlManager->createUrl(['site/premium']) ?>"
-                                   class="<?= (Yii::$app->controller->id === 'site' && Yii::$app->controller->action->id === 'premium') ? 'active' : '' ?>">
+                                <a href="<?= Yii::$app->urlManager->createUrl(['plano/index']) ?>"
+                                   class="<?= (Yii::$app->controller->id === 'plano' && Yii::$app->controller->action->id === 'index') ? 'active' : '' ?>">
                                     PREMIUM
                                 </a>
                             </li>
