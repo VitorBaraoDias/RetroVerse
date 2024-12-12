@@ -10,7 +10,6 @@ use yii\grid\GridView;
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
 $this->title = 'Planos';
-$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="plano-index">
     <div class="premium-banner">

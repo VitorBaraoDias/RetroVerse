@@ -51,7 +51,7 @@ use yii\widgets\ActiveForm;
             <?= $form->field($model, 'cidade')->textInput([
                 'autofocus' => true,
                 'placeholder' => 'Enter your city'
-            ])->label('city'); ?>
+            ])->label('City'); ?>
         </div>
         </div>
         <div class="col-12">
@@ -72,7 +72,7 @@ use yii\widgets\ActiveForm;
                     'value' => $model->idtipopagamento ?? 1, // Valor padrão
                     'class' => 'form-control w-100', // Classe para ocupar 100%
                 ]
-            )->label('Selecione a comissão', ['class' => 'custom-label-class']) ?>
+            )->label('Selecione o método de pagamento', ['class' => 'custom-label-class']) ?>
         </div>
         <div class="col-md-12 card outline mt-4 px-4 py-2">
             <h2><strong>COUPON CODE</strong></h2>

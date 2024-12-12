@@ -5,7 +5,6 @@
 use yii\helpers\Html;
 
 $this->title = 'About';
-$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="site-about">
         <div class="about-banner">

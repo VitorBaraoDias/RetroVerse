@@ -115,9 +115,9 @@ class Venda extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getIdmetodoexpedicao0()
+    public function getMetodoExpedicao()
     {
-        return $this->hasOne(Metodosexpedicoes::class, ['id' => 'idmetodoexpedicao']);
+        return $this->hasOne(Metodosexpedicao::class, ['id' => 'idmetodoexpedicao']);
     }
 
     /**
@@ -125,7 +125,7 @@ class Venda extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getIdtipopagamento0()
+    public function getMetodoPagamento()
     {
         return $this->hasOne(Tipopagamento::class, ['id' => 'idtipopagamento']);
     }
