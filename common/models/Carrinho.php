@@ -65,4 +65,8 @@ class Carrinho extends \yii\db\ActiveRecord
 
         return $totalVenda;
     }
+    public function ifExistsCart()
+    {
+        return $this !== null && $this->getLinhascarrinhos()->exists();
+    }
 }

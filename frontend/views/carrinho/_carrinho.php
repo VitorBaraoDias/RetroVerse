@@ -27,12 +27,12 @@ $precoComIVA = $precoBase + $valorIVA;
             echo Html::img($imagePath, [
                 'alt' => 'Article Image',
                 'class' => 'w-100',
-                'style' => 'width: 370px; height: 270px; object-fit: cover;',
+                'style' => 'width: 350px; height: 220px; object-fit: cover;',
             ]);
         } else {
             echo Html::tag('div', '', [
                 'class' => 'img-thumbnail',
-                'style' => 'width: 370px; height: 270px; background-color: grey; display: flex; align-items: center; justify-content: center;',
+                'style' => 'width: 350px; height: 220px; background-color: grey; display: flex; align-items: center; justify-content: center;',
             ]);
         }
         ?>

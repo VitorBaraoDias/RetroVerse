@@ -54,6 +54,17 @@
 	opacity: 1;
 	transform: translateY(0); /* Move o botão para sua posição original */
 }
+.outline-black-retroverse-btn {
+	margin-left: 8px;
+	background: transparent;  /* Fundo transparente */
+	color: #1e1d1d;  /* Cor do texto em azul */
+	border: 2px solid #1e1d1d;  /* Borda azul */
+	padding: 10px 8px;  /* Espaçamento interno */
+	text-align: center;  /* Alinhar o texto no centro */
+	font-size: 16px;  /* Tamanho da fonte */
+	cursor: pointer;  /* Cursor de ponteiro ao passar sobre o botão */
+	transition: all 0.3s ease;  /* Transição suave para hover */
+}
 .retroverse-btn {
 	background: #0000FF;  /* Fundo transparente */
 	color: white;  /* Cor do texto em azul */
@@ -84,7 +95,6 @@
 }
 
 
-}
 #info-cart{
 	position: absolute;
 	top: -6px;

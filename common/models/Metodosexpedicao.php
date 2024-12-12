@@ -29,9 +29,7 @@ class Metodosexpedicao extends \yii\db\ActiveRecord
     {
         return [
             [['nome'], 'required'],
-            [['nome'],'string', 'max' => 150],
-            [['nome'], 'unique'], // Garante que o nome seja único
-
+            [['nome'], 'string', 'max' => 250],
         ];
     }
 
