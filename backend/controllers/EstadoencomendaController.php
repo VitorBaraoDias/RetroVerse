@@ -1,22 +1,17 @@
 <?php
 
-namespace frontend\controllers;
+namespace backend\controllers;
 
-use common\models\Carrinho;
-
-use common\models\Iva;
-
-use common\models\Linhascarrinho;
-use Yii;
-use yii\data\ActiveDataProvider;
+use common\models\Estadoencomenda;
+use backend\models\SearchEstadoencomenda;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * CarrinhoController implements the CRUD actions for Carrinho model.
+ * EstadoencomendaController implements the CRUD actions for Estadoencomenda model.
  */
-class CarrinhoController extends Controller
+class EstadoencomendaController extends Controller
 {
     /**
      * @inheritDoc
@@ -29,7 +24,7 @@ class CarrinhoController extends Controller
                 'verbs' => [
                     'class' => VerbFilter::className(),
                     'actions' => [
-                        //'delete' => ['POST'],
+                        'delete' => ['POST'],
                     ],
                 ],
             ]
@@ -37,36 +32,23 @@ class CarrinhoController extends Controller
     }
 
     /**
-     * Lists all Carrinho models.
+     * Lists all Estadoencomenda models.
      *
      * @return string
      */
-    public function actionIndex($id)
+    public function actionIndex()
     {
-        $carrinho = Carrinho::findOne(['iduser' => $id]);
-
-        $iva = Iva::findOne(['emvigor' => 1]);
-
-
-        if ($carrinho === null) {
-            Yii::$app->session->setFlash('error', 'Não existe o carrinho');
-            return $this->redirect(['index']); // Página de fallback
-        }
-
-        $dataProvider = new ActiveDataProvider([
-            'query' => $carrinho->getLinhascarrinhos()]);
-
-
+        $searchModel = new SearchEstadoencomenda();
+        $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->render('index', [
+            'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
-            'iva' => $iva->percentagem
         ]);
-
     }
 
     /**
-     * Displays a single Carrinho model.
+     * Displays a single Estadoencomenda model.
      * @param int $id ID
      * @return string
      * @throws NotFoundHttpException if the model cannot be found
@@ -79,42 +61,34 @@ class CarrinhoController extends Controller
     }
 
     /**
-     * Creates a new Carrinho model.
+     * Creates a new Estadoencomenda model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return string|\yii\web\Response
      */
-
-    public function actionCreate($id)
+    public function actionCreate()
     {
+        $model = new Estadoencomenda();
 
-        $userId = Yii::$app->user->id;
-
-        // Tenta encontrar ou criar um carrinho
-        $carrinho = Carrinho::findOne(['iduser' => $userId]) ?? new Carrinho(['iduser' => $userId]);
-
-        if ($carrinho->isNewRecord && !$carrinho->save()) {
-            Yii::$app->session->setFlash('error', 'Erro ao criar o carrinho.');
-            return $this->redirect(['site/index']);
-        }
-        if (Linhascarrinho::findOne(['idcarrinho' => $carrinho->id, 'idartigo' => $id])) {
-            Yii::$app->session->setFlash('info', 'Artigo já está no carrinho.');
+        if ($this->request->isPost) {
+            if ($model->load($this->request->post()) && $model->save()) {
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
         } else {
-            $linhaCarrinho = new Linhascarrinho(['idcarrinho' => $carrinho->id, 'idartigo' => $id]);
-            $linhaCarrinho->save();
-            Yii::$app->session->setFlash('success', 'Item successfully added to basket!!');
+            $model->loadDefaultValues();
         }
 
-        return $this->redirect(['site/index']);
+        return $this->render('create', [
+            'model' => $model,
+        ]);
     }
 
     /**
-     * Updates an existing Carrinho model.
+     * Updates an existing Estadoencomenda model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param int $id ID
      * @return string|\yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
-
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
@@ -128,9 +102,8 @@ class CarrinhoController extends Controller
         ]);
     }
 
-
     /**
-     * Deletes an existing Carrinho model.
+     * Deletes an existing Estadoencomenda model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param int $id ID
      * @return \yii\web\Response
@@ -138,23 +111,21 @@ class CarrinhoController extends Controller
      */
     public function actionDelete($id)
     {
-
-        //nao é remover carrinho, é remover linha de compra
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
     }
 
     /**
-     * Finds the Carrinho model based on its primary key value.
+     * Finds the Estadoencomenda model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param int $id ID
-     * @return Carrinho the loaded model
+     * @return Estadoencomenda the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Carrinho::findOne(['id' => $id])) !== null) {
+        if (($model = Estadoencomenda::findOne(['id' => $id])) !== null) {
             return $model;
         }
 

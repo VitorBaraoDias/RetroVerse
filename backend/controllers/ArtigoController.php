@@ -51,8 +51,12 @@ class ArtigoController extends Controller
         // Gera o DataProvider com os parâmetros da requisição
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-        // Renderiza a view com os parâmetros necessários
+        // Configura o tamanho da página
+        $dataProvider->pagination = [
+            'pageSize' => 6,
+        ];
 
+        // Renderiza a view com os parâmetros necessários
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,

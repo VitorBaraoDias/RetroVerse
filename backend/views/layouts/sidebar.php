@@ -41,7 +41,7 @@
                         'label' => 'Store',
                         'icon' => 'fa-solid fa-store',
                         'items' => [
-                            ['label' => 'Orders', 'url' => ['orders/index'], 'iconStyle' => 'far'],
+                            ['label' => 'Orders', 'url' => ['venda/index'], 'iconStyle' => 'far'],
                             ['label' => 'Items', 'url' => ['artigo/index'], 'iconStyle' => 'far'],
                             ['label' => 'Plans', 'url' => ['plano/index'], 'iconStyle' => 'far'],
                             ['label' => 'Categories', 'url' => ['categoriaartigo/index'], 'iconStyle' => 'far'],
@@ -65,6 +65,7 @@
                         'items' => [
                             ['label' => 'Store Banner', 'url' => ['orders/index'], 'iconStyle' => 'far'],
                             ['label' => 'Shipping methods', 'url' => ['metodosexpedicao/index'], 'iconStyle' => 'far'],
+                            ['label' => 'Shipping states', 'url' => ['estadoencomenda/index'], 'iconStyle' => 'far'],
                             ['label' => 'FAQS', 'url' => ['faqs/index'], 'iconStyle' => 'far'],
                             ['label' => 'Users', 'url' => ['user/index'], 'iconStyle' => 'far'],
                             ['label' => 'IVA', 'url' => ['iva/index'], 'iconStyle' => 'far'],

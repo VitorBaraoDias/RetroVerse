@@ -3926,3 +3926,769 @@ $_SERVER = [
     'REQUEST_TIME_FLOAT' => 1733765109.76
     'REQUEST_TIME' => 1733765109
 ]
+2024-12-12 16:00:09 [::1][1][tp0civd6akmh11juehujihv0sj][error][yii\web\HttpException:404] yii\base\InvalidRouteException: Unable to resolve the request: api/artigo/loja in /Applications/MAMP/htdocs/retroverse-new/RetroVerse/vendor/yiisoft/yii2/base/Controller.php:149
+Stack trace:
+#0 /Applications/MAMP/htdocs/retroverse-new/RetroVerse/vendor/yiisoft/yii2/base/Module.php(552): yii\base\Controller->runAction('loja', Array)
+#1 /Applications/MAMP/htdocs/retroverse-new/RetroVerse/vendor/yiisoft/yii2/web/Application.php(103): yii\base\Module->runAction('api/artigo/loja', Array)
+#2 /Applications/MAMP/htdocs/retroverse-new/RetroVerse/vendor/yiisoft/yii2/base/Application.php(384): yii\web\Application->handleRequest(Object(yii\web\Request))
+#3 /Applications/MAMP/htdocs/retroverse-new/RetroVerse/backend/web/index.php(18): yii\base\Application->run()
+#4 {main}
+
+Next yii\web\NotFoundHttpException: Page not found. in /Applications/MAMP/htdocs/retroverse-new/RetroVerse/vendor/yiisoft/yii2/web/Application.php:115
+Stack trace:
+#0 /Applications/MAMP/htdocs/retroverse-new/RetroVerse/vendor/yiisoft/yii2/base/Application.php(384): yii\web\Application->handleRequest(Object(yii\web\Request))
+#1 /Applications/MAMP/htdocs/retroverse-new/RetroVerse/backend/web/index.php(18): yii\base\Application->run()
+#2 {main}
+2024-12-12 16:00:09 [::1][1][tp0civd6akmh11juehujihv0sj][info][application] $_GET = [
+    'access-token' => 'AVA93xW5yfiHdWni3M0XBAxV7-T4Tk37'
+]
+
+$_POST = []
+
+$_FILES = []
+
+$_COOKIE = [
+    '_csrf-backend' => 'f318d7c608856613a0b2809f178259b9375a0f018fcc362e61235e9e0e5d16a8a:2:{i:0;s:13:\"_csrf-backend\";i:1;s:32:\"oTbUZirqGkMgbFZ_S3V2qmjWsFEFt4Bw\";}'
+    'advanced-backend' => 'tp0civd6akmh11juehujihv0sj'
+]
+
+$_SESSION = [
+    '__flash' => []
+    '__id' => 1
+    '__authKey' => 'AVA93xW5yfiHdWni3M0XBAxV7-T4Tk37'
+]
+
+$_SERVER = [
+    'REDIRECT_STATUS' => '200'
+    'HTTP_USER_AGENT' => 'PostmanRuntime/7.43.0'
+    'HTTP_ACCEPT' => '*/*'
+    'HTTP_POSTMAN_TOKEN' => '6f99f695-0650-45f2-9734-5a6d9f57150a'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, br'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'CONTENT_TYPE' => 'application/x-www-form-urlencoded'
+    'CONTENT_LENGTH' => '13'
+    'HTTP_COOKIE' => '_csrf-backend=f318d7c608856613a0b2809f178259b9375a0f018fcc362e61235e9e0e5d16a8a%3A2%3A%7Bi%3A0%3Bs%3A13%3A%22_csrf-backend%22%3Bi%3A1%3Bs%3A32%3A%22oTbUZirqGkMgbFZ_S3V2qmjWsFEFt4Bw%22%3B%7D; advanced-backend=tp0civd6akmh11juehujihv0sj'
+    'PATH' => '/usr/bin:/bin:/usr/sbin:/sbin'
+    'SERVER_SIGNATURE' => ''
+    'SERVER_SOFTWARE' => 'Apache/2.4.54 (Unix) OpenSSL/1.0.2u PHP/8.1.13 mod_wsgi/3.5 Python/2.7.18 mod_fastcgi/mod_fastcgi-SNAP-0910052141 mod_perl/2.0.11 Perl/v5.30.1'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => '/Applications/MAMP/htdocs'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/Applications/MAMP/htdocs'
+    'SERVER_ADMIN' => 'you@example.com'
+    'SCRIPT_FILENAME' => '/Applications/MAMP/htdocs/retroverse-new/RetroVerse/backend/web/index.php'
+    'REMOTE_PORT' => '65102'
+    'REDIRECT_URL' => '/retroverse-new/RetroVerse/backend/web/api/artigo/loja'
+    'REDIRECT_QUERY_STRING' => 'access-token=AVA93xW5yfiHdWni3M0XBAxV7-T4Tk37'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'GET'
+    'QUERY_STRING' => 'access-token=AVA93xW5yfiHdWni3M0XBAxV7-T4Tk37'
+    'REQUEST_URI' => '/retroverse-new/RetroVerse/backend/web/api/artigo/loja?access-token=AVA93xW5yfiHdWni3M0XBAxV7-T4Tk37'
+    'SCRIPT_NAME' => '/retroverse-new/RetroVerse/backend/web/index.php'
+    'PHP_SELF' => '/retroverse-new/RetroVerse/backend/web/index.php'
+    'PHP_AUTH_USER' => '***'
+    'PHP_AUTH_PW' => '***'
+    'REQUEST_TIME_FLOAT' => 1734019209.7799
+    'REQUEST_TIME' => 1734019209
+]
+2024-12-12 16:29:51 [::1][1][es5cf9k4mjm4qcd6g9crcj3eu3][error][yii\web\HttpException:404] yii\base\InvalidRouteException: Unable to resolve the request "orders/index". in /Applications/MAMP/htdocs/retroverse-new/RetroVerse/vendor/yiisoft/yii2/base/Module.php:561
+Stack trace:
+#0 /Applications/MAMP/htdocs/retroverse-new/RetroVerse/vendor/yiisoft/yii2/web/Application.php(103): yii\base\Module->runAction('orders/index', Array)
+#1 /Applications/MAMP/htdocs/retroverse-new/RetroVerse/vendor/yiisoft/yii2/base/Application.php(384): yii\web\Application->handleRequest(Object(yii\web\Request))
+#2 /Applications/MAMP/htdocs/retroverse-new/RetroVerse/backend/web/index.php(18): yii\base\Application->run()
+#3 {main}
+
+Next yii\web\NotFoundHttpException: Page not found. in /Applications/MAMP/htdocs/retroverse-new/RetroVerse/vendor/yiisoft/yii2/web/Application.php:115
+Stack trace:
+#0 /Applications/MAMP/htdocs/retroverse-new/RetroVerse/vendor/yiisoft/yii2/base/Application.php(384): yii\web\Application->handleRequest(Object(yii\web\Request))
+#1 /Applications/MAMP/htdocs/retroverse-new/RetroVerse/backend/web/index.php(18): yii\base\Application->run()
+#2 {main}
+2024-12-12 16:29:51 [::1][1][es5cf9k4mjm4qcd6g9crcj3eu3][info][application] $_GET = []
+
+$_POST = []
+
+$_FILES = []
+
+$_COOKIE = [
+    'advanced-backend' => 'es5cf9k4mjm4qcd6g9crcj3eu3'
+    '_identity-backend' => 'a7b70a101cebbc1863ac1e50672d683b39f91fa74ee3a257dc422ae0eda9506ea:2:{i:0;s:17:\"_identity-backend\";i:1;s:46:\"[1,\"AVA93xW5yfiHdWni3M0XBAxV7-T4Tk37\",2592000]\";}'
+    '_csrf-backend' => 'd979484bc2fa05d8fc8e76b0743e7518c059e6e89c26bf137e6a3a8ae03ae55fa:2:{i:0;s:13:\"_csrf-backend\";i:1;s:32:\"GXwfsbuet4B8quDIEH2J8gycoiWpsW_g\";}'
+    '_csrf-frontend' => 'b9354b14eb12d57cb1c33f23f9e4d90ba242bbaeb53a360d89e7f8c6d3f3aa2ba:2:{i:0;s:14:\"_csrf-frontend\";i:1;s:32:\"MQIxYHoit-sP5buY-hXYwVH7znYTAU9M\";}'
+    'advanced-frontend' => 'f9ecuj8e2evnidjmeoc2qb63oc'
+]
+
+$_SESSION = [
+    '__flash' => []
+    '__returnUrl' => 'http://localhost/retroverse-new/RetroVerse/backend/web/'
+    '__id' => 1
+    '__authKey' => 'AVA93xW5yfiHdWni3M0XBAxV7-T4Tk37'
+]
+
+$_SERVER = [
+    'REDIRECT_STATUS' => '200'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'HTTP_SEC_CH_UA' => '\"Google Chrome\";v=\"131\", \"Chromium\";v=\"131\", \"Not_A Brand\";v=\"24\"'
+    'HTTP_SEC_CH_UA_MOBILE' => '?0'
+    'HTTP_SEC_CH_UA_PLATFORM' => '\"macOS\"'
+    'HTTP_UPGRADE_INSECURE_REQUESTS' => '1'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36'
+    'HTTP_ACCEPT' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7'
+    'HTTP_SEC_FETCH_SITE' => 'same-origin'
+    'HTTP_SEC_FETCH_MODE' => 'navigate'
+    'HTTP_SEC_FETCH_USER' => '?1'
+    'HTTP_SEC_FETCH_DEST' => 'document'
+    'HTTP_REFERER' => 'http://localhost/retroverse-new/RetroVerse/backend/web/'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, br, zstd'
+    'HTTP_ACCEPT_LANGUAGE' => 'pt-PT,pt;q=0.9,en-US;q=0.8,en;q=0.7'
+    'HTTP_COOKIE' => 'advanced-backend=es5cf9k4mjm4qcd6g9crcj3eu3; _identity-backend=a7b70a101cebbc1863ac1e50672d683b39f91fa74ee3a257dc422ae0eda9506ea%3A2%3A%7Bi%3A0%3Bs%3A17%3A%22_identity-backend%22%3Bi%3A1%3Bs%3A46%3A%22%5B1%2C%22AVA93xW5yfiHdWni3M0XBAxV7-T4Tk37%22%2C2592000%5D%22%3B%7D; _csrf-backend=d979484bc2fa05d8fc8e76b0743e7518c059e6e89c26bf137e6a3a8ae03ae55fa%3A2%3A%7Bi%3A0%3Bs%3A13%3A%22_csrf-backend%22%3Bi%3A1%3Bs%3A32%3A%22GXwfsbuet4B8quDIEH2J8gycoiWpsW_g%22%3B%7D; _csrf-frontend=b9354b14eb12d57cb1c33f23f9e4d90ba242bbaeb53a360d89e7f8c6d3f3aa2ba%3A2%3A%7Bi%3A0%3Bs%3A14%3A%22_csrf-frontend%22%3Bi%3A1%3Bs%3A32%3A%22MQIxYHoit-sP5buY-hXYwVH7znYTAU9M%22%3B%7D; advanced-frontend=f9ecuj8e2evnidjmeoc2qb63oc'
+    'PATH' => '/usr/bin:/bin:/usr/sbin:/sbin'
+    'SERVER_SIGNATURE' => ''
+    'SERVER_SOFTWARE' => 'Apache/2.4.54 (Unix) OpenSSL/1.0.2u PHP/8.1.13 mod_wsgi/3.5 Python/2.7.18 mod_fastcgi/mod_fastcgi-SNAP-0910052141 mod_perl/2.0.11 Perl/v5.30.1'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => '/Applications/MAMP/htdocs'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/Applications/MAMP/htdocs'
+    'SERVER_ADMIN' => 'you@example.com'
+    'SCRIPT_FILENAME' => '/Applications/MAMP/htdocs/retroverse-new/RetroVerse/backend/web/index.php'
+    'REMOTE_PORT' => '65510'
+    'REDIRECT_URL' => '/retroverse-new/RetroVerse/backend/web/orders/index'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'GET'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/retroverse-new/RetroVerse/backend/web/orders/index'
+    'SCRIPT_NAME' => '/retroverse-new/RetroVerse/backend/web/index.php'
+    'PHP_SELF' => '/retroverse-new/RetroVerse/backend/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1734020991.7907
+    'REQUEST_TIME' => 1734020991
+]
+2024-12-12 16:30:36 [::1][1][es5cf9k4mjm4qcd6g9crcj3eu3][error][yii\web\HttpException:404] yii\base\InvalidRouteException: Unable to resolve the request "orders/index". in /Applications/MAMP/htdocs/retroverse-new/RetroVerse/vendor/yiisoft/yii2/base/Module.php:561
+Stack trace:
+#0 /Applications/MAMP/htdocs/retroverse-new/RetroVerse/vendor/yiisoft/yii2/web/Application.php(103): yii\base\Module->runAction('orders/index', Array)
+#1 /Applications/MAMP/htdocs/retroverse-new/RetroVerse/vendor/yiisoft/yii2/base/Application.php(384): yii\web\Application->handleRequest(Object(yii\web\Request))
+#2 /Applications/MAMP/htdocs/retroverse-new/RetroVerse/backend/web/index.php(18): yii\base\Application->run()
+#3 {main}
+
+Next yii\web\NotFoundHttpException: Page not found. in /Applications/MAMP/htdocs/retroverse-new/RetroVerse/vendor/yiisoft/yii2/web/Application.php:115
+Stack trace:
+#0 /Applications/MAMP/htdocs/retroverse-new/RetroVerse/vendor/yiisoft/yii2/base/Application.php(384): yii\web\Application->handleRequest(Object(yii\web\Request))
+#1 /Applications/MAMP/htdocs/retroverse-new/RetroVerse/backend/web/index.php(18): yii\base\Application->run()
+#2 {main}
+2024-12-12 16:30:36 [::1][1][es5cf9k4mjm4qcd6g9crcj3eu3][info][application] $_GET = []
+
+$_POST = []
+
+$_FILES = []
+
+$_COOKIE = [
+    'advanced-backend' => 'es5cf9k4mjm4qcd6g9crcj3eu3'
+    '_identity-backend' => 'a7b70a101cebbc1863ac1e50672d683b39f91fa74ee3a257dc422ae0eda9506ea:2:{i:0;s:17:\"_identity-backend\";i:1;s:46:\"[1,\"AVA93xW5yfiHdWni3M0XBAxV7-T4Tk37\",2592000]\";}'
+    '_csrf-backend' => 'd979484bc2fa05d8fc8e76b0743e7518c059e6e89c26bf137e6a3a8ae03ae55fa:2:{i:0;s:13:\"_csrf-backend\";i:1;s:32:\"GXwfsbuet4B8quDIEH2J8gycoiWpsW_g\";}'
+    '_csrf-frontend' => 'b9354b14eb12d57cb1c33f23f9e4d90ba242bbaeb53a360d89e7f8c6d3f3aa2ba:2:{i:0;s:14:\"_csrf-frontend\";i:1;s:32:\"MQIxYHoit-sP5buY-hXYwVH7znYTAU9M\";}'
+    'advanced-frontend' => 'f9ecuj8e2evnidjmeoc2qb63oc'
+]
+
+$_SESSION = [
+    '__flash' => []
+    '__returnUrl' => 'http://localhost/retroverse-new/RetroVerse/backend/web/'
+    '__id' => 1
+    '__authKey' => 'AVA93xW5yfiHdWni3M0XBAxV7-T4Tk37'
+]
+
+$_SERVER = [
+    'REDIRECT_STATUS' => '200'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'HTTP_CACHE_CONTROL' => 'max-age=0'
+    'HTTP_SEC_CH_UA' => '\"Google Chrome\";v=\"131\", \"Chromium\";v=\"131\", \"Not_A Brand\";v=\"24\"'
+    'HTTP_SEC_CH_UA_MOBILE' => '?0'
+    'HTTP_SEC_CH_UA_PLATFORM' => '\"macOS\"'
+    'HTTP_UPGRADE_INSECURE_REQUESTS' => '1'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36'
+    'HTTP_ACCEPT' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7'
+    'HTTP_SEC_FETCH_SITE' => 'same-origin'
+    'HTTP_SEC_FETCH_MODE' => 'navigate'
+    'HTTP_SEC_FETCH_USER' => '?1'
+    'HTTP_SEC_FETCH_DEST' => 'document'
+    'HTTP_REFERER' => 'http://localhost/retroverse-new/RetroVerse/backend/web/'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, br, zstd'
+    'HTTP_ACCEPT_LANGUAGE' => 'pt-PT,pt;q=0.9,en-US;q=0.8,en;q=0.7'
+    'HTTP_COOKIE' => 'advanced-backend=es5cf9k4mjm4qcd6g9crcj3eu3; _identity-backend=a7b70a101cebbc1863ac1e50672d683b39f91fa74ee3a257dc422ae0eda9506ea%3A2%3A%7Bi%3A0%3Bs%3A17%3A%22_identity-backend%22%3Bi%3A1%3Bs%3A46%3A%22%5B1%2C%22AVA93xW5yfiHdWni3M0XBAxV7-T4Tk37%22%2C2592000%5D%22%3B%7D; _csrf-backend=d979484bc2fa05d8fc8e76b0743e7518c059e6e89c26bf137e6a3a8ae03ae55fa%3A2%3A%7Bi%3A0%3Bs%3A13%3A%22_csrf-backend%22%3Bi%3A1%3Bs%3A32%3A%22GXwfsbuet4B8quDIEH2J8gycoiWpsW_g%22%3B%7D; _csrf-frontend=b9354b14eb12d57cb1c33f23f9e4d90ba242bbaeb53a360d89e7f8c6d3f3aa2ba%3A2%3A%7Bi%3A0%3Bs%3A14%3A%22_csrf-frontend%22%3Bi%3A1%3Bs%3A32%3A%22MQIxYHoit-sP5buY-hXYwVH7znYTAU9M%22%3B%7D; advanced-frontend=f9ecuj8e2evnidjmeoc2qb63oc'
+    'PATH' => '/usr/bin:/bin:/usr/sbin:/sbin'
+    'SERVER_SIGNATURE' => ''
+    'SERVER_SOFTWARE' => 'Apache/2.4.54 (Unix) OpenSSL/1.0.2u PHP/8.1.13 mod_wsgi/3.5 Python/2.7.18 mod_fastcgi/mod_fastcgi-SNAP-0910052141 mod_perl/2.0.11 Perl/v5.30.1'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => '/Applications/MAMP/htdocs'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/Applications/MAMP/htdocs'
+    'SERVER_ADMIN' => 'you@example.com'
+    'SCRIPT_FILENAME' => '/Applications/MAMP/htdocs/retroverse-new/RetroVerse/backend/web/index.php'
+    'REMOTE_PORT' => '65517'
+    'REDIRECT_URL' => '/retroverse-new/RetroVerse/backend/web/orders/index'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'GET'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/retroverse-new/RetroVerse/backend/web/orders/index'
+    'SCRIPT_NAME' => '/retroverse-new/RetroVerse/backend/web/index.php'
+    'PHP_SELF' => '/retroverse-new/RetroVerse/backend/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1734021036.5271
+    'REQUEST_TIME' => 1734021036
+]
+2024-12-12 16:30:37 [::1][1][es5cf9k4mjm4qcd6g9crcj3eu3][error][yii\web\HttpException:404] yii\base\InvalidRouteException: Unable to resolve the request "orders/index". in /Applications/MAMP/htdocs/retroverse-new/RetroVerse/vendor/yiisoft/yii2/base/Module.php:561
+Stack trace:
+#0 /Applications/MAMP/htdocs/retroverse-new/RetroVerse/vendor/yiisoft/yii2/web/Application.php(103): yii\base\Module->runAction('orders/index', Array)
+#1 /Applications/MAMP/htdocs/retroverse-new/RetroVerse/vendor/yiisoft/yii2/base/Application.php(384): yii\web\Application->handleRequest(Object(yii\web\Request))
+#2 /Applications/MAMP/htdocs/retroverse-new/RetroVerse/backend/web/index.php(18): yii\base\Application->run()
+#3 {main}
+
+Next yii\web\NotFoundHttpException: Page not found. in /Applications/MAMP/htdocs/retroverse-new/RetroVerse/vendor/yiisoft/yii2/web/Application.php:115
+Stack trace:
+#0 /Applications/MAMP/htdocs/retroverse-new/RetroVerse/vendor/yiisoft/yii2/base/Application.php(384): yii\web\Application->handleRequest(Object(yii\web\Request))
+#1 /Applications/MAMP/htdocs/retroverse-new/RetroVerse/backend/web/index.php(18): yii\base\Application->run()
+#2 {main}
+2024-12-12 16:30:37 [::1][1][es5cf9k4mjm4qcd6g9crcj3eu3][info][application] $_GET = []
+
+$_POST = []
+
+$_FILES = []
+
+$_COOKIE = [
+    'advanced-backend' => 'es5cf9k4mjm4qcd6g9crcj3eu3'
+    '_identity-backend' => 'a7b70a101cebbc1863ac1e50672d683b39f91fa74ee3a257dc422ae0eda9506ea:2:{i:0;s:17:\"_identity-backend\";i:1;s:46:\"[1,\"AVA93xW5yfiHdWni3M0XBAxV7-T4Tk37\",2592000]\";}'
+    '_csrf-backend' => 'd979484bc2fa05d8fc8e76b0743e7518c059e6e89c26bf137e6a3a8ae03ae55fa:2:{i:0;s:13:\"_csrf-backend\";i:1;s:32:\"GXwfsbuet4B8quDIEH2J8gycoiWpsW_g\";}'
+    '_csrf-frontend' => 'b9354b14eb12d57cb1c33f23f9e4d90ba242bbaeb53a360d89e7f8c6d3f3aa2ba:2:{i:0;s:14:\"_csrf-frontend\";i:1;s:32:\"MQIxYHoit-sP5buY-hXYwVH7znYTAU9M\";}'
+    'advanced-frontend' => 'f9ecuj8e2evnidjmeoc2qb63oc'
+]
+
+$_SESSION = [
+    '__flash' => []
+    '__returnUrl' => 'http://localhost/retroverse-new/RetroVerse/backend/web/'
+    '__id' => 1
+    '__authKey' => 'AVA93xW5yfiHdWni3M0XBAxV7-T4Tk37'
+]
+
+$_SERVER = [
+    'REDIRECT_STATUS' => '200'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'HTTP_CACHE_CONTROL' => 'max-age=0'
+    'HTTP_SEC_CH_UA' => '\"Google Chrome\";v=\"131\", \"Chromium\";v=\"131\", \"Not_A Brand\";v=\"24\"'
+    'HTTP_SEC_CH_UA_MOBILE' => '?0'
+    'HTTP_SEC_CH_UA_PLATFORM' => '\"macOS\"'
+    'HTTP_UPGRADE_INSECURE_REQUESTS' => '1'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36'
+    'HTTP_ACCEPT' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7'
+    'HTTP_SEC_FETCH_SITE' => 'same-origin'
+    'HTTP_SEC_FETCH_MODE' => 'navigate'
+    'HTTP_SEC_FETCH_USER' => '?1'
+    'HTTP_SEC_FETCH_DEST' => 'document'
+    'HTTP_REFERER' => 'http://localhost/retroverse-new/RetroVerse/backend/web/'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, br, zstd'
+    'HTTP_ACCEPT_LANGUAGE' => 'pt-PT,pt;q=0.9,en-US;q=0.8,en;q=0.7'
+    'HTTP_COOKIE' => 'advanced-backend=es5cf9k4mjm4qcd6g9crcj3eu3; _identity-backend=a7b70a101cebbc1863ac1e50672d683b39f91fa74ee3a257dc422ae0eda9506ea%3A2%3A%7Bi%3A0%3Bs%3A17%3A%22_identity-backend%22%3Bi%3A1%3Bs%3A46%3A%22%5B1%2C%22AVA93xW5yfiHdWni3M0XBAxV7-T4Tk37%22%2C2592000%5D%22%3B%7D; _csrf-backend=d979484bc2fa05d8fc8e76b0743e7518c059e6e89c26bf137e6a3a8ae03ae55fa%3A2%3A%7Bi%3A0%3Bs%3A13%3A%22_csrf-backend%22%3Bi%3A1%3Bs%3A32%3A%22GXwfsbuet4B8quDIEH2J8gycoiWpsW_g%22%3B%7D; _csrf-frontend=b9354b14eb12d57cb1c33f23f9e4d90ba242bbaeb53a360d89e7f8c6d3f3aa2ba%3A2%3A%7Bi%3A0%3Bs%3A14%3A%22_csrf-frontend%22%3Bi%3A1%3Bs%3A32%3A%22MQIxYHoit-sP5buY-hXYwVH7znYTAU9M%22%3B%7D; advanced-frontend=f9ecuj8e2evnidjmeoc2qb63oc'
+    'PATH' => '/usr/bin:/bin:/usr/sbin:/sbin'
+    'SERVER_SIGNATURE' => ''
+    'SERVER_SOFTWARE' => 'Apache/2.4.54 (Unix) OpenSSL/1.0.2u PHP/8.1.13 mod_wsgi/3.5 Python/2.7.18 mod_fastcgi/mod_fastcgi-SNAP-0910052141 mod_perl/2.0.11 Perl/v5.30.1'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => '/Applications/MAMP/htdocs'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/Applications/MAMP/htdocs'
+    'SERVER_ADMIN' => 'you@example.com'
+    'SCRIPT_FILENAME' => '/Applications/MAMP/htdocs/retroverse-new/RetroVerse/backend/web/index.php'
+    'REMOTE_PORT' => '65517'
+    'REDIRECT_URL' => '/retroverse-new/RetroVerse/backend/web/orders/index'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'GET'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/retroverse-new/RetroVerse/backend/web/orders/index'
+    'SCRIPT_NAME' => '/retroverse-new/RetroVerse/backend/web/index.php'
+    'PHP_SELF' => '/retroverse-new/RetroVerse/backend/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1734021037.1735
+    'REQUEST_TIME' => 1734021037
+]
+2024-12-12 16:30:37 [::1][1][es5cf9k4mjm4qcd6g9crcj3eu3][error][yii\web\HttpException:404] yii\base\InvalidRouteException: Unable to resolve the request "orders/index". in /Applications/MAMP/htdocs/retroverse-new/RetroVerse/vendor/yiisoft/yii2/base/Module.php:561
+Stack trace:
+#0 /Applications/MAMP/htdocs/retroverse-new/RetroVerse/vendor/yiisoft/yii2/web/Application.php(103): yii\base\Module->runAction('orders/index', Array)
+#1 /Applications/MAMP/htdocs/retroverse-new/RetroVerse/vendor/yiisoft/yii2/base/Application.php(384): yii\web\Application->handleRequest(Object(yii\web\Request))
+#2 /Applications/MAMP/htdocs/retroverse-new/RetroVerse/backend/web/index.php(18): yii\base\Application->run()
+#3 {main}
+
+Next yii\web\NotFoundHttpException: Page not found. in /Applications/MAMP/htdocs/retroverse-new/RetroVerse/vendor/yiisoft/yii2/web/Application.php:115
+Stack trace:
+#0 /Applications/MAMP/htdocs/retroverse-new/RetroVerse/vendor/yiisoft/yii2/base/Application.php(384): yii\web\Application->handleRequest(Object(yii\web\Request))
+#1 /Applications/MAMP/htdocs/retroverse-new/RetroVerse/backend/web/index.php(18): yii\base\Application->run()
+#2 {main}
+2024-12-12 16:30:37 [::1][1][es5cf9k4mjm4qcd6g9crcj3eu3][info][application] $_GET = []
+
+$_POST = []
+
+$_FILES = []
+
+$_COOKIE = [
+    'advanced-backend' => 'es5cf9k4mjm4qcd6g9crcj3eu3'
+    '_identity-backend' => 'a7b70a101cebbc1863ac1e50672d683b39f91fa74ee3a257dc422ae0eda9506ea:2:{i:0;s:17:\"_identity-backend\";i:1;s:46:\"[1,\"AVA93xW5yfiHdWni3M0XBAxV7-T4Tk37\",2592000]\";}'
+    '_csrf-backend' => 'd979484bc2fa05d8fc8e76b0743e7518c059e6e89c26bf137e6a3a8ae03ae55fa:2:{i:0;s:13:\"_csrf-backend\";i:1;s:32:\"GXwfsbuet4B8quDIEH2J8gycoiWpsW_g\";}'
+    '_csrf-frontend' => 'b9354b14eb12d57cb1c33f23f9e4d90ba242bbaeb53a360d89e7f8c6d3f3aa2ba:2:{i:0;s:14:\"_csrf-frontend\";i:1;s:32:\"MQIxYHoit-sP5buY-hXYwVH7znYTAU9M\";}'
+    'advanced-frontend' => 'f9ecuj8e2evnidjmeoc2qb63oc'
+]
+
+$_SESSION = [
+    '__flash' => []
+    '__returnUrl' => 'http://localhost/retroverse-new/RetroVerse/backend/web/'
+    '__id' => 1
+    '__authKey' => 'AVA93xW5yfiHdWni3M0XBAxV7-T4Tk37'
+]
+
+$_SERVER = [
+    'REDIRECT_STATUS' => '200'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'HTTP_CACHE_CONTROL' => 'max-age=0'
+    'HTTP_SEC_CH_UA' => '\"Google Chrome\";v=\"131\", \"Chromium\";v=\"131\", \"Not_A Brand\";v=\"24\"'
+    'HTTP_SEC_CH_UA_MOBILE' => '?0'
+    'HTTP_SEC_CH_UA_PLATFORM' => '\"macOS\"'
+    'HTTP_UPGRADE_INSECURE_REQUESTS' => '1'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36'
+    'HTTP_ACCEPT' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7'
+    'HTTP_SEC_FETCH_SITE' => 'same-origin'
+    'HTTP_SEC_FETCH_MODE' => 'navigate'
+    'HTTP_SEC_FETCH_USER' => '?1'
+    'HTTP_SEC_FETCH_DEST' => 'document'
+    'HTTP_REFERER' => 'http://localhost/retroverse-new/RetroVerse/backend/web/'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, br, zstd'
+    'HTTP_ACCEPT_LANGUAGE' => 'pt-PT,pt;q=0.9,en-US;q=0.8,en;q=0.7'
+    'HTTP_COOKIE' => 'advanced-backend=es5cf9k4mjm4qcd6g9crcj3eu3; _identity-backend=a7b70a101cebbc1863ac1e50672d683b39f91fa74ee3a257dc422ae0eda9506ea%3A2%3A%7Bi%3A0%3Bs%3A17%3A%22_identity-backend%22%3Bi%3A1%3Bs%3A46%3A%22%5B1%2C%22AVA93xW5yfiHdWni3M0XBAxV7-T4Tk37%22%2C2592000%5D%22%3B%7D; _csrf-backend=d979484bc2fa05d8fc8e76b0743e7518c059e6e89c26bf137e6a3a8ae03ae55fa%3A2%3A%7Bi%3A0%3Bs%3A13%3A%22_csrf-backend%22%3Bi%3A1%3Bs%3A32%3A%22GXwfsbuet4B8quDIEH2J8gycoiWpsW_g%22%3B%7D; _csrf-frontend=b9354b14eb12d57cb1c33f23f9e4d90ba242bbaeb53a360d89e7f8c6d3f3aa2ba%3A2%3A%7Bi%3A0%3Bs%3A14%3A%22_csrf-frontend%22%3Bi%3A1%3Bs%3A32%3A%22MQIxYHoit-sP5buY-hXYwVH7znYTAU9M%22%3B%7D; advanced-frontend=f9ecuj8e2evnidjmeoc2qb63oc'
+    'PATH' => '/usr/bin:/bin:/usr/sbin:/sbin'
+    'SERVER_SIGNATURE' => ''
+    'SERVER_SOFTWARE' => 'Apache/2.4.54 (Unix) OpenSSL/1.0.2u PHP/8.1.13 mod_wsgi/3.5 Python/2.7.18 mod_fastcgi/mod_fastcgi-SNAP-0910052141 mod_perl/2.0.11 Perl/v5.30.1'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => '/Applications/MAMP/htdocs'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/Applications/MAMP/htdocs'
+    'SERVER_ADMIN' => 'you@example.com'
+    'SCRIPT_FILENAME' => '/Applications/MAMP/htdocs/retroverse-new/RetroVerse/backend/web/index.php'
+    'REMOTE_PORT' => '65518'
+    'REDIRECT_URL' => '/retroverse-new/RetroVerse/backend/web/orders/index'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'GET'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/retroverse-new/RetroVerse/backend/web/orders/index'
+    'SCRIPT_NAME' => '/retroverse-new/RetroVerse/backend/web/index.php'
+    'PHP_SELF' => '/retroverse-new/RetroVerse/backend/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1734021037.4602
+    'REQUEST_TIME' => 1734021037
+]
+2024-12-12 16:30:38 [::1][1][es5cf9k4mjm4qcd6g9crcj3eu3][error][yii\web\HttpException:404] yii\base\InvalidRouteException: Unable to resolve the request "orders/index". in /Applications/MAMP/htdocs/retroverse-new/RetroVerse/vendor/yiisoft/yii2/base/Module.php:561
+Stack trace:
+#0 /Applications/MAMP/htdocs/retroverse-new/RetroVerse/vendor/yiisoft/yii2/web/Application.php(103): yii\base\Module->runAction('orders/index', Array)
+#1 /Applications/MAMP/htdocs/retroverse-new/RetroVerse/vendor/yiisoft/yii2/base/Application.php(384): yii\web\Application->handleRequest(Object(yii\web\Request))
+#2 /Applications/MAMP/htdocs/retroverse-new/RetroVerse/backend/web/index.php(18): yii\base\Application->run()
+#3 {main}
+
+Next yii\web\NotFoundHttpException: Page not found. in /Applications/MAMP/htdocs/retroverse-new/RetroVerse/vendor/yiisoft/yii2/web/Application.php:115
+Stack trace:
+#0 /Applications/MAMP/htdocs/retroverse-new/RetroVerse/vendor/yiisoft/yii2/base/Application.php(384): yii\web\Application->handleRequest(Object(yii\web\Request))
+#1 /Applications/MAMP/htdocs/retroverse-new/RetroVerse/backend/web/index.php(18): yii\base\Application->run()
+#2 {main}
+2024-12-12 16:30:37 [::1][1][es5cf9k4mjm4qcd6g9crcj3eu3][info][application] $_GET = []
+
+$_POST = []
+
+$_FILES = []
+
+$_COOKIE = [
+    'advanced-backend' => 'es5cf9k4mjm4qcd6g9crcj3eu3'
+    '_identity-backend' => 'a7b70a101cebbc1863ac1e50672d683b39f91fa74ee3a257dc422ae0eda9506ea:2:{i:0;s:17:\"_identity-backend\";i:1;s:46:\"[1,\"AVA93xW5yfiHdWni3M0XBAxV7-T4Tk37\",2592000]\";}'
+    '_csrf-backend' => 'd979484bc2fa05d8fc8e76b0743e7518c059e6e89c26bf137e6a3a8ae03ae55fa:2:{i:0;s:13:\"_csrf-backend\";i:1;s:32:\"GXwfsbuet4B8quDIEH2J8gycoiWpsW_g\";}'
+    '_csrf-frontend' => 'b9354b14eb12d57cb1c33f23f9e4d90ba242bbaeb53a360d89e7f8c6d3f3aa2ba:2:{i:0;s:14:\"_csrf-frontend\";i:1;s:32:\"MQIxYHoit-sP5buY-hXYwVH7znYTAU9M\";}'
+    'advanced-frontend' => 'f9ecuj8e2evnidjmeoc2qb63oc'
+]
+
+$_SESSION = [
+    '__flash' => []
+    '__returnUrl' => 'http://localhost/retroverse-new/RetroVerse/backend/web/'
+    '__id' => 1
+    '__authKey' => 'AVA93xW5yfiHdWni3M0XBAxV7-T4Tk37'
+]
+
+$_SERVER = [
+    'REDIRECT_STATUS' => '200'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'HTTP_CACHE_CONTROL' => 'max-age=0'
+    'HTTP_SEC_CH_UA' => '\"Google Chrome\";v=\"131\", \"Chromium\";v=\"131\", \"Not_A Brand\";v=\"24\"'
+    'HTTP_SEC_CH_UA_MOBILE' => '?0'
+    'HTTP_SEC_CH_UA_PLATFORM' => '\"macOS\"'
+    'HTTP_UPGRADE_INSECURE_REQUESTS' => '1'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36'
+    'HTTP_ACCEPT' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7'
+    'HTTP_SEC_FETCH_SITE' => 'same-origin'
+    'HTTP_SEC_FETCH_MODE' => 'navigate'
+    'HTTP_SEC_FETCH_USER' => '?1'
+    'HTTP_SEC_FETCH_DEST' => 'document'
+    'HTTP_REFERER' => 'http://localhost/retroverse-new/RetroVerse/backend/web/'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, br, zstd'
+    'HTTP_ACCEPT_LANGUAGE' => 'pt-PT,pt;q=0.9,en-US;q=0.8,en;q=0.7'
+    'HTTP_COOKIE' => 'advanced-backend=es5cf9k4mjm4qcd6g9crcj3eu3; _identity-backend=a7b70a101cebbc1863ac1e50672d683b39f91fa74ee3a257dc422ae0eda9506ea%3A2%3A%7Bi%3A0%3Bs%3A17%3A%22_identity-backend%22%3Bi%3A1%3Bs%3A46%3A%22%5B1%2C%22AVA93xW5yfiHdWni3M0XBAxV7-T4Tk37%22%2C2592000%5D%22%3B%7D; _csrf-backend=d979484bc2fa05d8fc8e76b0743e7518c059e6e89c26bf137e6a3a8ae03ae55fa%3A2%3A%7Bi%3A0%3Bs%3A13%3A%22_csrf-backend%22%3Bi%3A1%3Bs%3A32%3A%22GXwfsbuet4B8quDIEH2J8gycoiWpsW_g%22%3B%7D; _csrf-frontend=b9354b14eb12d57cb1c33f23f9e4d90ba242bbaeb53a360d89e7f8c6d3f3aa2ba%3A2%3A%7Bi%3A0%3Bs%3A14%3A%22_csrf-frontend%22%3Bi%3A1%3Bs%3A32%3A%22MQIxYHoit-sP5buY-hXYwVH7znYTAU9M%22%3B%7D; advanced-frontend=f9ecuj8e2evnidjmeoc2qb63oc'
+    'PATH' => '/usr/bin:/bin:/usr/sbin:/sbin'
+    'SERVER_SIGNATURE' => ''
+    'SERVER_SOFTWARE' => 'Apache/2.4.54 (Unix) OpenSSL/1.0.2u PHP/8.1.13 mod_wsgi/3.5 Python/2.7.18 mod_fastcgi/mod_fastcgi-SNAP-0910052141 mod_perl/2.0.11 Perl/v5.30.1'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => '/Applications/MAMP/htdocs'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/Applications/MAMP/htdocs'
+    'SERVER_ADMIN' => 'you@example.com'
+    'SCRIPT_FILENAME' => '/Applications/MAMP/htdocs/retroverse-new/RetroVerse/backend/web/index.php'
+    'REMOTE_PORT' => '65518'
+    'REDIRECT_URL' => '/retroverse-new/RetroVerse/backend/web/orders/index'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'GET'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/retroverse-new/RetroVerse/backend/web/orders/index'
+    'SCRIPT_NAME' => '/retroverse-new/RetroVerse/backend/web/index.php'
+    'PHP_SELF' => '/retroverse-new/RetroVerse/backend/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1734021037.9166
+    'REQUEST_TIME' => 1734021037
+]
+2024-12-12 16:33:08 [::1][1][es5cf9k4mjm4qcd6g9crcj3eu3][error][yii\web\HttpException:404] yii\base\InvalidRouteException: Unable to resolve the request "orders/index". in /Applications/MAMP/htdocs/retroverse-new/RetroVerse/vendor/yiisoft/yii2/base/Module.php:561
+Stack trace:
+#0 /Applications/MAMP/htdocs/retroverse-new/RetroVerse/vendor/yiisoft/yii2/web/Application.php(103): yii\base\Module->runAction('orders/index', Array)
+#1 /Applications/MAMP/htdocs/retroverse-new/RetroVerse/vendor/yiisoft/yii2/base/Application.php(384): yii\web\Application->handleRequest(Object(yii\web\Request))
+#2 /Applications/MAMP/htdocs/retroverse-new/RetroVerse/backend/web/index.php(18): yii\base\Application->run()
+#3 {main}
+
+Next yii\web\NotFoundHttpException: Page not found. in /Applications/MAMP/htdocs/retroverse-new/RetroVerse/vendor/yiisoft/yii2/web/Application.php:115
+Stack trace:
+#0 /Applications/MAMP/htdocs/retroverse-new/RetroVerse/vendor/yiisoft/yii2/base/Application.php(384): yii\web\Application->handleRequest(Object(yii\web\Request))
+#1 /Applications/MAMP/htdocs/retroverse-new/RetroVerse/backend/web/index.php(18): yii\base\Application->run()
+#2 {main}
+2024-12-12 16:33:08 [::1][1][es5cf9k4mjm4qcd6g9crcj3eu3][info][application] $_GET = []
+
+$_POST = []
+
+$_FILES = []
+
+$_COOKIE = [
+    'advanced-backend' => 'es5cf9k4mjm4qcd6g9crcj3eu3'
+    '_identity-backend' => 'a7b70a101cebbc1863ac1e50672d683b39f91fa74ee3a257dc422ae0eda9506ea:2:{i:0;s:17:\"_identity-backend\";i:1;s:46:\"[1,\"AVA93xW5yfiHdWni3M0XBAxV7-T4Tk37\",2592000]\";}'
+    '_csrf-backend' => 'd979484bc2fa05d8fc8e76b0743e7518c059e6e89c26bf137e6a3a8ae03ae55fa:2:{i:0;s:13:\"_csrf-backend\";i:1;s:32:\"GXwfsbuet4B8quDIEH2J8gycoiWpsW_g\";}'
+    '_csrf-frontend' => 'b9354b14eb12d57cb1c33f23f9e4d90ba242bbaeb53a360d89e7f8c6d3f3aa2ba:2:{i:0;s:14:\"_csrf-frontend\";i:1;s:32:\"MQIxYHoit-sP5buY-hXYwVH7znYTAU9M\";}'
+    'advanced-frontend' => 'f9ecuj8e2evnidjmeoc2qb63oc'
+]
+
+$_SESSION = [
+    '__flash' => []
+    '__returnUrl' => 'http://localhost/retroverse-new/RetroVerse/backend/web/'
+    '__id' => 1
+    '__authKey' => 'AVA93xW5yfiHdWni3M0XBAxV7-T4Tk37'
+]
+
+$_SERVER = [
+    'REDIRECT_STATUS' => '200'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'HTTP_CACHE_CONTROL' => 'max-age=0'
+    'HTTP_SEC_CH_UA' => '\"Google Chrome\";v=\"131\", \"Chromium\";v=\"131\", \"Not_A Brand\";v=\"24\"'
+    'HTTP_SEC_CH_UA_MOBILE' => '?0'
+    'HTTP_SEC_CH_UA_PLATFORM' => '\"macOS\"'
+    'HTTP_UPGRADE_INSECURE_REQUESTS' => '1'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36'
+    'HTTP_ACCEPT' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7'
+    'HTTP_SEC_FETCH_SITE' => 'same-origin'
+    'HTTP_SEC_FETCH_MODE' => 'navigate'
+    'HTTP_SEC_FETCH_USER' => '?1'
+    'HTTP_SEC_FETCH_DEST' => 'document'
+    'HTTP_REFERER' => 'http://localhost/retroverse-new/RetroVerse/backend/web/'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, br, zstd'
+    'HTTP_ACCEPT_LANGUAGE' => 'pt-PT,pt;q=0.9,en-US;q=0.8,en;q=0.7'
+    'HTTP_COOKIE' => 'advanced-backend=es5cf9k4mjm4qcd6g9crcj3eu3; _identity-backend=a7b70a101cebbc1863ac1e50672d683b39f91fa74ee3a257dc422ae0eda9506ea%3A2%3A%7Bi%3A0%3Bs%3A17%3A%22_identity-backend%22%3Bi%3A1%3Bs%3A46%3A%22%5B1%2C%22AVA93xW5yfiHdWni3M0XBAxV7-T4Tk37%22%2C2592000%5D%22%3B%7D; _csrf-backend=d979484bc2fa05d8fc8e76b0743e7518c059e6e89c26bf137e6a3a8ae03ae55fa%3A2%3A%7Bi%3A0%3Bs%3A13%3A%22_csrf-backend%22%3Bi%3A1%3Bs%3A32%3A%22GXwfsbuet4B8quDIEH2J8gycoiWpsW_g%22%3B%7D; _csrf-frontend=b9354b14eb12d57cb1c33f23f9e4d90ba242bbaeb53a360d89e7f8c6d3f3aa2ba%3A2%3A%7Bi%3A0%3Bs%3A14%3A%22_csrf-frontend%22%3Bi%3A1%3Bs%3A32%3A%22MQIxYHoit-sP5buY-hXYwVH7znYTAU9M%22%3B%7D; advanced-frontend=f9ecuj8e2evnidjmeoc2qb63oc'
+    'PATH' => '/usr/bin:/bin:/usr/sbin:/sbin'
+    'SERVER_SIGNATURE' => ''
+    'SERVER_SOFTWARE' => 'Apache/2.4.54 (Unix) OpenSSL/1.0.2u PHP/8.1.13 mod_wsgi/3.5 Python/2.7.18 mod_fastcgi/mod_fastcgi-SNAP-0910052141 mod_perl/2.0.11 Perl/v5.30.1'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => '/Applications/MAMP/htdocs'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/Applications/MAMP/htdocs'
+    'SERVER_ADMIN' => 'you@example.com'
+    'SCRIPT_FILENAME' => '/Applications/MAMP/htdocs/retroverse-new/RetroVerse/backend/web/index.php'
+    'REMOTE_PORT' => '49155'
+    'REDIRECT_URL' => '/retroverse-new/RetroVerse/backend/web/orders/index'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'GET'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/retroverse-new/RetroVerse/backend/web/orders/index'
+    'SCRIPT_NAME' => '/retroverse-new/RetroVerse/backend/web/index.php'
+    'PHP_SELF' => '/retroverse-new/RetroVerse/backend/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1734021188.4013
+    'REQUEST_TIME' => 1734021188
+]
+2024-12-12 16:33:09 [::1][1][es5cf9k4mjm4qcd6g9crcj3eu3][error][yii\web\HttpException:404] yii\base\InvalidRouteException: Unable to resolve the request "orders/index". in /Applications/MAMP/htdocs/retroverse-new/RetroVerse/vendor/yiisoft/yii2/base/Module.php:561
+Stack trace:
+#0 /Applications/MAMP/htdocs/retroverse-new/RetroVerse/vendor/yiisoft/yii2/web/Application.php(103): yii\base\Module->runAction('orders/index', Array)
+#1 /Applications/MAMP/htdocs/retroverse-new/RetroVerse/vendor/yiisoft/yii2/base/Application.php(384): yii\web\Application->handleRequest(Object(yii\web\Request))
+#2 /Applications/MAMP/htdocs/retroverse-new/RetroVerse/backend/web/index.php(18): yii\base\Application->run()
+#3 {main}
+
+Next yii\web\NotFoundHttpException: Page not found. in /Applications/MAMP/htdocs/retroverse-new/RetroVerse/vendor/yiisoft/yii2/web/Application.php:115
+Stack trace:
+#0 /Applications/MAMP/htdocs/retroverse-new/RetroVerse/vendor/yiisoft/yii2/base/Application.php(384): yii\web\Application->handleRequest(Object(yii\web\Request))
+#1 /Applications/MAMP/htdocs/retroverse-new/RetroVerse/backend/web/index.php(18): yii\base\Application->run()
+#2 {main}
+2024-12-12 16:33:09 [::1][1][es5cf9k4mjm4qcd6g9crcj3eu3][info][application] $_GET = []
+
+$_POST = []
+
+$_FILES = []
+
+$_COOKIE = [
+    'advanced-backend' => 'es5cf9k4mjm4qcd6g9crcj3eu3'
+    '_identity-backend' => 'a7b70a101cebbc1863ac1e50672d683b39f91fa74ee3a257dc422ae0eda9506ea:2:{i:0;s:17:\"_identity-backend\";i:1;s:46:\"[1,\"AVA93xW5yfiHdWni3M0XBAxV7-T4Tk37\",2592000]\";}'
+    '_csrf-backend' => 'd979484bc2fa05d8fc8e76b0743e7518c059e6e89c26bf137e6a3a8ae03ae55fa:2:{i:0;s:13:\"_csrf-backend\";i:1;s:32:\"GXwfsbuet4B8quDIEH2J8gycoiWpsW_g\";}'
+    '_csrf-frontend' => 'b9354b14eb12d57cb1c33f23f9e4d90ba242bbaeb53a360d89e7f8c6d3f3aa2ba:2:{i:0;s:14:\"_csrf-frontend\";i:1;s:32:\"MQIxYHoit-sP5buY-hXYwVH7znYTAU9M\";}'
+    'advanced-frontend' => 'f9ecuj8e2evnidjmeoc2qb63oc'
+]
+
+$_SESSION = [
+    '__flash' => []
+    '__returnUrl' => 'http://localhost/retroverse-new/RetroVerse/backend/web/'
+    '__id' => 1
+    '__authKey' => 'AVA93xW5yfiHdWni3M0XBAxV7-T4Tk37'
+]
+
+$_SERVER = [
+    'REDIRECT_STATUS' => '200'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'HTTP_CACHE_CONTROL' => 'max-age=0'
+    'HTTP_SEC_CH_UA' => '\"Google Chrome\";v=\"131\", \"Chromium\";v=\"131\", \"Not_A Brand\";v=\"24\"'
+    'HTTP_SEC_CH_UA_MOBILE' => '?0'
+    'HTTP_SEC_CH_UA_PLATFORM' => '\"macOS\"'
+    'HTTP_UPGRADE_INSECURE_REQUESTS' => '1'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36'
+    'HTTP_ACCEPT' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7'
+    'HTTP_SEC_FETCH_SITE' => 'same-origin'
+    'HTTP_SEC_FETCH_MODE' => 'navigate'
+    'HTTP_SEC_FETCH_USER' => '?1'
+    'HTTP_SEC_FETCH_DEST' => 'document'
+    'HTTP_REFERER' => 'http://localhost/retroverse-new/RetroVerse/backend/web/'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, br, zstd'
+    'HTTP_ACCEPT_LANGUAGE' => 'pt-PT,pt;q=0.9,en-US;q=0.8,en;q=0.7'
+    'HTTP_COOKIE' => 'advanced-backend=es5cf9k4mjm4qcd6g9crcj3eu3; _identity-backend=a7b70a101cebbc1863ac1e50672d683b39f91fa74ee3a257dc422ae0eda9506ea%3A2%3A%7Bi%3A0%3Bs%3A17%3A%22_identity-backend%22%3Bi%3A1%3Bs%3A46%3A%22%5B1%2C%22AVA93xW5yfiHdWni3M0XBAxV7-T4Tk37%22%2C2592000%5D%22%3B%7D; _csrf-backend=d979484bc2fa05d8fc8e76b0743e7518c059e6e89c26bf137e6a3a8ae03ae55fa%3A2%3A%7Bi%3A0%3Bs%3A13%3A%22_csrf-backend%22%3Bi%3A1%3Bs%3A32%3A%22GXwfsbuet4B8quDIEH2J8gycoiWpsW_g%22%3B%7D; _csrf-frontend=b9354b14eb12d57cb1c33f23f9e4d90ba242bbaeb53a360d89e7f8c6d3f3aa2ba%3A2%3A%7Bi%3A0%3Bs%3A14%3A%22_csrf-frontend%22%3Bi%3A1%3Bs%3A32%3A%22MQIxYHoit-sP5buY-hXYwVH7znYTAU9M%22%3B%7D; advanced-frontend=f9ecuj8e2evnidjmeoc2qb63oc'
+    'PATH' => '/usr/bin:/bin:/usr/sbin:/sbin'
+    'SERVER_SIGNATURE' => ''
+    'SERVER_SOFTWARE' => 'Apache/2.4.54 (Unix) OpenSSL/1.0.2u PHP/8.1.13 mod_wsgi/3.5 Python/2.7.18 mod_fastcgi/mod_fastcgi-SNAP-0910052141 mod_perl/2.0.11 Perl/v5.30.1'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => '/Applications/MAMP/htdocs'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/Applications/MAMP/htdocs'
+    'SERVER_ADMIN' => 'you@example.com'
+    'SCRIPT_FILENAME' => '/Applications/MAMP/htdocs/retroverse-new/RetroVerse/backend/web/index.php'
+    'REMOTE_PORT' => '49155'
+    'REDIRECT_URL' => '/retroverse-new/RetroVerse/backend/web/orders/index'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'GET'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/retroverse-new/RetroVerse/backend/web/orders/index'
+    'SCRIPT_NAME' => '/retroverse-new/RetroVerse/backend/web/index.php'
+    'PHP_SELF' => '/retroverse-new/RetroVerse/backend/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1734021189.1426
+    'REQUEST_TIME' => 1734021189
+]
+2024-12-12 16:33:09 [::1][1][es5cf9k4mjm4qcd6g9crcj3eu3][error][yii\web\HttpException:404] yii\base\InvalidRouteException: Unable to resolve the request "orders/index". in /Applications/MAMP/htdocs/retroverse-new/RetroVerse/vendor/yiisoft/yii2/base/Module.php:561
+Stack trace:
+#0 /Applications/MAMP/htdocs/retroverse-new/RetroVerse/vendor/yiisoft/yii2/web/Application.php(103): yii\base\Module->runAction('orders/index', Array)
+#1 /Applications/MAMP/htdocs/retroverse-new/RetroVerse/vendor/yiisoft/yii2/base/Application.php(384): yii\web\Application->handleRequest(Object(yii\web\Request))
+#2 /Applications/MAMP/htdocs/retroverse-new/RetroVerse/backend/web/index.php(18): yii\base\Application->run()
+#3 {main}
+
+Next yii\web\NotFoundHttpException: Page not found. in /Applications/MAMP/htdocs/retroverse-new/RetroVerse/vendor/yiisoft/yii2/web/Application.php:115
+Stack trace:
+#0 /Applications/MAMP/htdocs/retroverse-new/RetroVerse/vendor/yiisoft/yii2/base/Application.php(384): yii\web\Application->handleRequest(Object(yii\web\Request))
+#1 /Applications/MAMP/htdocs/retroverse-new/RetroVerse/backend/web/index.php(18): yii\base\Application->run()
+#2 {main}
+2024-12-12 16:33:09 [::1][1][es5cf9k4mjm4qcd6g9crcj3eu3][info][application] $_GET = []
+
+$_POST = []
+
+$_FILES = []
+
+$_COOKIE = [
+    'advanced-backend' => 'es5cf9k4mjm4qcd6g9crcj3eu3'
+    '_identity-backend' => 'a7b70a101cebbc1863ac1e50672d683b39f91fa74ee3a257dc422ae0eda9506ea:2:{i:0;s:17:\"_identity-backend\";i:1;s:46:\"[1,\"AVA93xW5yfiHdWni3M0XBAxV7-T4Tk37\",2592000]\";}'
+    '_csrf-backend' => 'd979484bc2fa05d8fc8e76b0743e7518c059e6e89c26bf137e6a3a8ae03ae55fa:2:{i:0;s:13:\"_csrf-backend\";i:1;s:32:\"GXwfsbuet4B8quDIEH2J8gycoiWpsW_g\";}'
+    '_csrf-frontend' => 'b9354b14eb12d57cb1c33f23f9e4d90ba242bbaeb53a360d89e7f8c6d3f3aa2ba:2:{i:0;s:14:\"_csrf-frontend\";i:1;s:32:\"MQIxYHoit-sP5buY-hXYwVH7znYTAU9M\";}'
+    'advanced-frontend' => 'f9ecuj8e2evnidjmeoc2qb63oc'
+]
+
+$_SESSION = [
+    '__flash' => []
+    '__returnUrl' => 'http://localhost/retroverse-new/RetroVerse/backend/web/'
+    '__id' => 1
+    '__authKey' => 'AVA93xW5yfiHdWni3M0XBAxV7-T4Tk37'
+]
+
+$_SERVER = [
+    'REDIRECT_STATUS' => '200'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'HTTP_CACHE_CONTROL' => 'max-age=0'
+    'HTTP_SEC_CH_UA' => '\"Google Chrome\";v=\"131\", \"Chromium\";v=\"131\", \"Not_A Brand\";v=\"24\"'
+    'HTTP_SEC_CH_UA_MOBILE' => '?0'
+    'HTTP_SEC_CH_UA_PLATFORM' => '\"macOS\"'
+    'HTTP_UPGRADE_INSECURE_REQUESTS' => '1'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36'
+    'HTTP_ACCEPT' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7'
+    'HTTP_SEC_FETCH_SITE' => 'same-origin'
+    'HTTP_SEC_FETCH_MODE' => 'navigate'
+    'HTTP_SEC_FETCH_USER' => '?1'
+    'HTTP_SEC_FETCH_DEST' => 'document'
+    'HTTP_REFERER' => 'http://localhost/retroverse-new/RetroVerse/backend/web/'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, br, zstd'
+    'HTTP_ACCEPT_LANGUAGE' => 'pt-PT,pt;q=0.9,en-US;q=0.8,en;q=0.7'
+    'HTTP_COOKIE' => 'advanced-backend=es5cf9k4mjm4qcd6g9crcj3eu3; _identity-backend=a7b70a101cebbc1863ac1e50672d683b39f91fa74ee3a257dc422ae0eda9506ea%3A2%3A%7Bi%3A0%3Bs%3A17%3A%22_identity-backend%22%3Bi%3A1%3Bs%3A46%3A%22%5B1%2C%22AVA93xW5yfiHdWni3M0XBAxV7-T4Tk37%22%2C2592000%5D%22%3B%7D; _csrf-backend=d979484bc2fa05d8fc8e76b0743e7518c059e6e89c26bf137e6a3a8ae03ae55fa%3A2%3A%7Bi%3A0%3Bs%3A13%3A%22_csrf-backend%22%3Bi%3A1%3Bs%3A32%3A%22GXwfsbuet4B8quDIEH2J8gycoiWpsW_g%22%3B%7D; _csrf-frontend=b9354b14eb12d57cb1c33f23f9e4d90ba242bbaeb53a360d89e7f8c6d3f3aa2ba%3A2%3A%7Bi%3A0%3Bs%3A14%3A%22_csrf-frontend%22%3Bi%3A1%3Bs%3A32%3A%22MQIxYHoit-sP5buY-hXYwVH7znYTAU9M%22%3B%7D; advanced-frontend=f9ecuj8e2evnidjmeoc2qb63oc'
+    'PATH' => '/usr/bin:/bin:/usr/sbin:/sbin'
+    'SERVER_SIGNATURE' => ''
+    'SERVER_SOFTWARE' => 'Apache/2.4.54 (Unix) OpenSSL/1.0.2u PHP/8.1.13 mod_wsgi/3.5 Python/2.7.18 mod_fastcgi/mod_fastcgi-SNAP-0910052141 mod_perl/2.0.11 Perl/v5.30.1'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => '/Applications/MAMP/htdocs'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/Applications/MAMP/htdocs'
+    'SERVER_ADMIN' => 'you@example.com'
+    'SCRIPT_FILENAME' => '/Applications/MAMP/htdocs/retroverse-new/RetroVerse/backend/web/index.php'
+    'REMOTE_PORT' => '49155'
+    'REDIRECT_URL' => '/retroverse-new/RetroVerse/backend/web/orders/index'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'GET'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/retroverse-new/RetroVerse/backend/web/orders/index'
+    'SCRIPT_NAME' => '/retroverse-new/RetroVerse/backend/web/index.php'
+    'PHP_SELF' => '/retroverse-new/RetroVerse/backend/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1734021189.7563
+    'REQUEST_TIME' => 1734021189
+]
+2024-12-12 16:42:21 [::1][1][es5cf9k4mjm4qcd6g9crcj3eu3][error][yii\base\UnknownPropertyException] yii\base\UnknownPropertyException: Getting unknown property: common\models\VendaSearch::idestadoencomenda in /Applications/MAMP/htdocs/retroverse-new/RetroVerse/vendor/yiisoft/yii2/base/Component.php:154
+Stack trace:
+#0 /Applications/MAMP/htdocs/retroverse-new/RetroVerse/vendor/yiisoft/yii2/db/BaseActiveRecord.php(296): yii\base\Component->__get('idestadoencomen...')
+#1 /Applications/MAMP/htdocs/retroverse-new/RetroVerse/vendor/yiisoft/yii2/validators/Validator.php(257): yii\db\BaseActiveRecord->__get('idestadoencomen...')
+#2 /Applications/MAMP/htdocs/retroverse-new/RetroVerse/vendor/yiisoft/yii2/base/Model.php(368): yii\validators\Validator->validateAttributes(Object(common\models\VendaSearch), Array)
+#3 /Applications/MAMP/htdocs/retroverse-new/RetroVerse/common/models/VendaSearch.php(54): yii\base\Model->validate()
+#4 /Applications/MAMP/htdocs/retroverse-new/RetroVerse/backend/controllers/VendaController.php(43): common\models\VendaSearch->search(Array)
+#5 [internal function]: backend\controllers\VendaController->actionIndex()
+#6 /Applications/MAMP/htdocs/retroverse-new/RetroVerse/vendor/yiisoft/yii2/base/InlineAction.php(57): call_user_func_array(Array, Array)
+#7 /Applications/MAMP/htdocs/retroverse-new/RetroVerse/vendor/yiisoft/yii2/base/Controller.php(178): yii\base\InlineAction->runWithParams(Array)
+#8 /Applications/MAMP/htdocs/retroverse-new/RetroVerse/vendor/yiisoft/yii2/base/Module.php(552): yii\base\Controller->runAction('index', Array)
+#9 /Applications/MAMP/htdocs/retroverse-new/RetroVerse/vendor/yiisoft/yii2/web/Application.php(103): yii\base\Module->runAction('venda/index', Array)
+#10 /Applications/MAMP/htdocs/retroverse-new/RetroVerse/vendor/yiisoft/yii2/base/Application.php(384): yii\web\Application->handleRequest(Object(yii\web\Request))
+#11 /Applications/MAMP/htdocs/retroverse-new/RetroVerse/backend/web/index.php(18): yii\base\Application->run()
+#12 {main}
+2024-12-12 16:42:21 [::1][1][es5cf9k4mjm4qcd6g9crcj3eu3][info][application] $_GET = []
+
+$_POST = []
+
+$_FILES = []
+
+$_COOKIE = [
+    'advanced-backend' => 'es5cf9k4mjm4qcd6g9crcj3eu3'
+    '_identity-backend' => 'a7b70a101cebbc1863ac1e50672d683b39f91fa74ee3a257dc422ae0eda9506ea:2:{i:0;s:17:\"_identity-backend\";i:1;s:46:\"[1,\"AVA93xW5yfiHdWni3M0XBAxV7-T4Tk37\",2592000]\";}'
+    '_csrf-backend' => 'd979484bc2fa05d8fc8e76b0743e7518c059e6e89c26bf137e6a3a8ae03ae55fa:2:{i:0;s:13:\"_csrf-backend\";i:1;s:32:\"GXwfsbuet4B8quDIEH2J8gycoiWpsW_g\";}'
+    'advanced-frontend' => '39egmo3pbjusaq0d750igjvo81'
+    '_identity-frontend' => '706a8ccc8fffd0961d965325aafdc2103a15760bf61d95af43415cc83b3b7d86a:2:{i:0;s:18:\"_identity-frontend\";i:1;s:46:\"[1,\"AVA93xW5yfiHdWni3M0XBAxV7-T4Tk37\",2592000]\";}'
+    '_csrf-frontend' => '30ea7d3dff342c67386b85bb85fd0dd3cf812f7409029f007f9b2824d62f4527a:2:{i:0;s:14:\"_csrf-frontend\";i:1;s:32:\"fLn91MnNQwBEvXrkGJVGTUBLO8CIWKiB\";}'
+]
+
+$_SESSION = [
+    '__flash' => []
+    '__returnUrl' => 'http://localhost/retroverse-new/RetroVerse/backend/web/'
+    '__id' => 1
+    '__authKey' => 'AVA93xW5yfiHdWni3M0XBAxV7-T4Tk37'
+]
+
+$_SERVER = [
+    'REDIRECT_STATUS' => '200'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'HTTP_SEC_CH_UA' => '\"Google Chrome\";v=\"131\", \"Chromium\";v=\"131\", \"Not_A Brand\";v=\"24\"'
+    'HTTP_SEC_CH_UA_MOBILE' => '?0'
+    'HTTP_SEC_CH_UA_PLATFORM' => '\"macOS\"'
+    'HTTP_UPGRADE_INSECURE_REQUESTS' => '1'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36'
+    'HTTP_ACCEPT' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7'
+    'HTTP_SEC_FETCH_SITE' => 'same-origin'
+    'HTTP_SEC_FETCH_MODE' => 'navigate'
+    'HTTP_SEC_FETCH_USER' => '?1'
+    'HTTP_SEC_FETCH_DEST' => 'document'
+    'HTTP_REFERER' => 'http://localhost/retroverse-new/RetroVerse/backend/web/'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, br, zstd'
+    'HTTP_ACCEPT_LANGUAGE' => 'pt-PT,pt;q=0.9,en-US;q=0.8,en;q=0.7'
+    'HTTP_COOKIE' => 'advanced-backend=es5cf9k4mjm4qcd6g9crcj3eu3; _identity-backend=a7b70a101cebbc1863ac1e50672d683b39f91fa74ee3a257dc422ae0eda9506ea%3A2%3A%7Bi%3A0%3Bs%3A17%3A%22_identity-backend%22%3Bi%3A1%3Bs%3A46%3A%22%5B1%2C%22AVA93xW5yfiHdWni3M0XBAxV7-T4Tk37%22%2C2592000%5D%22%3B%7D; _csrf-backend=d979484bc2fa05d8fc8e76b0743e7518c059e6e89c26bf137e6a3a8ae03ae55fa%3A2%3A%7Bi%3A0%3Bs%3A13%3A%22_csrf-backend%22%3Bi%3A1%3Bs%3A32%3A%22GXwfsbuet4B8quDIEH2J8gycoiWpsW_g%22%3B%7D; advanced-frontend=39egmo3pbjusaq0d750igjvo81; _identity-frontend=706a8ccc8fffd0961d965325aafdc2103a15760bf61d95af43415cc83b3b7d86a%3A2%3A%7Bi%3A0%3Bs%3A18%3A%22_identity-frontend%22%3Bi%3A1%3Bs%3A46%3A%22%5B1%2C%22AVA93xW5yfiHdWni3M0XBAxV7-T4Tk37%22%2C2592000%5D%22%3B%7D; _csrf-frontend=30ea7d3dff342c67386b85bb85fd0dd3cf812f7409029f007f9b2824d62f4527a%3A2%3A%7Bi%3A0%3Bs%3A14%3A%22_csrf-frontend%22%3Bi%3A1%3Bs%3A32%3A%22fLn91MnNQwBEvXrkGJVGTUBLO8CIWKiB%22%3B%7D'
+    'PATH' => '/usr/bin:/bin:/usr/sbin:/sbin'
+    'SERVER_SIGNATURE' => ''
+    'SERVER_SOFTWARE' => 'Apache/2.4.54 (Unix) OpenSSL/1.0.2u PHP/8.1.13 mod_wsgi/3.5 Python/2.7.18 mod_fastcgi/mod_fastcgi-SNAP-0910052141 mod_perl/2.0.11 Perl/v5.30.1'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => '/Applications/MAMP/htdocs'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/Applications/MAMP/htdocs'
+    'SERVER_ADMIN' => 'you@example.com'
+    'SCRIPT_FILENAME' => '/Applications/MAMP/htdocs/retroverse-new/RetroVerse/backend/web/index.php'
+    'REMOTE_PORT' => '49323'
+    'REDIRECT_URL' => '/retroverse-new/RetroVerse/backend/web/venda/index'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'GET'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/retroverse-new/RetroVerse/backend/web/venda/index'
+    'SCRIPT_NAME' => '/retroverse-new/RetroVerse/backend/web/index.php'
+    'PHP_SELF' => '/retroverse-new/RetroVerse/backend/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1734021741.2136
+    'REQUEST_TIME' => 1734021741
+]

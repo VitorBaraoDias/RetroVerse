@@ -27,13 +27,26 @@ use yii\widgets\ListView;
                 'action' => ['index'],
                 'options' => ['class' => ''],
             ]); ?>
+            <div class="ml-3 mb-3 collection-span-texts">
+                <h2 style="font-weight:700">FILTERS</h2>
+            </div>
+
+
+            <!-- Nome do Artigo -->
+            <div class="ml-3 mb-3 collection-span-texts">
+                <?= $form->field($searchModel, 'nome')->textInput([
+                    'class' => 'form-control',
+                    'placeholder' => 'Pesquisar por nome',
+                ])->label(false) ?>
+            </div>
+
 
             <!-- CATEGORY Filter -->
             <?= $form->field($searchModel, 'idcategoria')->dropDownList(
                 ArrayHelper::map(\common\models\Categoriaartigo::find()->all(), 'id', 'nome'),
                 [
                     'prompt' => 'SELECIONE A CATEGORIA',
-                    'class' => 'mb-3 filter-dropdown',
+                    'class' => 'ml-3 mb-3 filter-dropdown',
                     'options' => [
                         '' => ['disabled' => true, 'selected' => true], // Garante que o prompt esteja desabilitado e selecionado por padrão
                     ],
@@ -45,7 +58,7 @@ use yii\widgets\ListView;
                 ArrayHelper::map(\common\models\Tamanho::find()->all(), 'id', 'tamanho'),
                 [
                     'prompt' => 'SELECIONE O TAMANHO',
-                    'class' => 'mb-3 filter-dropdown',
+                    'class' => 'ml-3 mb-3 filter-dropdown',
                     'options' => [
                         '' => ['disabled' => true, 'selected' => true],
                     ],
@@ -57,7 +70,7 @@ use yii\widgets\ListView;
                 ArrayHelper::map(\common\models\Estado::find()->all(), 'id', 'descricao'),
                 [
                     'prompt' => 'SELECIONE A CONDIÇÃO',
-                    'class' => 'mb-3 filter-dropdown',
+                    'class' => 'ml-3 mb-3 filter-dropdown',
                     'options' => [
                         '' => ['disabled' => true, 'selected' => true],
                     ],
@@ -69,36 +82,35 @@ use yii\widgets\ListView;
                 ArrayHelper::map(\common\models\Marca::find()->all(), 'id', 'nome'),
                 [
                     'prompt' => 'SELECIONE A MARCA',
-                    'class' => 'mb-3 filter-dropdown',
+                    'class' => 'ml-3 mb-3 filter-dropdown',
                     'options' => [
                         '' => ['disabled' => true, 'selected' => true],
                     ],
                 ]
             )->label(false) ?>
 
-
-            <div class="mb-3">
-                <!-- Slider para o preço mínimo -->
-                <input type="range" class="form-range" id="preco_min_range" name="SearchArtigo[preco_min]"
-                       min="0" max="1000" step="10" value="<?= isset($searchModel->preco_min) ? $searchModel->preco_min : 0 ?>"
-                       oninput="updateRangeValues()">
-
-                <!-- Slider para o preço máximo -->
-                <input type="range" class="form-range" id="preco_max_range" name="SearchArtigo[preco_max]"
-                       min="0" max="1000" step="10" value="<?= isset($searchModel->preco_max) ? $searchModel->preco_max : 1000 ?>"
-                       oninput="updateRangeValues()">
-
-                <!-- Display the selected values -->
-                <div class="d-flex justify-content-between">
-                    <span id="preco_min_value"><?= isset($searchModel->preco_min) ? $searchModel->preco_min : 0 ?></span>
-                    <span>até</span>
-                    <span id="preco_max_value"><?= isset($searchModel->preco_max) ? $searchModel->preco_max : 1000 ?></span>
+            <div class="preco_range-container rounded p-3 mb-3">
+                <label class="collection-span-texts  w-100" for="preco_range">PREÇO</label>
+                <!-- Slider único -->
+                <div class="range-filter-card ">
+                    <input class="w-100" type="range" id="preco_range" class="form-range" name="SearchArtigo[preco_min]"
+                           min="0" max="1000" step="10"
+                           value="<?= isset($searchModel->preco_min) ? $searchModel->preco_min : 0 ?>"
+                           oninput="updateRangeDisplay(this.value)">
                 </div>
+
+                <!-- Exibição dos valores mínimo e máximo -->
+                <div class="range-button-text-colection d-flex justify-content-between mt-2">
+                    <span class="collection-span-texts" id="range_min_display"><?= isset($searchModel->preco_min) ? $searchModel->preco_min : 0 ?></span>
+                    <span class="collection-span-texts">até</span>
+                    <span class="collection-span-texts" id="range_max_display"><?= isset($searchModel->preco_max) ? $searchModel->preco_max : 1000 ?></span>
+                </div>
+
+                <!-- Campos ocultos para envio -->
+                <input type="hidden" id="range_min" name="SearchArtigo[preco_min]" value="<?= isset($searchModel->preco_min) ? $searchModel->preco_min : 0 ?>">
+                <input type="hidden" id="range_max" name="SearchArtigo[preco_max]" value="<?= isset($searchModel->preco_max) ? $searchModel->preco_max : 1000 ?>">
             </div>
 
-            <!-- Campos ocultos para os valores de preco_min e preco_max -->
-            <input type="hidden" name="SearchArtigo[preco_min]" id="preco_min" value="<?= isset($searchModel->preco_min) ? $searchModel->preco_min : 0 ?>">
-            <input type="hidden" name="SearchArtigo[preco_max]" id="preco_max" value="<?= isset($searchModel->preco_max) ? $searchModel->preco_max : 1000 ?>">
 
 
             <!-- Search Button -->
@@ -128,21 +140,22 @@ use yii\widgets\ListView;
 </div>
 
 <script>
-    // Função para atualizar os valores mínimo e máximo do slider
-    function updateRangeValues() {
-        var minValue = document.getElementById('preco_min_range').value;
-        var maxValue = document.getElementById('preco_max_range').value;
+    // Atualizar os valores do range slider
+    function updateRangeDisplay(value) {
+        const maxPrice = 1000; // Valor máximo fixo do slider
+        const minPrice = value; // Valor mínimo ajustado no slider
 
-        // Mostrar os valores no console do navegador para depuração
-        console.log('Preço Mínimo: ', minValue);
-        console.log('Preço Máximo: ', maxValue);
+        // Atualiza os elementos de exibição
+        document.getElementById('range_min_display').textContent = minPrice;
+        document.getElementById('range_max_display').textContent = maxPrice;
 
-        // Atualiza os campos de texto na interface
-        document.getElementById('preco_min_value').textContent = minValue;
-        document.getElementById('preco_max_value').textContent = maxValue;
+        // Atualiza os campos ocultos do formulário
+        document.getElementById('range_min').value = minPrice;
+        document.getElementById('range_max').value = maxPrice;
 
-        // Atualiza os valores dos campos ocultos para envio no formulário
-        document.getElementById('preco_min').value = minValue;
-        document.getElementById('preco_max').value = maxValue;
+        // Debug no console
+        console.log("Preço mínimo: ", minPrice);
+        console.log("Preço máximo: ", maxPrice);
     }
 </script>
+

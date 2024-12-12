@@ -1,10 +1,7 @@
 <?php
 
 namespace backend\models;
-<<<<<<< HEAD
 
-=======
->>>>>>> 6981a9ceabea1ba976ed3fb9ae0ff498a4f6d5df
 use common\models\Fotosartigo;
 use Yii;
 use yii\base\Model;
@@ -16,10 +13,7 @@ class UploadForm extends Model
      * @var UploadedFile[]
      */
     public $imageFiles;
-<<<<<<< HEAD
 
-=======
->>>>>>> 6981a9ceabea1ba976ed3fb9ae0ff498a4f6d5df
     public function rules()
     {
         return [
@@ -29,7 +23,6 @@ class UploadForm extends Model
 
     public function upload($id)
     {
-<<<<<<< HEAD
         // Diretório para o backend
         $backendUploadDir = Yii::getAlias('@imageurl/img-artigos/');
 
@@ -85,7 +78,6 @@ class UploadForm extends Model
         }
         return false;
     }
-<<<<<<< HEAD
 
     public function removeFoto($fileName)
     {
@@ -95,12 +87,10 @@ class UploadForm extends Model
         $backendFilePath = $backendUploadDir . $fileName;
         $frontendFilePath = $frontendUploadDir . $fileName;
 
-        // Remover a foto do backend
         if (file_exists($backendFilePath)) {
             unlink($backendFilePath);
         }
 
-        // Remover a foto do frontend
         if (file_exists($frontendFilePath)) {
             unlink($frontendFilePath);
         }
@@ -108,7 +98,6 @@ class UploadForm extends Model
         return true;
     }
 }
-=======
     public function removeFoto($fileName)
     {
         $uploadDir = Yii::getAlias('@imageurl/img-artigos/');
@@ -119,4 +108,3 @@ class UploadForm extends Model
         return false;
     }
 }
->>>>>>> 6981a9ceabea1ba976ed3fb9ae0ff498a4f6d5df

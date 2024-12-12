@@ -54,6 +54,17 @@
 	opacity: 1;
 	transform: translateY(0); /* Move o botão para sua posição original */
 }
+.outline-black-retroverse-btn {
+	margin-left: 8px;
+	background: transparent;  /* Fundo transparente */
+	color: #1e1d1d;  /* Cor do texto em azul */
+	border: 2px solid #1e1d1d;  /* Borda azul */
+	padding: 10px 8px;  /* Espaçamento interno */
+	text-align: center;  /* Alinhar o texto no centro */
+	font-size: 16px;  /* Tamanho da fonte */
+	cursor: pointer;  /* Cursor de ponteiro ao passar sobre o botão */
+	transition: all 0.3s ease;  /* Transição suave para hover */
+}
 .retroverse-btn {
 	background: #0000FF;  /* Fundo transparente */
 	color: white;  /* Cor do texto em azul */
@@ -84,7 +95,6 @@
 }
 
 
-}
 #info-cart{
 	position: absolute;
 	top: -6px;
@@ -1118,7 +1128,7 @@ ol {
 }
 .premium-container-titles h5{
 	font-weight:bold;
-	color: #0000af;
+	color: ;#0000af
 }
 .premium-container-titles h2{
 	font-weight:bold;
@@ -1217,6 +1227,15 @@ ol {
 	background-cover: cover;
 }
 
+.banner-collection-premium {
+	display:flex;
+	background: url('../img/collection/collection-banner-premium.png');
+	align-items: center;
+	justify-content: center;
+	height:300px;
+	background-cover: cover;
+}
+
 .banner-collection-text {
 	color:white;
 	font-weight:700;
@@ -1239,21 +1258,77 @@ ol {
 	box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1); /* Sombra leve */
 }
 
-.filter-dropdown span{
+.collection-span-texts {
 	font-family: "Montserrat", sans-serif;
 	font-size: 14px; /* Define o tamanho geral */
 	font-weight:400;
 	color: black; /* Cor do texto padrão */
 }
 
+.collection-span-texts::placeholder {
+	font-size: inherit; /* Herdar tamanho da fonte */
+	font-weight: inherit; /* Herdar peso da fonte */
+	color: inherit; /* Herdar cor */
+	opacity: 0.6; /* Tornar o placeholder mais visível ou ajustável */
+}
+
+
+.filter-dropdown span {
+	font-family: "Montserrat", sans-serif;
+}
+
 .filter-dropdown:focus span {
 	font-weight: 700;
 }
 
+.preco_range-container:focus label	{
+	font-weight: 700;
+}
 
-/*---------------------
-  Hero
------------------------*/
+.range-filter-card {
+	background-color: #ffffff; /* Fundo branco */
+	border-radius: 12px;      /* Bordas arredondadas */
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra leve */
+	padding: 16px;
+}
+
+.shadow-sm {
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Pequena sombra */
+}
+
+input[type="range"] {
+	-webkit-appearance: none;
+	width: 100%;
+	height: 8px;
+	background: #e0e0e0; /* Cor da trilha */
+	border-radius: 5px;
+	outline: none;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+	-webkit-appearance: none;
+	width: 20px;
+	height: 20px;
+	background: #002aff; /* Cor do thumb */
+	border-radius: 50%; /* Arredondado */
+	cursor: pointer;
+}
+
+input[type="range"]::-moz-range-thumb {
+	width: 20px;
+	height: 20px;
+	background: #002aff; /* Cor do thumb */
+	border-radius: 50%;
+	cursor: pointer;
+}
+
+
+
+
+
+	/*---------------------
+      Hero
+    -----------------------*/
 
 .hero__slider.owl-carousel .owl-item.active .hero__text h6 {
 	top: 0;
