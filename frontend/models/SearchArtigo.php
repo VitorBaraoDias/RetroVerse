@@ -24,6 +24,7 @@ class SearchArtigo extends Artigo
             [['id', 'idcomissao', 'idestado', 'idmarca', 'idcategoria', 'idtamanho', 'idperfil', 'ativo'], 'integer'],
             [['nome', 'descricao'], 'string', 'max' => 255],
             [['precoanuncio'], 'number'],
+            [['preco_min', 'preco_max'], 'number'],
             [['tipoartigo'], 'safe'],
         ];
     }
@@ -76,9 +77,8 @@ class SearchArtigo extends Artigo
         $query->andFilterWhere(['like', 'nome', $this->nome])
             ->andFilterWhere(['like', 'descricao', $this->descricao]);
 
-        // Verifica se o filtro de preço foi definido
-        if ($this->preco_min !== null && $this->preco_max !== null) {
-            // Aplica filtro de intervalo de preço
+        // Filtro de preço
+        if (!is_null($this->preco_min) && !is_null($this->preco_max)) {
             $query->andFilterWhere(['>=', 'precoanuncio', $this->preco_min])
                 ->andFilterWhere(['<=', 'precoanuncio', $this->preco_max]);
         }

@@ -4,6 +4,7 @@ namespace frontend\controllers;
 
 use common\models\Artigo;
 use common\models\Carrinho;
+use common\models\Estadoencomenda;
 use common\models\Linhavenda;
 use common\models\Venda;
 use common\models\SearchVenda;
@@ -87,13 +88,18 @@ class VendaController extends Controller
 
         $userId = Yii::$app->user->id;
         $carrinho = Carrinho::findOne(['iduser' => $userId]);
-        $this->checkCart($carrinho);
-
         $transaction = Yii::$app->db->beginTransaction();
+
+        if(!$carrinho->ifExistsCart()){
+            Yii::$app->session->setFlash('error', 'Não existe o carrinho');
+            return $this->redirect(['site/index']);
+        }
         try {
-            if ($this->request->isPost) {
+            if ($carrinho->ifExistsCart() && $this->request->isPost) {
                 $model->idcomprador = $userId;
                 $model->total = $carrinho->getTotalVenda();
+                $model->idestadoencomenda = Estadoencomenda::getIdByStatusCode1(); //vai buscar o id do do status 1
+
 
                 if ($model->load($this->request->post()) && $model->save()) {
                     $linhasCarrinho = $carrinho->getLinhascarrinhos()->all();
@@ -118,13 +124,11 @@ class VendaController extends Controller
                     return $this->redirect(['view', 'id' => $model->id]);
                 }
             }
-
             $model->loadDefaultValues();
         } catch (\Exception $e) {
             $transaction->rollBack();
             Yii::$app->session->setFlash('error', 'Ocorreu um erro ao criar a venda: ' . $e->getMessage());
         }
-        // Carrinho e linhas validados, cria o DataProvider
         return $this->render('create', [
             'carrinho' => $carrinho,
             'model' => $model
@@ -182,19 +186,5 @@ class VendaController extends Controller
         throw new NotFoundHttpException('The requested page does not exist.');
     }
 
-
-    protected function checkCart($carrinho){
-
-        if ($carrinho === null) {
-            Yii::$app->session->setFlash('error', 'Não existe o carrinho.');
-            return $this->redirect(['site/index']); // Redireciona para uma página de fallback
-        }
-
-        // Verifica se há linhas no carrinho
-        if (!$carrinho->getLinhascarrinhos()->exists()) {
-            Yii::$app->session->setFlash('info', 'O carrinho está vazio.');
-            return $this->redirect(['site/index']); // Redireciona para a página inicial, por exemplo
-        }
-    }
 
 }

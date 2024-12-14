@@ -15,8 +15,8 @@ use yii\widgets\ListView;
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
 ?>
-<div class="banner-collection">
-    <div class="banner-collection-text">COLLECTION</div>
+<div class="banner-collection-premium">
+    <div class="banner-collection-text">PREMIUM COLLECTION</div>
 </div>
 <div class="container-fluid mt-4">
     <div class="row">

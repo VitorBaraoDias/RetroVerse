@@ -12,9 +12,9 @@ use Yii;
  * @property int $idartigo
  * @property int $idvendedor
  *
- * @property Artigos $idartigo0
- * @property Vendas $idvenda0
- * @property Perfils $idvendedor0
+ * @property Artigo $idartigo0
+ * @property Venda $idvenda0
+ * @property Perfil $idvendedor0
  */
 class Linhavenda extends \yii\db\ActiveRecord
 {

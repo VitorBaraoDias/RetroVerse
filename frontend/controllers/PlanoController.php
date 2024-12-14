@@ -2,11 +2,15 @@
 
 namespace frontend\controllers;
 
+use frontend\models\SearchArtigo;
+use Yii;
 use common\models\Plano;
+use common\models\Perfil;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+
 
 /**
  * PlanoController implements the CRUD actions for Plano model.
@@ -45,8 +49,36 @@ class PlanoController extends Controller
             throw new NotFoundHttpException('Nenhum plano ativo encontrado.');
         }
 
+
+        $userId = Yii::$app->user->id; //para ir buscar o perfil do utilizador logado
+        $perfil = Perfil::findOne(['id' => $userId]);
+
+        // Verifica se o utilizador tem um plano premium ativo
+        $isPremium = $perfil ? $perfil->hasActivePremiumPlano() : false;
+
+        // Define a variável pageName com base na verificação
+        $pageName = $isPremium ? '_collection_premium' : '_aderir_plano';
+
+
+        //Ir buscar os artigos premium
+        $searchModel = new SearchArtigo();
+
+        $queryParams = Yii::$app->request->queryParams;
+
+        if (!isset($queryParams['SearchArtigo']['tipo'])) {
+            $searchModel->tipo = 'premium';
+        }
+        if (!isset($queryParams['SearchArtigo']['ativo'])) {
+            $searchModel->ativo = 1;
+        }
+
+        $dataProvider = $searchModel->search($queryParams);
+
         return $this->render('index', [
             'plano' => $planoAtivo,
+            'pageName' => $pageName,
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
         ]);
     }
 
