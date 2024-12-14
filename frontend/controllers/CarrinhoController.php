@@ -41,22 +41,19 @@ class CarrinhoController extends Controller
      *
      * @return string
      */
-    public function actionIndex($id)
+    public function actionIndex()
     {
-        $carrinho = Carrinho::findOne(['iduser' => $id]);
+        $userId = Yii::$app->user->id;
+
+        $carrinho = Carrinho::findOne(['iduser' => $userId]);
 
         $iva = Iva::findOne(['emvigor' => 1]);
-
-
         if ($carrinho === null) {
             Yii::$app->session->setFlash('error', 'Não existe o carrinho');
             return $this->redirect(['index']); // Página de fallback
         }
-
         $dataProvider = new ActiveDataProvider([
             'query' => $carrinho->getLinhascarrinhos()]);
-
-
 
         return $this->render('index', [
             'dataProvider' => $dataProvider,
@@ -86,9 +83,6 @@ class CarrinhoController extends Controller
 
     public function actionCreate($id)
     {
-
-        $userId = Yii::$app->user->id;
-
         // Tenta encontrar ou criar um carrinho
         $carrinho = Carrinho::findOne(['iduser' => $userId]) ?? new Carrinho(['iduser' => $userId]);
 

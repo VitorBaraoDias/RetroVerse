@@ -82,7 +82,7 @@ $this->title = $model->id;
             </div>
             <hr>
             <div class="bg-light outline p-2">
-                (All items have been checked before selling)(All items have been checked before selling)(All items have been checked before selling)(All items have been checked before selling)
+                <?= $model->descricao ?>
             </div>
             <hr>
             <h1 class="font-weight-bold" style="font-size: 42px"><strong>SHIPPING INFO</strong></h1>

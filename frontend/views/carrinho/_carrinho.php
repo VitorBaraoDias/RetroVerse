@@ -13,7 +13,7 @@ $precoComIVA = $precoBase + $valorIVA;
 
 ?>
 <div class="d-flex align-items-center gap-4">
-    <div>
+    <div class="d-flex flex-column">
         <span>Store</span>
         <p style="font-size: 18px">
             <strong><?= Html::encode($model->artigo->nome) ?></strong>
@@ -26,9 +26,9 @@ $precoComIVA = $precoBase + $valorIVA;
         if ($firstPhoto && file_exists(Yii::getAlias('@frontend/web/uploads/img-artigos/') . $firstPhoto->caminhofoto)) {
             // Renderiza a imagem
             echo Html::img($imagePath, [
-                'alt' => 'Article Image',
+                'alt' => '',
                 'class' => 'w-100',
-                'style' => 'width: 350px; height: 220px; object-fit: cover;',
+                'style' => 'width: 220px; height: 220px; object-fit: cover;',
             ]);
         } else {
             echo Html::tag('div', '', [

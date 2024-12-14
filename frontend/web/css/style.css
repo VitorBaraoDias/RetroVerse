@@ -65,6 +65,11 @@
 	cursor: pointer;  /* Cursor de ponteiro ao passar sobre o botão */
 	transition: all 0.3s ease;  /* Transição suave para hover */
 }
+.outline-black-retroverse-btn:hover {
+
+	color: black !important;  /* Cor do texto em azul */
+
+}
 .retroverse-btn {
 	background: #0000FF;  /* Fundo transparente */
 	color: white;  /* Cor do texto em azul */

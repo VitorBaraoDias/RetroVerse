@@ -12,16 +12,32 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'id')->textInput() ?>
-
-    <?= $form->field($model, 'descricao')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'caminhofotoperfil')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'morada')->textInput(['maxlength' => true]) ?>
-
-    <div class="form-group">
-        <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
+    <div class="row">
+        <div class="col-md-6"></div>
+        <div class="col-md-6">
+            <div class="input-details">
+                <?= $form->field($model, 'username')->textInput([
+                    'autofocus' => true,
+                    'placeholder' => 'Enter your username'
+                ])->label('Username'); ?>
+            </div>
+            <div class="input-details">
+                <?= $form->field($model, 'descricao')->textInput([
+                    'autofocus' => true,
+                    'placeholder' => 'Enter your description'
+                ])->label('Description'); ?>
+            </div>
+            <?= $form->field($model, 'caminhofotoperfil')->textInput(['maxlength' => true]) ?>
+            <div class="input-details">
+                <?= $form->field($model, 'morada')->textInput([
+                    'autofocus' => true,
+                    'placeholder' => 'Enter your dress'
+                ])->label('Location'); ?>
+            </div>
+        </div>
+    </div>
+    <div class="form-group d-flex justify-content-end mt-4">
+        <?= Html::submitButton('CONFIRM', ['class' => 'btn retroverse-btn active w-auto px-5 py-2', 'id' => "retroverse-btn-active"]) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

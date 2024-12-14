@@ -11,32 +11,61 @@ use yii\grid\GridView;
 
 $this->title = 'Perfils';
 ?>
-<div class="perfil-index container-md">
-    <h1><strong>PROFILE</strong></h1>
-    <div class="row mt-4">
-        <div class="d-flex col-md-6">
-            <img src="<?= Yii::getAlias('@web') ?>/img/icon-profile.svg" alt="" height="140">
-            <div class="">
+<div class="perfil-index">
+    <h1 style="margin-left: 90px; margin-top:30px"><strong>PROFILE</strong></h1>
+
+    <div class="row justify-content-between mt-4 mx-5">
+        <div class="d-flex col-lg-6 row">
+            <img class="col-md-3" src="<?= Yii::getAlias('@web') ?>/img/icon-profile.svg" alt="" height="140">
+            <div class="col-md-9">
                 <div class="d-flex gap-4 align-items-center">
                     <h3>Username</h3>
                     <h3>Reviews</h3>
-                    <?= Html::a('EDIT PROFILE', ['perfil/update'], [
+                    <?= Html::a('EDIT PROFILE', ['perfil/update', 'id' => Yii::$app->user->id], [
                         'class' => 'btn retroverse-btn',
                         'id' => 'retroverse-btn-active',
-                        'style' => 'font-size: x-small; gap: 10px',
+                        'style' => 'font-size: x-small; gap: 10px; padding: 5px',
                     ]) ?>
+
                 </div>
-                <p class="text-wrap">descriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescription</p>
-                <div>
+                <div class="mt-4" style="word-break: break-all;">descriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescription</div>
+                <div class="d-flex justify-content-between mt-4">
                     <?= Html::a('EDIT PROFILE', ['perfil/update'], [
                         'class' => 'outline-black-retroverse-btn',
-                        'style' => 'font-size: x-small; gap: 10px',
+                        'style' => 'font-size: x-small; margin-left: 0',
+                    ]) ?>
+                    <?= Html::a('EDIT PROFILE', ['perfil/update'], [
+                        'class' => 'outline-black-retroverse-btn',
+                        'style' => 'font-size: x-small; margin-left: 0',
                     ]) ?>
                 </div>
             </div>
         </div>
-        <div class="col-md-6"></div>
+        <div class="col-lg-4 p-4 card mt-5 mt-lg-0">
+            <div class="d-flex justify-content-between" style="gap: 50px">
+                <span>EARNINGS AND STATS</span>
+                <?= Html::a('HISTORY', ['perfil/update'], [
+                    'class' => 'btn retroverse-btn',
+                    'id' => 'retroverse-btn-active',
+                    'style' => 'font-size: x-small; gap: 10px; padding: 10px',
+                ]) ?>
+            </div>
+            <div class="d-flex justify-content-between px-4 mt-5">
+                <div class="d-flex flex-column align-items-center">
+                    <span>can earn up to</span>
+                    <strong>5</strong>
+                </div>
+                <div class="d-flex flex-column align-items-center">
+                    <span>total earnings</span>
+                    <strong>5</strong>
+
+                </div>
+            </div>
+        </div>
 
     </div>
-
+    <div class="" style="margin-left: 90px; margin-top:10px">
+        <h2><strong>MY ITENS</strong></h2>
+        cards
+    </div>
 </div>

@@ -59,19 +59,18 @@ return [
             'showScriptName' => false,
             'rules' => [
                 ['class' => 'yii\rest\UrlRule', 'controller' => 'api/artigo',
-                    'extraPatterns' => [
-                        'GET {tipo}/{tamanho}/{marca}/{estado}' => 'artigofiltro',
-                        // Adicionar uma regra para parâmetros opcionais
+                'extraPatterns' => [
+                    'GET {id}/preco' => 'preco', // 'preco' é 'actionPreco'
+                    'GET {tipo}/{tamanho}/{marca}/{estado}' => 'artigofiltro',
                         'GET {tipo}/{tamanho}/{marca}' => 'artigofiltro',
                         'GET {tipo}/{tamanho}' => 'artigofiltro',
-                        'GET {tipo}' => 'artigofiltro',
-                    ],
-                    'tokens' => [
+                        'GET ' => 'artigofiltro',
+                ], 'tokens' => [
+                        '{id}' => '<id:\\d+>',
                         '{tipo}' => '<tipo:\\w+>',
                         '{tamanho}' => '<tamanho:\\w+>',
                         '{marca}' => '<marca:\\w+>',
                         '{estado}' => '<estado:\\w+>',
-
                     ],
                 ],
                 [

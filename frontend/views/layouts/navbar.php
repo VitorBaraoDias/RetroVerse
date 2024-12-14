@@ -54,7 +54,7 @@ $carrinho = \common\models\Carrinho::findOne(['iduser' => Yii::$app->user->id]);
                         <div class="navbar__icons">
 
                             <a href=""><img src="<?= Yii::getAlias('@web') ?>/img/favourites.svg" alt=""></a>
-                            <a href="<?= Yii::$app->urlManager->createUrl(['carrinho/index', 'id' => Yii::$app->user->id]) ?>" style="position: relative">
+                            <a href="<?= Yii::$app->urlManager->createUrl(['carrinho/index']) ?>" style="position: relative">
                                     <img src="<?= Yii::getAlias('@web') ?>/img/cart.svg" alt="">
                                     <div id="info-cart">
                                         <?= $carrinho ? $carrinho->getLinhascarrinhos()->count() : 0 ?>
