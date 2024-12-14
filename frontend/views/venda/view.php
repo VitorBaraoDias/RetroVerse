@@ -44,7 +44,7 @@ $this->title = 'ORDER #' . $model->codigo;
                         <?= Html::encode($model->cidade ?? 'Cidade desconhecida') ?></p>
                     <p><?= Html::encode($model->pais ?? 'País desconhecido') ?></p>
                     <h5><strong>CARRIER</strong></h5>
-                    <p><?= Html::encode($model->idmetodoexpedicao0->nome ?? 'Transportadora desconhecida') ?></p>
+                    <p><?= Html::encode($model->metodoExpedicao->nome ?? 'Transportadora desconhecida') ?></p>
                 </div>
             </div>
 

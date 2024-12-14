@@ -12,7 +12,9 @@ use yii\grid\GridView;
 /** @var common\models\Plano $plano */
 /** @var common\models\SearchArtigo $searchModel */
 
+$this->title = 'Planos';
 ?>
+
 <div class="plano-index">
     <?= $this->render($pageName, [
         'plano' => $plano,

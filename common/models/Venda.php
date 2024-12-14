@@ -19,11 +19,7 @@ use Yii;
  * @property string $morada
  * @property string $pais
  * @property string $cidade
-<<<<<<< HEAD
- *
-=======
  * @property string $codigo
->>>>>>> fdff1d60d879f717b79b00aa022c7505e4147740
  * @property Avaliacoes[] $avaliacoes
  * @property Devolucoes[] $devolucoes
  * @property Perfils $idcomprador0
@@ -140,6 +136,7 @@ class Venda extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
+
     public function getTipoPagamento()
     {
         return $this->hasOne(Tipopagamento::class, ['id' => 'idtipopagamento']);
