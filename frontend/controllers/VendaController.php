@@ -74,6 +74,7 @@ class VendaController extends Controller
             'dataProvider' => $dataProvider,  // Passa o dataProvider para a view
         ]);
 
+
     }
 
     /**

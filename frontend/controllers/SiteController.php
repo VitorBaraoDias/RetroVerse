@@ -202,7 +202,8 @@ class SiteController extends Controller
     {
         $plano = Plano::findOne(['id' => 2]);
         return $this->render('premium', ['plano' => $plano,
-        ]);    }
+        ]);
+    }
 
     /**
      * Signs user up.
