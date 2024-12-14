@@ -37,6 +37,7 @@ class UploadForm extends Model
             mkdir($frontendUploadDir, 0775, true);
         }
 
+        // Valida os arquivos de imagem
         if ($this->validate()) {
             foreach ($this->imageFiles as $file) {
                 // Gerar um nome único para o arquivo
@@ -48,7 +49,7 @@ class UploadForm extends Model
                 // Caminho para salvar no frontend
                 $frontendFilePath = $frontendUploadDir . $fileName;
 
-                // Salvar nos dois locais
+                // Salvar nos dois locais (backend e frontend)
                 if ($file->saveAs($backendFilePath)) {
                     copy($backendFilePath, $frontendFilePath);
 
@@ -56,21 +57,6 @@ class UploadForm extends Model
                     $fotoModel = new Fotosartigo();
                     $fotoModel->idartigo = $id;
                     $fotoModel->caminhofoto = $fileName;
-=======
-        $uploadDir = Yii::getAlias('@imageurl/img-artigos/');
-
-        if ($this->validate()) {
-            foreach ($this->imageFiles as $file) {
-
-                //idunico
-                $fileName = uniqid()  . '.' . $file->extension;
-                $filePath = $uploadDir .  $fileName;
-
-                if ($file->saveAs($filePath)) {
-                    $fotoModel = new Fotosartigo();
-                    $fotoModel->idartigo = $id;
-                    $fotoModel->caminhofoto =  $fileName;
->>>>>>> 6981a9ceabea1ba976ed3fb9ae0ff498a4f6d5df
                     $fotoModel->save(false);
                 }
             }
@@ -98,13 +84,4 @@ class UploadForm extends Model
         return true;
     }
 }
-    public function removeFoto($fileName)
-    {
-        $uploadDir = Yii::getAlias('@imageurl/img-artigos/');
-        $filePath = $uploadDir . $fileName;
-        if (file_exists($filePath)) {
-            return unlink($filePath);
-        }
-        return false;
-    }
-}
+
