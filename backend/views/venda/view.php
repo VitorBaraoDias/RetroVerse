@@ -81,11 +81,20 @@ $this->params['breadcrumbs'][] = $this->title;
                 'label' => 'Foto',
                 'format' => 'raw',
                 'value' => function ($model) {
-                    $primeiraFoto = $model->idartigo0->fotosartigos[0]->url ?? null; // Obtém a primeira foto do artigo
-                    if ($primeiraFoto) {
-                        return Html::img($primeiraFoto, ['alt' => 'Foto', 'width' => '50px']);
+                    $firstPhoto = $model->idartigo0->fotosartigos[0] ?? null;
+                    if ($firstPhoto && file_exists('../../common/uploads/img-artigos/' . $firstPhoto->caminhofoto)) {
+                        return Html::img(('../../../common/uploads/img-artigos/'). $firstPhoto->caminhofoto, [
+                            'alt' => 'Article Image',
+                            'class' => 'img-thumbnail',
+                            'style' => 'width: 370px; height: 270px; object-fit: cover;',
+                        ]);
+                    } else {
+                        // Se não houver imagem, exibir uma div cinza
+                        return Html::tag('div', '', [
+                            'class' => 'img-thumbnail',
+                            'style' => 'width: 150px; height: 150px; background-color: grey; display: flex; align-items: center; justify-content: center;',
+                        ]);
                     }
-                    return 'Sem Foto';
                 },
             ],
             [

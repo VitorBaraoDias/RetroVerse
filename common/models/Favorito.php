@@ -11,8 +11,8 @@ use Yii;
  * @property int $idartigo
  * @property int $idperfil
  *
- * @property Artigos $idartigo0
- * @property Perfils $idperfil0
+ * @property Artigo $idartigo0
+ * @property Perfil $idperfil0
  */
 class Favorito extends \yii\db\ActiveRecord
 {
@@ -32,8 +32,8 @@ class Favorito extends \yii\db\ActiveRecord
         return [
             [['idartigo', 'idperfil'], 'required'],
             [['idartigo', 'idperfil'], 'integer'],
-            [['idartigo'], 'exist', 'skipOnError' => true, 'targetClass' => Artigos::class, 'targetAttribute' => ['idartigo' => 'id']],
-            [['idperfil'], 'exist', 'skipOnError' => true, 'targetClass' => Perfils::class, 'targetAttribute' => ['idperfil' => 'id']],
+            [['idartigo'], 'exist', 'skipOnError' => true, 'targetClass' => Artigo::class, 'targetAttribute' => ['idartigo' => 'id']],
+            [['idperfil'], 'exist', 'skipOnError' => true, 'targetClass' => Perfil::class, 'targetAttribute' => ['idperfil' => 'id']],
         ];
     }
 
@@ -54,9 +54,9 @@ class Favorito extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getIdartigo0()
+    public function getArtigo()
     {
-        return $this->hasOne(Artigos::class, ['id' => 'idartigo']);
+        return $this->hasOne(Artigo::class, ['id' => 'idartigo']);
     }
 
     /**
@@ -64,8 +64,10 @@ class Favorito extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getIdperfil0()
+    public function getPerfil()
     {
-        return $this->hasOne(Perfils::class, ['id' => 'idperfil']);
+        return $this->hasOne(Perfil::class, ['id' => 'idperfil']);
     }
+
+
 }
