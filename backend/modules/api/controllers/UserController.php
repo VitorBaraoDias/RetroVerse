@@ -2,6 +2,7 @@
 
 namespace backend\modules\api\controllers;
 
+use frontend\models\SignupForm;
 use Yii;
 use yii\rest\ActiveController;
 
@@ -11,31 +12,31 @@ use yii\rest\ActiveController;
 class UserController extends ActiveController
 {
 
+    public $modelClass = 'common\models\User';
 
-    public function actionCreate()
+    public function behaviors()
     {
-        $model = new User();
-
-        // Receber os dados enviados no POST
-        $data = Yii::$app->request->post();
-
-        die($data);
-        // Carregar os dados no modelo
-        if ($model->load($data, '') && $model->save()) {
-            // Se o modelo salvar com sucesso, retorne os dados
-            return [
-                'success' => true,
-                'data' => $model,
-            ];
-        }
-
-        // Se falhar, retornar os erros de validação
-        Yii::$app->response->statusCode = 422;
-        return [
-            'success' => false,
-            'errors' => $model->errors,
-        ];
+        $behaviors = parent::behaviors();
+        return $behaviors;
     }
 
+    /**
+     * Personalizar ações, se necessário
+     */
+    public function actions()
+    {
+        $actions = parent::actions();
+        unset($actions['delete']);
+        return $actions;
+    }
+    public function actionUsercreate(){
 
+        $model = new SignupForm();
+
+        // Carregar os dados enviados via POST no formulário de registro
+        if ($model->load(\Yii::$app->request->post())) {
+            var_dump($model);
+        }
+        return 'erro';
+    }
 }

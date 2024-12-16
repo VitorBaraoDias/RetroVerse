@@ -31,9 +31,6 @@ class ArtigoController extends ActiveController
         return true;
     }
 
-    public function actionIndex(){
-        die('ola');
-    }
     public function actionArtigofiltro($tipo = null, $tamanho = null, $estado = null, $marca = null)
     {
         $query = Artigo::find()

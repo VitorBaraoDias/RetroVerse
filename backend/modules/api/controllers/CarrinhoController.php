@@ -91,11 +91,6 @@ class CarrinhoController extends ActiveController
             'carrinho' => $linhasCarrinhoFormatted,
         ];
     }
-
-
-
-
-
     public function beforeAction($action)
     {
 

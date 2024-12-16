@@ -16,10 +16,15 @@ $this->title = 'Perfils';
 
     <div class="row justify-content-between mt-4 mx-5">
         <div class="d-flex col-lg-6 row">
-            <img class="col-md-3" src="<?= Yii::getAlias('@web') ?>/img/icon-profile.svg" alt="" height="140">
+                <?php if (!empty($model->caminhofotoperfil)): ?>
+                    <img class="col-md-3 rounded-circle" style="object-fit: cover" src="<?= Yii::getAlias('@web') ?>/uploads/img-profile/<?= $model->caminhofotoperfil ?>" alt="Foto de Perfil" height="140">
+                <?php else: ?>
+                    <img class="col-md-3" src="<?= Yii::getAlias('@web') ?>/img/icon-profile.svg" alt="Ícone de Perfil" height="140">
+                <?php endif; ?>
             <div class="col-md-9">
                 <div class="d-flex gap-4 align-items-center">
-                    <h3>Username</h3>
+                    <h3><?= $model->user->username?></h3>
+                    <div class="rounded-circle" style="background-color: #0000FF; height: 7px; width: 20px"></div>
                     <h3>Reviews</h3>
                     <?= Html::a('EDIT PROFILE', ['perfil/update', 'id' => Yii::$app->user->id], [
                         'class' => 'btn retroverse-btn',
@@ -28,7 +33,7 @@ $this->title = 'Perfils';
                     ]) ?>
 
                 </div>
-                <div class="mt-4" style="word-break: break-all;">descriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescription</div>
+                <div class="mt-4" style="word-break: break-all;"><?= $model->descricao?></div>
                 <div class="d-flex justify-content-between mt-4">
                     <?= Html::a('EDIT PROFILE', ['perfil/update'], [
                         'class' => 'outline-black-retroverse-btn',

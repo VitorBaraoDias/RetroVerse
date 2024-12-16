@@ -2,11 +2,15 @@
 
 namespace frontend\controllers;
 
+use common\models\Carrinho;
 use common\models\Perfil;
+use frontend\models\UploadForm;
+use Yii;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\UploadedFile;
 
 /**
  * PerfilController implements the CRUD actions for Perfil model.
@@ -38,22 +42,11 @@ class PerfilController extends Controller
      */
     public function actionIndex()
     {
-        $dataProvider = new ActiveDataProvider([
-            'query' => Perfil::find(),
-            /*
-            'pagination' => [
-                'pageSize' => 50
-            ],
-            'sort' => [
-                'defaultOrder' => [
-                    'id' => SORT_DESC,
-                ]
-            ],
-            */
-        ]);
+        $perfil = Perfil::findOne(['id' => Yii::$app->user->id]);
+
 
         return $this->render('index', [
-            'dataProvider' => $dataProvider,
+            'model' => $perfil,
         ]);
     }
 
@@ -75,23 +68,6 @@ class PerfilController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return string|\yii\web\Response
      */
-    public function actionCreate()
-    {
-        $model = new Perfil();
-
-        if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
-            }
-        } else {
-            $model->loadDefaultValues();
-        }
-
-        return $this->render('create', [
-            'model' => $model,
-        ]);
-    }
-
     /**
      * Updates an existing Perfil model.
      * If update is successful, the browser will be redirected to the 'view' page.
@@ -101,14 +77,44 @@ class PerfilController extends Controller
      */
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
-
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        $perfil = Perfil::findOne($id);
+        if (!$perfil) {
+            Yii::$app->session->setFlash('info', 'erro');
+            return $this->redirect(['site/index']);
         }
 
+        $uploadForm = new UploadForm();
+        if (Yii::$app->request->isPost) {
+            $perfil->load(Yii::$app->request->post());
+            $uploadForm->imageFile = UploadedFile::getInstance($uploadForm, 'imageFile');
+
+            // Validação conjunta do perfil e do upload // verifica se possui alguma foto já
+            if ($perfil->validate() && $uploadForm->validate()) {
+
+                $oldProfileimg = $perfil->caminhofotoperfil;
+                if($uploadForm->upload()){
+                    $perfil->caminhofotoperfil = $uploadForm->imagepath;
+                    if ($perfil->save()) {
+
+                        $uploadForm->deleteProfileImageIfExist($oldProfileimg);
+                        Yii::$app->session->setFlash('success', 'Perfil atualizado com sucesso.');
+                        return $this->redirect(['view', 'id' => $perfil->id]);
+                    }
+                    else{
+                        $uploadForm->deleteProfileImageIfExist($perfil->caminhofotoperfil);
+                    }
+                }
+            }
+            else{
+                Yii::$app->session->setFlash('info', 'erro');
+                return $this->redirect(['site/index']);
+            }
+        }
+
+        // Renderizar o formulário com os dados
         return $this->render('update', [
-            'model' => $model,
+            'model' => $perfil,
+            'uploadForm' => $uploadForm,
         ]);
     }
 

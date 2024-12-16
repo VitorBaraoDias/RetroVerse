@@ -11146,3 +11146,860 @@ $_SERVER = [
     'REQUEST_TIME_FLOAT' => 1734021122.8765
     'REQUEST_TIME' => 1734021122
 ]
+2024-12-15 18:40:55 [::1][1][87bsuda0a9dvejdna2ge1dac70][error][Error] Error: Class "common\models\models\User" not found in /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/rest/IndexAction.php:149
+Stack trace:
+#0 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/rest/IndexAction.php(117): yii\rest\IndexAction->prepareDataProvider()
+#1 [internal function]: yii\rest\IndexAction->run()
+#2 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Action.php(93): call_user_func_array(Array, Array)
+#3 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Controller.php(178): yii\base\Action->runWithParams(Array)
+#4 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Module.php(552): yii\base\Controller->runAction('index', Array)
+#5 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/web/Application.php(103): yii\base\Module->runAction('api/user/index', Array)
+#6 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Application.php(384): yii\web\Application->handleRequest(Object(yii\web\Request))
+#7 /Applications/MAMP/htdocs/RetroVerse/backend/web/index.php(18): yii\base\Application->run()
+#8 {main}
+2024-12-15 18:40:55 [::1][1][87bsuda0a9dvejdna2ge1dac70][info][application] $_GET = []
+
+$_POST = []
+
+$_FILES = []
+
+$_COOKIE = [
+    '_identity-backend' => 'a7b70a101cebbc1863ac1e50672d683b39f91fa74ee3a257dc422ae0eda9506ea:2:{i:0;s:17:\"_identity-backend\";i:1;s:46:\"[1,\"AVA93xW5yfiHdWni3M0XBAxV7-T4Tk37\",2592000]\";}'
+    '_identity-frontend' => '706a8ccc8fffd0961d965325aafdc2103a15760bf61d95af43415cc83b3b7d86a:2:{i:0;s:18:\"_identity-frontend\";i:1;s:46:\"[1,\"AVA93xW5yfiHdWni3M0XBAxV7-T4Tk37\",2592000]\";}'
+    '_csrf-frontend' => 'c2004a6ab66d002f341f3c35e932e82818fd94906edfbd81bf2626fb82f1d395a:2:{i:0;s:14:\"_csrf-frontend\";i:1;s:32:\"TpUCeql6CUIIn59pD9XCWYtO8Q0M5Vh7\";}'
+    'advanced-frontend' => '1hbck95te2llb8td2m4gc6ibqh'
+    '_csrf-backend' => 'b52575adccd266b427bf7923ca816c390e399879a70524cef69c2f5b36464548a:2:{i:0;s:13:\"_csrf-backend\";i:1;s:32:\"oWuFSXXdeORbyeGy-JljlfatR4haW91A\";}'
+    'advanced-backend' => '87bsuda0a9dvejdna2ge1dac70'
+    'PHPSESSID' => 'n17po6bfmvmj3lncdqgq8ls2n0'
+    'sidebar-collapse' => 'false'
+    'dropdown-legacy' => 'false'
+    'layout-navbar-fixed' => 'false'
+    'dark-mode' => 'false'
+]
+
+$_SESSION = [
+    '__flash' => []
+    '__id' => 1
+    '__authKey' => 'AVA93xW5yfiHdWni3M0XBAxV7-T4Tk37'
+]
+
+$_SERVER = [
+    'REDIRECT_STATUS' => '200'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_SEC_FETCH_SITE' => 'none'
+    'HTTP_COOKIE' => '_identity-backend=a7b70a101cebbc1863ac1e50672d683b39f91fa74ee3a257dc422ae0eda9506ea%3A2%3A%7Bi%3A0%3Bs%3A17%3A%22_identity-backend%22%3Bi%3A1%3Bs%3A46%3A%22%5B1%2C%22AVA93xW5yfiHdWni3M0XBAxV7-T4Tk37%22%2C2592000%5D%22%3B%7D; _identity-frontend=706a8ccc8fffd0961d965325aafdc2103a15760bf61d95af43415cc83b3b7d86a%3A2%3A%7Bi%3A0%3Bs%3A18%3A%22_identity-frontend%22%3Bi%3A1%3Bs%3A46%3A%22%5B1%2C%22AVA93xW5yfiHdWni3M0XBAxV7-T4Tk37%22%2C2592000%5D%22%3B%7D; _csrf-frontend=c2004a6ab66d002f341f3c35e932e82818fd94906edfbd81bf2626fb82f1d395a%3A2%3A%7Bi%3A0%3Bs%3A14%3A%22_csrf-frontend%22%3Bi%3A1%3Bs%3A32%3A%22TpUCeql6CUIIn59pD9XCWYtO8Q0M5Vh7%22%3B%7D; advanced-frontend=1hbck95te2llb8td2m4gc6ibqh; _csrf-backend=b52575adccd266b427bf7923ca816c390e399879a70524cef69c2f5b36464548a%3A2%3A%7Bi%3A0%3Bs%3A13%3A%22_csrf-backend%22%3Bi%3A1%3Bs%3A32%3A%22oWuFSXXdeORbyeGy-JljlfatR4haW91A%22%3B%7D; advanced-backend=87bsuda0a9dvejdna2ge1dac70; PHPSESSID=n17po6bfmvmj3lncdqgq8ls2n0; sidebar-collapse=false; dropdown-legacy=false; layout-navbar-fixed=false; dark-mode=false'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'HTTP_UPGRADE_INSECURE_REQUESTS' => '1'
+    'HTTP_SEC_FETCH_MODE' => 'navigate'
+    'HTTP_ACCEPT' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.0.1 Safari/605.1.15'
+    'HTTP_ACCEPT_LANGUAGE' => 'en-US,en;q=0.9'
+    'HTTP_SEC_FETCH_DEST' => 'document'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate'
+    'PATH' => '/usr/bin:/bin:/usr/sbin:/sbin'
+    'SERVER_SIGNATURE' => ''
+    'SERVER_SOFTWARE' => 'Apache/2.4.54 (Unix) OpenSSL/1.0.2u PHP/8.1.13 mod_wsgi/3.5 Python/2.7.18 mod_fastcgi/mod_fastcgi-SNAP-0910052141 mod_perl/2.0.11 Perl/v5.30.1'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => '/Applications/MAMP/htdocs'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/Applications/MAMP/htdocs'
+    'SERVER_ADMIN' => 'you@example.com'
+    'SCRIPT_FILENAME' => '/Applications/MAMP/htdocs/RetroVerse/backend/web/index.php'
+    'REMOTE_PORT' => '54616'
+    'REDIRECT_URL' => '/RetroVerse/backend/web/api/users'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'GET'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/RetroVerse/backend/web/api/users'
+    'SCRIPT_NAME' => '/RetroVerse/backend/web/index.php'
+    'PHP_SELF' => '/RetroVerse/backend/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1734288055.4217
+    'REQUEST_TIME' => 1734288055
+]
+2024-12-15 18:45:25 [::1][-][-][error][yii\db\Exception] PDOException: SQLSTATE[HY000]: General error: 1364 Field 'username' doesn't have a default value in /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/db/Command.php:1320
+Stack trace:
+#0 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/db/Command.php(1320): PDOStatement->execute()
+#1 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/db/Command.php(1120): yii\db\Command->internalExecute('INSERT INTO `us...')
+#2 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/db/Schema.php(431): yii\db\Command->execute()
+#3 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/db/ActiveRecord.php(604): yii\db\Schema->insert('{{%user}}', Array)
+#4 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/db/ActiveRecord.php(570): yii\db\ActiveRecord->insertInternal(NULL)
+#5 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/db/BaseActiveRecord.php(688): yii\db\ActiveRecord->insert(true, NULL)
+#6 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/rest/CreateAction.php(52): yii\db\BaseActiveRecord->save()
+#7 [internal function]: yii\rest\CreateAction->run()
+#8 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Action.php(93): call_user_func_array(Array, Array)
+#9 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Controller.php(178): yii\base\Action->runWithParams(Array)
+#10 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Module.php(552): yii\base\Controller->runAction('create', Array)
+#11 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/web/Application.php(103): yii\base\Module->runAction('api/user/create', Array)
+#12 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Application.php(384): yii\web\Application->handleRequest(Object(yii\web\Request))
+#13 /Applications/MAMP/htdocs/RetroVerse/backend/web/index.php(18): yii\base\Application->run()
+#14 {main}
+
+Next yii\db\Exception: SQLSTATE[HY000]: General error: 1364 Field 'username' doesn't have a default value
+The SQL being executed was: INSERT INTO `user` (`status`, `created_at`, `updated_at`) VALUES (9, 1734288325, 1734288325) in /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/db/Schema.php:676
+Stack trace:
+#0 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/db/Command.php(1325): yii\db\Schema->convertException(Object(PDOException), 'INSERT INTO `us...')
+#1 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/db/Command.php(1120): yii\db\Command->internalExecute('INSERT INTO `us...')
+#2 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/db/Schema.php(431): yii\db\Command->execute()
+#3 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/db/ActiveRecord.php(604): yii\db\Schema->insert('{{%user}}', Array)
+#4 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/db/ActiveRecord.php(570): yii\db\ActiveRecord->insertInternal(NULL)
+#5 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/db/BaseActiveRecord.php(688): yii\db\ActiveRecord->insert(true, NULL)
+#6 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/rest/CreateAction.php(52): yii\db\BaseActiveRecord->save()
+#7 [internal function]: yii\rest\CreateAction->run()
+#8 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Action.php(93): call_user_func_array(Array, Array)
+#9 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Controller.php(178): yii\base\Action->runWithParams(Array)
+#10 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Module.php(552): yii\base\Controller->runAction('create', Array)
+#11 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/web/Application.php(103): yii\base\Module->runAction('api/user/create', Array)
+#12 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Application.php(384): yii\web\Application->handleRequest(Object(yii\web\Request))
+#13 /Applications/MAMP/htdocs/RetroVerse/backend/web/index.php(18): yii\base\Application->run()
+#14 {main}
+Additional Information:
+Array
+(
+    [0] => HY000
+    [1] => 1364
+    [2] => Field 'username' doesn't have a default value
+)
+
+2024-12-15 18:45:25 [::1][-][-][info][application] $_GET = []
+
+$_POST = []
+
+$_FILES = []
+
+$_COOKIE = []
+
+$_SERVER = [
+    'REDIRECT_STATUS' => '200'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_USER_AGENT' => 'curl/8.2.1'
+    'HTTP_ACCEPT' => '*/*'
+    'CONTENT_TYPE' => 'application/json'
+    'CONTENT_LENGTH' => '75'
+    'PATH' => '/usr/bin:/bin:/usr/sbin:/sbin'
+    'SERVER_SIGNATURE' => ''
+    'SERVER_SOFTWARE' => 'Apache/2.4.54 (Unix) OpenSSL/1.0.2u PHP/8.1.13 mod_wsgi/3.5 Python/2.7.18 mod_fastcgi/mod_fastcgi-SNAP-0910052141 mod_perl/2.0.11 Perl/v5.30.1'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => '/Applications/MAMP/htdocs'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/Applications/MAMP/htdocs'
+    'SERVER_ADMIN' => 'you@example.com'
+    'SCRIPT_FILENAME' => '/Applications/MAMP/htdocs/RetroVerse/backend/web/index.php'
+    'REMOTE_PORT' => '54633'
+    'REDIRECT_URL' => '/RetroVerse/backend/web/api/users'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/RetroVerse/backend/web/api/users'
+    'SCRIPT_NAME' => '/RetroVerse/backend/web/index.php'
+    'PHP_SELF' => '/RetroVerse/backend/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1734288325.5185
+    'REQUEST_TIME' => 1734288325
+]
+2024-12-15 18:51:32 [::1][1][87bsuda0a9dvejdna2ge1dac70][error][yii\web\HttpException:404] yii\base\InvalidRouteException: Unable to resolve the request "api/users/creaate". in /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Module.php:561
+Stack trace:
+#0 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/web/Application.php(103): yii\base\Module->runAction('api/users/creaa...', Array)
+#1 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Application.php(384): yii\web\Application->handleRequest(Object(yii\web\Request))
+#2 /Applications/MAMP/htdocs/RetroVerse/backend/web/index.php(18): yii\base\Application->run()
+#3 {main}
+
+Next yii\web\NotFoundHttpException: Page not found. in /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/web/Application.php:115
+Stack trace:
+#0 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Application.php(384): yii\web\Application->handleRequest(Object(yii\web\Request))
+#1 /Applications/MAMP/htdocs/RetroVerse/backend/web/index.php(18): yii\base\Application->run()
+#2 {main}
+2024-12-15 18:51:32 [::1][1][87bsuda0a9dvejdna2ge1dac70][info][application] $_GET = []
+
+$_POST = []
+
+$_FILES = []
+
+$_COOKIE = [
+    '_identity-backend' => 'a7b70a101cebbc1863ac1e50672d683b39f91fa74ee3a257dc422ae0eda9506ea:2:{i:0;s:17:\"_identity-backend\";i:1;s:46:\"[1,\"AVA93xW5yfiHdWni3M0XBAxV7-T4Tk37\",2592000]\";}'
+    '_identity-frontend' => '706a8ccc8fffd0961d965325aafdc2103a15760bf61d95af43415cc83b3b7d86a:2:{i:0;s:18:\"_identity-frontend\";i:1;s:46:\"[1,\"AVA93xW5yfiHdWni3M0XBAxV7-T4Tk37\",2592000]\";}'
+    '_csrf-frontend' => 'c2004a6ab66d002f341f3c35e932e82818fd94906edfbd81bf2626fb82f1d395a:2:{i:0;s:14:\"_csrf-frontend\";i:1;s:32:\"TpUCeql6CUIIn59pD9XCWYtO8Q0M5Vh7\";}'
+    'advanced-frontend' => '1hbck95te2llb8td2m4gc6ibqh'
+    '_csrf-backend' => 'b52575adccd266b427bf7923ca816c390e399879a70524cef69c2f5b36464548a:2:{i:0;s:13:\"_csrf-backend\";i:1;s:32:\"oWuFSXXdeORbyeGy-JljlfatR4haW91A\";}'
+    'advanced-backend' => '87bsuda0a9dvejdna2ge1dac70'
+    'PHPSESSID' => 'n17po6bfmvmj3lncdqgq8ls2n0'
+    'sidebar-collapse' => 'false'
+    'dropdown-legacy' => 'false'
+    'layout-navbar-fixed' => 'false'
+    'dark-mode' => 'false'
+]
+
+$_SESSION = [
+    '__flash' => []
+    '__id' => 1
+    '__authKey' => 'AVA93xW5yfiHdWni3M0XBAxV7-T4Tk37'
+]
+
+$_SERVER = [
+    'REDIRECT_STATUS' => '200'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_SEC_FETCH_SITE' => 'none'
+    'HTTP_COOKIE' => '_identity-backend=a7b70a101cebbc1863ac1e50672d683b39f91fa74ee3a257dc422ae0eda9506ea%3A2%3A%7Bi%3A0%3Bs%3A17%3A%22_identity-backend%22%3Bi%3A1%3Bs%3A46%3A%22%5B1%2C%22AVA93xW5yfiHdWni3M0XBAxV7-T4Tk37%22%2C2592000%5D%22%3B%7D; _identity-frontend=706a8ccc8fffd0961d965325aafdc2103a15760bf61d95af43415cc83b3b7d86a%3A2%3A%7Bi%3A0%3Bs%3A18%3A%22_identity-frontend%22%3Bi%3A1%3Bs%3A46%3A%22%5B1%2C%22AVA93xW5yfiHdWni3M0XBAxV7-T4Tk37%22%2C2592000%5D%22%3B%7D; _csrf-frontend=c2004a6ab66d002f341f3c35e932e82818fd94906edfbd81bf2626fb82f1d395a%3A2%3A%7Bi%3A0%3Bs%3A14%3A%22_csrf-frontend%22%3Bi%3A1%3Bs%3A32%3A%22TpUCeql6CUIIn59pD9XCWYtO8Q0M5Vh7%22%3B%7D; advanced-frontend=1hbck95te2llb8td2m4gc6ibqh; _csrf-backend=b52575adccd266b427bf7923ca816c390e399879a70524cef69c2f5b36464548a%3A2%3A%7Bi%3A0%3Bs%3A13%3A%22_csrf-backend%22%3Bi%3A1%3Bs%3A32%3A%22oWuFSXXdeORbyeGy-JljlfatR4haW91A%22%3B%7D; advanced-backend=87bsuda0a9dvejdna2ge1dac70; PHPSESSID=n17po6bfmvmj3lncdqgq8ls2n0; sidebar-collapse=false; dropdown-legacy=false; layout-navbar-fixed=false; dark-mode=false'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'HTTP_UPGRADE_INSECURE_REQUESTS' => '1'
+    'HTTP_SEC_FETCH_MODE' => 'navigate'
+    'HTTP_ACCEPT' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.0.1 Safari/605.1.15'
+    'HTTP_ACCEPT_LANGUAGE' => 'en-US,en;q=0.9'
+    'HTTP_SEC_FETCH_DEST' => 'document'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate'
+    'PATH' => '/usr/bin:/bin:/usr/sbin:/sbin'
+    'SERVER_SIGNATURE' => ''
+    'SERVER_SOFTWARE' => 'Apache/2.4.54 (Unix) OpenSSL/1.0.2u PHP/8.1.13 mod_wsgi/3.5 Python/2.7.18 mod_fastcgi/mod_fastcgi-SNAP-0910052141 mod_perl/2.0.11 Perl/v5.30.1'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => '/Applications/MAMP/htdocs'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/Applications/MAMP/htdocs'
+    'SERVER_ADMIN' => 'you@example.com'
+    'SCRIPT_FILENAME' => '/Applications/MAMP/htdocs/RetroVerse/backend/web/index.php'
+    'REMOTE_PORT' => '54638'
+    'REDIRECT_URL' => '/RetroVerse/backend/web/api/users/creaate'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'GET'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/RetroVerse/backend/web/api/users/creaate'
+    'SCRIPT_NAME' => '/RetroVerse/backend/web/index.php'
+    'PHP_SELF' => '/RetroVerse/backend/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1734288692.303
+    'REQUEST_TIME' => 1734288692
+]
+2024-12-15 18:51:36 [::1][1][87bsuda0a9dvejdna2ge1dac70][error][yii\web\HttpException:404] yii\base\InvalidRouteException: Unable to resolve the request "api/users/create". in /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Module.php:561
+Stack trace:
+#0 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/web/Application.php(103): yii\base\Module->runAction('api/users/creat...', Array)
+#1 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Application.php(384): yii\web\Application->handleRequest(Object(yii\web\Request))
+#2 /Applications/MAMP/htdocs/RetroVerse/backend/web/index.php(18): yii\base\Application->run()
+#3 {main}
+
+Next yii\web\NotFoundHttpException: Page not found. in /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/web/Application.php:115
+Stack trace:
+#0 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Application.php(384): yii\web\Application->handleRequest(Object(yii\web\Request))
+#1 /Applications/MAMP/htdocs/RetroVerse/backend/web/index.php(18): yii\base\Application->run()
+#2 {main}
+2024-12-15 18:51:35 [::1][1][87bsuda0a9dvejdna2ge1dac70][info][application] $_GET = []
+
+$_POST = []
+
+$_FILES = []
+
+$_COOKIE = [
+    '_identity-backend' => 'a7b70a101cebbc1863ac1e50672d683b39f91fa74ee3a257dc422ae0eda9506ea:2:{i:0;s:17:\"_identity-backend\";i:1;s:46:\"[1,\"AVA93xW5yfiHdWni3M0XBAxV7-T4Tk37\",2592000]\";}'
+    '_identity-frontend' => '706a8ccc8fffd0961d965325aafdc2103a15760bf61d95af43415cc83b3b7d86a:2:{i:0;s:18:\"_identity-frontend\";i:1;s:46:\"[1,\"AVA93xW5yfiHdWni3M0XBAxV7-T4Tk37\",2592000]\";}'
+    '_csrf-frontend' => 'c2004a6ab66d002f341f3c35e932e82818fd94906edfbd81bf2626fb82f1d395a:2:{i:0;s:14:\"_csrf-frontend\";i:1;s:32:\"TpUCeql6CUIIn59pD9XCWYtO8Q0M5Vh7\";}'
+    'advanced-frontend' => '1hbck95te2llb8td2m4gc6ibqh'
+    '_csrf-backend' => 'b52575adccd266b427bf7923ca816c390e399879a70524cef69c2f5b36464548a:2:{i:0;s:13:\"_csrf-backend\";i:1;s:32:\"oWuFSXXdeORbyeGy-JljlfatR4haW91A\";}'
+    'advanced-backend' => '87bsuda0a9dvejdna2ge1dac70'
+    'PHPSESSID' => 'n17po6bfmvmj3lncdqgq8ls2n0'
+    'sidebar-collapse' => 'false'
+    'dropdown-legacy' => 'false'
+    'layout-navbar-fixed' => 'false'
+    'dark-mode' => 'false'
+]
+
+$_SESSION = [
+    '__flash' => []
+    '__id' => 1
+    '__authKey' => 'AVA93xW5yfiHdWni3M0XBAxV7-T4Tk37'
+]
+
+$_SERVER = [
+    'REDIRECT_STATUS' => '200'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_SEC_FETCH_SITE' => 'none'
+    'HTTP_COOKIE' => '_identity-backend=a7b70a101cebbc1863ac1e50672d683b39f91fa74ee3a257dc422ae0eda9506ea%3A2%3A%7Bi%3A0%3Bs%3A17%3A%22_identity-backend%22%3Bi%3A1%3Bs%3A46%3A%22%5B1%2C%22AVA93xW5yfiHdWni3M0XBAxV7-T4Tk37%22%2C2592000%5D%22%3B%7D; _identity-frontend=706a8ccc8fffd0961d965325aafdc2103a15760bf61d95af43415cc83b3b7d86a%3A2%3A%7Bi%3A0%3Bs%3A18%3A%22_identity-frontend%22%3Bi%3A1%3Bs%3A46%3A%22%5B1%2C%22AVA93xW5yfiHdWni3M0XBAxV7-T4Tk37%22%2C2592000%5D%22%3B%7D; _csrf-frontend=c2004a6ab66d002f341f3c35e932e82818fd94906edfbd81bf2626fb82f1d395a%3A2%3A%7Bi%3A0%3Bs%3A14%3A%22_csrf-frontend%22%3Bi%3A1%3Bs%3A32%3A%22TpUCeql6CUIIn59pD9XCWYtO8Q0M5Vh7%22%3B%7D; advanced-frontend=1hbck95te2llb8td2m4gc6ibqh; _csrf-backend=b52575adccd266b427bf7923ca816c390e399879a70524cef69c2f5b36464548a%3A2%3A%7Bi%3A0%3Bs%3A13%3A%22_csrf-backend%22%3Bi%3A1%3Bs%3A32%3A%22oWuFSXXdeORbyeGy-JljlfatR4haW91A%22%3B%7D; advanced-backend=87bsuda0a9dvejdna2ge1dac70; PHPSESSID=n17po6bfmvmj3lncdqgq8ls2n0; sidebar-collapse=false; dropdown-legacy=false; layout-navbar-fixed=false; dark-mode=false'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'HTTP_UPGRADE_INSECURE_REQUESTS' => '1'
+    'HTTP_SEC_FETCH_MODE' => 'navigate'
+    'HTTP_ACCEPT' => 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.0.1 Safari/605.1.15'
+    'HTTP_ACCEPT_LANGUAGE' => 'en-US,en;q=0.9'
+    'HTTP_SEC_FETCH_DEST' => 'document'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate'
+    'PATH' => '/usr/bin:/bin:/usr/sbin:/sbin'
+    'SERVER_SIGNATURE' => ''
+    'SERVER_SOFTWARE' => 'Apache/2.4.54 (Unix) OpenSSL/1.0.2u PHP/8.1.13 mod_wsgi/3.5 Python/2.7.18 mod_fastcgi/mod_fastcgi-SNAP-0910052141 mod_perl/2.0.11 Perl/v5.30.1'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => '/Applications/MAMP/htdocs'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/Applications/MAMP/htdocs'
+    'SERVER_ADMIN' => 'you@example.com'
+    'SCRIPT_FILENAME' => '/Applications/MAMP/htdocs/RetroVerse/backend/web/index.php'
+    'REMOTE_PORT' => '54638'
+    'REDIRECT_URL' => '/RetroVerse/backend/web/api/users/create'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'GET'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/RetroVerse/backend/web/api/users/create'
+    'SCRIPT_NAME' => '/RetroVerse/backend/web/index.php'
+    'PHP_SELF' => '/RetroVerse/backend/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1734288695.9211
+    'REQUEST_TIME' => 1734288695
+]
+2024-12-15 18:53:59 [::1][-][-][error][yii\db\Exception] PDOException: SQLSTATE[HY000]: General error: 1364 Field 'username' doesn't have a default value in /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/db/Command.php:1320
+Stack trace:
+#0 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/db/Command.php(1320): PDOStatement->execute()
+#1 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/db/Command.php(1120): yii\db\Command->internalExecute('INSERT INTO `us...')
+#2 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/db/Schema.php(431): yii\db\Command->execute()
+#3 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/db/ActiveRecord.php(604): yii\db\Schema->insert('{{%user}}', Array)
+#4 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/db/ActiveRecord.php(570): yii\db\ActiveRecord->insertInternal(NULL)
+#5 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/db/BaseActiveRecord.php(688): yii\db\ActiveRecord->insert(true, NULL)
+#6 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/rest/CreateAction.php(52): yii\db\BaseActiveRecord->save()
+#7 [internal function]: yii\rest\CreateAction->run()
+#8 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Action.php(93): call_user_func_array(Array, Array)
+#9 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Controller.php(178): yii\base\Action->runWithParams(Array)
+#10 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Module.php(552): yii\base\Controller->runAction('create', Array)
+#11 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/web/Application.php(103): yii\base\Module->runAction('api/user/create', Array)
+#12 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Application.php(384): yii\web\Application->handleRequest(Object(yii\web\Request))
+#13 /Applications/MAMP/htdocs/RetroVerse/backend/web/index.php(18): yii\base\Application->run()
+#14 {main}
+
+Next yii\db\Exception: SQLSTATE[HY000]: General error: 1364 Field 'username' doesn't have a default value
+The SQL being executed was: INSERT INTO `user` (`status`, `created_at`, `updated_at`) VALUES (9, 1734288839, 1734288839) in /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/db/Schema.php:676
+Stack trace:
+#0 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/db/Command.php(1325): yii\db\Schema->convertException(Object(PDOException), 'INSERT INTO `us...')
+#1 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/db/Command.php(1120): yii\db\Command->internalExecute('INSERT INTO `us...')
+#2 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/db/Schema.php(431): yii\db\Command->execute()
+#3 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/db/ActiveRecord.php(604): yii\db\Schema->insert('{{%user}}', Array)
+#4 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/db/ActiveRecord.php(570): yii\db\ActiveRecord->insertInternal(NULL)
+#5 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/db/BaseActiveRecord.php(688): yii\db\ActiveRecord->insert(true, NULL)
+#6 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/rest/CreateAction.php(52): yii\db\BaseActiveRecord->save()
+#7 [internal function]: yii\rest\CreateAction->run()
+#8 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Action.php(93): call_user_func_array(Array, Array)
+#9 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Controller.php(178): yii\base\Action->runWithParams(Array)
+#10 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Module.php(552): yii\base\Controller->runAction('create', Array)
+#11 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/web/Application.php(103): yii\base\Module->runAction('api/user/create', Array)
+#12 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Application.php(384): yii\web\Application->handleRequest(Object(yii\web\Request))
+#13 /Applications/MAMP/htdocs/RetroVerse/backend/web/index.php(18): yii\base\Application->run()
+#14 {main}
+Additional Information:
+Array
+(
+    [0] => HY000
+    [1] => 1364
+    [2] => Field 'username' doesn't have a default value
+)
+
+2024-12-15 18:53:59 [::1][-][-][info][application] $_GET = []
+
+$_POST = []
+
+$_FILES = []
+
+$_COOKIE = []
+
+$_SERVER = [
+    'REDIRECT_STATUS' => '200'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_USER_AGENT' => 'curl/8.2.1'
+    'HTTP_ACCEPT' => '*/*'
+    'CONTENT_TYPE' => 'application/json'
+    'CONTENT_LENGTH' => '75'
+    'PATH' => '/usr/bin:/bin:/usr/sbin:/sbin'
+    'SERVER_SIGNATURE' => ''
+    'SERVER_SOFTWARE' => 'Apache/2.4.54 (Unix) OpenSSL/1.0.2u PHP/8.1.13 mod_wsgi/3.5 Python/2.7.18 mod_fastcgi/mod_fastcgi-SNAP-0910052141 mod_perl/2.0.11 Perl/v5.30.1'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => '/Applications/MAMP/htdocs'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/Applications/MAMP/htdocs'
+    'SERVER_ADMIN' => 'you@example.com'
+    'SCRIPT_FILENAME' => '/Applications/MAMP/htdocs/RetroVerse/backend/web/index.php'
+    'REMOTE_PORT' => '54649'
+    'REDIRECT_URL' => '/RetroVerse/backend/web/api/users'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/RetroVerse/backend/web/api/users'
+    'SCRIPT_NAME' => '/RetroVerse/backend/web/index.php'
+    'PHP_SELF' => '/RetroVerse/backend/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1734288839.5735
+    'REQUEST_TIME' => 1734288839
+]
+2024-12-15 18:54:11 [::1][-][-][error][yii\web\HttpException:404] yii\base\InvalidRouteException: Unable to resolve the request "api/users/create". in /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Module.php:561
+Stack trace:
+#0 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/web/Application.php(103): yii\base\Module->runAction('api/users/creat...', Array)
+#1 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Application.php(384): yii\web\Application->handleRequest(Object(yii\web\Request))
+#2 /Applications/MAMP/htdocs/RetroVerse/backend/web/index.php(18): yii\base\Application->run()
+#3 {main}
+
+Next yii\web\NotFoundHttpException: Page not found. in /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/web/Application.php:115
+Stack trace:
+#0 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Application.php(384): yii\web\Application->handleRequest(Object(yii\web\Request))
+#1 /Applications/MAMP/htdocs/RetroVerse/backend/web/index.php(18): yii\base\Application->run()
+#2 {main}
+2024-12-15 18:54:11 [::1][-][-][info][application] $_GET = []
+
+$_POST = []
+
+$_FILES = []
+
+$_COOKIE = []
+
+$_SERVER = [
+    'REDIRECT_STATUS' => '200'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_USER_AGENT' => 'curl/8.2.1'
+    'HTTP_ACCEPT' => '*/*'
+    'CONTENT_TYPE' => 'application/json'
+    'CONTENT_LENGTH' => '75'
+    'PATH' => '/usr/bin:/bin:/usr/sbin:/sbin'
+    'SERVER_SIGNATURE' => ''
+    'SERVER_SOFTWARE' => 'Apache/2.4.54 (Unix) OpenSSL/1.0.2u PHP/8.1.13 mod_wsgi/3.5 Python/2.7.18 mod_fastcgi/mod_fastcgi-SNAP-0910052141 mod_perl/2.0.11 Perl/v5.30.1'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => '/Applications/MAMP/htdocs'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/Applications/MAMP/htdocs'
+    'SERVER_ADMIN' => 'you@example.com'
+    'SCRIPT_FILENAME' => '/Applications/MAMP/htdocs/RetroVerse/backend/web/index.php'
+    'REMOTE_PORT' => '54650'
+    'REDIRECT_URL' => '/RetroVerse/backend/web/api/users/create'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/RetroVerse/backend/web/api/users/create'
+    'SCRIPT_NAME' => '/RetroVerse/backend/web/index.php'
+    'PHP_SELF' => '/RetroVerse/backend/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1734288851.4806
+    'REQUEST_TIME' => 1734288851
+]
+2024-12-15 18:55:42 [::1][-][-][error][yii\web\HttpException:404] yii\base\InvalidRouteException: Unable to resolve the request "api/users/create". in /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Module.php:561
+Stack trace:
+#0 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/web/Application.php(103): yii\base\Module->runAction('api/users/creat...', Array)
+#1 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Application.php(384): yii\web\Application->handleRequest(Object(yii\web\Request))
+#2 /Applications/MAMP/htdocs/RetroVerse/backend/web/index.php(18): yii\base\Application->run()
+#3 {main}
+
+Next yii\web\NotFoundHttpException: Page not found. in /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/web/Application.php:115
+Stack trace:
+#0 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Application.php(384): yii\web\Application->handleRequest(Object(yii\web\Request))
+#1 /Applications/MAMP/htdocs/RetroVerse/backend/web/index.php(18): yii\base\Application->run()
+#2 {main}
+2024-12-15 18:55:42 [::1][-][-][info][application] $_GET = []
+
+$_POST = []
+
+$_FILES = []
+
+$_COOKIE = []
+
+$_SERVER = [
+    'REDIRECT_STATUS' => '200'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_USER_AGENT' => 'curl/8.2.1'
+    'HTTP_ACCEPT' => '*/*'
+    'CONTENT_TYPE' => 'application/json'
+    'CONTENT_LENGTH' => '75'
+    'PATH' => '/usr/bin:/bin:/usr/sbin:/sbin'
+    'SERVER_SIGNATURE' => ''
+    'SERVER_SOFTWARE' => 'Apache/2.4.54 (Unix) OpenSSL/1.0.2u PHP/8.1.13 mod_wsgi/3.5 Python/2.7.18 mod_fastcgi/mod_fastcgi-SNAP-0910052141 mod_perl/2.0.11 Perl/v5.30.1'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => '/Applications/MAMP/htdocs'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/Applications/MAMP/htdocs'
+    'SERVER_ADMIN' => 'you@example.com'
+    'SCRIPT_FILENAME' => '/Applications/MAMP/htdocs/RetroVerse/backend/web/index.php'
+    'REMOTE_PORT' => '54668'
+    'REDIRECT_URL' => '/RetroVerse/backend/web/api/users/create'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/RetroVerse/backend/web/api/users/create'
+    'SCRIPT_NAME' => '/RetroVerse/backend/web/index.php'
+    'PHP_SELF' => '/RetroVerse/backend/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1734288942.0334
+    'REQUEST_TIME' => 1734288942
+]
+2024-12-15 18:57:54 [::1][-][-][error][yii\web\HttpException:404] yii\base\InvalidRouteException: Unable to resolve the request "api/users/create". in /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Module.php:561
+Stack trace:
+#0 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/web/Application.php(103): yii\base\Module->runAction('api/users/creat...', Array)
+#1 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Application.php(384): yii\web\Application->handleRequest(Object(yii\web\Request))
+#2 /Applications/MAMP/htdocs/RetroVerse/backend/web/index.php(18): yii\base\Application->run()
+#3 {main}
+
+Next yii\web\NotFoundHttpException: Page not found. in /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/web/Application.php:115
+Stack trace:
+#0 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Application.php(384): yii\web\Application->handleRequest(Object(yii\web\Request))
+#1 /Applications/MAMP/htdocs/RetroVerse/backend/web/index.php(18): yii\base\Application->run()
+#2 {main}
+2024-12-15 18:57:54 [::1][-][-][info][application] $_GET = []
+
+$_POST = []
+
+$_FILES = []
+
+$_COOKIE = []
+
+$_SERVER = [
+    'REDIRECT_STATUS' => '200'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_USER_AGENT' => 'curl/8.2.1'
+    'HTTP_ACCEPT' => '*/*'
+    'CONTENT_TYPE' => 'application/json'
+    'CONTENT_LENGTH' => '75'
+    'PATH' => '/usr/bin:/bin:/usr/sbin:/sbin'
+    'SERVER_SIGNATURE' => ''
+    'SERVER_SOFTWARE' => 'Apache/2.4.54 (Unix) OpenSSL/1.0.2u PHP/8.1.13 mod_wsgi/3.5 Python/2.7.18 mod_fastcgi/mod_fastcgi-SNAP-0910052141 mod_perl/2.0.11 Perl/v5.30.1'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => '/Applications/MAMP/htdocs'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/Applications/MAMP/htdocs'
+    'SERVER_ADMIN' => 'you@example.com'
+    'SCRIPT_FILENAME' => '/Applications/MAMP/htdocs/RetroVerse/backend/web/index.php'
+    'REMOTE_PORT' => '54670'
+    'REDIRECT_URL' => '/RetroVerse/backend/web/api/users/create'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/RetroVerse/backend/web/api/users/create'
+    'SCRIPT_NAME' => '/RetroVerse/backend/web/index.php'
+    'PHP_SELF' => '/RetroVerse/backend/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1734289074.1885
+    'REQUEST_TIME' => 1734289074
+]
+2024-12-15 18:58:26 [::1][-][-][error][yii\web\HttpException:404] yii\base\InvalidRouteException: Unable to resolve the request "api/users/create". in /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Module.php:561
+Stack trace:
+#0 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/web/Application.php(103): yii\base\Module->runAction('api/users/creat...', Array)
+#1 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Application.php(384): yii\web\Application->handleRequest(Object(yii\web\Request))
+#2 /Applications/MAMP/htdocs/RetroVerse/backend/web/index.php(18): yii\base\Application->run()
+#3 {main}
+
+Next yii\web\NotFoundHttpException: Page not found. in /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/web/Application.php:115
+Stack trace:
+#0 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Application.php(384): yii\web\Application->handleRequest(Object(yii\web\Request))
+#1 /Applications/MAMP/htdocs/RetroVerse/backend/web/index.php(18): yii\base\Application->run()
+#2 {main}
+2024-12-15 18:58:26 [::1][-][-][info][application] $_GET = []
+
+$_POST = []
+
+$_FILES = []
+
+$_COOKIE = []
+
+$_SERVER = [
+    'REDIRECT_STATUS' => '200'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_USER_AGENT' => 'curl/8.2.1'
+    'HTTP_ACCEPT' => '*/*'
+    'CONTENT_TYPE' => 'application/json'
+    'CONTENT_LENGTH' => '75'
+    'PATH' => '/usr/bin:/bin:/usr/sbin:/sbin'
+    'SERVER_SIGNATURE' => ''
+    'SERVER_SOFTWARE' => 'Apache/2.4.54 (Unix) OpenSSL/1.0.2u PHP/8.1.13 mod_wsgi/3.5 Python/2.7.18 mod_fastcgi/mod_fastcgi-SNAP-0910052141 mod_perl/2.0.11 Perl/v5.30.1'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => '/Applications/MAMP/htdocs'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/Applications/MAMP/htdocs'
+    'SERVER_ADMIN' => 'you@example.com'
+    'SCRIPT_FILENAME' => '/Applications/MAMP/htdocs/RetroVerse/backend/web/index.php'
+    'REMOTE_PORT' => '54675'
+    'REDIRECT_URL' => '/RetroVerse/backend/web/api/users/create'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/RetroVerse/backend/web/api/users/create'
+    'SCRIPT_NAME' => '/RetroVerse/backend/web/index.php'
+    'PHP_SELF' => '/RetroVerse/backend/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1734289106.3027
+    'REQUEST_TIME' => 1734289106
+]
+2024-12-15 18:58:33 [::1][-][-][error][yii\web\HttpException:404] yii\base\InvalidRouteException: Unable to resolve the request "api/users/create". in /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Module.php:561
+Stack trace:
+#0 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/web/Application.php(103): yii\base\Module->runAction('api/users/creat...', Array)
+#1 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Application.php(384): yii\web\Application->handleRequest(Object(yii\web\Request))
+#2 /Applications/MAMP/htdocs/RetroVerse/backend/web/index.php(18): yii\base\Application->run()
+#3 {main}
+
+Next yii\web\NotFoundHttpException: Page not found. in /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/web/Application.php:115
+Stack trace:
+#0 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Application.php(384): yii\web\Application->handleRequest(Object(yii\web\Request))
+#1 /Applications/MAMP/htdocs/RetroVerse/backend/web/index.php(18): yii\base\Application->run()
+#2 {main}
+2024-12-15 18:58:33 [::1][-][-][info][application] $_GET = []
+
+$_POST = []
+
+$_FILES = []
+
+$_COOKIE = []
+
+$_SERVER = [
+    'REDIRECT_STATUS' => '200'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_USER_AGENT' => 'curl/8.2.1'
+    'HTTP_ACCEPT' => '*/*'
+    'CONTENT_TYPE' => 'application/json'
+    'CONTENT_LENGTH' => '75'
+    'PATH' => '/usr/bin:/bin:/usr/sbin:/sbin'
+    'SERVER_SIGNATURE' => ''
+    'SERVER_SOFTWARE' => 'Apache/2.4.54 (Unix) OpenSSL/1.0.2u PHP/8.1.13 mod_wsgi/3.5 Python/2.7.18 mod_fastcgi/mod_fastcgi-SNAP-0910052141 mod_perl/2.0.11 Perl/v5.30.1'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => '/Applications/MAMP/htdocs'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/Applications/MAMP/htdocs'
+    'SERVER_ADMIN' => 'you@example.com'
+    'SCRIPT_FILENAME' => '/Applications/MAMP/htdocs/RetroVerse/backend/web/index.php'
+    'REMOTE_PORT' => '54676'
+    'REDIRECT_URL' => '/RetroVerse/backend/web/api/users/create'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/RetroVerse/backend/web/api/users/create'
+    'SCRIPT_NAME' => '/RetroVerse/backend/web/index.php'
+    'PHP_SELF' => '/RetroVerse/backend/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1734289113.3431
+    'REQUEST_TIME' => 1734289113
+]
+2024-12-15 19:00:04 [::1][-][-][error][yii\web\HttpException:404] yii\base\InvalidRouteException: Unable to resolve the request "api/users/create". in /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Module.php:561
+Stack trace:
+#0 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/web/Application.php(103): yii\base\Module->runAction('api/users/creat...', Array)
+#1 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Application.php(384): yii\web\Application->handleRequest(Object(yii\web\Request))
+#2 /Applications/MAMP/htdocs/RetroVerse/backend/web/index.php(18): yii\base\Application->run()
+#3 {main}
+
+Next yii\web\NotFoundHttpException: Page not found. in /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/web/Application.php:115
+Stack trace:
+#0 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Application.php(384): yii\web\Application->handleRequest(Object(yii\web\Request))
+#1 /Applications/MAMP/htdocs/RetroVerse/backend/web/index.php(18): yii\base\Application->run()
+#2 {main}
+2024-12-15 19:00:04 [::1][-][-][info][application] $_GET = []
+
+$_POST = []
+
+$_FILES = []
+
+$_COOKIE = []
+
+$_SERVER = [
+    'REDIRECT_STATUS' => '200'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_USER_AGENT' => 'curl/8.2.1'
+    'HTTP_ACCEPT' => '*/*'
+    'CONTENT_TYPE' => 'application/json'
+    'CONTENT_LENGTH' => '72'
+    'PATH' => '/usr/bin:/bin:/usr/sbin:/sbin'
+    'SERVER_SIGNATURE' => ''
+    'SERVER_SOFTWARE' => 'Apache/2.4.54 (Unix) OpenSSL/1.0.2u PHP/8.1.13 mod_wsgi/3.5 Python/2.7.18 mod_fastcgi/mod_fastcgi-SNAP-0910052141 mod_perl/2.0.11 Perl/v5.30.1'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => '/Applications/MAMP/htdocs'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/Applications/MAMP/htdocs'
+    'SERVER_ADMIN' => 'you@example.com'
+    'SCRIPT_FILENAME' => '/Applications/MAMP/htdocs/RetroVerse/backend/web/index.php'
+    'REMOTE_PORT' => '54679'
+    'REDIRECT_URL' => '/RetroVerse/backend/web/api/users/create'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/RetroVerse/backend/web/api/users/create'
+    'SCRIPT_NAME' => '/RetroVerse/backend/web/index.php'
+    'PHP_SELF' => '/RetroVerse/backend/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1734289204.0919
+    'REQUEST_TIME' => 1734289204
+]
+2024-12-15 19:01:53 [::1][-][-][error][yii\web\HttpException:404] yii\base\InvalidRouteException: Unable to resolve the request "api/users/create". in /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Module.php:561
+Stack trace:
+#0 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/web/Application.php(103): yii\base\Module->runAction('api/users/creat...', Array)
+#1 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Application.php(384): yii\web\Application->handleRequest(Object(yii\web\Request))
+#2 /Applications/MAMP/htdocs/RetroVerse/backend/web/index.php(18): yii\base\Application->run()
+#3 {main}
+
+Next yii\web\NotFoundHttpException: Page not found. in /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/web/Application.php:115
+Stack trace:
+#0 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Application.php(384): yii\web\Application->handleRequest(Object(yii\web\Request))
+#1 /Applications/MAMP/htdocs/RetroVerse/backend/web/index.php(18): yii\base\Application->run()
+#2 {main}
+2024-12-15 19:01:53 [::1][-][-][info][application] $_GET = []
+
+$_POST = []
+
+$_FILES = []
+
+$_COOKIE = []
+
+$_SERVER = [
+    'REDIRECT_STATUS' => '200'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_USER_AGENT' => 'curl/8.2.1'
+    'HTTP_ACCEPT' => '*/*'
+    'PATH' => '/usr/bin:/bin:/usr/sbin:/sbin'
+    'SERVER_SIGNATURE' => ''
+    'SERVER_SOFTWARE' => 'Apache/2.4.54 (Unix) OpenSSL/1.0.2u PHP/8.1.13 mod_wsgi/3.5 Python/2.7.18 mod_fastcgi/mod_fastcgi-SNAP-0910052141 mod_perl/2.0.11 Perl/v5.30.1'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => '/Applications/MAMP/htdocs'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/Applications/MAMP/htdocs'
+    'SERVER_ADMIN' => 'you@example.com'
+    'SCRIPT_FILENAME' => '/Applications/MAMP/htdocs/RetroVerse/backend/web/index.php'
+    'REMOTE_PORT' => '54686'
+    'REDIRECT_URL' => '/RetroVerse/backend/web/api/users/create'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/RetroVerse/backend/web/api/users/create'
+    'SCRIPT_NAME' => '/RetroVerse/backend/web/index.php'
+    'PHP_SELF' => '/RetroVerse/backend/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1734289313.8342
+    'REQUEST_TIME' => 1734289313
+]
+2024-12-15 19:02:07 [::1][-][-][error][yii\web\HttpException:404] yii\base\InvalidRouteException: Unable to resolve the request "api/users/create". in /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Module.php:561
+Stack trace:
+#0 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/web/Application.php(103): yii\base\Module->runAction('api/users/creat...', Array)
+#1 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Application.php(384): yii\web\Application->handleRequest(Object(yii\web\Request))
+#2 /Applications/MAMP/htdocs/RetroVerse/backend/web/index.php(18): yii\base\Application->run()
+#3 {main}
+
+Next yii\web\NotFoundHttpException: Page not found. in /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/web/Application.php:115
+Stack trace:
+#0 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Application.php(384): yii\web\Application->handleRequest(Object(yii\web\Request))
+#1 /Applications/MAMP/htdocs/RetroVerse/backend/web/index.php(18): yii\base\Application->run()
+#2 {main}
+2024-12-15 19:02:07 [::1][-][-][info][application] $_GET = []
+
+$_POST = []
+
+$_FILES = []
+
+$_COOKIE = []
+
+$_SERVER = [
+    'REDIRECT_STATUS' => '200'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_USER_AGENT' => 'curl/8.2.1'
+    'HTTP_ACCEPT' => '*/*'
+    'PATH' => '/usr/bin:/bin:/usr/sbin:/sbin'
+    'SERVER_SIGNATURE' => ''
+    'SERVER_SOFTWARE' => 'Apache/2.4.54 (Unix) OpenSSL/1.0.2u PHP/8.1.13 mod_wsgi/3.5 Python/2.7.18 mod_fastcgi/mod_fastcgi-SNAP-0910052141 mod_perl/2.0.11 Perl/v5.30.1'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => '/Applications/MAMP/htdocs'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/Applications/MAMP/htdocs'
+    'SERVER_ADMIN' => 'you@example.com'
+    'SCRIPT_FILENAME' => '/Applications/MAMP/htdocs/RetroVerse/backend/web/index.php'
+    'REMOTE_PORT' => '54687'
+    'REDIRECT_URL' => '/RetroVerse/backend/web/api/users/create'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/RetroVerse/backend/web/api/users/create'
+    'SCRIPT_NAME' => '/RetroVerse/backend/web/index.php'
+    'PHP_SELF' => '/RetroVerse/backend/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1734289327.1614
+    'REQUEST_TIME' => 1734289327
+]
+2024-12-15 19:02:12 [::1][-][-][error][yii\web\HttpException:404] yii\base\InvalidRouteException: Unable to resolve the request "api/users/create". in /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Module.php:561
+Stack trace:
+#0 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/web/Application.php(103): yii\base\Module->runAction('api/users/creat...', Array)
+#1 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Application.php(384): yii\web\Application->handleRequest(Object(yii\web\Request))
+#2 /Applications/MAMP/htdocs/RetroVerse/backend/web/index.php(18): yii\base\Application->run()
+#3 {main}
+
+Next yii\web\NotFoundHttpException: Page not found. in /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/web/Application.php:115
+Stack trace:
+#0 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Application.php(384): yii\web\Application->handleRequest(Object(yii\web\Request))
+#1 /Applications/MAMP/htdocs/RetroVerse/backend/web/index.php(18): yii\base\Application->run()
+#2 {main}
+2024-12-15 19:02:12 [::1][-][-][info][application] $_GET = []
+
+$_POST = []
+
+$_FILES = []
+
+$_COOKIE = []
+
+$_SERVER = [
+    'REDIRECT_STATUS' => '200'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_USER_AGENT' => 'curl/8.2.1'
+    'HTTP_ACCEPT' => '*/*'
+    'PATH' => '/usr/bin:/bin:/usr/sbin:/sbin'
+    'SERVER_SIGNATURE' => ''
+    'SERVER_SOFTWARE' => 'Apache/2.4.54 (Unix) OpenSSL/1.0.2u PHP/8.1.13 mod_wsgi/3.5 Python/2.7.18 mod_fastcgi/mod_fastcgi-SNAP-0910052141 mod_perl/2.0.11 Perl/v5.30.1'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => '/Applications/MAMP/htdocs'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/Applications/MAMP/htdocs'
+    'SERVER_ADMIN' => 'you@example.com'
+    'SCRIPT_FILENAME' => '/Applications/MAMP/htdocs/RetroVerse/backend/web/index.php'
+    'REMOTE_PORT' => '54688'
+    'REDIRECT_URL' => '/RetroVerse/backend/web/api/users/create'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/RetroVerse/backend/web/api/users/create'
+    'SCRIPT_NAME' => '/RetroVerse/backend/web/index.php'
+    'PHP_SELF' => '/RetroVerse/backend/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1734289332.6953
+    'REQUEST_TIME' => 1734289332
+]

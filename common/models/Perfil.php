@@ -61,6 +61,9 @@ class Perfil extends \yii\db\ActiveRecord
             'morada' => 'Morada',
         ];
     }
+    public function hasImageProfile(){
+
+    }
 
     public function hasActivePremiumPlano()
     {

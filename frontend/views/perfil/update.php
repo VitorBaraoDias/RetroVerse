@@ -12,6 +12,7 @@ use yii\helpers\Html;
 
     <?= $this->render('_form', [
         'model' => $model,
+        'uploadForm' => $uploadForm,
     ]) ?>
 
 </div>

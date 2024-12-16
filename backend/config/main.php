@@ -84,6 +84,9 @@ return [
                 [
                     'class' => 'yii\rest\UrlRule',
                     'controller' => 'api/user',
+                    'extraPatterns' => [
+                        'GET create' => 'usercreate', // GET /api/carrinhos/user/{id} -> actionUser($id)
+                    ],
                 ],
                 [
                     'class' => 'yii\rest\UrlRule',
