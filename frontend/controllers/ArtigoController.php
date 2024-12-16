@@ -5,12 +5,14 @@ namespace frontend\controllers;
 use Yii;
 use common\models\Artigospremium;
 use common\models\Artigo;
+use common\models\Favorito;
+use frontend\models\SearchArtigo;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\db\Query;
-use frontend\models\SearchArtigo;
+
 
 
 
@@ -61,10 +63,22 @@ class ArtigoController extends Controller
         // Executa a pesquisa com os filtros
         $dataProvider = $searchModel->search($queryParams);
 
+
+        // obter favoritos do user atual
+        $idperfil = Yii::$app->user->id;
+        $favoritos = [];
+        if ($idperfil) {
+            $favoritos = Favorito::find()
+                ->select('idartigo')
+                ->where(['idperfil' => $idperfil])
+                ->column();
+        }
+
         // Renderiza a view com os dados
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'favoritos' => $favoritos,
         ]);
     }
 

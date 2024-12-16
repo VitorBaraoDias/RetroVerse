@@ -134,6 +134,9 @@ use yii\widgets\ListView;
                     'class' => \yii\bootstrap5\LinkPager::class,
                     'options' => ['class' => 'pagination justify-content-center'],
                 ],
+                'viewParams' => [
+                    'favoritos' => $favoritos, // Passa a variável 'favoritos' para a view parcial
+                ],
             ]) ?>
         </div>
     </div>

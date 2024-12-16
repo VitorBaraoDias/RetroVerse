@@ -25,7 +25,6 @@ class FavoritoController extends Controller
                 'verbs' => [
                     'class' => VerbFilter::className(),
                     'actions' => [
-                        'delete' => ['POST'],
                     ],
                 ],
             ]
@@ -52,9 +51,20 @@ class FavoritoController extends Controller
             'query' => Favorito::find()->where(['idperfil' => $userId]), // Filtra pelos favoritos do utilizador
         ]);
 
+        // obter favoritos do user atual
+        $idperfil = Yii::$app->user->id;
+        $favoritos = [];
+        if ($idperfil) {
+            $favoritos = Favorito::find()
+                ->select('idartigo')
+                ->where(['idperfil' => $idperfil])
+                ->column();
+        }
+
 
         return $this->render('index', [
             'dataProvider' => $dataProvider,
+            'favoritos' => $favoritos,
         ]);
 
     }
@@ -147,7 +157,7 @@ class FavoritoController extends Controller
         }
 
 
-        return $this->redirect(['favorito/index']);
+        return $this->redirect(['artigo/index']);
     }
 
 

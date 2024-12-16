@@ -10,11 +10,27 @@ use yii\widgets\ListView;
     <!-- Card para cada artigo -->
         <div class="card">
             <div class="image-container bg-secondary position-relative">
-                <div class="rounded-circle container-like d-flex justify-content-center align-items-center">
-                    <img class="icon-like" src="<?= Yii::getAlias('@web/images/vector_like.svg') ?>">
-                </div>
-                <!-- Imagem do artigo -->
 
+                <!-- Botão de favoritos -->
+                <div class="rounded-circle container-like d-flex justify-content-center align-items-center">
+                    <?php if (in_array($model->idartigo, $favoritos)): ?>
+                        <!-- Artigo está nos favoritos -->
+                        <a href="<?= \yii\helpers\Url::to(['favorito/delete', 'id' => $model->idartigo]) ?>">
+                            <img class="icon-like"
+                                 src="<?= Yii::getAlias('@web/img/vector_liked.svg') ?>"
+                                 alt="Remover dos Favoritos">
+                        </a>
+                    <?php else: ?>
+                        <!-- Artigo não está nos favoritos -->
+                        <a href="<?= \yii\helpers\Url::to(['favorito/create', 'id' => $model->id]) ?>">
+                            <img class="icon-like"
+                                 src="<?= Yii::getAlias('@web/img/vector_like.svg') ?>"
+                                 alt="Adicionar aos Favoritos">
+                        </a>
+                    <?php endif; ?>
+                </div>
+
+                <!-- Imagem do artigo -->
                 <?php
                 $firstPhoto = $model->artigo->fotosartigos[0] ?? null;
                 // Caminho para a imagem no frontend
