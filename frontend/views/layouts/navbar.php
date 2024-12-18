@@ -1,7 +1,9 @@
 <?php
 
 use common\models\Carrinho;
+use common\models\Favorito;
 use common\models\Perfil;
+use yii\bootstrap5\Html;
 
 $userId = Yii::$app->user->id;
 $perfil = Perfil::findOne(['id' => $userId]);
@@ -9,6 +11,7 @@ $perfil = Perfil::findOne(['id' => $userId]);
 //verificar se ele tem premium
 $isPremiumActive = $perfil ? $perfil->hasActivePremiumPlano() : false;
 $carrinho = \common\models\Carrinho::findOne(['iduser' => Yii::$app->user->id]);
+$favoritosCount = Favorito::getFavoritosCount(Yii::$app->user->id);
 
 ?>
 
@@ -51,34 +54,34 @@ $carrinho = \common\models\Carrinho::findOne(['iduser' => Yii::$app->user->id]);
                                 </a>
                             </li>
                         </ul>
-                        <div class="navbar__icons">
+                        <?php if (!Yii::$app->user->isGuest) { ?>
 
-                            <a href="<?= Yii::$app->urlManager->createUrl(['favorito/index']) ?>"><img src="<?= Yii::getAlias('@web') ?>/img/favourites.svg" alt=""></a>
-                            <a href="<?= Yii::$app->urlManager->createUrl(['carrinho/index']) ?>" style="position: relative">
+                        <?= Html::a('+ PUBLISH AN ITEM', ['artigo/create'], [
+                            'class' => 'btn retroverse-btn  w-auto px-3 py-2 rounded-0',
+                            'id' => 'retroverse-btn-active',
+                            'style' => 'font-size: x-small; gap: 10px',
+                        ]) ?>
+                        <?php }?>
+
+                        <div class="navbar__icons">
+                            <?php if (Yii::$app->user->isGuest) { ?>
+                                <a href="<?= Yii::$app->urlManager->createUrl(['site/signup']) ?>"><img src="<?= Yii::getAlias('@web') ?>/img/myaccount.svg" alt=""></a>
+                            <?php } else { ?>
+                                <a href="<?= Yii::$app->urlManager->createUrl(['favorito/index']) ?> " style="position: relative">
+                                    <img src="<?= Yii::getAlias('@web') ?>/img/favourites.svg" alt="">
+                                    <div id="info-cart">
+                                        <?= $favoritosCount ? $favoritosCount : 0 ?>
+                                    </div>
+                                </a>
+                                <a href="<?= Yii::$app->urlManager->createUrl(['carrinho/index']) ?>" style="position: relative">
                                     <img src="<?= Yii::getAlias('@web') ?>/img/cart.svg" alt="">
                                     <div id="info-cart">
                                         <?= $carrinho ? $carrinho->getLinhascarrinhos()->count() : 0 ?>
                                     </div>
-                            </a>
-                            <?php if (!$isPremiumActive) { ?>
-                                <a href="<?= Yii::$app->urlManager->createUrl(['site/signup']) ?>"><img src="<?= Yii::getAlias('@web') ?>/img/myaccount.svg" alt=""></a>
-                            <?php } else { ?>
+                                </a>
                                 <a href="<?= Yii::$app->urlManager->createUrl(['perfil/index']) ?>"><img src="<?= Yii::getAlias('@web') ?>/img/myaccount-premium.svg" alt=""></a>
-                            <?php } ?>
-
-                            <?php if (!Yii::$app->user->isGuest) : ?>
                                 <a href="<?= Yii::$app->urlManager->createUrl(['site/logout']) ?>"><img src="<?= Yii::getAlias('@web') ?>/img/logout.svg" alt=""></a>
-                            <?php endif; ?>
-                            <a class="switch-button" href="#">
-                                <label for="mane" class="button-float">
-                                    <div class="texts">
-                                        <span class="left">STORE</span>
-                                        <span class="right">MARKETPLACE</span>
-                                    </div>
-                                    <input type="checkbox" name="mane" id="mane" />
-                                    <div class="container-active"></div>
-                                </label>
-                            </a>
+                            <?php } ?>
                         </div>
                     </nav>
 

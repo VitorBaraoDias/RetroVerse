@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ba38dd5d5989e18c69e154330ee81aef",
+    "content-hash": "3dbf080e2b92e108085a69d1fa12ed3b",
     "packages": [
         {
             "name": "almasaeed2010/adminlte",
@@ -624,7 +624,7 @@
         },
         {
             "name": "kartik-v/yii2-widget-fileinput",
-            "version": "dev-master",
+            "version": "v1.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kartik-v/yii2-widget-fileinput.git",
@@ -640,7 +640,6 @@
                 "kartik-v/bootstrap-fileinput": ">=5.5.0",
                 "kartik-v/yii2-krajee-base": ">=3.0.5"
             },
-            "default-branch": true,
             "type": "yii2-extension",
             "extra": {
                 "branch-alias": {
@@ -5956,9 +5955,7 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "kartik-v/yii2-widget-fileinput": 20
-    },
+    "stability-flags": {},
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {

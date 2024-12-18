@@ -5,7 +5,7 @@ use yii\widgets\ListView;
 <!-- Card para cada artigo -->
 <div class="card">
     <div class="image-container bg-secondary position-relative">
-
+        <div class="container-info-type-item"><?= $model->tipoartigo ?></div>
         <!-- Botão de favoritos -->
         <div class="rounded-circle container-like d-flex justify-content-center align-items-center">
             <?php if (in_array($model->id, $favoritos)): ?>
@@ -68,10 +68,18 @@ use yii\widgets\ListView;
                             </span>
             </div>
 
-            <?= Html::a('VIEW', ['artigo/view', 'id' => $model->id], [
-                'class' => 'retroverse-btn',
-                'style' => 'font-size: x-small; gap: 10px',
-            ]) ?>
+            <?= Html::a(
+                'VIEW',
+                [
+                    $model->tipo === 'MARKETPLACE' ? 'artigo/view-marketplace' : 'artigo/view', // Condição para a URL
+                    'id' => $model->id
+                ],
+                [
+                    'class' => 'retroverse-btn',
+                    'style' => 'font-size: x-small; gap: 10px',
+                ]
+            ) ?>
+
         </div>
     </div>
 </div>

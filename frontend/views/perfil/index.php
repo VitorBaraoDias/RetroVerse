@@ -67,10 +67,16 @@ $this->title = 'Perfils';
                 </div>
             </div>
         </div>
-
     </div>
-    <div class="" style="margin-left: 90px; margin-top:10px">
-        <h2><strong>MY ITENS</strong></h2>
+    <div class="mx-5 mt-5" style="margin-left: 90px; margin-top:10px">
+        <div class="d-flex justify-content-between">
+            <h2><strong>MY ITENS</strong></h2>
+                <?= Html::a('+ PUBLISH AN ITEM', ['perfil/update'], [
+                'class' => 'btn retroverse-btn  w-auto px-3 py-2 rounded-0',
+                'id' => 'retroverse-btn-active',
+                'style' => 'font-size: x-small; gap: 10px',
+            ]) ?>
+        </div>
         cards
     </div>
 </div>

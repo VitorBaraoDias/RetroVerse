@@ -5,11 +5,12 @@ use yii\widgets\ListView;
     <!-- Card para cada artigo -->
         <div class="card">
             <div class="image-container bg-secondary position-relative">
+                <div class="container-info-type-item"><?= $model->tipoartigo ?></div>
+
                 <div class="rounded-circle container-like d-flex justify-content-center align-items-center">
                     <img class="icon-like" src="<?= Yii::getAlias('@web/images/vector_like.svg') ?>">
                 </div>
                 <!-- Imagem do artigo -->
-
                 <?php
                 $firstPhoto = $model->fotosartigos[0] ?? null;
                 // Caminho para a imagem no frontend
@@ -52,10 +53,18 @@ use yii\widgets\ListView;
                             </span>
                     </div>
 
-                    <?= Html::a('VIEW', ['artigo/view', 'id' => $model->id], [
-                        'class' => 'retroverse-btn',
-                        'style' => 'font-size: x-small; gap: 10px',
-                    ]) ?>
+                    <?= Html::a(
+                        'VIEW',
+                        [
+                            $model->tipoartigo === 'MARKETPLACE' ? 'artigo/view-marketplace' : 'artigo/view', // Condição para a URL
+                            'id' => $model->id
+                        ],
+                        [
+                            'class' => 'retroverse-btn',
+                            'style' => 'font-size: x-small; gap: 10px',
+                        ]
+                    ) ?>
+
                 </div>
             </div>
         </div>

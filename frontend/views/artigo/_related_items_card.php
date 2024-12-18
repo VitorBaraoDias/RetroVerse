@@ -5,6 +5,8 @@ use yii\widgets\ListView;
     <!-- Card para cada artigo -->
         <div class="card">
             <div class="image-container bg-secondary position-relative">
+                <div class="container-info-type-item"><?= $model->tipoartigo ?></div>
+
                 <div class="rounded-circle container-like d-flex justify-content-center align-items-center">
                     <img class="icon-like" src="<?= Yii::getAlias('@web/images/vector_like.svg') ?>">
                 </div>

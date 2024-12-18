@@ -93,6 +93,8 @@ class ArtigoController extends Controller
         if ($this->request->isPost) {
             $model->idperfil = Yii::$app->user->id;
             $model->tipoartigo = 'LOJA';
+            //buscar a comissao ativa
+            //validar as fotos
 
             if ($model->load($this->request->post()) && $model->save()) {
                 return $this->redirect(['artigo/view', 'id' => $model->id]);

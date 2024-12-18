@@ -9,6 +9,7 @@ use Yii;
  *
  * @property int $id
  * @property float $comissao
+ * @property int $ativo
  *
  * @property Artigos[] $artigos
  */
@@ -28,8 +29,11 @@ class Comissao extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['comissao'], 'required'],
+            [['comissao', 'ativo'], 'required'],
             [['comissao'], 'number'],
+            [['ativo'], 'boolean'],
+            ['ativo', 'validateUniqueActiveComissao'],
+
         ];
     }
 
@@ -41,9 +45,30 @@ class Comissao extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'comissao' => 'Comissao',
+            'ativo' => 'Ativo',
         ];
     }
 
+    public function validateUniqueActiveComissao($attribute, $params)
+    {
+        if ($this->ativo) {
+            $existingActiveComissao = self::find()
+                ->where(['ativo' => 1])
+                ->andWhere(['<>', 'id', $this->id ?? 0]) // Exclui o registro atual ao editar
+                ->exists();
+
+            if ($existingActiveComissao) {
+                $this->addError($attribute, 'Já existe uma comissoa ativo. Apenas uma Comissão pode estar ativa.');
+            }
+        }
+    }
+    public static function getIdActiveComissao()
+    {
+        return self::find()
+            ->select('id')
+            ->where(['ativo' => 1])
+            ->scalar(); // Retorna o valor diretamente como um inteiro ou null
+    }
     /**
      * Gets query for [[Artigos]].
      *
