@@ -1079,6 +1079,106 @@ ol {
 
 /* FAQS end */
 
+
+/* Order History */
+
+.history-button {
+	border: 1px solid black;
+	color: black;
+	background-color: white;
+	transition: all 0.3s ease;
+	border-radius: 10px;
+	font-weight:700;
+}
+
+.history-button.active {
+	background-color: black;
+	color: white;
+}
+
+
+.history-button:hover {
+	background-color: black;
+	color: white;
+}
+
+/* Caixa de Pedido */
+.history-order-box {
+	background-color: #f2f3f4; /* Fundo cinza claro */
+	border-radius: 8px;
+	padding: 20px;
+	display: flex;
+	flex-direction: column;
+	position: relative;
+}
+
+/* Informações do Pedido */
+.history-order-info h6 {
+	color: #7d7d7d; /* Cinza escuro */
+	font-size: 14px;
+	margin-bottom: 8px;
+}
+
+.history-order-info h3 {
+	font-weight: bold;
+	margin: 0;
+}
+
+.history-order-info span {
+	font-weight: bold;
+}
+
+/* Total */
+.history-order-total {
+	position: absolute;
+	top: 20px;
+	right: 20px;
+	font-weight: bold;
+	font-size: 24px;
+}
+
+/* Botões */
+.history-buttons {
+	display: flex;
+	gap: 10px;
+	justify-content: flex-end;
+	margin-top: 20px;
+}
+
+.history-view-details {
+	background-color: blue;
+	color: white;
+	border: none;
+	padding: 8px 16px;
+	text-transform: uppercase;
+	font-size: 12px;
+	border-radius: 4px;
+	transition: background-color 0.3s ease;
+	font-weight:700;
+}
+.history-view-details:hover {
+	background-color: #0000cc; /* Azul mais escuro */
+}
+
+.history-view-invoice {
+	color: blue;
+	border: 1px solid blue;
+	background-color: transparent;
+	padding: 8px 16px;
+	text-transform: uppercase;
+	font-size: 12px;
+	border-radius: 4px;
+	transition: all 0.3s ease;
+	font-weight:700;
+
+}
+.history-view-invoice:hover {
+	background-color: blue;
+	color: white;
+}
+
+/* Order History End*/
+
 /* Terms and Conditions */
 .terms-container-text{
 	width:75%;

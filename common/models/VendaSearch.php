@@ -2,15 +2,20 @@
 
 namespace common\models;
 
+use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use common\models\Venda;
+
 
 /**
  * VendaSearch represents the model behind the search form of `common\models\Venda`.
  */
 class VendaSearch extends Venda
 {
+
+    public $tipoVenda;
+
     /**
      * {@inheritdoc}
      */
@@ -19,7 +24,7 @@ class VendaSearch extends Venda
         return [
             [['id', 'idcomprador', 'idmetodoexpedicao', 'idtipopagamento', 'idestadoencomenda'], 'integer'],
             [['total'], 'number'],
-            [['datavenda', 'nome', 'codigopostal', 'morada', 'pais', 'cidade'], 'safe'],
+            [['datavenda', 'nome', 'codigopostal', 'morada', 'pais', 'cidade', 'codigo', 'estadoEncomenda', 'tipoVenda'], 'safe'],
         ];
     }
 
@@ -72,7 +77,26 @@ class VendaSearch extends Venda
             ->andFilterWhere(['like', 'codigopostal', $this->codigopostal])
             ->andFilterWhere(['like', 'morada', $this->morada])
             ->andFilterWhere(['like', 'pais', $this->pais])
-            ->andFilterWhere(['like', 'cidade', $this->cidade]);
+            ->andFilterWhere(['like', 'cidade', $this->cidade])
+            ->andFilterWhere(['like', 'codigo', $this->codigo]);
+
+
+        // Filtrar por Compras (idcomprador = usuário logado)
+        if (isset($this->tipoVenda) && $this->tipoVenda === 'purchases') {
+            $query->andWhere(['idcomprador' => Yii::$app->user->id]);
+        }
+
+        // Filtrar por Vendas (usuário é o vendedor nas linhas de venda)
+        if (isset($this->tipoVenda) && $this->tipoVenda === 'sales') {
+            $query->joinWith('linhavendas l')
+                ->andWhere(['l.idvendedor' => Yii::$app->user->id]);
+        }
+
+        // Filtrar pelo estado da encomenda
+        if ($this->idestadoencomenda) {
+            $query->joinWith('estadoEncomenda e')
+                ->andWhere(['e.descricao' => $this->estadoEncomenda]);
+        }
 
         return $dataProvider;
     }

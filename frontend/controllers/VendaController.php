@@ -7,7 +7,7 @@ use common\models\Carrinho;
 use common\models\Estadoencomenda;
 use common\models\Linhavenda;
 use common\models\Venda;
-use common\models\SearchVenda;
+use common\models\VendaSearch;
 use Yii;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
@@ -44,8 +44,19 @@ class VendaController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new SearchVenda();
-        $dataProvider = $searchModel->search($this->request->queryParams);
+        $searchModel = new VendaSearch();
+        $queryParams = Yii::$app->request->queryParams;
+
+        // Verifica o tipo de venda (compras ou vendas)
+        if (isset($queryParams['VendaSearch']['tipoVenda']) && $queryParams['VendaSearch']['tipoVenda'] === 'sales') {
+            // Se for vendas, filtramos pelas vendas do usuário
+            $dataProvider = $searchModel->search(array_merge($queryParams, ['VendaSearch' => ['tipoVenda' => 'sales']]));
+        } else {
+            // Se for compras, filtramos pelas compras do usuário
+            $dataProvider = new \yii\data\ActiveDataProvider([
+                'query' => \common\models\Venda::find()->where(['idcomprador' => Yii::$app->user->id]),
+            ]);
+        }
 
         return $this->render('index', [
             'searchModel' => $searchModel,

@@ -49,7 +49,7 @@ $this->title = 'Perfils';
         <div class="col-lg-4 p-4 card mt-5 mt-lg-0">
             <div class="d-flex justify-content-between" style="gap: 50px">
                 <span>EARNINGS AND STATS</span>
-                <?= Html::a('HISTORY', ['perfil/update'], [
+                <?= Html::a('HISTORY', ['venda/index'], [
                     'class' => 'btn retroverse-btn',
                     'id' => 'retroverse-btn-active',
                     'style' => 'font-size: x-small; gap: 10px; padding: 10px',
