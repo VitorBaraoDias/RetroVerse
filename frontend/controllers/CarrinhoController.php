@@ -44,9 +44,7 @@ class CarrinhoController extends Controller
     public function actionIndex()
     {
         $userId = Yii::$app->user->id;
-
         $carrinho = Carrinho::findOne(['iduser' => $userId]);
-
         $iva = Iva::findOne(['emvigor' => 1]);
         if ($carrinho === null) {
             Yii::$app->session->setFlash('error', 'Não existe o carrinho');
@@ -84,6 +82,7 @@ class CarrinhoController extends Controller
     public function actionCreate($id)
     {
         // Tenta encontrar ou criar um carrinho
+        $userId = Yii::$app->user->id;
         $carrinho = Carrinho::findOne(['iduser' => $userId]) ?? new Carrinho(['iduser' => $userId]);
 
         if ($carrinho->isNewRecord && !$carrinho->save()) {

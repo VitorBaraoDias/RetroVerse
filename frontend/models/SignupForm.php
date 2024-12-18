@@ -76,7 +76,6 @@ class SignupForm extends Model
             $perfil->id = $user->getId();
             $perfil->username = $user->username;
 
-
              if (!$perfil->save(false)) {
                 $transaction->rollBack();
                 return null;

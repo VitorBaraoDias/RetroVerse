@@ -219,4 +219,22 @@ class Artigo extends \yii\db\ActiveRecord
     {
         return $this->hasMany(Linhavenda::class, ['idartigo' => 'id']);
     }
+
+
+
+    public function getPrecoComComissao()
+    {
+        // Obter a comissão associada ao artigo
+        $comissao = $this->idcomissao0 ? $this->idcomissao0->comissao : 0;
+
+        // Calcular o preço com a comissão
+        $precoComComissao = $this->precoanuncio * (1 + ($comissao / 100));
+
+        return round($precoComComissao, 2);
+    }
+    public function getPrecoComComissaoFormatado()
+    {
+        // Chama o método de preço com comissão e formata para o padrão Euro
+        return '€ ' . number_format($this->getPrecoComComissao(), 2, ',', '.');
+    }
 }

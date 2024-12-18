@@ -2,6 +2,8 @@
 
 namespace frontend\controllers;
 
+use backend\models\UploadForm;
+use common\models\Comissao;
 use Yii;
 use common\models\Artigospremium;
 use common\models\Artigo;
@@ -101,7 +103,7 @@ class ArtigoController extends Controller
             'query' => Artigo::find()
                 ->where(['ativo' => 1]) // Apenas artigos ativos
                 ->andWhere(['not in', 'id', $id]) // Excluir o próprio artigo
-                ->andWhere(['not in', 'id', (new Query())->select('id')->from('artigospremium')]) // Excluir artigos premium
+                ->andWhere(['not in', 'id', Artigospremium::find()->select('id')]) // Excluir artigos premium
                 ->andWhere([
                     'or',
                     ['idcategoria' => $model->idcategoria], // Mesma categoria
@@ -115,9 +117,9 @@ class ArtigoController extends Controller
         // DataProvider para artigos premium relacionados
         $relatedDataProviderPremium = new ActiveDataProvider([
             'query' => Artigo::find()
-                ->where(['ativo' => 1]) // Apenas artigos ativos
-                ->andWhere(['not in', 'id', $id]) // Excluir o próprio artigo
-                ->andWhere(['id' => (new Query())->select('id')->from('artigospremium')]) // Apenas artigos premium
+                ->where(['ativo' => 1])
+                ->andWhere(['not in', 'id', $id])
+                ->andWhere(['id' => Artigospremium::find()->select('id')])
                 ->andWhere([
                     'or',
                     ['idcategoria' => $model->idcategoria], // Mesma categoria
@@ -139,6 +141,14 @@ class ArtigoController extends Controller
             'relatedDataProvider' => $relatedDataProviderToUse,
         ]);
     }
+    public function actionViewMarketplace($id)
+    {
+        $model = $this->findModel($id);
+
+        return $this->render('view_marketplace', [
+            'model' => $model,
+        ]);
+    }
 
     /**
      * Creates a new Artigo model.
@@ -147,18 +157,24 @@ class ArtigoController extends Controller
      */
     public function actionCreate()
     {
-        $model = new Artigo();
+        $model = new Artigo(); // Modelo principal
+        $uploadForm = new UploadForm(); // Instancia o modelo do formulário de upload
 
         if ($this->request->isPost) {
+            $model->idperfil = Yii::$app->user->id;
+            $model->tipoartigo = 'MARKETPLACE';
+            $model->ativo = 1;
+            $model->idcomissao = Comissao::getIdActiveComissao();
+
+            // FALTA FOTOS
             if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
+                return $this->redirect(['artigo/view', 'id' => $model->id]);
             }
-        } else {
-            $model->loadDefaultValues();
         }
 
         return $this->render('create', [
             'model' => $model,
+            'uploadForm' => $uploadForm, // Envie a variável para a view
         ]);
     }
 

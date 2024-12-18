@@ -36,6 +36,15 @@ $this->params['breadcrumbs'][] = $this->title;
                     return Url::toRoute([$action, 'id' => $model->id]);
                  }
             ],
+            [
+                'attribute' => 'ativo',
+                'format' => 'raw', // Exibir HTML se necessário
+                'value' => function($model) {
+                    return $model->ativo
+                        ? Html::tag('span', 'Ativo', ['class' => 'badge bg-success'])
+                        : Html::tag('span', 'Inativo', ['class' => 'badge bg-danger']);
+                },
+            ],
         ],
     ]); ?>
 

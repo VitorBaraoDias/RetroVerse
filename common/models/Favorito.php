@@ -52,8 +52,14 @@ class Favorito extends \yii\db\ActiveRecord
     /**
      * Gets query for [[Idartigo0]].
      *
-     * @return \yii\db\ActiveQuery
+     * @return bool|int|string|\yii\db\ActiveQuery
      */
+    public static function getFavoritosCount($idPerfil)
+    {
+        return self::find()
+            ->where(['idperfil' => $idPerfil]) // Filtra pelo ID do perfil
+            ->count(); // Conta o número de registros
+    }
     public function getArtigo()
     {
         return $this->hasOne(Artigo::class, ['id' => 'idartigo']);

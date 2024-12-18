@@ -216,52 +216,6 @@
 })(jQuery);
 
 /* Marketplace/Store Switch Button */
-document.addEventListener("DOMContentLoaded", function () {
-    const checkbox = document.getElementById("mane");
-    const leftText = document.querySelector(".left");
-    const rightText = document.querySelector(".right");
-
-    // Função que atualiza as cores dependendo do estado do checkbox
-    function updateTextColor() {
-        if (checkbox.checked) {
-            leftText.style.color = "#0000FF"; // Azul quando o switch está marcado
-            rightText.style.color = "#FFFFFF"; // Branco quando o switch está marcado
-        } else {
-            leftText.style.color = "#FFFFFF"; // Branco quando o switch está desmarcado
-            rightText.style.color = "#0000FF"; // Azul quando o switch está desmarcado
-        }
-    }
-
-    // Adiciona o evento para mudar a cor quando o checkbox é alterado
-    checkbox.addEventListener("change", updateTextColor);
-
-    // Atualiza a cor inicialmente
-    updateTextColor();
-});
-
-/* Marketplace/Store hAMBUERGUER Switch Button */
-document.addEventListener("DOMContentLoaded", function () {
-    const checkbox = document.getElementById("mane_hamburguer");
-    const leftText = document.querySelector(".left_hamburguer");
-    const rightText = document.querySelector(".right_hamburguer");
-
-    // Função que atualiza as cores dependendo do estado do checkbox
-    function updateTextColor() {
-        if (checkbox.checked) {
-            leftText.style.color = "#000000";
-            rightText.style.color = "#FFFFFF";
-        } else {
-            leftText.style.color = "#FFFFFF";
-            rightText.style.color = "#000000";
-        }
-    }
-
-    // Adiciona o evento para mudar a cor quando o checkbox é alterado
-    checkbox.addEventListener("change", updateTextColor);
-
-    // Atualiza a cor inicialmente
-    updateTextColor();
-});
 
 
 

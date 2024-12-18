@@ -70,6 +70,16 @@
 	color: black !important;  /* Cor do texto em azul */
 
 }
+.container-info-type-item{
+	top: 5px;
+	position: absolute;
+	background: #0000FF;
+	color: white;
+	padding: 2px 14px;
+	right: 8px;
+	font-size: 12px;
+	border-radius: 4px;
+}
 .retroverse-btn {
 	background: #0000FF;  /* Fundo transparente */
 	color: white;  /* Cor do texto em azul */
@@ -920,7 +930,7 @@ ol {
 	position:relative;
 }
 
-.input-details input {
+.input-details input, .input-details select {
 	height: 48px;
 	background:#F2F4F8;
 	border: none;
