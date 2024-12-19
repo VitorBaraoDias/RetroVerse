@@ -19,7 +19,8 @@ use yii\widgets\ListView;
     <div class="container mt-4">
         <!-- Filtros de Compras/Vendas -->
         <?php
-        $tipoVenda = Yii::$app->request->get('VendaSearch')['tipoVenda'] ?? null;
+        $tipoVenda = Yii::$app->request->get('VendaSearch')['tipoVenda'] ?? 'purchases';
+        $estadoEncomenda = Yii::$app->request->get('VendaSearch')['estadoEncomenda'] ?? null;
         ?>
         <button class="history-button px-4 py-2 <?= $tipoVenda === 'purchases' ? 'active' : '' ?>"
                 onclick="location.href='<?= Yii::$app->urlManager->createUrl(['venda/index', 'VendaSearch' => ['tipoVenda' => 'purchases']]) ?>'; setActive(this, 'category')">
@@ -55,16 +56,15 @@ use yii\widgets\ListView;
     <div class="container mt-4">
         <?= ListView::widget([
             'dataProvider' => $dataProvider,
-            'itemView' => '_order_card', // A view parcial para exibir cada card
+            'itemView' => $viewType === 'sales' ? '_sale_order_card' : '_order_card',
             'layout' => '<div class="row">{items}</div>{pager}',
-            'itemOptions' => ['class' => 'col-md-12 mb-4'], // Classe para cada card
+            'itemOptions' =>  $viewType === 'sales' ? ['class' => 'col-md-4 mb-4'] : ['class' => 'col-md-12 mb-4'],
             'pager' => [
                 'class' => \yii\bootstrap5\LinkPager::class,
                 'options' => ['class' => 'pagination justify-content-center'],
             ],
         ]); ?>
     </div>
-
 </div>
 
 <script>

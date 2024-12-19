@@ -71,7 +71,7 @@ use yii\widgets\ListView;
             <?= Html::a(
                 'VIEW',
                 [
-                    $model->tipo === 'MARKETPLACE' ? 'artigo/view-marketplace' : 'artigo/view', // Condição para a URL
+                    $model->tipoartigo === 'MARKETPLACE' ? 'artigo/view-marketplace' : 'artigo/view', // Condição para a URL
                     'id' => $model->id
                 ],
                 [

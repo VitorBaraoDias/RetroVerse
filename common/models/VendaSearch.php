@@ -16,6 +16,12 @@ class VendaSearch extends Venda
 
     public $tipoVenda;
 
+    public function __construct($config = [])
+    {
+        $this->tipoVenda = 'purchases'; // Define o valor inicial como 'purchases'
+        parent::__construct($config);
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -86,11 +92,6 @@ class VendaSearch extends Venda
             $query->andWhere(['idcomprador' => Yii::$app->user->id]);
         }
 
-        // Filtrar por Vendas (usuário é o vendedor nas linhas de venda)
-        if (isset($this->tipoVenda) && $this->tipoVenda === 'sales') {
-            $query->joinWith('linhavendas l')
-                ->andWhere(['l.idvendedor' => Yii::$app->user->id]);
-        }
 
         // Filtrar pelo estado da encomenda
         if ($this->idestadoencomenda) {

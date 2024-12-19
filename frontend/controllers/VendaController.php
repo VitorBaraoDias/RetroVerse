@@ -8,6 +8,7 @@ use common\models\Estadoencomenda;
 use common\models\Linhavenda;
 use common\models\Venda;
 use common\models\VendaSearch;
+use common\models\LinhavendaSearch;
 use Yii;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
@@ -44,25 +45,28 @@ class VendaController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new VendaSearch();
-        $queryParams = Yii::$app->request->queryParams;
+        $tipoVenda = Yii::$app->request->get('VendaSearch')['tipoVenda'] ?? 'purchases';
 
-        // Verifica o tipo de venda (compras ou vendas)
-        if (isset($queryParams['VendaSearch']['tipoVenda']) && $queryParams['VendaSearch']['tipoVenda'] === 'sales') {
-            // Se for vendas, filtramos pelas vendas do usuário
-            $dataProvider = $searchModel->search(array_merge($queryParams, ['VendaSearch' => ['tipoVenda' => 'sales']]));
+        if ($tipoVenda === 'sales') {
+            $searchModel = new LinhaVendaSearch();
+            $view = 'index';
+            $viewType = 'sales';
         } else {
-            // Se for compras, filtramos pelas compras do usuário
-            $dataProvider = new \yii\data\ActiveDataProvider([
-                'query' => \common\models\Venda::find()->where(['idcomprador' => Yii::$app->user->id]),
-            ]);
+            $searchModel = new VendaSearch();
+            $view = 'index';
+            $viewType = 'purchases';
         }
 
-        return $this->render('index', [
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        return $this->render($view, [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'viewType' => $viewType, // Passa o tipo de visualização para a view
         ]);
     }
+
+
 
 
     /**
