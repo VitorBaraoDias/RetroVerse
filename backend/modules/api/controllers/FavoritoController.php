@@ -28,7 +28,7 @@ class FavoritoController extends ActiveController
     public function actionFavorito($id)
     {
         $modelClass = $this->modelClass;
-        $favorito = $modelClass::find()->where(['user_id' => $id])->all(); // Ajuste de coluna
+        $favorito = $modelClass::find()->where(['idperfil' => $id])->all(); // Ajuste de coluna
 
         if (empty($favorito)) {
             return ['message' => 'No favorites found for this user.', 'status' => 404];
@@ -36,22 +36,4 @@ class FavoritoController extends ActiveController
 
         return $favorito;
     }
-
-    public function actionDeleteFavorito($id)
-    {
-        $modelClass = $this->modelClass;
-
-        $favorito = $modelClass::findOne($id);
-
-        if (!$favorito) {
-            return ['message' => 'Favorite not found.', 'status' => 404];
-        }
-
-        if ($favorito->delete()) {
-            return ['message' => 'Favorite deleted successfully.', 'status' => 200];
-        }
-
-        return ['message' => 'Failed to delete favorite.', 'status' => 500];
-    }
-
 }

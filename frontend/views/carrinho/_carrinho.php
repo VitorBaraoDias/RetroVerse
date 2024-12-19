@@ -14,7 +14,7 @@ $precoComIVA = $precoBase + $valorIVA;
 ?>
 <div class="d-flex align-items-center gap-4">
     <div class="d-flex flex-column">
-        <span>Store</span>
+        <span><?= $model->artigo->tipoartigo ?></span>
         <p style="font-size: 18px">
             <strong><?= Html::encode($model->artigo->nome) ?></strong>
         </p>
@@ -47,16 +47,20 @@ $precoComIVA = $precoBase + $valorIVA;
 <div class="d-flex flex-column justify-content-between">
     <div>
         <div class="d-flex align-items-center gap-2">
+            <?php if ($model->artigo->tipoartigo === 'MARKETPLACE'): ?>
+                <h2 style="font-size: 20px">
+                    <?= $model->artigo->getPrecoComComissaoFormatado() ?>
+                </h2>
+            <?php endif; ?>
             <h1 style="font-size: 30px">
                 <strong><?= Yii::$app->formatter->asCurrency($model->artigo->precoanuncio, 'EUR') ?></strong>
             </h1>
-            <h2 style="font-size: 20px">
-                <?= Yii::$app->formatter->asCurrency($precoComIVA, 'EUR') ?>
-
-            </h2>
         </div>
-        <p>WITH TAXES</p>
+        <p>
+            <?= $model->artigo->tipoartigo === 'MARKETPLACE' ? 'WITH TAXES' : 'WITHOUT TAXES' ?>
+        </p>
     </div>
+
 
     <?= Html::a('Remove', ['linhascarrinho/delete', 'id' => $model->id], [
         'class' => 'retroverse-btn active w-100',

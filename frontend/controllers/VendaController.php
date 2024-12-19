@@ -130,6 +130,10 @@ class VendaController extends Controller
                             throw new \Exception('Erro ao eliminar linha do carrinho: ' . json_encode($linha->errors));
                         }
                     }
+
+                    //
+                    $linhaVenda->idartigo0->ativo = 0;
+                    $linhaVenda->idartigo0->save();
                     $transaction->commit();
                     Yii::$app->session->setFlash('success', 'Venda criada com sucesso!');
                     return $this->redirect(['view', 'id' => $model->id]);

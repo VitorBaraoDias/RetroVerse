@@ -188,6 +188,7 @@ class ArtigoController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $uploadForm = new UploadForm(); // Instancia o modelo do formulário de upload
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -195,6 +196,7 @@ class ArtigoController extends Controller
 
         return $this->render('update', [
             'model' => $model,
+            'uploadForm' => $uploadForm, // Envie a variável para a view
         ]);
     }
 

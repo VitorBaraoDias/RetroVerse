@@ -8,7 +8,7 @@ use yii\widgets\DetailView;
 /** @var yii\web\View $this */
 /** @var common\models\Venda $model */
 
-$this->title = 'Order details for '. $model->comprador->username;
+$this->title = 'Order details for '. $model->comprador->user->username;
 $this->params['breadcrumbs'][] = ['label' => 'Vendas', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);

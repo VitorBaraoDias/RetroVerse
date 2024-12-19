@@ -70,7 +70,7 @@ $this->title = $model->id;
         <!-- Coluna de Informações -->
         <div class="col-md-6 d-flex flex-column align-self-lg-center">
             <div class="row">
-                <div class="col-md-8 row">
+                <div class="col-md-12 row">
                     <h1 class="font-weight-bold" style="font-size: 48px"><strong><?= $model->nome ?></strong></h1>
                     <hr>
                     <div  class="d-flex mt-2 align-items-end">
@@ -107,10 +107,12 @@ $this->title = $model->id;
                                         'style' => 'font-size: x-small; font-weight: bold',]) ?>
                         <img class="col-md-2"  src="<?php echo Yii::getAlias('@web') ?>/img/icon_heart.svg" height="30">
                     </div>
-
                     <?= Html::a('MAKE AN OFFER', ['carrinho/create', 'id' => $model->id],
-                        [    'class' => 'outline-retroverse-btn active w-100 col-md-9 m-0',    'id' => 'retroverse-btn-active',
+                        [    'class' => 'outline-retroverse-btn active w-100 col-md-9 m-0 mb-2 ',    'id' => 'retroverse-btn-active',
                             'style' => 'font-size: x-small; font-weight: bold',]) ?>
+                    <?= Html::a('MAKE AN OFFER', ['carrinho/create', 'id' => $model->id],
+                        [    'class' => 'btn history-button  w-100 col-md-9 mb-2 text-white rounded-0 ',    'id' => 'retroverse-btn-active',
+                            'style' => 'font-size: x-small; background: #121619; font-weight: bold',]) ?>
                     <hr>
                     <div class="bg-light outline p-2 mb-4" style="min-height: 200px">
                         <?= $model->descricao ?>
@@ -122,13 +124,10 @@ $this->title = $model->id;
                     <p>Shipping price calculated in check out</p>
                     <!-- Adicione mais informações conforme necessário -->
                 </div>
-                <div class="col-md-3 d-flex flex-column justify-content-between">
-
-                </div>
             </div>
-
         </div>
     </div>
+    <h2> <strong>OTHER MEMBER ITEMS</strong> </h2>
     <hr>
 </div>
 
