@@ -1,29 +1,82 @@
-<?php
-use yii\helpers\Html;
+<?php use yii\helpers\Html;
 
-/** @var $model \common\models\Venda */
-
-// Status e cores de exemplo para vendas
-$status = $model->estadoEncomenda->descricao ?? 'N/A';
-$statusColor = $model->estadoEncomenda && $model->estadoEncomenda->isFinalState() ? 'green' : 'grey';
+$statusColor = $model->idvenda0->estadoEncomenda->descricao && $model->idvenda0->estadoEncomenda->isFinalState() ? 'green' : 'grey';
 ?>
 
-<div class="history-order-box border p-3 rounded shadow-sm">
-    <!-- Total no canto superior direito -->
-    <div class="history-order-total text-end">
-        <span>TOTAL:</span> <?= Yii::$app->formatter->asCurrency($model->total) ?>
+<div class="card">
+
+        <div class="image-container bg-secondary position-relative">
+        <?php
+        $firstPhoto = $model->idartigo0->fotosartigos[0] ?? null;  // Alterado para usar idartigo0
+        // Caminho para a imagem no frontend
+        $imagePath = Yii::getAlias('@web/uploads/img-artigos/') . ($firstPhoto->caminhofoto ?? '');
+
+        if ($firstPhoto && file_exists(Yii::getAlias('@frontend/web/uploads/img-artigos/') . $firstPhoto->caminhofoto)) {
+            // Renderiza a imagem
+            echo Html::img($imagePath, [
+                'alt' => 'Article Image',
+                'class' => 'w-100',
+                'style' => 'width: 370px; height: 270px; object-fit: cover;',
+            ]);
+        } else {
+            echo Html::tag('div', '', [
+                'class' => 'img-thumbnail',
+                'style' => 'width: 370px; height: 270px; background-color: grey; display: flex; align-items: center; justify-content: center;',
+            ]);
+        }
+        ?>
+        </div>
+
+    <div class="card-body">
+        <div class="history-order-info mb-3">
+            <h6>#<?=  $model->idvenda0->codigo ?></h6>
+        </div>
+
+        <p class="card-title text-black" style="font-weight: bold; color: black">
+            BRAND: <span class="text-secondary" style="font-weight: lighter"><?= Html::encode($model->idartigo0->idmarca0->nome) ?></span>
+        </p>
+
+
+        <p class="card-title text-black" style="font-weight: bold; color: black">
+            DATE OF SALE: <span class="text-secondary" style="font-weight: lighter"><?= Html::encode(Yii::$app->formatter->asDate($model->idvenda0->datavenda)) ?></span>
+        </p>
+
+        <p class="card-title text-black" style="font-weight: bold; color: black">
+            ADDRESS OF BUYER: <span class="text-secondary" style="font-weight: lighter"><?= Html::encode($model->idvenda0->morada) ?></span>
+        </p>
+
+
+        <p class="card-title text-black" style="font-weight: bold; color: black">
+            STATUS: <span class="text-secondary" style="font-weight: lighter, color="<?= $statusColor?>"><?= Html::encode($model->idvenda0->estadoEncomenda->descricao) ?></span>
+        </p>
+
+
+        <div class="d-flex align-items-center justify-content-between">
+            <div class="d-flex flex-column">
+                <!-- Preço do artigo -->
+                <span style="font-weight: normal; font-size: small"><?= Html::encode($model->idartigo0->precoanuncio) ?>€</span>
+                <span style="font-weight: bolder; font-size: small">
+                                <?= Html::encode($model->idartigo0->precoanuncio) ?>€
+                                <span style="font-weight: bold">(inc.)
+                                    <img src="<?= Yii::getAlias('@web/images/check_icon.svg') ?>" height="10">
+                                </span>
+                            </span>
+            </div>
+
+            <?= Html::a(
+                'VIEW',
+                [
+                    $model->idartigo0->tipoartigo === 'MARKETPLACE' ? 'artigo/view-marketplace' : 'artigo/view', // Condição para a URL
+                    'id' => $model->id
+                ],
+                [
+                    'class' => 'retroverse-btn',
+                    'style' => 'font-size: x-small; gap: 10px',
+                ]
+            ) ?>
+        </div>
+
+
     </div>
 
-    <!-- Informações do Pedido -->
-    <div class="history-order-info">
-        <h6>SALE #<?= $model->codigo ?></h6>
-        <h3><?= Html::encode($model->getLinhavendas()->count()) ?> ITEMS SOLD</h3>
-        <p><span>STATUS: </span><span style="color: <?= $statusColor ?>; font-weight: bold;"><?= Html::encode($status) ?></span></p>
-    </div>
-
-    <!-- Botões no canto inferior direito -->
-    <div class="history-buttons text-end">
-        <?= Html::a('VIEW SALE DETAILS', ['venda/view', 'id' => $model->id], ['class' => 'history-view-details']) ?>
-        <?= Html::a('VIEW INVOICE', ['venda/invoice', 'id' => $model->id], ['class' => 'history-view-invoice']) ?>
-    </div>
 </div>

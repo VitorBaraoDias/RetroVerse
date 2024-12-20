@@ -12088,6 +12088,7 @@ $_SERVER = [
     'REQUEST_TIME_FLOAT' => 1734436190.8781
     'REQUEST_TIME' => 1734436190
 ]
+<<<<<<< HEAD
 2024-12-19 14:31:27 [::1][1][slgp9nsg5noa79j4ebq6rplern][error][yii\base\UnknownPropertyException] yii\base\UnknownPropertyException: Getting unknown property: common\models\Perfil::username in /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Component.php:154
 Stack trace:
 #0 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/db/BaseActiveRecord.php(296): yii\base\Component->__get('username')
@@ -12513,12 +12514,29 @@ Stack trace:
 2024-12-19 15:47:28 [::1][1][ncvtpoo89vlts0ubcgraccp27a][info][application] $_GET = [
     'id' => '1'
 ]
+=======
+2024-12-19 14:45:45 [::1][1][5kc1smuc6fmijad9mfjqtrjfuk][error][yii\web\HttpException:404] yii\base\InvalidRouteException: Unable to resolve the request: site/gii in /Applications/MAMP/htdocs/retroverse-new/RetroVerse/vendor/yiisoft/yii2/base/Controller.php:149
+Stack trace:
+#0 /Applications/MAMP/htdocs/retroverse-new/RetroVerse/vendor/yiisoft/yii2/base/Module.php(552): yii\base\Controller->runAction('gii', Array)
+#1 /Applications/MAMP/htdocs/retroverse-new/RetroVerse/vendor/yiisoft/yii2/web/Application.php(103): yii\base\Module->runAction('site/gii', Array)
+#2 /Applications/MAMP/htdocs/retroverse-new/RetroVerse/vendor/yiisoft/yii2/base/Application.php(384): yii\web\Application->handleRequest(Object(yii\web\Request))
+#3 /Applications/MAMP/htdocs/retroverse-new/RetroVerse/backend/web/index.php(18): yii\base\Application->run()
+#4 {main}
+
+Next yii\web\NotFoundHttpException: Page not found. in /Applications/MAMP/htdocs/retroverse-new/RetroVerse/vendor/yiisoft/yii2/web/Application.php:115
+Stack trace:
+#0 /Applications/MAMP/htdocs/retroverse-new/RetroVerse/vendor/yiisoft/yii2/base/Application.php(384): yii\web\Application->handleRequest(Object(yii\web\Request))
+#1 /Applications/MAMP/htdocs/retroverse-new/RetroVerse/backend/web/index.php(18): yii\base\Application->run()
+#2 {main}
+2024-12-19 14:45:45 [::1][1][5kc1smuc6fmijad9mfjqtrjfuk][info][application] $_GET = []
+>>>>>>> 9096d47c49b278d200e38f7c667e36497d1ae934
 
 $_POST = []
 
 $_FILES = []
 
 $_COOKIE = [
+<<<<<<< HEAD
     'Phpstorm-f1926c32' => '270f0bde-3ec2-48c2-ab72-3c75c453acc7'
     '_identity-backend' => 'a7b70a101cebbc1863ac1e50672d683b39f91fa74ee3a257dc422ae0eda9506ea:2:{i:0;s:17:\"_identity-backend\";i:1;s:46:\"[1,\"AVA93xW5yfiHdWni3M0XBAxV7-T4Tk37\",2592000]\";}'
     'sidebar-collapse' => 'false'
@@ -12533,26 +12551,57 @@ $_SESSION = [
     '__flash' => []
     '__id' => 1
     '__authKey' => 'AVA93xW5yfiHdWni3M0XBAxV7-T4Tk37'
+=======
+    '_identity-backend' => 'a7b70a101cebbc1863ac1e50672d683b39f91fa74ee3a257dc422ae0eda9506ea:2:{i:0;s:17:\"_identity-backend\";i:1;s:46:\"[1,\"AVA93xW5yfiHdWni3M0XBAxV7-T4Tk37\",2592000]\";}'
+    '_identity-frontend' => '706a8ccc8fffd0961d965325aafdc2103a15760bf61d95af43415cc83b3b7d86a:2:{i:0;s:18:\"_identity-frontend\";i:1;s:46:\"[1,\"AVA93xW5yfiHdWni3M0XBAxV7-T4Tk37\",2592000]\";}'
+    'advanced-frontend' => 'i8o4g0dg9kolc18j7i4tr8uimf'
+    '_csrf-backend' => 'fd049de0043d280ceca85de6580ee86ae729bcbee14c311a5e1bae9082ff004ca:2:{i:0;s:13:\"_csrf-backend\";i:1;s:32:\"U2CQBOUPiHS387uwfULscvQRN5xlypR5\";}'
+    '_csrf-frontend' => 'cdd6e34feb5e1fd067ca60fe700e03954cf94b11452a60a8be21b7043db44c12a:2:{i:0;s:14:\"_csrf-frontend\";i:1;s:32:\"1tHAcOPEqfq-WmNK2RImnmR3v13Yp8Ip\";}'
+    'advanced-backend' => '5kc1smuc6fmijad9mfjqtrjfuk'
+]
+
+$_SESSION = [
+    '__flash' => [
+        'success' => -1
+    ]
+    '__id' => 1
+    '__authKey' => 'AVA93xW5yfiHdWni3M0XBAxV7-T4Tk37'
+    'success' => 'Estados atualizados com sucesso.'
+>>>>>>> 9096d47c49b278d200e38f7c667e36497d1ae934
 ]
 
 $_SERVER = [
     'REDIRECT_STATUS' => '200'
     'HTTP_HOST' => 'localhost'
     'HTTP_CONNECTION' => 'keep-alive'
+<<<<<<< HEAD
     'HTTP_CACHE_CONTROL' => 'max-age=0'
     'HTTP_SEC_CH_UA' => '\"Google Chrome\";v=\"113\", \"Chromium\";v=\"113\", \"Not-A.Brand\";v=\"24\"'
     'HTTP_SEC_CH_UA_MOBILE' => '?0'
     'HTTP_SEC_CH_UA_PLATFORM' => '\"macOS\"'
     'HTTP_UPGRADE_INSECURE_REQUESTS' => '1'
     'HTTP_USER_AGENT' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36'
+=======
+    'HTTP_SEC_CH_UA' => '\"Google Chrome\";v=\"131\", \"Chromium\";v=\"131\", \"Not_A Brand\";v=\"24\"'
+    'HTTP_SEC_CH_UA_MOBILE' => '?0'
+    'HTTP_SEC_CH_UA_PLATFORM' => '\"macOS\"'
+    'HTTP_UPGRADE_INSECURE_REQUESTS' => '1'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36'
+>>>>>>> 9096d47c49b278d200e38f7c667e36497d1ae934
     'HTTP_ACCEPT' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7'
     'HTTP_SEC_FETCH_SITE' => 'none'
     'HTTP_SEC_FETCH_MODE' => 'navigate'
     'HTTP_SEC_FETCH_USER' => '?1'
     'HTTP_SEC_FETCH_DEST' => 'document'
+<<<<<<< HEAD
     'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, br'
     'HTTP_ACCEPT_LANGUAGE' => 'en-US,en;q=0.9,pt-BR;q=0.8,pt;q=0.7'
     'HTTP_COOKIE' => 'Phpstorm-f1926c32=270f0bde-3ec2-48c2-ab72-3c75c453acc7; _identity-backend=a7b70a101cebbc1863ac1e50672d683b39f91fa74ee3a257dc422ae0eda9506ea%3A2%3A%7Bi%3A0%3Bs%3A17%3A%22_identity-backend%22%3Bi%3A1%3Bs%3A46%3A%22%5B1%2C%22AVA93xW5yfiHdWni3M0XBAxV7-T4Tk37%22%2C2592000%5D%22%3B%7D; sidebar-collapse=false; _csrf-backend=c866a2c5cdef9fe5f72aa6bd882aba20771803cb6c6858d76d2f8ffbd5f82441a%3A2%3A%7Bi%3A0%3Bs%3A13%3A%22_csrf-backend%22%3Bi%3A1%3Bs%3A32%3A%22Pf-gj6g79t4vpNkDaL3O69KWy48Tungx%22%3B%7D; advanced-frontend=noilst0jde77ua719kj78olfav; _identity-frontend=706a8ccc8fffd0961d965325aafdc2103a15760bf61d95af43415cc83b3b7d86a%3A2%3A%7Bi%3A0%3Bs%3A18%3A%22_identity-frontend%22%3Bi%3A1%3Bs%3A46%3A%22%5B1%2C%22AVA93xW5yfiHdWni3M0XBAxV7-T4Tk37%22%2C2592000%5D%22%3B%7D; _csrf-frontend=8c04be73367799bc3da4fe6036eb86d52a837049e6ee9963f68ad241df392e8ba%3A2%3A%7Bi%3A0%3Bs%3A14%3A%22_csrf-frontend%22%3Bi%3A1%3Bs%3A32%3A%22R9gYIzPE6eq-AzCdqSimzHuWp6tRO6EY%22%3B%7D; advanced-backend=ncvtpoo89vlts0ubcgraccp27a'
+=======
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, br, zstd'
+    'HTTP_ACCEPT_LANGUAGE' => 'pt-PT,pt;q=0.9,en-US;q=0.8,en;q=0.7'
+    'HTTP_COOKIE' => '_identity-backend=a7b70a101cebbc1863ac1e50672d683b39f91fa74ee3a257dc422ae0eda9506ea%3A2%3A%7Bi%3A0%3Bs%3A17%3A%22_identity-backend%22%3Bi%3A1%3Bs%3A46%3A%22%5B1%2C%22AVA93xW5yfiHdWni3M0XBAxV7-T4Tk37%22%2C2592000%5D%22%3B%7D; _identity-frontend=706a8ccc8fffd0961d965325aafdc2103a15760bf61d95af43415cc83b3b7d86a%3A2%3A%7Bi%3A0%3Bs%3A18%3A%22_identity-frontend%22%3Bi%3A1%3Bs%3A46%3A%22%5B1%2C%22AVA93xW5yfiHdWni3M0XBAxV7-T4Tk37%22%2C2592000%5D%22%3B%7D; advanced-frontend=i8o4g0dg9kolc18j7i4tr8uimf; _csrf-backend=fd049de0043d280ceca85de6580ee86ae729bcbee14c311a5e1bae9082ff004ca%3A2%3A%7Bi%3A0%3Bs%3A13%3A%22_csrf-backend%22%3Bi%3A1%3Bs%3A32%3A%22U2CQBOUPiHS387uwfULscvQRN5xlypR5%22%3B%7D; _csrf-frontend=cdd6e34feb5e1fd067ca60fe700e03954cf94b11452a60a8be21b7043db44c12a%3A2%3A%7Bi%3A0%3Bs%3A14%3A%22_csrf-frontend%22%3Bi%3A1%3Bs%3A32%3A%221tHAcOPEqfq-WmNK2RImnmR3v13Yp8Ip%22%3B%7D; advanced-backend=5kc1smuc6fmijad9mfjqtrjfuk'
+>>>>>>> 9096d47c49b278d200e38f7c667e36497d1ae934
     'PATH' => '/usr/bin:/bin:/usr/sbin:/sbin'
     'SERVER_SIGNATURE' => ''
     'SERVER_SOFTWARE' => 'Apache/2.4.54 (Unix) OpenSSL/1.0.2u PHP/8.1.13 mod_wsgi/3.5 Python/2.7.18 mod_fastcgi/mod_fastcgi-SNAP-0910052141 mod_perl/2.0.11 Perl/v5.30.1'
@@ -12565,13 +12614,20 @@ $_SERVER = [
     'CONTEXT_PREFIX' => ''
     'CONTEXT_DOCUMENT_ROOT' => '/Applications/MAMP/htdocs'
     'SERVER_ADMIN' => 'you@example.com'
+<<<<<<< HEAD
     'SCRIPT_FILENAME' => '/Applications/MAMP/htdocs/RetroVerse/backend/web/index.php'
     'REMOTE_PORT' => '61546'
     'REDIRECT_URL' => '/RetroVerse/backend/web/api/vendas/1'
+=======
+    'SCRIPT_FILENAME' => '/Applications/MAMP/htdocs/retroverse-new/RetroVerse/backend/web/index.php'
+    'REMOTE_PORT' => '53224'
+    'REDIRECT_URL' => '/retroverse-new/RetroVerse/backend/web/site/gii'
+>>>>>>> 9096d47c49b278d200e38f7c667e36497d1ae934
     'GATEWAY_INTERFACE' => 'CGI/1.1'
     'SERVER_PROTOCOL' => 'HTTP/1.1'
     'REQUEST_METHOD' => 'GET'
     'QUERY_STRING' => ''
+<<<<<<< HEAD
     'REQUEST_URI' => '/RetroVerse/backend/web/api/vendas/1'
     'SCRIPT_NAME' => '/RetroVerse/backend/web/index.php'
     'PHP_SELF' => '/RetroVerse/backend/web/index.php'
@@ -14849,4 +14905,11 @@ $_SERVER = [
     'PHP_SELF' => '/RetroVerse/backend/web/index.php'
     'REQUEST_TIME_FLOAT' => 1734624808.1442
     'REQUEST_TIME' => 1734624808
+=======
+    'REQUEST_URI' => '/retroverse-new/RetroVerse/backend/web/site/gii'
+    'SCRIPT_NAME' => '/retroverse-new/RetroVerse/backend/web/index.php'
+    'PHP_SELF' => '/retroverse-new/RetroVerse/backend/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1734619545.3721
+    'REQUEST_TIME' => 1734619545
+>>>>>>> 9096d47c49b278d200e38f7c667e36497d1ae934
 ]
