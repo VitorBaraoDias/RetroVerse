@@ -122,7 +122,8 @@ class VendaController extends Controller
                         $linhaVenda = new Linhavenda();
                         $linhaVenda->idvenda = $model->id;
                         $linhaVenda->idartigo = $linha->idartigo;
-                        $linhaVenda->idvendedor = $linha->artigo->idperfil; // ID do vendedor associado ao artigo
+                        $linhaVenda->idvendedor = $linha->artigo->idperfil;
+                        $linhaVenda->idestadoencomenda = Estadoencomenda::getIdByStatusCode1();
 
                         if (!$linhaVenda->save()) {
                             throw new \Exception('Erro ao salvar linha de venda: ' . json_encode($linhaVenda->errors));
@@ -184,6 +185,7 @@ class VendaController extends Controller
 
         return $this->redirect(['index']);
     }
+
 
     /**
      * Finds the Venda model based on its primary key value.

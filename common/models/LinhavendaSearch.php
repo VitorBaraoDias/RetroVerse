@@ -17,7 +17,7 @@ class LinhavendaSearch extends Linhavenda
     public function rules()
     {
         return [
-            [['id', 'idvenda', 'idartigo', 'idvendedor'], 'integer'],
+            [['id', 'idvenda', 'idartigo', 'idvendedor', 'idestadoencomenda'], 'integer'],
         ];
     }
 
@@ -67,6 +67,7 @@ class LinhavendaSearch extends Linhavenda
             'idvenda' => $this->idvenda,
             'idartigo' => $this->idartigo,
             'idvendedor' => $this->idvendedor,
+            'idestadoencomenda' => $this->idestadoencomenda,
         ]);
 
         return $dataProvider;

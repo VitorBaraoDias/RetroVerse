@@ -167,4 +167,33 @@ class Venda extends \yii\db\ActiveRecord
         // Gera um código único baseado no timestamp (apenas números)
         return str_pad(mt_rand(1, 999999999), 10, '0', STR_PAD_LEFT);
     }
+
+    public function checkAndSetFinalState()
+    {
+        if ($this->estadoEncomenda->isFinalState()) {
+            return;
+        }
+
+        $items = $this->linhavendas;
+
+        // Verifique se todos os itens têm o estado final
+        $allItemsState = true;
+
+        foreach ($items as $item) {
+            // Verifique se o estado do item é final
+            if (!$item->idestadoencomenda0->isFinalState()) {
+                $allItemsState = false;
+                break;
+            }
+        }
+
+        // Se todos os itens estão no estado final, altere o estado da venda para "final"
+        if ($allItemsState) {
+            // Atualize o estado da venda
+            $this->idestadoencomenda = 2;
+            $this->save();  // Salve a venda com o novo estado
+        }
+    }
+
+
 }

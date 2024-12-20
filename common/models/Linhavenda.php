@@ -11,10 +11,12 @@ use Yii;
  * @property int $idvenda
  * @property int $idartigo
  * @property int $idvendedor
+ * @property int|null $idestadoencomenda
  *
- * @property Artigo $idartigo0
- * @property Venda $idvenda0
- * @property Perfil $idvendedor0
+ * @property Artigos $idartigo0
+ * @property Estadoencomendas $idestadoencomenda0
+ * @property Vendas $idvenda0
+ * @property Perfils $idvendedor0
  */
 class Linhavenda extends \yii\db\ActiveRecord
 {
@@ -33,10 +35,11 @@ class Linhavenda extends \yii\db\ActiveRecord
     {
         return [
             [['idvenda', 'idartigo', 'idvendedor'], 'required'],
-            [['idvenda', 'idartigo', 'idvendedor'], 'integer'],
+            [['idvenda', 'idartigo', 'idvendedor', 'idestadoencomenda'], 'integer'],
             [['idartigo'], 'exist', 'skipOnError' => true, 'targetClass' => Artigo::class, 'targetAttribute' => ['idartigo' => 'id']],
             [['idvenda'], 'exist', 'skipOnError' => true, 'targetClass' => Venda::class, 'targetAttribute' => ['idvenda' => 'id']],
             [['idvendedor'], 'exist', 'skipOnError' => true, 'targetClass' => Perfil::class, 'targetAttribute' => ['idvendedor' => 'id']],
+            [['idestadoencomenda'], 'exist', 'skipOnError' => true, 'targetClass' => Estadoencomenda::class, 'targetAttribute' => ['idestadoencomenda' => 'id']],
         ];
     }
 
@@ -50,6 +53,7 @@ class Linhavenda extends \yii\db\ActiveRecord
             'idvenda' => 'Idvenda',
             'idartigo' => 'Idartigo',
             'idvendedor' => 'Idvendedor',
+            'idestadoencomenda' => 'Idestadoencomenda',
         ];
     }
 
@@ -61,6 +65,16 @@ class Linhavenda extends \yii\db\ActiveRecord
     public function getIdartigo0()
     {
         return $this->hasOne(Artigo::class, ['id' => 'idartigo']);
+    }
+
+    /**
+     * Gets query for [[Idestadoencomenda0]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getIdestadoencomenda0()
+    {
+        return $this->hasOne(Estadoencomenda::class, ['id' => 'idestadoencomenda']);
     }
 
     /**
