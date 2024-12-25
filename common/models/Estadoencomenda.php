@@ -66,7 +66,35 @@ class Estadoencomenda extends \yii\db\ActiveRecord
     public function isFinalState()
     {
         $finalState = self::find()->orderBy(['status' => SORT_DESC])->one();
-
         return $this->status === $finalState->status;
     }
+
+    public function isFirstState()
+    {
+        // Encontre o estado com a menor ordem
+        $firstState = self::find()->orderBy(['id' => SORT_ASC])->one();
+        return $this->id === $firstState->id;
+    }
+
+    public static function isBeforeLastState()
+    {
+        // Obtém o último estado (maior ID)
+        $ultimoEstado = self::find()->orderBy(['id' => SORT_DESC])->one();
+
+        if (!$ultimoEstado) {
+            throw new \Exception('Nenhum estado encontrado.');
+        }
+
+        // Busca o estado com o ID anterior ao último
+        $estadoAnterior = self::find()->where(['<', 'id', $ultimoEstado->id])
+            ->orderBy(['id' => SORT_DESC])
+            ->one();
+
+        if (!$estadoAnterior) {
+            throw new \Exception('Estado anterior ao último não encontrado.');
+        }
+
+        return $estadoAnterior;
+    }
+
 }

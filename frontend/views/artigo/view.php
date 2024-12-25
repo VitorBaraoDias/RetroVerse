@@ -4,15 +4,12 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 use yii\widgets\ListView;
 use yii\db\Query;
+use common\models\Favorito;
 
+$userId = Yii::$app->user->id;
+$artigoId = $model->id;
 
-/** @var yii\web\View $this */
-/** @var common\models\Artigo $model */
-
-$this->title = $model->id;
-
-\yii\web\YiiAsset::register($this);
-
+$isFavorito = Favorito::isFavorito($userId, $artigoId);
 ?>
 <div class="artigo-view container-lg">
 
@@ -33,7 +30,9 @@ $this->title = $model->id;
                     <div class="carousel-inner">
                         <?php foreach ($model->fotosartigos as $index => $foto): ?>
                             <div class="carousel-item <?= $index === 0 ? 'active' : '' ?>">
-                                <img src="../../../common/uploads/img-artigos/<?= $foto->caminhofoto ?>" class="d-block w-100" alt="Foto <?= $index + 1 ?>">
+                                <img src="../../../common/uploads/img-artigos/<?= $foto->caminhofoto ?>"
+                                     style="max-height: 650px; object-fit: cover;"
+                                     class="d-block w-100" alt="Foto <?= $index + 1 ?>">
                             </div>
                         <?php endforeach; ?>
                     </div>
@@ -79,7 +78,21 @@ $this->title = $model->id;
             </span>
             <div class="d-flex align-items-center justify-content-between mt-2 gap-5">
                 <?= Html::a('ADD TO CART', ['carrinho/create', 'id' => $model->id], [    'class' => 'retroverse-btn active',    'id' => 'retroverse-btn-active',    'style' => 'font-size: x-small; gap: 10px',]) ?>
-                <img src="<?php echo Yii::getAlias('@web') ?>/img/icon_heart.svg" height="30">
+                <?php if ($isFavorito): ?>
+                    <!-- Artigo está nos favoritos -->
+                    <a href="<?= \yii\helpers\Url::to(['favorito/delete', 'id' => $artigoId]) ?>">
+                        <img height="40"
+                             src="<?= Yii::getAlias('@web/img/vector_liked.svg') ?>"
+                             alt="Remover dos Favoritos">
+                    </a>
+                <?php else: ?>
+                    <!-- Artigo não está nos favoritos -->
+                    <a href="<?= \yii\helpers\Url::to(['favorito/create', 'id' => $artigoId]) ?>">
+                        <img height="40"
+                             src="<?= Yii::getAlias('@web/img/vector_like.svg') ?>"
+                             alt="Adicionar aos Favoritos">
+                    </a>
+                <?php endif; ?>
             </div>
             <hr>
             <div class="bg-light outline p-2">

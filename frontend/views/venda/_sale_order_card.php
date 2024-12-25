@@ -63,12 +63,12 @@ $statusColor = $model->idestadoencomenda0->isFinalState() ? 'green' : 'grey';
                             </span>
             </div>
 
-            <?php if (!$model->idestadoencomenda0->isFinalState()): ?>
+            <?php if ($model->idestadoencomenda0->isFirstState()): ?>
                 <?= Html::a(
-                    'ALREADY SENT MY ITEM',
+                    'I´VE ALREADY SENT MY ITEM',
                     ['linhavenda/ordersent', 'id' => $model->id], // Substitua 'venda' pelo controlador correto
                     [
-                        'class' => 'btn btn-primary',
+                        'class' => 'history-view-details',
                         'style' => 'font-size: x-small; gap: 10px',
                         'data-confirm' => 'Are you sure you want to mark this item as sent?', // Mensagem de confirmação opcional
                     ]

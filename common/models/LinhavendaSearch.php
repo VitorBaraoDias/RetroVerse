@@ -5,12 +5,16 @@ namespace common\models;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use common\models\Linhavenda;
+use common\models\Estadoencomenda;
 
 /**
  * LinhavendaSearch represents the model behind the search form of `common\models\Linhavenda`.
  */
 class LinhavendaSearch extends Linhavenda
 {
+
+    public $statusFilter;
+
     /**
      * {@inheritdoc}
      */
@@ -18,6 +22,7 @@ class LinhavendaSearch extends Linhavenda
     {
         return [
             [['id', 'idvenda', 'idartigo', 'idvendedor', 'idestadoencomenda'], 'integer'],
+            [['statusFilter'], 'safe'],
         ];
     }
 
@@ -41,14 +46,11 @@ class LinhavendaSearch extends Linhavenda
     {
         $query = Linhavenda::find();
 
-
         $query->andWhere(['idvendedor' => \Yii::$app->user->id]);
 
+        // ordenar por vendas mais recentes
         $query->leftJoin('vendas', 'linhavendas.idvenda = vendas.id')
-            ->where(['idvendedor' => 1])
             ->orderBy(['vendas.datavenda' => SORT_DESC]);
-
-
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -57,18 +59,44 @@ class LinhavendaSearch extends Linhavenda
         $this->load($params);
 
         if (!$this->validate()) {
-            // Retorna os dados sem filtros adicionais caso a validação falhe
+            // uncomment the following line if you do not want to return any records when validation fails
+            // $query->where('0=1');
             return $dataProvider;
         }
 
-        // Condições de filtro da grid
+
         $query->andFilterWhere([
             'id' => $this->id,
             'idvenda' => $this->idvenda,
             'idartigo' => $this->idartigo,
             'idvendedor' => $this->idvendedor,
-            'idestadoencomenda' => $this->idestadoencomenda,
+            'linhavendas.idestadoencomenda' => $this->idestadoencomenda,
         ]);
+
+
+        // filtrar pelo estado da encomenda
+        $estados = Estadoencomenda::find()->orderBy(['status' => SORT_ASC])->all();
+
+        $primeiroEstado = $estados[0] ?? null;
+        $penultimoEstado = $estados[count($estados) - 2] ?? null;
+        $ultimoEstado = Estadoencomenda::find()->orderBy(['status' => SORT_DESC])->one();
+
+        //encomendas que nao estao concluidas
+        if ($this->statusFilter === 'accepted') {
+            if ($primeiroEstado && $penultimoEstado) {
+                $query->andWhere(['in', 'linhavendas.idestadoencomenda', [
+                    $primeiroEstado->id,
+                    $penultimoEstado->id
+                ]]);
+            }
+        }
+
+        //encomendas completas
+        if ($this->statusFilter === 'completed') {
+            if ($ultimoEstado) {
+                $query->andWhere(['linhavendas.idestadoencomenda' => $ultimoEstado->id]);
+            }
+        }
 
         return $dataProvider;
     }

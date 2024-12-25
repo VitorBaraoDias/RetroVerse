@@ -1,40 +1,18 @@
 <?php
 use yii\helpers\Html;
 use yii\widgets\ListView;
-use common\models\Favorito;
-
-$userId = Yii::$app->user->id;
-$artigoId = $model->id;
-
-$isFavorito = Favorito::isFavorito($userId, $artigoId);
 ?>
     <!-- Card para cada artigo -->
         <div class="card">
             <div class="image-container bg-secondary position-relative">
-                <div class="container-info-type-item"><?= $model->tipoartigo ?></div>
-
-                <!-- Botão de favoritos -->
                 <div class="rounded-circle container-like d-flex justify-content-center align-items-center">
-                    <?php if ($isFavorito): ?>
-                        <!-- Artigo está nos favoritos -->
-                        <a href="<?= \yii\helpers\Url::to(['favorito/delete', 'id' => $artigoId]) ?>">
-                            <img class="icon-like"
-                                 src="<?= Yii::getAlias('@web/img/vector_liked.svg') ?>"
-                                 alt="Remover dos Favoritos">
-                        </a>
-                    <?php else: ?>
-                        <!-- Artigo não está nos favoritos -->
-                        <a href="<?= \yii\helpers\Url::to(['favorito/create', 'id' => $artigoId]) ?>">
-                            <img class="icon-like"
-                                 src="<?= Yii::getAlias('@web/img/vector_like.svg') ?>"
-                                 alt="Adicionar aos Favoritos">
-                        </a>
-                    <?php endif; ?>
+                    <img class="icon-like" src="<?= Yii::getAlias('@web/images/vector_like.svg') ?>">
                 </div>
-
                 <!-- Imagem do artigo -->
+
                 <?php
                 $firstPhoto = $model->fotosartigos[0] ?? null;
+
                 // Caminho para a imagem no frontend
                 $imagePath = Yii::getAlias('@web/uploads/img-artigos/') . ($firstPhoto->caminhofoto ?? '');
 
@@ -46,12 +24,14 @@ $isFavorito = Favorito::isFavorito($userId, $artigoId);
                         'style' => 'width: 370px; height: 270px; object-fit: cover;',
                     ]);
                 } else {
+                    // Exibe uma div cinza se não houver imagem
                     echo Html::tag('div', '', [
                         'class' => 'img-thumbnail',
                         'style' => 'width: 370px; height: 270px; background-color: grey; display: flex; align-items: center; justify-content: center;',
                     ]);
                 }
                 ?>
+
 
             </div>
             <div class="card-body">
@@ -75,18 +55,10 @@ $isFavorito = Favorito::isFavorito($userId, $artigoId);
                             </span>
                     </div>
 
-                    <?= Html::a(
-                        'VIEW',
-                        [
-                            $model->tipoartigo === 'MARKETPLACE' ? 'artigo/view-marketplace' : 'artigo/view', // Condição para a URL
-                            'id' => $model->id
-                        ],
-                        [
-                            'class' => 'retroverse-btn',
-                            'style' => 'font-size: x-small; gap: 10px',
-                        ]
-                    ) ?>
-
+                    <?= Html::a('EDIT NOW', ['artigo/update', 'id' => $model->id], [
+                        'class' => 'retroverse-btn',
+                        'style' => 'font-size: x-small; gap: 10px',
+                    ]) ?>
                 </div>
             </div>
         </div>

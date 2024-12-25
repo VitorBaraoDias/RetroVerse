@@ -4,7 +4,10 @@ use yii\helpers\Url;
 
 /** @var $model \common\models\Venda */
 
-// Status e cores de exemplo
+
+$model->checkAndSetNextState();
+
+//cores do status da order
 $status = $model->estadoEncomenda->descricao ?? 'N/A';
 $statusColor = $model->estadoEncomenda && $model->estadoEncomenda->isFinalState() ? 'green' : 'grey';
 ?>

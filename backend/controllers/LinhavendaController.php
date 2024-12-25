@@ -1,6 +1,6 @@
 <?php
 
-namespace frontend\controllers;
+namespace backend\controllers;
 
 use Yii;
 use common\models\Linhavenda;
@@ -126,13 +126,13 @@ class LinhavendaController extends Controller
             throw new NotFoundHttpException('Item not found.');
         }
 
-        // Obter o estado atual da linha de venda
+        // obter o estado atual da linha de venda
         $estadoAtual = $linhaVenda->idestadoencomenda0;
 
-        // Encontrar o próximo estado baseado na ordem
+        // encontrar o próximo estado baseado na ordem
         $proximoEstado = EstadoEncomenda::find()
-            ->where(['>', 'id', $estadoAtual->id]) // Buscar estado seguinte
-            ->orderBy(['id' => SORT_ASC]) // Buscar o próximo estado em ordem crescente
+            ->where(['>', 'id', $estadoAtual->id])
+            ->orderBy(['id' => SORT_ASC])
             ->one();
 
         if ($proximoEstado === null) {
@@ -140,53 +140,52 @@ class LinhavendaController extends Controller
             return $this->redirect(['venda/index?VendaSearch%5BtipoVenda%5D=sales']); // Redirecionar sem alterações
         }
 
-        // Atualizar o estado da linha de venda para o próximo estado
+        // atualizar o estado da linha de venda para o próximo estado
         $linhaVenda->idestadoencomenda = $proximoEstado->id;
 
         if ($linhaVenda->save()) {
             Yii::$app->session->setFlash('success', 'Item state updated to the next state successfully.');
 
-            // Verificar e atualizar o estado da venda, se necessário
+            // verificar e atualizar o estado da venda, se necessário
             $linhaVenda->idvenda0->checkAndSetNextState();
         } else {
             Yii::$app->session->setFlash('error', 'Failed to update item state.');
         }
 
-        return $this->redirect(['venda/index?VendaSearch%5BtipoVenda%5D=sales']); // Redirecione para a página desejada
+        return $this->redirect(['linhavenda/index']);
     }
 
 
     public function actionOrderreceived($id)
     {
-        // Obtém a linha de venda correspondente
+        // obtém a linha de venda correspondente
         $linhaVenda = Linhavenda::findOne($id);
 
         if (!$linhaVenda) {
             Yii::$app->session->setFlash('error', 'Linha de venda não encontrada.');
-            return $this->redirect(['venda/view', 'id' => $linhaVenda->idvenda]);
+            return $this->redirect(['linhavenda/index']);
         }
 
-        // Obtém o estado final
+        // obtém o estado final
         $estadoFinal = Estadoencomenda::find()->orderBy(['status' => SORT_DESC])->one();
 
         if (!$estadoFinal) {
             Yii::$app->session->setFlash('error', 'Estado final não encontrado.');
-            return $this->redirect(['venda/view', 'id' => $linhaVenda->idvenda]);
+            return $this->redirect(['linhavenda/index']);
         }
 
-        // Atualiza o estado da linha de venda para o estado final
+        // atualiza o estado da linha de venda para o estado final
         $linhaVenda->idestadoencomenda = $estadoFinal->id;
 
         if ($linhaVenda->save()) {
             Yii::$app->session->setFlash('success', 'Linha de venda marcada como recebida.');
-            return $this->redirect(['venda/view', 'id' => $linhaVenda->idvenda]);
+            return $this->redirect(['linhavenda/index']);
         } else {
             Yii::$app->session->setFlash('error', 'Erro ao atualizar o estado da linha de venda.');
-            return $this->redirect(['venda/view', 'id' => $linhaVenda->idvenda]);
+            return $this->redirect(['linhavenda/index']);
         }
 
     }
-
 
     /**
      * Finds the Linhavenda model based on its primary key value.

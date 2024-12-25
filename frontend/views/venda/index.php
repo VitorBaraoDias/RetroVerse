@@ -33,24 +33,25 @@ use yii\widgets\ListView;
     </div>
 
     <div class="container mt-4">
-        <!-- Filtros de Status da compra/venda -->
         <h5 class="fw-bold mb-3">FILTER BY STATUS</h5>
         <?php
-        $estadoEncomenda = Yii::$app->request->get('VendaSearch')['estadoEncomenda'] ?? null;
+        $currentStatus = Yii::$app->request->get('status');
+        $currentTipoVenda = Yii::$app->request->get('VendaSearch')['tipoVenda'] ?? 'purchases';
         ?>
-        <button class="history-button px-4 py-2 <?= empty($estadoEncomenda) ? 'active' : '' ?>"
-                onclick="location.href='<?= Yii::$app->urlManager->createUrl(['venda/index', 'VendaSearch' => ['tipoVenda' => $tipoVenda]]) ?>'; setActive(this, 'status')">
+        <button class="history-button px-4 py-2 <?= empty($currentStatus) ? 'active' : '' ?>"
+                onclick="location.href='<?= Yii::$app->urlManager->createUrl(['venda/index', 'VendaSearch' => ['tipoVenda' => $currentTipoVenda]]) ?>'">
             ALL ORDERS
         </button>
-        <button class="history-button px-4 py-2 <?= $estadoEncomenda === 'Accepted' ? 'active' : '' ?>"
-                onclick="location.href='<?= Yii::$app->urlManager->createUrl(['venda/index', 'VendaSearch' => ['tipoVenda' => $tipoVenda, 'estadoEncomenda' => 'Accepted']]) ?>'; setActive(this, 'status')">
+        <button class="history-button px-4 py-2 <?= $currentStatus === 'accepted' ? 'active' : '' ?>"
+                onclick="location.href='<?= Yii::$app->urlManager->createUrl(['venda/index', 'VendaSearch' => ['tipoVenda' => $currentTipoVenda], 'status' => 'accepted']) ?>'">
             ACCEPTED
         </button>
-        <button class="history-button px-4 py-2 <?= $estadoEncomenda === 'Completed' ? 'active' : '' ?>"
-                onclick="location.href='<?= Yii::$app->urlManager->createUrl(['venda/index', 'VendaSearch' => ['tipoVenda' => $tipoVenda, 'estadoEncomenda' => 'Completed']]) ?>'; setActive(this, 'status')">
+        <button class="history-button px-4 py-2 <?= $currentStatus === 'completed' ? 'active' : '' ?>"
+                onclick="location.href='<?= Yii::$app->urlManager->createUrl(['venda/index', 'VendaSearch' => ['tipoVenda' => $currentTipoVenda], 'status' => 'completed']) ?>'">
             COMPLETED
         </button>
     </div>
+
 
     <!-- Lista de Encomendas -->
     <div class="container mt-4">
@@ -59,6 +60,7 @@ use yii\widgets\ListView;
             'itemView' => $viewType === 'sales' ? '_sale_order_card' : '_order_card',
             'layout' => '<div class="row">{items}</div>{pager}',
             'itemOptions' =>  $viewType === 'sales' ? ['class' => 'col-md-4 mb-4'] : ['class' => 'col-md-12 mb-4'],
+            'emptyText' => 'No orders found for the selected filter.',
             'pager' => [
                 'class' => \yii\bootstrap5\LinkPager::class,
                 'options' => ['class' => 'pagination justify-content-center'],

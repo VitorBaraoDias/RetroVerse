@@ -107,16 +107,16 @@ use yii\data\ActiveDataProvider;
 
     <?= ListView::widget([
         'dataProvider' => $dataProvider2,
-        'itemView' => '_artigo_card_premium',  // Especifica o arquivo de item que criamos
-        'viewParams' => [
-            'isPremiumActive' => $isPremiumActive, // Passa a variável para o itemView
-        ],
-        'layout' => '<div class="row">{items}</div>{pager}',  // Layout com items e paginação
-        'options' => ['class' => 'list-view'],  // Classe opcional para estilização adicional
-        'itemOptions' => ['class' => 'col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 card-product'],  // Estilo para cada item
+        'itemView' => '_artigo_card_premium',
+        'layout' => '<div class="row">{items}</div>{pager}',
+        'options' => ['class' => 'list-view'],
+        'itemOptions' => ['class' => 'col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 card-product'],
         'pager' => [
             'class' => \yii\bootstrap5\LinkPager::class,
             'options' => ['class' => 'pagination justify-content-center'],
+        ],
+        'viewParams' => [
+            'isPremiumActive' => $isPremiumActive,
         ],
     ]) ?>
 

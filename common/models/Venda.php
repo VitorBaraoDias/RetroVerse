@@ -168,32 +168,28 @@ class Venda extends \yii\db\ActiveRecord
         return str_pad(mt_rand(1, 999999999), 10, '0', STR_PAD_LEFT);
     }
 
-    public function checkAndSetFinalState()
+    public function checkAndSetNextState()
     {
-        if ($this->estadoEncomenda->isFinalState()) {
+        $estadoAtual = $this->estadoEncomenda;
+
+        $estadoFinal = Estadoencomenda::find()->orderBy(['status' => SORT_DESC])->one();
+
+        if ($estadoAtual->status === $estadoFinal->status) {
             return;
         }
 
-        $items = $this->linhavendas;
+        foreach ($this->linhavendas as $linhaVenda) {
 
-        // Verifique se todos os itens têm o estado final
-        $allItemsState = true;
-
-        foreach ($items as $item) {
-            // Verifique se o estado do item é final
-            if (!$item->idestadoencomenda0->isFinalState()) {
-                $allItemsState = false;
-                break;
+            if ($linhaVenda->idestadoencomenda0->status !== $estadoFinal->status) {
+                return;
             }
         }
 
-        // Se todos os itens estão no estado final, altere o estado da venda para "final"
-        if ($allItemsState) {
-            // Atualize o estado da venda
-            $this->idestadoencomenda = 2;
-            $this->save();  // Salve a venda com o novo estado
-        }
+        // Se todas as linhas estão no estado final, agora avançamos o estado da venda para o último estado
+        $this->idestadoencomenda = $estadoFinal->id;
+        $this->save(false); // Atualiza a venda para o último estado
     }
+
 
 
 }

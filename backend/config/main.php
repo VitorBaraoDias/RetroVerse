@@ -98,6 +98,10 @@ return [
                 [
                     'class' => 'yii\rest\UrlRule',
                     'controller' => 'api/venda',
+                    'extraPatterns' => [
+                        'GET compras/{id}' => 'compras', //buscar as venda do user
+                        'GET linhasvendas/{id}' => 'vendas', //buscar as venda do user
+                    ],
                 ],
                 [
                     'class' => 'yii\rest\UrlRule',
@@ -112,7 +116,6 @@ return [
                     'controller' => 'api/favorito',
                     'extraPatterns' => [
                         'GET {id}/favorito' => 'favorito',
-                        'DELETE {id}/favorito' => 'favorito'
                     ],
                 ],
             ],
