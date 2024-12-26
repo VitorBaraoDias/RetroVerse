@@ -41,7 +41,7 @@
                         'label' => 'Store',
                         'icon' => 'fa-solid fa-store',
                         'items' => [
-                            ['label' => 'Orders', 'url' => ['venda/index'], 'iconStyle' => 'far'],
+                            ['label' => 'Orders', 'url' => ['linhavenda/index'], 'iconStyle' => 'far'],
                             ['label' => 'Items', 'url' => ['artigo/index'], 'iconStyle' => 'far'],
                             ['label' => 'Plans', 'url' => ['plano/index'], 'iconStyle' => 'far'],
                             ['label' => 'Categories', 'url' => ['categoriaartigo/index'], 'iconStyle' => 'far'],

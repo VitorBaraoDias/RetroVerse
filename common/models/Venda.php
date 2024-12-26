@@ -167,4 +167,29 @@ class Venda extends \yii\db\ActiveRecord
         // Gera um código único baseado no timestamp (apenas números)
         return str_pad(mt_rand(1, 999999999), 10, '0', STR_PAD_LEFT);
     }
+
+    public function checkAndSetNextState()
+    {
+        $estadoAtual = $this->estadoEncomenda;
+
+        $estadoFinal = Estadoencomenda::find()->orderBy(['status' => SORT_DESC])->one();
+
+        if ($estadoAtual->status === $estadoFinal->status) {
+            return;
+        }
+
+        foreach ($this->linhavendas as $linhaVenda) {
+
+            if ($linhaVenda->idestadoencomenda0->status !== $estadoFinal->status) {
+                return;
+            }
+        }
+
+        // Se todas as linhas estão no estado final, agora avançamos o estado da venda para o último estado
+        $this->idestadoencomenda = $estadoFinal->id;
+        $this->save(false); // Atualiza a venda para o último estado
+    }
+
+
+
 }

@@ -3,6 +3,7 @@
 namespace frontend\controllers;
 
 use backend\models\UploadForm;
+use yii\web\UploadedFile;
 use common\models\Comissao;
 use Yii;
 use common\models\Artigospremium;
@@ -23,6 +24,7 @@ use yii\db\Query;
  */
 class ArtigoController extends Controller
 {
+
     /**
      * @inheritDoc
      */
@@ -66,21 +68,12 @@ class ArtigoController extends Controller
         $dataProvider = $searchModel->search($queryParams);
 
 
-        // obter favoritos do user atual
-        $idperfil = Yii::$app->user->id;
-        $favoritos = [];
-        if ($idperfil) {
-            $favoritos = Favorito::find()
-                ->select('idartigo')
-                ->where(['idperfil' => $idperfil])
-                ->column();
-        }
+
 
         // Renderiza a view com os dados
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
-            'favoritos' => $favoritos,
         ]);
     }
 
@@ -95,7 +88,6 @@ class ArtigoController extends Controller
      */
     public function actionView($id)
     {
-
         $model = $this->findModel($id);
 
         // DataProvider para artigos normais relacionados
@@ -141,6 +133,8 @@ class ArtigoController extends Controller
             'relatedDataProvider' => $relatedDataProviderToUse,
         ]);
     }
+
+
     public function actionViewMarketplace($id)
     {
         $model = $this->findModel($id);
@@ -157,8 +151,8 @@ class ArtigoController extends Controller
      */
     public function actionCreate()
     {
-        $model = new Artigo(); // Modelo principal
-        $uploadForm = new UploadForm(); // Instancia o modelo do formulário de upload
+        $model = new Artigo();
+        $uploadForm = new UploadForm();
 
         if ($this->request->isPost) {
             $model->idperfil = Yii::$app->user->id;
@@ -166,15 +160,20 @@ class ArtigoController extends Controller
             $model->ativo = 1;
             $model->idcomissao = Comissao::getIdActiveComissao();
 
-            // FALTA FOTOS
             if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['artigo/view', 'id' => $model->id]);
+                $uploadForm->imageFiles = UploadedFile::getInstances($uploadForm, 'imageFiles');
+
+                if ($uploadForm->upload($model->id)) {
+                    return $this->redirect(['artigo/view', 'id' => $model->id]);
+                } else {
+                    Yii::$app->session->setFlash('error', 'O artigo foi salvo, mas as imagens não puderam ser carregadas.');
+                }
             }
         }
 
         return $this->render('create', [
             'model' => $model,
-            'uploadForm' => $uploadForm, // Envie a variável para a view
+            'uploadForm' => $uploadForm,
         ]);
     }
 

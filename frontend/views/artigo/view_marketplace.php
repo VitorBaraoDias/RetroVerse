@@ -8,14 +8,12 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 use yii\widgets\ListView;
 use yii\db\Query;
+use common\models\Favorito;
 
+$userId = Yii::$app->user->id;
+$artigoId = $model->id;
 
-/** @var yii\web\View $this */
-/** @var common\models\Artigo $model */
-
-$this->title = $model->id;
-
-\yii\web\YiiAsset::register($this);
+$isFavorito = Favorito::isFavorito($userId, $artigoId);
 
 ?>
 <div class="artigo-view container-lg">
@@ -29,7 +27,8 @@ $this->title = $model->id;
                     <!-- Indicadores -->
                     <ol class="carousel-indicators">
                         <?php foreach ($model->fotosartigos as $index => $foto): ?>
-                            <li data-bs-target="#articleCarousel" data-bs-slide-to="<?= $index ?>" class="<?= $index === 0 ? 'active' : '' ?>"></li>
+                            <li data-bs-target="#articleCarousel" data-bs-slide-to="<?= $index ?>"
+                                class="<?= $index === 0 ? 'active' : '' ?>"></li>
                         <?php endforeach; ?>
                     </ol>
 
@@ -37,7 +36,10 @@ $this->title = $model->id;
                     <div class="carousel-inner">
                         <?php foreach ($model->fotosartigos as $index => $foto): ?>
                             <div class="carousel-item <?= $index === 0 ? 'active' : '' ?>">
-                                <img src="../../../common/uploads/img-artigos/<?= $foto->caminhofoto ?>" class="d-block w-100" alt="Foto <?= $index + 1 ?>">
+                                <img src="../../../common/uploads/img-artigos/<?= $foto->caminhofoto ?>"
+                                     class="d-block w-100"
+                                     style="max-height: 650px; object-fit: cover;"
+                                     alt="Foto <?= $index + 1 ?>">
                             </div>
                         <?php endforeach; ?>
                     </div>
@@ -55,16 +57,20 @@ $this->title = $model->id;
             <?php else: ?>
                 <p>Não há fotos disponíveis para este artigo.</p>
             <?php endif; ?>
+
             <div class="d-flex justify-content-between">
-                <h2><strong> <?= $model->idperfil0->user->username ?> </strong> </h2>
+                <h2><strong> <?= $model->idperfil0->user->username ?> </strong></h2>
                 <?php if (!empty($model->idperfil0->caminhofotoperfil)): ?>
-                    <img class=" rounded-circle" style="object-fit: cover; width: 60px" src="<?= Yii::getAlias('@web') ?>/uploads/img-profile/<?= $model->idperfil0->caminhofotoperfil ?>" alt="Foto de Perfil" height="60">
+                    <img class=" rounded-circle" style="object-fit: cover; width: 60px"
+                         src="<?= Yii::getAlias('@web') ?>/uploads/img-profile/<?= $model->idperfil0->caminhofotoperfil ?>"
+                         alt="Foto de Perfil" height="60">
                 <?php else: ?>
-                    <img class="" src="<?= Yii::getAlias('@web') ?>/img/icon-profile.svg" alt="Ícone de Perfil" height="70">
+                    <img class="" src="<?= Yii::getAlias('@web') ?>/img/icon-profile.svg" alt="Ícone de Perfil"
+                         height="70">
                 <?php endif; ?>
             </div>
             <?= Html::a('REPORT AD', ['carrinho/create', 'id' => $model->id],
-                [    'class' => 'btn btn-danger w-10',    'id' => 'retroverse-btn-active',
+                ['class' => 'btn btn-danger w-10', 'id' => 'retroverse-btn-active',
                     'style' => 'font-size: x-small; font-weight: bold']) ?>
         </div>
         <!-- Coluna de Informações -->
@@ -73,12 +79,13 @@ $this->title = $model->id;
                 <div class="col-md-12 row">
                     <h1 class="font-weight-bold" style="font-size: 48px"><strong><?= $model->nome ?></strong></h1>
                     <hr>
-                    <div  class="d-flex mt-2 align-items-end">
+                    <div class="d-flex mt-2 align-items-end">
                         <h2 style="font-weight: bold"><?= $model->getPrecoComComissaoFormatado() ?>€</h2>
                         <span style="font-weight: ; padding-bottom:3px">(inc.)
                            <img src="/RetroVerse/frontend/web/images/check_icon.svg" height="15">
                         </span>
-                        <h4 style="font-weight: bolder; color: #0000FF; margin-left: 10px"><?= $model->precoanuncio ?>€</h4>
+                        <h4 style="font-weight: bolder; color: #0000FF; margin-left: 10px"><?= $model->precoanuncio ?>
+                            €</h4>
                     </div>
                     <div class="d-flex mt-2">
                         <h2 style="font-size: 20px; font-weight: bold"><strong>CATEGORY:</strong></h2>
@@ -97,18 +104,32 @@ $this->title = $model->id;
                         <p style="font-size: 20px;"><?= $model->idestado0->descricao ?></p>
                     </div>
                     <span style="font-weight: bold">
-                      <img src= "<?php echo Yii::getAlias('@web') ?>/img/check_icon.svg" height="20">
+                      <img src="<?php echo Yii::getAlias('@web') ?>/img/check_icon.svg" height="20">
                         This item will be shipped to our HQ in order to be autenticated before being shipped to you.
                     </span>
 
                     <div class="mt-4 row d-flex justify-content-between align-items-center p-0 m-0 mb-2">
                         <?= Html::a('ADD TO CART', ['carrinho/create', 'id' => $model->id],
-                                    [    'class' => 'retroverse-btn active col-md-9',    'id' => 'retroverse-btn-active',
-                                        'style' => 'font-size: x-small; font-weight: bold',]) ?>
-                        <img class="col-md-2"  src="<?php echo Yii::getAlias('@web') ?>/img/icon_heart.svg" height="30">
+                            ['class' => 'retroverse-btn active col-md-9', 'id' => 'retroverse-btn-active',
+                                'style' => 'font-size: x-small; font-weight: bold',]) ?>
+                        <?php if ($isFavorito): ?>
+                            <!-- Artigo está nos favoritos -->
+                            <a href="<?= \yii\helpers\Url::to(['favorito/delete', 'id' => $artigoId]) ?>">
+                                <img height="40"
+                                     src="<?= Yii::getAlias('@web/img/vector_liked.svg') ?>"
+                                     alt="Remover dos Favoritos">
+                            </a>
+                        <?php else: ?>
+                            <!-- Artigo não está nos favoritos -->
+                            <a href="<?= \yii\helpers\Url::to(['favorito/create', 'id' => $artigoId]) ?>">
+                                <img height="40"
+                                     src="<?= Yii::getAlias('@web/img/vector_like.svg') ?>"
+                                     alt="Adicionar aos Favoritos">
+                            </a>
+                        <?php endif; ?>
                     </div>
                     <?= Html::a('MAKE AN OFFER', ['carrinho/create', 'id' => $model->id],
-                        [    'class' => 'outline-retroverse-btn active w-100 col-md-9 m-0 mb-2 ',    'id' => 'retroverse-btn-active',
+                        ['class' => 'outline-retroverse-btn active w-100 col-md-9 m-0 mb-2 ', 'id' => 'retroverse-btn-active',
                             'style' => 'font-size: x-small; font-weight: bold',]) ?>
                     <?= Html::a('SEND MESSAGE TO SELLER', ['chat/create', 'id' => $model->id],
                         [    'class' => 'btn history-button  w-100 col-md-9 mb-2 text-white rounded-0 ',    'id' => 'retroverse-btn-active',
@@ -120,14 +141,15 @@ $this->title = $model->id;
                     <hr>
                     <h1 class="font-weight-bold" style="font-size: 42px"><strong>SHIPPING INFO</strong></h1>
                     <h2 class="font-weight-bold" style="font-size: 20px"><strong>SHIPPING METHOD:</strong> CTT</h2>
-                    <h2 class="font-weight-bold" style="font-size: 20px"><strong>SHIPPING DATE:</strong> 3-5 working days</h2>
+                    <h2 class="font-weight-bold" style="font-size: 20px"><strong>SHIPPING DATE:</strong> 3-5 working
+                        days</h2>
                     <p>Shipping price calculated in check out</p>
                     <!-- Adicione mais informações conforme necessário -->
                 </div>
             </div>
         </div>
     </div>
-    <h2> <strong>OTHER MEMBER ITEMS</strong> </h2>
+    <h2><strong>OTHER MEMBER ITEMS</strong></h2>
     <hr>
 </div>
 

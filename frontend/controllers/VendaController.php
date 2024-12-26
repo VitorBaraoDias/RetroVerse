@@ -45,26 +45,32 @@ class VendaController extends Controller
      */
     public function actionIndex()
     {
-        $tipoVenda = Yii::$app->request->get('VendaSearch')['tipoVenda'] ?? 'purchases';
+        $queryParams = Yii::$app->request->queryParams;
+
+        $tipoVenda = $queryParams['VendaSearch']['tipoVenda'] ?? 'purchases';
+        $statusFilter = $queryParams['status'] ?? null;
 
         if ($tipoVenda === 'sales') {
             $searchModel = new LinhaVendaSearch();
-            $view = 'index';
-            $viewType = 'sales';
+            $queryParams['LinhavendaSearch']['statusFilter'] = $statusFilter; // Filtro para sales
+            $view = 'index'; // View principal
+            $viewType = 'sales'; // Parcial para vendas
         } else {
             $searchModel = new VendaSearch();
-            $view = 'index';
-            $viewType = 'purchases';
+            $queryParams['VendaSearch']['statusFilter'] = $statusFilter; // Filtro para purchases
+            $view = 'index'; // View principal
+            $viewType = 'purchases'; // Parcial para compras
         }
 
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider = $searchModel->search($queryParams);
 
         return $this->render($view, [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
-            'viewType' => $viewType, // Passa o tipo de visualização para a view
+            'viewType' => $viewType,
         ]);
     }
+
 
 
 
@@ -122,7 +128,8 @@ class VendaController extends Controller
                         $linhaVenda = new Linhavenda();
                         $linhaVenda->idvenda = $model->id;
                         $linhaVenda->idartigo = $linha->idartigo;
-                        $linhaVenda->idvendedor = $linha->artigo->idperfil; // ID do vendedor associado ao artigo
+                        $linhaVenda->idvendedor = $linha->artigo->idperfil;
+                        $linhaVenda->idestadoencomenda = Estadoencomenda::getIdByStatusCode1();
 
                         if (!$linhaVenda->save()) {
                             throw new \Exception('Erro ao salvar linha de venda: ' . json_encode($linhaVenda->errors));
@@ -145,6 +152,7 @@ class VendaController extends Controller
             }
             $model->loadDefaultValues();
         } catch (\Exception $e) {
+            Yii::error('Erro ao criar a venda: ' . $e->getMessage() . "\n" . $e->getTraceAsString(), __METHOD__);
             $transaction->rollBack();
             Yii::$app->session->setFlash('error', 'Ocorreu um erro ao criar a venda: ' . $e->getMessage());
         }
@@ -188,6 +196,7 @@ class VendaController extends Controller
 
         return $this->redirect(['index']);
     }
+
 
     /**
      * Finds the Venda model based on its primary key value.

@@ -121,21 +121,17 @@ use yii\widgets\ListView;
             <?php ActiveForm::end(); ?>
         </div>
 
-        <!-- Products List (à direita) -->
+
         <div class="col-md-9">
-            <!-- Card 1 -->
             <?= ListView::widget([
                 'dataProvider' => $dataProvider,
-                'itemView' => '_artigo_card',  // Especifica o arquivo de item que criamos
-                'layout' => '<div class="row">{items}</div>{pager}',  // Layout com items e paginação
-                'options' => ['class' => 'list-view'],  // Classe opcional para estilização adicional
-                'itemOptions' => ['class' => 'col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 card-product mt-4'],  // Estilo para cada item
+                'itemView' => '_artigo_card',
+                'layout' => '<div class="row">{items}</div>{pager}',
+                'options' => ['class' => 'list-view'],
+                'itemOptions' => ['class' => 'col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 card-product mt-4'],
                 'pager' => [
                     'class' => \yii\bootstrap5\LinkPager::class,
                     'options' => ['class' => 'pagination justify-content-center'],
-                ],
-                'viewParams' => [
-                    'favoritos' => $favoritos, // Passa a variável 'favoritos' para a view parcial
                 ],
             ]) ?>
         </div>

@@ -14,13 +14,7 @@ use common\models\Venda;
 class VendaSearch extends Venda
 {
 
-    public $tipoVenda;
-
-    public function __construct($config = [])
-    {
-        $this->tipoVenda = 'purchases'; // Define o valor inicial como 'purchases'
-        parent::__construct($config);
-    }
+    public $statusFilter;
 
     /**
      * {@inheritdoc}
@@ -30,7 +24,8 @@ class VendaSearch extends Venda
         return [
             [['id', 'idcomprador', 'idmetodoexpedicao', 'idtipopagamento', 'idestadoencomenda'], 'integer'],
             [['total'], 'number'],
-            [['datavenda', 'nome', 'codigopostal', 'morada', 'pais', 'cidade', 'codigo', 'estadoEncomenda', 'tipoVenda'], 'safe'],
+            [['statusFilter'], 'safe'],
+            [['datavenda', 'nome', 'codigopostal', 'morada', 'pais', 'cidade', 'codigo', 'estadoEncomenda'], 'safe'],
         ];
     }
 
@@ -54,7 +49,6 @@ class VendaSearch extends Venda
     {
         $query = Venda::find();
 
-        // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -87,17 +81,36 @@ class VendaSearch extends Venda
             ->andFilterWhere(['like', 'codigo', $this->codigo]);
 
 
-        // Filtrar por Compras (idcomprador = usuário logado)
-        if (isset($this->tipoVenda) && $this->tipoVenda === 'purchases') {
             $query->andWhere(['idcomprador' => Yii::$app->user->id]);
-        }
+
+        $query->orderBy(['datavenda' => SORT_DESC]);
 
 
-        // Filtrar pelo estado da encomenda
-        if ($this->idestadoencomenda) {
-            $query->joinWith('estadoEncomenda e')
-                ->andWhere(['e.descricao' => $this->estadoEncomenda]);
+        // filtrar pelo estado da encomenda
+        $estados = Estadoencomenda::find()->orderBy(['status' => SORT_ASC])->all();
+
+        $primeiroEstado = $estados[0] ?? null;
+        $penultimoEstado = $estados[count($estados) - 2] ?? null;
+        $ultimoEstado = Estadoencomenda::find()->orderBy(['status' => SORT_DESC])->one();
+
+
+        //encomendas que nao estao concluidas
+        if ($this->statusFilter === 'accepted') {
+            if ($primeiroEstado && $penultimoEstado) {
+                $query->andWhere(['in', 'vendas.idestadoencomenda', [
+                    $primeiroEstado->id,
+                    $penultimoEstado->id
+                ]]);
+            }
         }
+
+        //encomendas completas
+        if ($this->statusFilter === 'completed') {
+            if ($ultimoEstado) {
+                $query->andWhere(['vendas.idestadoencomenda' => $ultimoEstado->id]);
+            }
+        }
+
 
         return $dataProvider;
     }

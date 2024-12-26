@@ -24,11 +24,13 @@ use yii\widgets\ActiveForm;
             'accept' => 'image/*', // Restringir para arquivos de imagem
         ],
         'pluginOptions' => [
-            'showUpload' => false, //
-            'browseOnZoneClick' => true, // Permitir abrir o seletor clicando na área
-            'initialPreviewAsData' => true,
-            'maxFileSize' => 2000,
-            'previewFileType' => 'image',
+            'showUpload' => false, // Desativar upload automático do plugin
+            'browseOnZoneClick' => true, // Abrir seletor ao clicar na área
+            'initialPreviewAsData' => true, // Mostrar pré-visualização das imagens
+            'maxFileSize' => 2000, // Tamanho máximo por arquivo em KB
+            'previewFileType' => 'image', // Mostrar pré-visualização apenas para imagens
+            'overwriteInitial' => false, // Não sobrescrever pré-visualizações iniciais
+            'maxFileCount' => 4, // Limitar o número de arquivos
         ],
     ]); ?>
     <div class="row">

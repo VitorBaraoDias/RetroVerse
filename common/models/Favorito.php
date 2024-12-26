@@ -75,5 +75,11 @@ class Favorito extends \yii\db\ActiveRecord
         return $this->hasOne(Perfil::class, ['id' => 'idperfil']);
     }
 
+    public static function isFavorito($userId, $artigoId)
+    {
+        return self::find()
+            ->where(['idperfil' => $userId, 'idartigo' => $artigoId])
+            ->exists();
+    }
 
 }

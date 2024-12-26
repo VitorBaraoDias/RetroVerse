@@ -1,6 +1,6 @@
 <?php use yii\helpers\Html;
 
-$statusColor = $model->idvenda0->estadoEncomenda->descricao && $model->idvenda0->estadoEncomenda->isFinalState() ? 'green' : 'grey';
+$statusColor = $model->idestadoencomenda0->isFinalState() ? 'green' : 'grey';
 ?>
 
 <div class="card">
@@ -47,7 +47,7 @@ $statusColor = $model->idvenda0->estadoEncomenda->descricao && $model->idvenda0-
 
 
         <p class="card-title text-black" style="font-weight: bold; color: black">
-            STATUS: <span class="text-secondary" style="font-weight: lighter, color="<?= $statusColor?>"><?= Html::encode($model->idvenda0->estadoEncomenda->descricao) ?></span>
+            STATUS: <span style="font-weight: bold; color: <?= $statusColor ?>"><?= Html::encode($model->idestadoencomenda0->descricao) ?></span>
         </p>
 
 
@@ -63,20 +63,22 @@ $statusColor = $model->idvenda0->estadoEncomenda->descricao && $model->idvenda0-
                             </span>
             </div>
 
-            <?= Html::a(
-                'VIEW',
-                [
-                    $model->idartigo0->tipoartigo === 'MARKETPLACE' ? 'artigo/view-marketplace' : 'artigo/view', // Condição para a URL
-                    'id' => $model->id
-                ],
-                [
-                    'class' => 'retroverse-btn',
-                    'style' => 'font-size: x-small; gap: 10px',
-                ]
-            ) ?>
+            <?php if ($model->idestadoencomenda0->isFirstState()): ?>
+                <?= Html::a(
+                    'I´VE ALREADY SENT MY ITEM',
+                    ['linhavenda/ordersent', 'id' => $model->id], // Substitua 'venda' pelo controlador correto
+                    [
+                        'class' => 'history-view-details',
+                        'style' => 'font-size: x-small; gap: 10px',
+                        'data-confirm' => 'Are you sure you want to mark this item as sent?', // Mensagem de confirmação opcional
+                    ]
+                ) ?>
+            <?php endif; ?>
         </div>
 
 
     </div>
 
 </div>
+
+
