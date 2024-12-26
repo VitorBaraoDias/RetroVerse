@@ -2,21 +2,18 @@
 
 namespace frontend\controllers;
 
-use frontend\models\SearchArtigo;
+use common\models\Conversa;
+use common\models\Mensagenstexto;
 use Yii;
-use common\models\Plano;
-use common\models\Perfil;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use common\models\Clientesplano;
-
 
 /**
- * PlanoController implements the CRUD actions for Plano model.
+ * ConversaController implements the CRUD actions for Conversa model.
  */
-class PlanoController extends Controller
+class ConversaController extends Controller
 {
     /**
      * @inheritDoc
@@ -37,56 +34,33 @@ class PlanoController extends Controller
     }
 
     /**
-     * Lists all Plano models.
+     * Lists all Conversa models.
      *
      * @return string
      */
     public function actionIndex()
     {
-        // Busca o plano ativo
-        $planoAtivo = Plano::findOne(['ativo' => 1]);
-
-        if (!$planoAtivo) {
-            throw new NotFoundHttpException('Nenhum plano ativo encontrado.');
-        }
-
-
-        $userId = Yii::$app->user->id; //para ir buscar o perfil do utilizador logado
-        $perfil = Perfil::findOne(['id' => $userId]);
-
-        // Verifica se o utilizador tem um plano premium ativo
-        $isPremium = $perfil ? $perfil->hasActivePremiumPlano() : false;
-
-        // Define a variável pageName com base na verificação
-        $pageName = $isPremium ? '_collection_premium' : '_aderir_plano';
-
-
-        //Ir buscar os artigos premium
-        $searchModel = new SearchArtigo();
-
-        $queryParams = Yii::$app->request->queryParams;
-
-        if (!isset($queryParams['SearchArtigo']['tipo'])) {
-            $searchModel->tipo = 'premium';
-        }
-        if (!isset($queryParams['SearchArtigo']['ativo'])) {
-            $searchModel->ativo = 1;
-        }
-
-        $dataProvider = $searchModel->search($queryParams);
+        $dataProvider = new ActiveDataProvider([
+            'query' => Conversa::find(),
+            /*
+            'pagination' => [
+                'pageSize' => 50
+            ],
+            'sort' => [
+                'defaultOrder' => [
+                    'id' => SORT_DESC,
+                ]
+            ],
+            */
+        ]);
 
         return $this->render('index', [
-            'plano' => $planoAtivo,
-            'pageName' => $pageName,
-            'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
-
         ]);
     }
 
-
     /**
-     * Displays a single Plano model.
+     * Displays a single Conversa model.
      * @param int $id ID
      * @return string
      * @throws NotFoundHttpException if the model cannot be found
@@ -99,29 +73,59 @@ class PlanoController extends Controller
     }
 
     /**
-     * Creates a new Plano model.
+     * Creates a new Conversa model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return string|\yii\web\Response
      */
-    public function actionCreate()
+    public function actionCreate($id)
     {
-        $model = new Plano();
+        // Criar novo modelo de conversa
+        $model = new Conversa();
+        $modelTexto = new Mensagenstexto(); // Supondo que o modelo seja Mensagenstextos
+
 
         if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
+
+            // Carregar os dados do formulário nos dois modelos
+
+
+            if ($modelTexto->load($this->request->post())) {
+
+                // Validar se o campo 'descricao' não está vazio
+                if (empty($modelTexto->descricao)) { // Verifica se a mensagem de texto foi preenchida
+                    Yii::$app->session->setFlash('error', 'Por favor, insira uma mensagem!');
+                    return $this->redirect(['chat/view', 'id' => $id]); // Redireciona se a mensagem estiver vazia
+                }
+
+
+
+                // Salvar o modelo de conversa
+                if ($modelTexto->save()) {
+
+                    $model->idchat = (int)$id;
+                    $model->iduser = Yii::$app->user->id;
+                    $model->idmensagem = $modelTexto->id;
+                    $model->tipo = 'TEXTO';
+
+                    //ver o porqie que nao salva
+                    $model->save();
+                    if (!$model->save()) {
+                        echo $modelTexto->id;
+                        var_dump($model->getErrors());
+                        die();
+                    }
+                    return $this->redirect(['chat/view', 'id' => $id]); // Redireciona para a página da conversa
+                }
             }
         } else {
             $model->loadDefaultValues();
+            $modelTexto->loadDefaultValues(); // Caso o formulário não tenha sido submetido, carrega valores padrão
         }
-
-        return $this->render('create', [
-            'model' => $model,
-        ]);
     }
 
+
     /**
-     * Updates an existing Plano model.
+     * Updates an existing Conversa model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param int $id ID
      * @return string|\yii\web\Response
@@ -141,7 +145,7 @@ class PlanoController extends Controller
     }
 
     /**
-     * Deletes an existing Plano model.
+     * Deletes an existing Conversa model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param int $id ID
      * @return \yii\web\Response
@@ -149,38 +153,24 @@ class PlanoController extends Controller
      */
     public function actionDelete($id)
     {
-        $model = $this->findModel($id);
-
-        if ($model->delete()) {
-            Yii::$app->session->setFlash('success', 'Plano excluído com sucesso!');
-        } else {
-            Yii::$app->session->setFlash('error', 'Erro ao excluir o plano.');
-        }
+        $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
     }
 
-
     /**
-     * Finds the Plano model based on its primary key value.
+     * Finds the Conversa model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param int $id ID
-     * @return Plano the loaded model
+     * @return Conversa the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Plano::findOne(['id' => $id])) !== null) {
+        if (($model = Conversa::findOne(['id' => $id])) !== null) {
             return $model;
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
     }
-
-
-
-
-
-
-
 }

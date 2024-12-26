@@ -11,26 +11,24 @@ use yii\widgets\ListView;
 $this->title = 'ORDER #' . $model->codigo;
 ?>
 <div class="venda-view">
-    <div class="container mt-6 w-80 mx-auto">
+    <div class="mt-6 mx-5">
         <h2><strong><?= Html::encode($this->title) ?></strong></h2>
         <h4><strong><?= Yii::$app->formatter->asDate($model->datavenda, 'dd/MM/yyyy') ?></strong></h4><br>
         <h3><strong><?= $model->getLinhavendas()->count() ?> ITEMS </strong></h3>
 
-        <div class="row">
-            <div class="col-12">
+
                 <?= ListView::widget([
                     'dataProvider' => $dataProvider,  // Passa o dataProvider com as Linhasvendas
                     'itemView' => '_venda',
-                    'layout' => '<div class="row justify-content-center mt-4 gap-4">{items}</div>{pager}',
+                    'layout' => '<div class="row mt-4 gap-4">{items}</div>{pager}',
                     'options' => ['class' => 'list-view '],
-                    'itemOptions' => ['class' => 'col-12 card p-4'],
+                    'itemOptions' => ['class' => 'col-4 card pl-4 py-3 pr-1', 'style' => 'max-width: 400px'],
                     'pager' => [
                         'class' => \yii\bootstrap5\LinkPager::class,
                         'options' => ['class' => 'pagination justify-content-center'],
                     ],
                 ]) ?>
-            </div>
-        </div>
+
 
         <!-- Shipping e Summary -->
         <div class="row mt-4">

@@ -13,22 +13,16 @@ use yii\widgets\ListView;
 
 $this->title = 'Perfils';
 
+$query = $model->getArtigos();
 $dataProvider = new ActiveDataProvider([
-    'query' => $model->getArtigos(),
+    'query' => $query,
     'pagination' => [
         'pageSize' => 6, // Define o número de itens por página
     ],
-])
+]);
 ?>
 <div class="perfil-index">
     <h1 style="margin-left: 90px; margin-top:30px"><strong>PROFILE</strong></h1>
-    <h3 style="margin-left: 90px"><b>ACTIVE PLAN: </b>
-        <?php if ($model->clientesplano): ?>
-            <?= $model->clientesplano->plano->descricao ?>
-        <?php else: ?>
-            BASIC
-        <?php endif; ?>
-    </h3>
     <div class="row justify-content-between mt-4 mx-5">
         <div class="d-flex col-lg-6 row">
                 <?php if (!empty($model->caminhofotoperfil)): ?>
@@ -39,21 +33,24 @@ $dataProvider = new ActiveDataProvider([
             <div class="col-md-9">
                 <div class="d-flex gap-4 align-items-center">
                     <h3><?= $model->user->username?></h3>
-                    <div class="rounded-circle" style="background-color: #0000FF; height: 7px; width: 20px"></div>
+                    <?php if ($model->hasActivePremiumPlano()): ?>
+                        <img class="" style="object-fit: cover" src="<?= Yii::getAlias('@web') ?>/img/premium-user-verified.svg" alt="Verified Premium Badge">
+                    <?php endif; ?>
                     <h3>Reviews</h3>
                     <?= Html::a('EDIT PROFILE', ['perfil/update', 'id' => Yii::$app->user->id], [
                         'class' => 'btn retroverse-btn',
                         'id' => 'retroverse-btn-active',
                         'style' => 'font-size: x-small; gap: 10px; padding: 5px',
                     ]) ?>
-
                 </div>
                 <div class="mt-4" style="word-break: break-all;"><?= $model->descricao?></div>
                 <div class="d-flex justify-content-between mt-4">
-                    <?= Html::a('MY PLAN', ['perfil/update'], [
-                        'class' => 'outline-black-retroverse-btn',
-                        'style' => 'font-size: x-small; margin-left: 0',
-                    ]) ?>
+                    <?php if ($model->hasActivePremiumPlano()): ?>
+                        <?= Html::a('MY PLAN', ['clientesplano/view', 'id' => $model->clientesplano->id], [
+                            'class' => 'outline-retroverse-btn',
+                            'style' => 'font-size: x-small; margin-left: 0',
+                        ]) ?>
+                    <?php endif; ?>
                 </div>
             </div>
         </div>
