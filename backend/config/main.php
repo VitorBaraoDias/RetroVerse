@@ -26,6 +26,9 @@ return [
         ],
         'request' => [
             'csrfParam' => '_csrf-backend',
+            'parsers' => [
+                'application/json' => 'yii\web\JsonParser',
+            ],
         ],
         'view' => [
             'theme' => [
@@ -85,7 +88,8 @@ return [
                     'class' => 'yii\rest\UrlRule',
                     'controller' => 'api/user',
                     'extraPatterns' => [
-                        'GET create' => 'usercreate', // GET /api/carrinhos/user/{id} -> actionUser($id)
+                        'POST ' => 'usercreate',
+                        'POST login' => 'login',
                     ],
                 ],
                 [

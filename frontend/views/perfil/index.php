@@ -13,12 +13,13 @@ use yii\widgets\ListView;
 
 $this->title = 'Perfils';
 
+$query = $model->getArtigos();
 $dataProvider = new ActiveDataProvider([
-    'query' => $model->getArtigos(),
+    'query' => $query,
     'pagination' => [
         'pageSize' => 6, // Define o número de itens por página
     ],
-])
+]);
 ?>
 <div class="perfil-index">
     <h1 style="margin-left: 90px; margin-top:30px"><strong>PROFILE</strong></h1>

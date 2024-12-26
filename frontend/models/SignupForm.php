@@ -72,9 +72,8 @@ class SignupForm extends Model
 
             //ATRIBUICAO DO PERFIL DA PROBLEMAS
 
-           $perfil = new Perfil();
+            $perfil = new Perfil();
             $perfil->id = $user->getId();
-            $perfil->username = $user->username;
 
              if (!$perfil->save(false)) {
                 $transaction->rollBack();
