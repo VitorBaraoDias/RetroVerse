@@ -2,16 +2,15 @@
 
 namespace common\models;
 
-use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\Venda;
-
+use common\models\Linhavenda;
+use common\models\Estadoencomenda;
 
 /**
- * VendaSearch represents the model behind the search form of `common\models\Venda`.
+ * LinhavendaSearch represents the model behind the search form of `common\models\Linhavenda`.
  */
-class VendaSearch extends Venda
+class LinhavendaSearch extends Linhavenda
 {
 
     public $statusFilter;
@@ -22,10 +21,8 @@ class VendaSearch extends Venda
     public function rules()
     {
         return [
-            [['id', 'idcomprador', 'idmetodoexpedicao', 'idtipopagamento', 'idestadoencomenda'], 'integer'],
-            [['total'], 'number'],
+            [['id', 'idvenda', 'idartigo', 'idvendedor', 'idestadoencomenda'], 'integer'],
             [['statusFilter'], 'safe'],
-            [['datavenda', 'nome', 'codigopostal', 'morada', 'pais', 'cidade', 'codigo', 'estadoEncomenda'], 'safe'],
         ];
     }
 
@@ -47,8 +44,13 @@ class VendaSearch extends Venda
      */
     public function search($params)
     {
-        $query = Venda::find();
+        $query = Linhavenda::find();
 
+        $query->andWhere(['idvendedor' => \Yii::$app->user->id]);
+
+        // ordenar por vendas mais recentes
+        $query->leftJoin('vendas', 'linhavendas.idvenda = vendas.id')
+            ->orderBy(['vendas.datavenda' => SORT_DESC]);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -62,28 +64,14 @@ class VendaSearch extends Venda
             return $dataProvider;
         }
 
-        // grid filtering conditions
+
         $query->andFilterWhere([
             'id' => $this->id,
-            'idcomprador' => $this->idcomprador,
-            'idmetodoexpedicao' => $this->idmetodoexpedicao,
-            'idtipopagamento' => $this->idtipopagamento,
-            'total' => $this->total,
-            'datavenda' => $this->datavenda,
-            'idestadoencomenda' => $this->idestadoencomenda,
+            'idvenda' => $this->idvenda,
+            'idartigo' => $this->idartigo,
+            'idvendedor' => $this->idvendedor,
+            'linhavendas.idestadoencomenda' => $this->idestadoencomenda,
         ]);
-
-        $query->andFilterWhere(['like', 'nome', $this->nome])
-            ->andFilterWhere(['like', 'codigopostal', $this->codigopostal])
-            ->andFilterWhere(['like', 'morada', $this->morada])
-            ->andFilterWhere(['like', 'pais', $this->pais])
-            ->andFilterWhere(['like', 'cidade', $this->cidade])
-            ->andFilterWhere(['like', 'codigo', $this->codigo]);
-
-
-            $query->andWhere(['idcomprador' => Yii::$app->user->id]);
-
-        $query->orderBy(['datavenda' => SORT_DESC]);
 
 
         // filtrar pelo estado da encomenda
@@ -93,11 +81,10 @@ class VendaSearch extends Venda
         $penultimoEstado = $estados[count($estados) - 2] ?? null;
         $ultimoEstado = Estadoencomenda::find()->orderBy(['status' => SORT_DESC])->one();
 
-
         //encomendas que nao estao concluidas
         if ($this->statusFilter === 'accepted') {
             if ($primeiroEstado && $penultimoEstado) {
-                $query->andWhere(['in', 'vendas.idestadoencomenda', [
+                $query->andWhere(['in', 'linhavendas.idestadoencomenda', [
                     $primeiroEstado->id,
                     $penultimoEstado->id
                 ]]);
@@ -107,10 +94,9 @@ class VendaSearch extends Venda
         //encomendas completas
         if ($this->statusFilter === 'completed') {
             if ($ultimoEstado) {
-                $query->andWhere(['vendas.idestadoencomenda' => $ultimoEstado->id]);
+                $query->andWhere(['linhavendas.idestadoencomenda' => $ultimoEstado->id]);
             }
         }
-
 
         return $dataProvider;
     }

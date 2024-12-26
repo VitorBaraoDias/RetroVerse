@@ -108,7 +108,7 @@ class FavoritoController extends Controller
             }
         }
 
-        return $this->redirect(['artigo/index']);
+        return $this->redirect(Yii::$app->request->referrer ?: ['artigo/index']);
     }
 
 
@@ -157,9 +157,16 @@ class FavoritoController extends Controller
         }
 
 
-        return $this->redirect(['artigo/index']);
+        return $this->redirect(Yii::$app->request->referrer ?: ['artigo/index']);
     }
 
+
+    public function isFavorito($userId, $artigoId)
+    {
+        return (bool) Favorito::find()
+            ->where(['idperfil' => $userId, 'idartigo' => $artigoId])
+            ->exists();
+    }
 
 
     /**

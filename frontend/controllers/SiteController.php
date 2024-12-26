@@ -20,6 +20,7 @@ use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
 use frontend\models\ContactForm;
 use common\models\Plano;
+use common\models\Favorito;
 use yii\db\Query;
 
 /**
@@ -85,19 +86,19 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        //utilizador a navegar no index
+
         $userId = Yii::$app->user->id;
         $perfil = Perfil::findOne(['id' => $userId]);
 
         //verificar se ele tem premium
         $isPremiumActive = $perfil ? $perfil->hasActivePremiumPlano() : false;
 
-
         $dataProvider1 = new ActiveDataProvider([
             'query' => Artigo::find()
                 ->with('fotosartigos')
-                ->where(['not in', 'id', (new Query())->select('id')->from('artigospremium')]) // Exclui os artigos premium
-                ->andWhere(['ativo' => 1]) // Filtra para mostrar apenas artigos com "ativo" = 1
+                ->where(['not in', 'id', (new Query())->select('id')->from('artigospremium')]) // exclui os artigos premium
+                ->andWhere(['ativo' => 1])
+                ->andWhere(['tipoartigo' => 'LOJA'])
                 ->orderBy(['datacriacao' => SORT_DESC])
                 ->limit(4),
             'pagination' => false,
@@ -119,7 +120,7 @@ class SiteController extends Controller
         return $this->render('index', [
             'dataProvider1' => $dataProvider1,
             'dataProvider2' => $dataProvider2,
-            'isPremiumActive' => $isPremiumActive
+            'isPremiumActive' => $isPremiumActive,
         ]);
     }
 

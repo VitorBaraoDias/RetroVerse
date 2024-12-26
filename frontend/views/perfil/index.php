@@ -1,15 +1,24 @@
 <?php
 
 use common\models\Perfil;
+use yii\data\ActiveDataProvider;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\ActionColumn;
 use yii\grid\GridView;
+use yii\widgets\ListView;
 
 /** @var yii\web\View $this */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
 $this->title = 'Perfils';
+
+$dataProvider = new ActiveDataProvider([
+    'query' => $model->getArtigos(),
+    'pagination' => [
+        'pageSize' => 6, // Define o número de itens por página
+    ],
+])
 ?>
 <div class="perfil-index">
     <h1 style="margin-left: 90px; margin-top:30px"><strong>PROFILE</strong></h1>
@@ -77,6 +86,18 @@ $this->title = 'Perfils';
                 'style' => 'font-size: x-small; gap: 10px',
             ]) ?>
         </div>
-        cards
+        <hr>
+        <?= ListView::widget([
+            'dataProvider' => $dataProvider,
+            'itemView' => 'my_items',
+            'layout' => '<div class="row">{items}</div>{pager}',
+            'options' => ['class' => 'list-view'],
+            'itemOptions' => ['class' => 'col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 card-product'],
+
+            'pager' => [
+                'class' => \yii\bootstrap5\LinkPager::class,
+                'options' => ['class' => 'mt-4 pagination justify-content-center'],
+            ],
+        ]) ?>
     </div>
 </div>

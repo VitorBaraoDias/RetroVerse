@@ -10,18 +10,6 @@ use yii\widgets\ActiveForm;
 /** @var common\models\Artigo $model */
 /** @var yii\widgets\ActiveForm $form */
 \yii\web\YiiAsset::register($this);
-
-$js = <<<JS
-$("#uploadform-imagefiles").fileinput({
-    theme: 'fas', // Utilize 'fas' para FontAwesome 5 ou outro tema compatível
-    showUpload: false,
-    browseOnZoneClick: true,
-    allowedFileExtensions: ['jpg', 'jpeg', 'png', 'gif'],
-    maxFileSize: 2000,
-    maxFileCount: 5
-});
-JS;
-$this->registerJs($js);
 ?>
 
 <div class="artigo-form">
@@ -36,11 +24,13 @@ $this->registerJs($js);
             'accept' => 'image/*', // Restringir para arquivos de imagem
         ],
         'pluginOptions' => [
-            'showUpload' => false, //
-            'browseOnZoneClick' => true, // Permitir abrir o seletor clicando na área
-            'initialPreviewAsData' => true,
-            'maxFileSize' => 2000,
-            'previewFileType' => 'image',
+            'showUpload' => false, // Desativar upload automático do plugin
+            'browseOnZoneClick' => true, // Abrir seletor ao clicar na área
+            'initialPreviewAsData' => true, // Mostrar pré-visualização das imagens
+            'maxFileSize' => 2000, // Tamanho máximo por arquivo em KB
+            'previewFileType' => 'image', // Mostrar pré-visualização apenas para imagens
+            'overwriteInitial' => false, // Não sobrescrever pré-visualizações iniciais
+            'maxFileCount' => 4, // Limitar o número de arquivos
         ],
     ]); ?>
     <div class="row">
@@ -90,7 +80,7 @@ $this->registerJs($js);
                 ])->label('PRICE'); ?>
             </div>
             <div class="form-group">
-                <?= Html::submitButton('PUBLISH ITEM', ['class' => 'btn retroverse-btn active w-100 mt-3 px-5 py-2 rounded-0', 'id' => "retroverse-btn-active"]) ?>
+                <?= Html::submitButton($textContentButton, ['class' => 'btn retroverse-btn active w-100 mt-3 px-5 py-2 rounded-0', 'id' => "retroverse-btn-active"]) ?>
             </div>
         </div>
     </div>

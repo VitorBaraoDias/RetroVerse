@@ -60,11 +60,21 @@ class Carrinho extends \yii\db\ActiveRecord
         $totalVenda = 0;
 
         foreach ($linhasCarrinho as $linha) {
-            $totalVenda += $linha->artigo->precoanuncio; // Quantidade * Preço
+            $artigo = $linha->artigo;
+
+            if ($artigo->tipoartigo === 'MARKETPLACE' && $artigo->idcomissao0) {
+                // Aplica a comissão ao preço se o artigo for do tipo MARKETPLACE
+                $precoComComissao = round($artigo->precoanuncio * (1 + $artigo->idcomissao0->comissao / 100), 2);
+                $totalVenda += $precoComComissao;
+            } else {
+                // Sem comissão, apenas soma o preço normal
+                $totalVenda += $artigo->precoanuncio;
+            }
         }
 
         return $totalVenda;
     }
+
     public function ifExistsCart()
     {
         return $this !== null && $this->getLinhascarrinhos()->exists();
