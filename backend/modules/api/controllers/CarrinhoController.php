@@ -111,4 +111,79 @@ class CarrinhoController extends ActiveController
         return true;
     }
 
+    public function actionDetalhes()
+    {
+        // Busca todos os carrinhos
+        $carrinhos = Carrinho::find()->all();
+
+        $carrinhosFormatted = [];
+
+        foreach ($carrinhos as $carrinho) {
+            $linhasCarrinho = Linhascarrinho::find()
+                ->with([
+                    'artigo',
+                    'artigo.idcomissao0',
+                    'artigo.idestado0',
+                    'artigo.idmarca0',
+                    'artigo.idcategoria0',
+                    'artigo.idtamanho0',
+                    'artigo.idperfil0',
+                ])
+                ->where(['idcarrinho' => $carrinho->id]) // Relaciona as linhas ao carrinho
+                ->all();
+
+            // Verifica se as linhas foram encontradas
+            if (!$linhasCarrinho) {
+                $carrinhosFormatted[] = [
+                    'id' => $carrinho->id,
+                    'iduser' => $carrinho->iduser,
+                    'message' => 'Nenhuma linha encontrada para este carrinho.',
+                ];
+                continue;  // Vai para o próximo carrinho
+            }
+
+            $linhasCarrinhoFormatted = [];
+
+            foreach ($linhasCarrinho as $linha) {
+                $artigo = $linha->artigo;
+                $fotos = [];
+                foreach ($artigo->fotosartigos as $foto) {
+                    $fotos[] = $foto->caminhofoto;
+
+                    $linhasCarrinhoFormatted[] = [
+                        'id' => $linha->id,
+                        'idcarrinho' => $linha->idcarrinho,
+                        'idartigo' => $linha->idartigo,
+                        'artigo' => $artigo ? [
+                            'nome' => $artigo->nome,
+                            'descricao' => $artigo->descricao,
+                            'precoanuncio' => $artigo->precoanuncio,
+                            'comissao' => $artigo->idcomissao0->comissao,
+                            'estado' => $artigo->idestado0->descricao,
+                            'marca' => $artigo->idmarca0->nome,
+                            'categoria' => $artigo->idcategoria0->nome,
+                            'tamanho' => $artigo->idtamanho0->tamanho,
+                            'perfil' => "@" . $artigo->idperfil0->username,
+                            'tipoartigo' => $artigo->tipoartigo,
+                            'fotos' => $fotos,  // Adicionando as fotos ao resultado
+
+                        ] : null,
+                    ];
+                }
+            }
+
+            // Adiciona o carrinho com as linhas formatadas
+            $carrinhosFormatted[] = [
+                'id' => $carrinho->id,
+                'iduser' => $carrinho->iduser,
+                'linhas_carrinho' => $linhasCarrinhoFormatted,
+            ];
+        }
+
+        return [
+            'success' => true,
+            'carrinhos' => $carrinhosFormatted,
+        ];
+    }
+
 }
