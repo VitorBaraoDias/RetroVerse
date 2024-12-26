@@ -59,7 +59,7 @@ class Clientesplano extends \yii\db\ActiveRecord
      */
     public function getPerfil()
     {
-        return $this->hasOne(Perfils::class, ['id' => 'idperfil']);
+        return $this->hasOne(Perfil::class, ['id' => 'idperfil']);
     }
 
     /**
@@ -69,6 +69,6 @@ class Clientesplano extends \yii\db\ActiveRecord
      */
     public function getPlano()
     {
-        return $this->hasOne(Planos::class, ['id' => 'idplano']);
+        return $this->hasOne(Plano::class, ['id' => 'idplano']);
     }
 }

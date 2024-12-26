@@ -22,7 +22,13 @@ $dataProvider = new ActiveDataProvider([
 ?>
 <div class="perfil-index">
     <h1 style="margin-left: 90px; margin-top:30px"><strong>PROFILE</strong></h1>
-
+    <h3 style="margin-left: 90px"><b>ACTIVE PLAN: </b>
+        <?php if ($model->clientesplano): ?>
+            <?= $model->clientesplano->plano->descricao ?>
+        <?php else: ?>
+            BASIC
+        <?php endif; ?>
+    </h3>
     <div class="row justify-content-between mt-4 mx-5">
         <div class="d-flex col-lg-6 row">
                 <?php if (!empty($model->caminhofotoperfil)): ?>
@@ -44,11 +50,7 @@ $dataProvider = new ActiveDataProvider([
                 </div>
                 <div class="mt-4" style="word-break: break-all;"><?= $model->descricao?></div>
                 <div class="d-flex justify-content-between mt-4">
-                    <?= Html::a('EDIT PROFILE', ['perfil/update'], [
-                        'class' => 'outline-black-retroverse-btn',
-                        'style' => 'font-size: x-small; margin-left: 0',
-                    ]) ?>
-                    <?= Html::a('EDIT PROFILE', ['perfil/update'], [
+                    <?= Html::a('MY PLAN', ['perfil/update'], [
                         'class' => 'outline-black-retroverse-btn',
                         'style' => 'font-size: x-small; margin-left: 0',
                     ]) ?>
@@ -64,15 +66,12 @@ $dataProvider = new ActiveDataProvider([
                     'style' => 'font-size: x-small; gap: 10px; padding: 10px',
                 ]) ?>
             </div>
-            <div class="d-flex justify-content-between px-4 mt-5">
+            <div class="d-flex justify-content-between  mt-5">
                 <div class="d-flex flex-column align-items-center">
-                    <span>can earn up to</span>
-                    <strong>5</strong>
+                    <p><b>MY BALANCE: </b><?=$model->saldo?>€</p>
                 </div>
                 <div class="d-flex flex-column align-items-center">
-                    <span>total earnings</span>
-                    <strong>5</strong>
-
+                    <p><b>BALANCE ON HOLD: </b><?=$model->saldopendente ?>€</p>
                 </div>
             </div>
         </div>

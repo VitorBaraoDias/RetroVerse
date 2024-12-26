@@ -6,15 +6,15 @@ use common\models\Estadoencomenda;
 
 /* @var $model common\models\Linhavenda */
 
-$precoBase = $model->idartigo0->precoanuncio;  // Alterado para usar idartigo0 em vez de artigo
-$porcentagemIVA = Yii::$app->params['iva'] ?? 20; // Ou use $iva->porcentagem se o IVA for específico para este item
+$precoBase = $model->idartigo0->precoanuncio;
+$porcentagemIVA = Yii::$app->params['iva'] ?? 20;
 $valorIVA = $precoBase * ($porcentagemIVA / 100);
 $precoComIVA = $precoBase + $valorIVA;
 ?>
 
-<div class="position-relative d-flex align-items-center gap-4" style="padding-bottom: 60px;"> <!-- Adicionado padding-bottom para evitar sobreposição do botão -->
+<div class="position-relative d-flex align-items-center gap-4" style="padding-bottom: 60px;">
     <div>
-        <span>Store</span>
+        <span><?= Html::encode($model->idartigo0->tipoartigo) ?></span>
         <p style="font-size: 18px">
             <strong><?= Html::encode($model->idartigo0->nome) ?></strong>
         </p>
