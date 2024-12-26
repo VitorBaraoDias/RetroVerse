@@ -66,7 +66,7 @@ $statusColor = $model->idestadoencomenda0->isFinalState() ? 'green' : 'grey';
             <?php if ($model->idestadoencomenda0->isFirstState()): ?>
                 <?= Html::a(
                     'I´VE ALREADY SENT MY ITEM',
-                    ['linhavenda/ordersent', 'id' => $model->id], // Substitua 'venda' pelo controlador correto
+                    ['linhavenda/ordersent', 'id' => $model->id],
                     [
                         'class' => 'history-view-details',
                         'style' => 'font-size: x-small; gap: 10px',

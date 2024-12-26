@@ -53,18 +53,16 @@ class VendaController extends Controller
         if ($tipoVenda === 'sales') {
             $searchModel = new LinhaVendaSearch();
             $queryParams['LinhavendaSearch']['statusFilter'] = $statusFilter; // Filtro para sales
-            $view = 'index'; // View principal
-            $viewType = 'sales'; // Parcial para vendas
++            $viewType = 'sales'; // Parcial para vendas
         } else {
             $searchModel = new VendaSearch();
             $queryParams['VendaSearch']['statusFilter'] = $statusFilter; // Filtro para purchases
-            $view = 'index'; // View principal
             $viewType = 'purchases'; // Parcial para compras
         }
 
         $dataProvider = $searchModel->search($queryParams);
 
-        return $this->render($view, [
+        return $this->render( 'index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
             'viewType' => $viewType,
@@ -94,8 +92,6 @@ class VendaController extends Controller
             'model' => $model,
             'dataProvider' => $dataProvider,  // Passa o dataProvider para a view
         ]);
-
-
     }
 
     /**

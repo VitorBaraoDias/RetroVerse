@@ -27,6 +27,7 @@ $statusColor = $model->estadoEncomenda && $model->estadoEncomenda->isFinalState(
 
     <!-- Botões no canto inferior direito -->
     <div class="history-buttons text-end">
+
         <?= Html::a('VIEW ORDER DETAILS', ['venda/view', 'id' => $model->id], ['class' => 'history-view-details']) ?>
         <?= Html::a('VIEW INVOICE', ['venda/invoice', 'id' => $model->id], ['class' => 'history-view-invoice']) ?>
     </div>

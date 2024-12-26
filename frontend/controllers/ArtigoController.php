@@ -55,6 +55,7 @@ class ArtigoController extends Controller
 
         // Obtém os parâmetros da requisição
         $queryParams = Yii::$app->request->queryParams;
+        $queryParams['SearchArtigo']['exclude_user_id'] = Yii::$app->user->id;
 
         // Define os valores padrão caso não estejam nos parâmetros
         if (!isset($queryParams['SearchArtigo']['tipo'])) {
@@ -164,7 +165,7 @@ class ArtigoController extends Controller
                 $uploadForm->imageFiles = UploadedFile::getInstances($uploadForm, 'imageFiles');
 
                 if ($uploadForm->upload($model->id)) {
-                    return $this->redirect(['artigo/view', 'id' => $model->id]);
+                    return $this->redirect(['artigo/view-marketplace', 'id' => $model->id]);
                 } else {
                     Yii::$app->session->setFlash('error', 'O artigo foi salvo, mas as imagens não puderam ser carregadas.');
                 }

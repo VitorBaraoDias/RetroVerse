@@ -83,10 +83,6 @@ $favoritosCount = Favorito::getFavoritosCount(Yii::$app->user->id);
                                         <?= $carrinho ? $carrinho->getLinhascarrinhos()->count() : 0 ?>
                                     </div>
                                 </a>
-                                <a href="<?= Yii::$app->urlManager->createUrl(['perfil/index']) ?>">
-                                    <img src="<?= Yii::getAlias('@web') ?>/img/myaccount-premium.svg" alt="">
-                                </a>
-
                                 <?php if ($isPremiumActive) { ?>
                                 <a href="<?= Yii::$app->urlManager->createUrl(['perfil/index']) ?>"><img src="<?= Yii::getAlias('@web') ?>/img/myaccount-premium.svg" alt=""></a>
                                 <?php } else { ?>
