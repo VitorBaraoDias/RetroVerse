@@ -109,7 +109,7 @@ class Perfil extends \yii\db\ActiveRecord
      */
     public function getChats()
     {
-        return $this->hasMany(Chat::class, ['iddestinatario' => 'id']);
+        return $this->hasMany(Listachats::class, ['iddestinatario' => 'id']);
     }
 
     /**

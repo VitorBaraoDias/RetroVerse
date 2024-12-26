@@ -14,10 +14,6 @@ $precoComIVA = $precoBase + $valorIVA;
 ?>
 <div class="d-flex align-items-center gap-4">
     <div class="d-flex flex-column">
-        <span><?= $model->artigo->tipoartigo ?></span>
-        <p style="font-size: 18px">
-            <strong><?= Html::encode($model->artigo->nome) ?></strong>
-        </p>
         <?php
         $firstPhoto = $model->artigo->fotosartigos[0] ?? null;
         // Caminho para a imagem no frontend
@@ -38,10 +34,19 @@ $precoComIVA = $precoBase + $valorIVA;
         }
         ?>
     </div>
-    <div class="d-flex flex-column gap-2">
-        <h2 style="font-size: 18px"><strong><?= Html::encode($model->artigo->idmarca0->nome ?? 'Unknown Brand') ?></strong></h2>
-        <h2 style="font-size: 18px"><?= Html::encode($model->artigo->idcategoria0->nome ?? 'Unknown Category') ?></h2>
-        <h2 style="font-size: 18px"><?= Html::encode($model->artigo->idtamanho0->tamanho ?? 'Unknown Size') ?></h2>
+    <div class="h-100 d-flex flex-column justify-content-between gap-2">
+        <div>
+            <span><?= $model->artigo->tipoartigo ?></span>
+            <p style="font-size: 18px">
+                <strong><?= Html::encode($model->artigo->nome) ?></strong>
+            </p>
+        </div>
+        <div>
+            <h2 style="font-size: 18px"><strong><?= Html::encode($model->artigo->idmarca0->nome ?? 'Unknown Brand') ?></strong></h2>
+            <h2 style="font-size: 18px"><?= Html::encode($model->artigo->idcategoria0->nome ?? 'Unknown Category') ?></h2>
+            <h2 style="font-size: 18px"><?= Html::encode($model->artigo->idtamanho0->tamanho ?? 'Unknown Size') ?></h2>
+        </div>
+
     </div>
 </div>
 <div class="d-flex flex-column justify-content-between">

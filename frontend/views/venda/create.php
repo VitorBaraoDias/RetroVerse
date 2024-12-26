@@ -20,7 +20,8 @@ $this->title = 'CHECKOUT';
                 'model' => $model,
             ]) ?>
         </div>
-    <div class="col-md-5 d-flex flex-column gap-4 card p-4">
+    <div class="col-md-5 d-flex flex-column gap-4 card p-4" style="    height: fit-content;
+">
         <h2 class="text-center"><strong> ORDER SUMMARY </strong></h2>
         <hr>
             <?= ListView::widget([

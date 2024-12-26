@@ -13,10 +13,7 @@ $precoComIVA = $precoBase + $valorIVA;
 
 <div class="d-flex align-items-center gap-4">
     <div>
-        <span>Store</span>
-        <p style="font-size: 18px">
-            <strong><?= Html::encode($model->idartigo0->nome) ?></strong>  <!-- Alterado para usar idartigo0 -->
-        </p>
+
         <?php
         $firstPhoto = $model->idartigo0->fotosartigos[0] ?? null;  // Alterado para usar idartigo0
         // Caminho para a imagem no frontend
@@ -27,29 +24,39 @@ $precoComIVA = $precoBase + $valorIVA;
             echo Html::img($imagePath, [
                 'alt' => 'Article Image',
                 'class' => 'w-100',
-                'style' => 'width: 370px; height: 270px; object-fit: cover;',
+                'style' => ' height: 230px; object-fit: cover;',
             ]);
         } else {
             echo Html::tag('div', '', [
                 'class' => 'img-thumbnail',
-                'style' => 'width: 370px; height: 270px; background-color: grey; display: flex; align-items: center; justify-content: center;',
+                'style' => 'width: 240px; height: 270px; background-color: grey; display: flex; align-items: center; justify-content: center;',
             ]);
         }
         ?>
     </div>
-    <div class="d-flex flex-column gap-2">
-        <h2 style="font-size: 18px"><strong><?= Html::encode($model->idartigo0->idmarca0->nome ?? 'Unknown Brand') ?></strong></h2>  <!-- Alterado para usar idartigo0 -->
-        <h2 style="font-size: 18px"><?= Html::encode($model->idartigo0->idcategoria0->nome ?? 'Unknown Category') ?></h2>  <!-- Alterado para usar idartigo0 -->
-        <h2 style="font-size: 18px"><?= Html::encode($model->idartigo0->idtamanho0->tamanho ?? 'Unknown Size') ?></h2>  <!-- Alterado para usar idartigo0 -->
+    <div class="h-100 d-flex flex-column">
+        <div>
+            <span><?= $model->idartigo0->tipoartigo ?></span>
+            <p style="font-size: 18px; margin: 0px">
+                <strong><?= Html::encode($model->idartigo0->nome) ?></strong>
+            </p>
+        </div>
+        <div class="d-flex flex-column h-100 justify-content-between">
+            <div class="d-flex gap-2">
+                <h2 style="font-size: 16px"><strong><?= Html::encode($model->idartigo0->idmarca0->nome ?? 'Unknown Brand') ?></strong></h2>
+                <h2 style="font-size: 16px"><?= Html::encode($model->idartigo0->idcategoria0->nome ?? 'Unknown Category') ?></h2>
+                <h2 style="font-size: 16px"><?= Html::encode($model->idartigo0->idtamanho0->tamanho ?? 'Unknown Size') ?></h2>
+            </div>
+            <div class="d-flex flex-column align-items-start">
+                <h2 style="font-size: 24px">
+                    <strong><?= Yii::$app->formatter->asCurrency($model->idartigo0->precoanuncio, 'EUR') ?></strong>
+                </h2>
+                <h3 style="font-size: 18px">
+                    <?= Yii::$app->formatter->asCurrency($precoComIVA, 'EUR') ?>
+                </h3>
+            </div>
+        </div>
     </div>
 </div>
 
-<div class="d-flex flex-column align-items-end" style="position: absolute; right: 10px; top: 10px;">
-<h1 style="font-size: 30px">
-    <strong><?= Yii::$app->formatter->asCurrency($model->idartigo0->precoanuncio, 'EUR') ?></strong>
-</h1>
-<h2 style="font-size: 20px">
-    <?= Yii::$app->formatter->asCurrency($precoComIVA, 'EUR') ?>
-</h2>
-</div>
 

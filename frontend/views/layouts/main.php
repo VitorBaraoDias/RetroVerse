@@ -48,7 +48,6 @@ $action = Yii::$app->controller->id;
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-
 </head>
 
 <body class="d-flex flex-column h-100">
@@ -124,7 +123,6 @@ $action = Yii::$app->controller->id;
 <?php $this->endBody() ?>
 
 </body>
-
 <!-- Js Plugins -->
 <script src="<?= Yii::getAlias('@web') ?>/js/jquery-3.3.1.min.js"></script>
 <script src="<?= Yii::getAlias('@web') ?>/js/bootstrap.min.js"></script>
@@ -137,6 +135,5 @@ $action = Yii::$app->controller->id;
 <script src="<?= Yii::getAlias('@web') ?>/js/mixitup.min.js"></script>
 <script src="<?= Yii::getAlias('@web') ?>/js/owl.carousel.min.js"></script>
 <script src="<?= Yii::getAlias('@web') ?>/js/main.js"></script>
-
 
 </html>

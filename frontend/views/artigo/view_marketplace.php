@@ -110,7 +110,7 @@ $this->title = $model->id;
                     <?= Html::a('MAKE AN OFFER', ['carrinho/create', 'id' => $model->id],
                         [    'class' => 'outline-retroverse-btn active w-100 col-md-9 m-0 mb-2 ',    'id' => 'retroverse-btn-active',
                             'style' => 'font-size: x-small; font-weight: bold',]) ?>
-                    <?= Html::a('MAKE AN OFFER', ['carrinho/create', 'id' => $model->id],
+                    <?= Html::a('SEND MESSAGE TO SELLER', ['chat/create', 'id' => $model->id],
                         [    'class' => 'btn history-button  w-100 col-md-9 mb-2 text-white rounded-0 ',    'id' => 'retroverse-btn-active',
                             'style' => 'font-size: x-small; background: #121619; font-weight: bold',]) ?>
                     <hr>
