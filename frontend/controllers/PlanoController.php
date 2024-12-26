@@ -10,6 +10,7 @@ use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use common\models\Clientesplano;
 
 
 /**
@@ -79,6 +80,7 @@ class PlanoController extends Controller
             'pageName' => $pageName,
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+
         ]);
     }
 
@@ -147,10 +149,17 @@ class PlanoController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $model = $this->findModel($id);
+
+        if ($model->delete()) {
+            Yii::$app->session->setFlash('success', 'Plano excluído com sucesso!');
+        } else {
+            Yii::$app->session->setFlash('error', 'Erro ao excluir o plano.');
+        }
 
         return $this->redirect(['index']);
     }
+
 
     /**
      * Finds the Plano model based on its primary key value.
@@ -167,4 +176,11 @@ class PlanoController extends Controller
 
         throw new NotFoundHttpException('The requested page does not exist.');
     }
+
+
+
+
+
+
+
 }
