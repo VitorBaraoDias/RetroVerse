@@ -2,6 +2,7 @@
 
 namespace backend\modules\api\controllers;
 use common\models\Artigo;
+use yii\filters\auth\QueryParamAuth;
 use yii\rest\Controller;
 use yii\rest\ActiveController;
 use Yii;
@@ -14,7 +15,14 @@ class ArtigoController extends ActiveController
     //modelo a criar artigo
     public $modelClass = 'common\models\Artigo';
 
-
+    public function behaviors()
+    {
+        $behaviors = parent::behaviors();
+        $behaviors['authenticator'] = [
+            'class' => QueryParamAuth::className(),
+        ];
+        return $behaviors;
+    }
     public function BeforeAction($action)
     {
         if (!parent::beforeAction($action)) {
@@ -30,6 +38,8 @@ class ArtigoController extends ActiveController
         }
         return true;
     }
+
+
 
     public function actionArtigofiltro($tipo = null, $tamanho = null, $estado = null, $marca = null)
     {
@@ -62,7 +72,7 @@ class ArtigoController extends ActiveController
                 'tamanho' => $artigo->idtamanho0->tamanho,
                 'tipoartigo' => $artigo->tipoartigo,
                 'ativo' => $artigo->ativo ? 'Sim' : 'Não',
-                'fotos' => $fotos,  // Adicionando as fotos ao resultado
+                'fotos' => $fotos,
 
                 'perfil' => [
                     'id' => $artigo->idperfil0->id,
@@ -77,11 +87,11 @@ class ArtigoController extends ActiveController
         return $result;
     }
 
-    public function actionDetalhesArtigo($id)
+    public function actionArtigodetalhes($id)
     {
-        // Buscar o artigo com as relações necessárias
+        // Buscar o artigo com todas as relações necessárias
         $artigo = Artigo::find()
-            ->with(['idestado0', 'idmarca0', 'idtamanho0', 'idcategoria0', 'idperfil0']) // Eager loading das relações
+            ->with(['idestado0', 'idmarca0', 'idtamanho0', 'idcategoria0', 'idperfil0', 'fotosartigos'])
             ->where(['id' => $id])
             ->one();
 
@@ -90,31 +100,40 @@ class ArtigoController extends ActiveController
             throw new \yii\web\NotFoundHttpException("Artigo não encontrado.");
         }
 
-        // Montar o resultado substituindo os IDs pelos nomes
+        // Montar o resultado substituindo os IDs pelos nomes e outras informações
+        $fotos = [];
+        foreach ($artigo->fotosartigos as $foto) {
+            $fotos[] = $foto->caminhofoto;
+        }
+
         return [
             'id' => $artigo->id,
             'datacriacao' => Yii::$app->formatter->asDate($artigo->datacriacao, 'dd/MM/yyyy'),
             'nome' => $artigo->nome,
             'descricao' => $artigo->descricao,
             'precoanuncio' => $artigo->precoanuncio,
-            'comissao' => $artigo->idcomissao0->comissao,
-            'estado' => $artigo->idestado0 ? $artigo->idestado0->descricao : null, // Estado pelo nome
-            'marca' => $artigo->idmarca0 ? $artigo->idmarca0->nome : null, // Marca pelo nome
-            'categoria' => $artigo->idcategoria0 ? $artigo->idcategoria0->nome : null, // Categoria pelo nome
-            'tamanho' => $artigo->idtamanho0 ? $artigo->idtamanho0->tamanho : null, // Tamanho pelo nome
+            'comissao' => $artigo->idcomissao0 ? $artigo->idcomissao0->comissao : null,
+            'estado' => $artigo->idestado0 ? $artigo->idestado0->descricao : null,
+            'marca' => $artigo->idmarca0 ? $artigo->idmarca0->nome : null,
+            'categoria' => $artigo->idcategoria0 ? $artigo->idcategoria0->nome : null,
+            'tamanho' => $artigo->idtamanho0 ? $artigo->idtamanho0->tamanho : null,
             'tipoartigo' => $artigo->tipoartigo,
             'ativo' => $artigo->ativo ? 'Sim' : 'Não',
-            'fotos' => array_map(function ($foto) {
-                return $foto->caminhofoto;
-            }, $artigo->fotosartigos), // Fotos dos artigos
-            'perfil' => [
+            'fotos' => $fotos,
+            'perfil' => $artigo->idperfil0 ? [
                 'id' => $artigo->idperfil0->id,
                 'username' => $artigo->idperfil0->username,
                 'descricao' => $artigo->idperfil0->descricao,
                 'caminhofotoperfil' => $artigo->idperfil0->caminhofotoperfil,
                 'morada' => $artigo->idperfil0->morada,
-            ]
+            ] : null,
         ];
     }
+
+
+
+
+
+
 
 }
