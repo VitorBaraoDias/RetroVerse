@@ -2,21 +2,18 @@
 
 namespace frontend\controllers;
 
-use frontend\models\SearchArtigo;
+use common\models\Artigo;
+use common\models\Denuncia;
 use Yii;
-use common\models\Plano;
-use common\models\Perfil;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use common\models\Clientesplano;
-
 
 /**
- * PlanoController implements the CRUD actions for Plano model.
+ * DenunciaController implements the CRUD actions for Denuncia model.
  */
-class PlanoController extends Controller
+class DenunciaController extends Controller
 {
     /**
      * @inheritDoc
@@ -37,56 +34,33 @@ class PlanoController extends Controller
     }
 
     /**
-     * Lists all Plano models.
+     * Lists all Denuncia models.
      *
      * @return string
      */
     public function actionIndex()
     {
-        // Busca o plano ativo
-        $planoAtivo = Plano::findOne(['ativo' => 1]);
-
-        if (!$planoAtivo) {
-            throw new NotFoundHttpException('Nenhum plano ativo encontrado.');
-        }
-
-
-        $userId = Yii::$app->user->id; //para ir buscar o perfil do utilizador logado
-        $perfil = Perfil::findOne(['id' => $userId]);
-
-        // Verifica se o utilizador tem um plano premium ativo
-        $isPremium = $perfil ? $perfil->hasActivePremiumPlano() : false;
-
-        // Define a variável pageName com base na verificação
-        $pageName = $isPremium ? '_collection_premium' : '_aderir_plano';
-
-
-        //Ir buscar os artigos premium
-        $searchModel = new SearchArtigo();
-
-        $queryParams = Yii::$app->request->queryParams;
-
-        if (!isset($queryParams['SearchArtigo']['tipo'])) {
-            $searchModel->tipo = 'premium';
-        }
-        if (!isset($queryParams['SearchArtigo']['ativo'])) {
-            $searchModel->ativo = 1;
-        }
-
-        $dataProvider = $searchModel->search($queryParams);
+        $dataProvider = new ActiveDataProvider([
+            'query' => Denuncia::find(),
+            /*
+            'pagination' => [
+                'pageSize' => 50
+            ],
+            'sort' => [
+                'defaultOrder' => [
+                    'id' => SORT_DESC,
+                ]
+            ],
+            */
+        ]);
 
         return $this->render('index', [
-            'plano' => $planoAtivo,
-            'pageName' => $pageName,
-            'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
-
         ]);
     }
 
-
     /**
-     * Displays a single Plano model.
+     * Displays a single Denuncia model.
      * @param int $id ID
      * @return string
      * @throws NotFoundHttpException if the model cannot be found
@@ -99,17 +73,32 @@ class PlanoController extends Controller
     }
 
     /**
-     * Creates a new Plano model.
+     * Creates a new Denuncia model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return string|\yii\web\Response
      */
-    public function actionCreate()
+    public function actionCreate($id)
     {
-        $model = new Plano();
+        $model = new Denuncia();
+        $artigo = Artigo::findOne($id);
+        $userId = Yii::$app->user->id; // ID do usuário logado
+
+        $jaDenunciado = Denuncia::find()
+            ->where(['iddenunciante' => $userId, 'idartigo' => $artigo->id])
+            ->exists();
+
+        if (Denuncia::hasAlreadyReported($userId, $artigo->id)) {
+            Yii::$app->session->setFlash('error', 'You have already reported this article.');
+            return $this->redirect(['artigo/view-marketplace', 'id' => $artigo->id]);
+        }
 
         if ($this->request->isPost) {
+            $model->iddenunciante = $userId; // ID do usuário logado
+            $model->iddenunciado = $artigo->idperfil;
+            $model->idartigo = $artigo->id;
             if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
+                Yii::$app->session->setFlash('success', 'Report successfully created.');
+                return $this->redirect(['artigo/view-marketplace', 'id' => $artigo->id]);
             }
         } else {
             $model->loadDefaultValues();
@@ -117,11 +106,12 @@ class PlanoController extends Controller
 
         return $this->render('create', [
             'model' => $model,
+            'artigo' => $artigo,
         ]);
     }
 
     /**
-     * Updates an existing Plano model.
+     * Updates an existing Denuncia model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param int $id ID
      * @return string|\yii\web\Response
@@ -141,7 +131,7 @@ class PlanoController extends Controller
     }
 
     /**
-     * Deletes an existing Plano model.
+     * Deletes an existing Denuncia model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param int $id ID
      * @return \yii\web\Response
@@ -149,38 +139,24 @@ class PlanoController extends Controller
      */
     public function actionDelete($id)
     {
-        $model = $this->findModel($id);
-
-        if ($model->delete()) {
-            Yii::$app->session->setFlash('success', 'Plano excluído com sucesso!');
-        } else {
-            Yii::$app->session->setFlash('error', 'Erro ao excluir o plano.');
-        }
+        $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
     }
 
-
     /**
-     * Finds the Plano model based on its primary key value.
+     * Finds the Denuncia model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param int $id ID
-     * @return Plano the loaded model
+     * @return Denuncia the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Plano::findOne(['id' => $id])) !== null) {
+        if (($model = Denuncia::findOne(['id' => $id])) !== null) {
             return $model;
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
     }
-
-
-
-
-
-
-
 }

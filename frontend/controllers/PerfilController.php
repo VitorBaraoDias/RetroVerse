@@ -98,7 +98,7 @@ class PerfilController extends Controller
 
                         $uploadForm->deleteProfileImageIfExist($oldProfileimg);
                         Yii::$app->session->setFlash('success', 'Perfil atualizado com sucesso.');
-                        return $this->redirect(['view', 'id' => $perfil->id]);
+                        return $this->redirect(['index', 'id' => $perfil->id]);
                     }
                     else{
                         $uploadForm->deleteProfileImageIfExist($perfil->caminhofotoperfil);

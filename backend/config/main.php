@@ -64,13 +64,14 @@ return [
                 ['class' => 'yii\rest\UrlRule', 'controller' => 'api/artigo',
                 'extraPatterns' => [
                     'GET {id}/preco' => 'preco', // 'preco' é 'actionPreco'
-                    'GET {tipo}/{tamanho}/{marca}/{estado}' => 'artigofiltro',
-                        'GET {tipo}/{tamanho}/{marca}' => 'artigofiltro',
-                        'GET {tipo}/{tamanho}' => 'artigofiltro',
-                        'GET ' => 'artigofiltro',
+                    'GET {tipoartigo}/{tamanho}/{marca}/{estado}' => 'artigofiltro',
+                    'GET {tipoartigo}/{tamanho}/{marca}' => 'artigofiltro',
+                    'GET {tipoartigo}/{tamanho}' => 'artigofiltro',
+                    'GET {tipoartigo}' => 'artigofiltro',
+                    'GET ' => 'artigofiltro',
                 ], 'tokens' => [
                         '{id}' => '<id:\\d+>',
-                        '{tipo}' => '<tipo:\\w+>',
+                        '{tipoartigo}' => '<tipoartigo:\\w+>',
                         '{tamanho}' => '<tamanho:\\w+>',
                         '{marca}' => '<marca:\\w+>',
                         '{estado}' => '<estado:\\w+>',
@@ -96,6 +97,7 @@ return [
                     'class' => 'yii\rest\UrlRule',
                     'controller' => 'api/carrinho',
                     'extraPatterns' => [
+                        'GET detalhes' => 'detalhes', // GET /api/carrinhos/user/{id} -> actionUser($id)
                         'GET user/{id}' => 'user', // GET /api/carrinhos/user/{id} -> actionUser($id)
                     ],
                 ],

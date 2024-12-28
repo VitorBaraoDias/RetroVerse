@@ -3,7 +3,7 @@
 if (Yii::$app->user->identity && Yii::$app->user->identity->id === $model->iduser): ?>
     <div class="chat outgoing">
         <div class="details">
-            <p><?=$model->mensagem->descricao, ENT_QUOTES?></p>
+            <p><?=$model->mensagem->descricao ?></p>
         </div>
     </div>
 <?php else: ?>

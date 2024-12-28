@@ -11,31 +11,53 @@ use yii\widgets\ActiveForm;
 
 <div class="avaliacao-form row">
 
-    <div class="col-md-6">
-        <?php $form = ActiveForm::begin(); ?>
+    <div class="col-md-6 d-flex align-items-center" style="width: 100%;"> <!-- Coluna do formulário -->
+        <?php $form = ActiveForm::begin([
+            'action' => ['avaliacao/create', 'id' => $linhaVenda->id],
+            'options' => ['style' => 'width: 100%;'], // Define largura total do formulário
+        ]); ?>
+        <h2 class="text-center mb-5 text-uppercase"><strong>RATE: <?=$linhaVenda->idvendedor0->user->username?></strong></h2>
 
+        <div class="input-details">
         <?= $form->field($model, 'descricao')->textInput() ?>
+        </div>
 
-        <?= $form->field($model, 'escala')->textInput(['maxlength' => true]) ?>
-
-        <?= $form->field($model, 'idremetente')->textInput() ?>
-
-        <?= $form->field($model, 'iddestinatario')->textInput() ?>
-
+        <div class="input-details">
+        <?= $form->field($model, 'escala')->textInput(['type' => 'number', 'min' => 0, 'max' => 5]) ?>
+        </div>
 
         <div class="form-group">
-            <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
+            <?= Html::submitButton(
+                '<span>Rate</span> <img src="' . Yii::getAlias('@web/img/star.svg') . '" alt="Star Icon" style="height: 20px; margin-left: 10px;">',
+                [
+                    'class' => 'btn retroverse-btn active w-100 mt-3 px-5 py-2 rounded-0',
+                    'id' => 'retroverse-btn-active',
+                    'encode' => false, // Permite HTML no conteúdo do botão
+                ]
+            ) ?>
+
         </div>
         <?php ActiveForm::end(); ?>
     </div>
     <div class="col-md-6 d-flex flex-column justify-content-center align-items-center">
-        <?php if (!empty($linhaVenda->idvendedor->caminhofotoperfil)): ?>
-            <img class="col-md-3 rounded-circle mb-4" style="object-fit: cover"
-                 src="<?= Yii::getAlias('@web') ?>/uploads/img-profile/<?= $linhaVenda->idvendedor->caminhofotoperfil ?>" alt="Foto de Perfil" height="140">
-        <?php else: ?>
-            <img class="col-md-3 mb-4" src="<?= Yii::getAlias('@web') ?>/img/icon-profile.svg" alt="Ícone de Perfil" height="140">
-        <?php endif; ?>
-        <div class="position-relative d-flex flex-column align-items-center gap-4" style="padding-bottom: 20px;"> <!-- Adicionado padding-bottom para evitar sobreposição do botão -->
+        <div class="position-relative d-flex flex-column align-items-center gap-4" style="padding-bottom: 20px;">
+            <div class="d-flex gap-4 justify-content-between align-items-start card w-100">
+                <div class="d-flex gap-3 align-items-center">
+                    <?php
+                    if (!empty($linhaVenda->idvendedor0->caminhoperfil)): ?>
+                        <img class="rounded-circle mb-4" style="object-fit: cover; height: 40px; width: 40px"
+                             src="<?= Yii::getAlias('@web') ?>/uploads/img-profile/<?= $linhaVenda->idvendedor0->caminhoperfil ?>" alt="Foto de Perfil">
+                    <?php else: ?>
+                        <img src="<?= Yii::getAlias('@web') ?>/img/icon-profile.svg" alt="Ícone de Perfil" height="40">
+                    <?php endif; ?>
+                    <div class="d-flex align-items-center">
+                        <h2 class="mr-2"> <strong><?= $linhaVenda->idvendedor0->user->username ?></strong></h2>
+                        <span><?= $linhaVenda->idvendedor0->getAvgRates() ?></span>
+                        <img src="<?= Yii::getAlias('@web/img/star.svg') ?>" alt="Star Icon" style="height: 20px; margin-left: 10px;">
+                        <span>(<?= $linhaVenda->idvendedor0->getCountRates() ?>)</span>
+                    </div>
+                </div>
+            </div><!-- Adicionado padding-bottom para evitar sobreposição do botão -->
             <div class="d-flex gap-4">
                 <div>
                     <?php
@@ -45,8 +67,8 @@ use yii\widgets\ActiveForm;
                     if ($firstPhoto && file_exists(Yii::getAlias('@frontend/web/uploads/img-artigos/') . $firstPhoto->caminhofoto)) {
                         echo Html::img($imagePath, [
                             'alt' => 'Article Image',
-                            'class' => 'w-100',
-                            'style' => ' height: 230px; object-fit: cover;',
+                            'class' => '',
+                            'style' => ' height: 230px; width: 230px; object-fit: cover;',
                         ]);
                     } else {
                         echo Html::tag('div', '', [

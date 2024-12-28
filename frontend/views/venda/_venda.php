@@ -6,35 +6,33 @@ use common\models\Estadoencomenda;
 
 /* @var $model common\models\Linhavenda */
 
-$precoBase = $model->idartigo0->precoanuncio;  // Alterado para usar idartigo0 em vez de artigo
-$porcentagemIVA = Yii::$app->params['iva'] ?? 20; // Ou use $iva->porcentagem se o IVA for específico para este item
+$precoBase = $model->idartigo0->precoanuncio;
+$porcentagemIVA = Yii::$app->params['iva'] ?? 20;
 $valorIVA = $precoBase * ($porcentagemIVA / 100);
 $precoComIVA = $precoBase + $valorIVA;
 ?>
 
-<div class="position-relative d-flex flex-column align-items-center gap-4" style="padding-bottom: 20px;"> <!-- Adicionado padding-bottom para evitar sobreposição do botão -->
-    <div class="d-flex gap-4">
-        <div>
+<div class="position-relative d-flex align-items-center gap-4" style="padding-bottom: 20px;"> <!-- Adicionado padding-bottom para evitar sobreposição do botão -->
+    <div>
+        <?php
+        $firstPhoto = $model->idartigo0->fotosartigos[0] ?? null;
+        $imagePath = Yii::getAlias('@web/uploads/img-artigos/') . ($firstPhoto->caminhofoto ?? '');
 
-            <?php
-            $firstPhoto = $model->idartigo0->fotosartigos[0] ?? null;
-            $imagePath = Yii::getAlias('@web/uploads/img-artigos/') . ($firstPhoto->caminhofoto ?? '');
-
-            if ($firstPhoto && file_exists(Yii::getAlias('@frontend/web/uploads/img-artigos/') . $firstPhoto->caminhofoto)) {
-                echo Html::img($imagePath, [
-                    'alt' => 'Article Image',
-                    'class' => 'w-100',
-                    'style' => ' height: 230px; object-fit: cover;',
-                ]);
-            } else {
-                echo Html::tag('div', '', [
-                    'class' => 'img-thumbnail',
-                    'style' => 'width: 240px; height: 270px; background-color: grey; display: flex; align-items: center; justify-content: center;',
-                ]);
-            }
-            ?>
-        </div>
-        <div class="d-flex flex-column">
+        if ($firstPhoto && file_exists(Yii::getAlias('@frontend/web/uploads/img-artigos/') . $firstPhoto->caminhofoto)) {
+            echo Html::img($imagePath, [
+                'alt' => 'Article Image',
+                'class' => 'w-100',
+                'style' => ' height: 230px; object-fit: cover;',
+            ]);
+        } else {
+            echo Html::tag('div', '', [
+                'class' => 'img-thumbnail',
+                'style' => 'width: 240px; height: 270px; background-color: grey; display: flex; align-items: center; justify-content: center;',
+            ]);
+        }
+        ?>
+    </div>
+        <div class="d-flex flex-column h-100">
             <div>
                 <span><?= $model->idartigo0->tipoartigo ?></span>
                 <p style="font-size: 18px; margin: 0px">
@@ -49,22 +47,15 @@ $precoComIVA = $precoBase + $valorIVA;
                 </div>
                 <div class="d-flex flex-column align-items-start">
                     <h2 style="font-size: 24px">
-                        <strong><?= Yii::$app->formatter->asCurrency($model->idartigo0->precoanuncio, 'EUR') ?></strong>
+                        <strong><?= Yii::$app->formatter->asCurrency($model->idartigo0->getPrecoComComissao(), 'EUR') ?></strong>
                     </h2>
                     <h3 style="font-size: 18px">
-                        <?= Yii::$app->formatter->asCurrency($precoComIVA, 'EUR') ?>
+                        <?= Yii::$app->formatter->asCurrency($model->idartigo0->precoanuncio, 'EUR') ?>
                     </h3>
                 </div>
             </div>
-
-
-
-
-
-        <!-- Adicionar o botão ao canto inferior direito -->
     </div>
-    </div>
-
+</div>
     <?php
     $estadoAntesDoUltimo = Estadoencomenda::isBeforeLastState();
 
@@ -79,17 +70,20 @@ $precoComIVA = $precoBase + $valorIVA;
                 ]
             ) ?>
     <?php endif; ?>
-    <?php if ($model->idestadoencomenda0->isFinalState() && $model->idartigo0->tipoartigo !== 'LOJA'): ?>
-        <?= Html::a(
-            '<span>RATE</span> <img height="20px" src="' . Yii::getAlias('@web/img/star.svg') . '" alt="Star Icon">',
-            ['avaliacao/create', 'id' => $model->id], // Passa o ID da linhavenda como parâmetro
-            [
-                'class' => 'history-view-details ml-auto mr-',
-                'style' => 'font-size: x-small; gap: 10px',
-                'encode' => false, // Permitir HTML no conteúdo
-            ]
-        ) ?>
-    <?php endif; ?>
+<?php if ($model->idestadoencomenda0->isFinalState() && $model->idartigo0->tipoartigo !== 'LOJA' && is_null($model->avaliacao)): ?>
+    <?= Html::a(
+        '<span>RATE</span> <img height="20px" src="' . Yii::getAlias('@web/img/star.svg') . '" alt="Star Icon">',
+        ['avaliacao/create', 'id' => $model->id], // Passa o ID da linhavenda como parâmetro
+        [
+            'class' => 'history-view-details ml-auto mr-',
+            'style' => 'font-size: x-small; gap: 10px',
+            'encode' => false, // Permitir HTML no conteúdo
+        ]
+    ) ?>
+<?php elseif ($model->idartigo0->tipoartigo === 'MARKETPLACE'): ?>
+    <span style="font-size: x-small; color: gray;">Rate already carried out</span>
+<?php endif; ?>
+
 
 
 

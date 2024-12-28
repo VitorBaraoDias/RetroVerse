@@ -34,5 +34,5 @@ use yii\bootstrap5\Html;
     // URL do link
     ['chat/view', 'id' => $model->id],
     // Opções do link
-    ['class' => 'w-100 d-flex px-4 py-3 gap-3', 'style' => 'background: #F5F5F5; text-decoration: none; color: inherit;']
+    ['class' => 'w-100 d-flex gap-3 pt-2 p-l-1', 'style' => '; text-decoration: none; color: inherit;']
 ) ?>

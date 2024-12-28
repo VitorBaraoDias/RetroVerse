@@ -56,6 +56,7 @@ use yii\widgets\ActiveForm;
     <!-- Botão de Confirmação -->
     <div class="form-group d-flex justify-content-end mt-4">
         <?= Html::submitButton('CONFIRM', ['class' => 'btn retroverse-btn active w-auto px-5 py-2', 'id' => "retroverse-btn-active"]) ?>
+
     </div>
 
     <?php ActiveForm::end(); ?>

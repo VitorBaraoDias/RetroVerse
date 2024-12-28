@@ -4,6 +4,8 @@ namespace frontend\controllers;
 
 use common\models\Avaliacao;
 use common\models\Linhavenda;
+use common\models\Perfil;
+use Yii;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -37,14 +39,17 @@ class AvaliacaoController extends Controller
      *
      * @return string
      */
-    public function actionIndex()
+    public function actionIndex($id)
     {
+        $perfil = Perfil::findOne($id);
+
         $dataProvider = new ActiveDataProvider([
-            'query' => Avaliacao::find(),
+            'query' => $perfil->getAvaliacoes(),
         ]);
 
         return $this->render('index', [
             'dataProvider' => $dataProvider,
+            'perfil' => $perfil,
         ]);
     }
 
@@ -56,6 +61,9 @@ class AvaliacaoController extends Controller
      */
     public function actionView($id)
     {
+        $perfil = Perfil::findOne($id);
+
+
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);
@@ -71,9 +79,19 @@ class AvaliacaoController extends Controller
         $model = new Avaliacao();
         $linhaVenda = Linhavenda::findOne(['id' => $id]);
 
+
+        if($linhaVenda->avaliacao){
+            Yii::$app->session->setFlash('error', 'Já possui avaliação');
+            return $this->redirect(['venda/view', 'id' => $linhaVenda->idvenda]);
+
+        }
         if ($this->request->isPost) {
+
+            $model->idremetente = Yii::$app->user->id;
+            $model->iddestinatario = $linhaVenda->idvendedor;
+            $model->idlinhavenda = $linhaVenda->id;
             if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
+                return $this->redirect(['venda/view', 'id' => $id]);
             }
         } else {
             $model->loadDefaultValues();

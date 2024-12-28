@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use common\models\Linhavenda;
 use common\models\LoginForm;
 use common\models\User;
 use Yii;
@@ -70,12 +71,29 @@ class SiteController extends Controller
     public function actionIndex()
     {
         $userCount = User::find()->count();
+        $marketplaceSales = Linhavenda::getVendasMensaisPorTipoArtigo('MARKETPLACE');
+        $lojaSales = Linhavenda::getVendasMensaisPorTipoArtigo('LOJA');
+        $marcasData = Linhavenda::getMarcasMaisVendidas();
 
         return $this->render('index', [
+            'marketplaceSales' => json_encode($marketplaceSales),
+            'lojaSales' => json_encode($lojaSales),
             'userCount' => $userCount,
+            'marcas' => json_encode($marcasData['marcas']),
+            'quantidadeVendas' => json_encode($marcasData['quantidade_vendas']),
         ]);
     }
+    private function getSalesData($type)
+    {
+        // Ajustar a consulta para usar a relação correta
+        $salesCount = Linhavenda::find()
+            ->joinWith('idartigo0')  // Aqui é a relação correta
+            ->where(['artigos.tipoartigo' => $type])  // Filtra pelo tipo de artigo
+            ->andWhere(['artigos.ativo' => 1])  // Somente artigos ativos
+            ->count();  // Conta as vendas
 
+        return $salesCount ?: 0;  // Retorna 0 se não houver vendas
+    }
     /**
      * Login action.
      *

@@ -150,10 +150,12 @@ class Venda extends \yii\db\ActiveRecord
     {
         return $this->hasMany(Linhavenda::class, ['idvenda' => 'id']);
     }
+
     public function getIdartigo0()
     {
         return $this->hasOne(Artigo::class, ['id' => 'idartigo']);
     }
+
     public function beforeSave($insert)
     {
         if ($insert) {
@@ -162,6 +164,7 @@ class Venda extends \yii\db\ActiveRecord
         }
         return parent::beforeSave($insert);
     }
+
     private function gerarCodigoUnico()
     {
         // Gera um código único baseado no timestamp (apenas números)
@@ -185,10 +188,34 @@ class Venda extends \yii\db\ActiveRecord
             }
         }
 
-        // Se todas as linhas estão no estado final, agora avançamos o estado da venda para o último estado
+
         $this->idestadoencomenda = $estadoFinal->id;
-        $this->save(false); // Atualiza a venda para o último estado
+        $this->save(false);
+        $this->releaseBalance();
     }
+
+
+    public function releaseBalance()
+    {
+        if ($this->estadoEncomenda->isFinalState()) {
+            $transaction = Yii::$app->db->beginTransaction();
+            try {
+                foreach ($this->linhavendas as $linha) {
+                    $perfil = $linha->idvendedor0;
+                    if ($perfil) {
+                        $perfil->saldo += $linha->idartigo0->precoanuncio;
+                        $perfil->saldopendente -= $linha->idartigo0->precoanuncio;
+                        $perfil->save(false);
+                    }
+                }
+                $transaction->commit();
+            } catch (\Exception $e) {
+                $transaction->rollBack();
+                throw $e;
+            }
+        }
+    }
+
 
 
 

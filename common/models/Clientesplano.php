@@ -12,8 +12,8 @@ use Yii;
  * @property int $idperfil
  * @property string $expira
  *
- * @property Perfils $idperfil0
- * @property Planos $idplano0
+ * @property Perfil $idperfil0
+ * @property Plano $idplano0
  */
 class Clientesplano extends \yii\db\ActiveRecord
 {
@@ -33,9 +33,9 @@ class Clientesplano extends \yii\db\ActiveRecord
         return [
             [['idplano', 'idperfil', 'expira'], 'required'],
             [['idplano', 'idperfil'], 'integer'],
-            [['expira'], 'safe'],
-            [['idperfil'], 'exist', 'skipOnError' => true, 'targetClass' => Perfils::class, 'targetAttribute' => ['idperfil' => 'id']],
-            [['idplano'], 'exist', 'skipOnError' => true, 'targetClass' => Planos::class, 'targetAttribute' => ['idplano' => 'id']],
+            [['expira'], 'date', 'format' => 'php:Y-m-d H:i:s'],
+            [['idperfil'], 'exist', 'skipOnError' => true, 'targetClass' => Perfil::class, 'targetAttribute' => ['idperfil' => 'id']],
+            [['idplano'], 'exist', 'skipOnError' => true, 'targetClass' => Plano::class, 'targetAttribute' => ['idplano' => 'id']],
         ];
     }
 
@@ -59,7 +59,7 @@ class Clientesplano extends \yii\db\ActiveRecord
      */
     public function getPerfil()
     {
-        return $this->hasOne(Perfils::class, ['id' => 'idperfil']);
+        return $this->hasOne(Perfil::class, ['id' => 'idperfil']);
     }
 
     /**
@@ -69,6 +69,25 @@ class Clientesplano extends \yii\db\ActiveRecord
      */
     public function getPlano()
     {
-        return $this->hasOne(Planos::class, ['id' => 'idplano']);
+        return $this->hasOne(Plano::class, ['id' => 'idplano']);
     }
+
+    public function setDefaultExpira()
+    {
+        $this->expira = date('Y-m-d H:i:s', strtotime('+1 month'));
+    }
+
+    public function validateUniquePremiumPlan($attribute, $params)
+    {
+        // Verifica se já existe um plano premium associado ao idperfil
+        $existingPlan = self::find()
+            ->where(['idperfil' => $this->idperfil, 'idplano' => $this->idplano])
+            ->exists();
+
+        if ($existingPlan) {
+            $this->addError($attribute, 'Você já possui um plano premium ativo.');
+        }
+    }
+
+
 }

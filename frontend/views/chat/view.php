@@ -15,14 +15,25 @@ $perfil = $chatAtual->getDestinatarioOuRemetente();
 
 $dataProviderChata = new ActiveDataProvider([
     'query' => Conversa::find()->where(['idchat' => $chatAtual->id]),
+    'pagination' => false,  // Desabilita a paginação.
+
 ]);
 
 
 ?>
 <div class="chat-view my-5 w-100 d-flex justify-content-center">
     <div class="container card row d-flex flex-row p-0" style="min-height: 650px">
-        <div class="col-md-4 card p-0 d-flex flex-column">
-            <h2 class="text-start pl-5 text-uppercase card">MESSAGES</h2>
+        <div class="card p-0">
+            <div class="col-md-12 border-left-0 border-right-0 row p-0 m-0 border-0 py-2">
+                <div class="col-md-4 m-0 card p-0 border-left-0 border-bottom-0 border-top-0 px-4">
+                    <h2> <strong>MESSAGES</strong> </h2>
+                </div>
+                <div class="col-md-8 text-center text-uppercase">
+                    <h2 style="color: #0000FF !important;"> <strong> <?= $perfil->user->username ?></strong> </h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 card p-0 d-flex flex-column border-top-0 ">
             <?php if ($chatAtual): ?>
                 <div class="chat-atual">
                     <?= $this->render('_first_chat_item', ['model' => $chatAtual]) ?>
@@ -38,12 +49,10 @@ $dataProviderChata = new ActiveDataProvider([
             ]); ?>
         </div>
         <div class="col-md-8 p-0 d-flex flex-column">
-            <h2 class="text-center text-uppercase card" style="color: #0000FF"><?= $perfil->user->username ?></h2>
-
             <?= ListView::widget([
                 'dataProvider' => $dataProviderChata,
                 'itemView' => '../conversa/_chat',
-                'layout' => '<div class="chat-box">{items}</div>',
+                'layout' => '<div class="chat-box" id="chat">{items}</div>',
             ]) ?>
             <div style="margin-top: auto;">
                 <?= $this->render('../conversa/create', [
@@ -55,44 +64,70 @@ $dataProviderChata = new ActiveDataProvider([
         </div>
     </div>
 </div>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.1.0/paho-mqtt.min.js"
-        integrity="sha512-Y5n0fbohPllOQ21fTwM/h9sQQ/1a1h5KhweGhu2zwD8lAoJnTgVa7NIrFa1bRDIMQHixtyuRV2ubIx+qWbGdDA=="
-        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdn.jsdelivr.net/npm/mqtt@4.2.7/dist/mqtt.min.js"></script>
+
 <script>
+    const chatContainer = document.getElementById("chat");
 
-    const chatId = <?= $chatAtual->id ?>;  // Obtendo o ID do chat diretamente no PHP
-    const topic = `chat/${chatId}`;
+    // Manter o scroll na parte inferior do chat
+    chatContainer.scrollTop = chatContainer.scrollHeight;
+    // Configurações de conexão
+    const options = {
+        hostname: "127.0.0.1",  // Endereço do broker
+        port: 9001,  // Porta do WebSocket
+        clientId: "client_" + Math.random().toString(16).substr(2, 8),
+        username: "user1",  // Nome de usuário (se necessário)
+        password: "password"  // Senha (se necessário)
+    };
 
-    const client = new Paho.Client("localhost", 1883, "clientId-" + parseInt(Math.random() * 100, 10));
-    // set callback handlers
-    // set callback handlers
-    client.onConnectionLost = onConnectionLost;
-    client.onMessageArrived = onMessageArrived;
+    // Criar uma nova instância do cliente MQTT
+    const client = mqtt.connect(`ws://${options.hostname}:${options.port}`, options);
 
-    // connect the client
-    client.connect({onSuccess:onConnect});
+    // Quando o cliente se conectar ao broker
+    client.on('connect', function () {
+        console.log("Conectado ao broker MQTT via WebSocket");
+        // Inscrever-se no tópico 'chat/12'
+        client.subscribe("chat/12", function (err) {
+            if (!err) {
+                console.log("Inscrito no tópico: chat/12");
+            } else {
+                console.log("Erro ao se inscrever: " + err);
+            }
+        });
+    });
+
+    // Quando uma nova mensagem chegar
+    client.on('message', function (topic, message) {
+        console.log("Mensagem recebida: " + message.toString());
+        //
+        const data = JSON.parse(message.toString());
+        const descricao = data.descricao;  // Acessar a propriedade "descricao"
+
+        // Criar o div para o card de mensagem
+        const chatCard = document.createElement("div");
+        chatCard.classList.add("chat", "incoming");
+
+        // Criar a div com os detalhes da mensagem
+        const messageDetails = document.createElement("div");
+        messageDetails.classList.add("details");
+
+        // Criar o parágrafo com a descrição da mensagem
+        const messageDescription = document.createElement("p");
+        messageDescription.textContent = descricao; // Aqui você usa o conteúdo da mensagem
+
+        // Adicionar o parágrafo dentro da div de detalhes
+        messageDetails.appendChild(messageDescription);
+
+        // Adicionar a div de detalhes dentro do card
+        chatCard.appendChild(messageDetails);
+
+        // Adicionar o card no container de mensagens
+        chatContainer.appendChild(chatCard);    });
+        chatContainer.scrollTop = chatContainer.scrollHeight;
 
 
-    // called when the client connects
-    function onConnect() {
-        // Once a connection has been made, make a subscription and send a message.
-        console.log("onConnect");
-        client.subscribe(topic);
-        message = new Paho.Message("Hello");
-        message.destinationName = "World";
-        client.send(message);
-    }
-
-    // called when the client loses its connection
-    function onConnectionLost(responseObject) {
-        if (responseObject.errorCode !== 0) {
-            console.log("onConnectionLost:"+responseObject.errorMessage);
-        }
-    }
-
-    // called when a message arrives
-    function onMessageArrived(message) {
-        console.log("onMessageArrived:"+message.payloadString);
-    }
-
+    // Caso haja erro na conexão
+    client.on('error', function (err) {
+        console.log("Erro de conexão: " + err);
+    });
 </script>

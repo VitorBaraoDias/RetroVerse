@@ -44,6 +44,7 @@ class Perfil extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
+            [['saldo', 'saldopendente'], 'integer'], // Validação para os campos saldo e saldopendente
             [['descricao', 'caminhofotoperfil', 'morada'], 'string', 'max' => 150],
             [['id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['id' => 'id']],
         ];
@@ -57,17 +58,21 @@ class Perfil extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'descricao' => 'Descricao',
-            'caminhofotoperfil' => 'Caminhofotoperfil',
+            'caminhofotoperfil' => 'Caminho Foto Perfil',
             'morada' => 'Morada',
+            'saldo' => 'Saldo', // Rótulo para saldo
+            'saldopendente' => 'Saldo Pendente', // Rótulo para saldopendente
         ];
     }
+
+
     public function hasImageProfile(){
 
     }
 
     public function hasActivePremiumPlano()
     {
-        return $this->getClientesplanos()
+        return $this->getClientesplano()
             ->where(['>', 'expira', date('Y-m-d H:i:s')]) // Plano ainda ativo
             ->exists(); // Verifica se existe pelo menos um registro
     }
@@ -127,9 +132,9 @@ class Perfil extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getClientesplanos()
+    public function getClientesplano()
     {
-        return $this->hasMany(Clientesplano::class, ['idperfil' => 'id']);
+        return $this->hasOne(Clientesplano::class, ['idperfil' => 'id']);
     }
 
     /**
@@ -221,4 +226,17 @@ class Perfil extends \yii\db\ActiveRecord
     {
         return $this->hasMany(Venda::class, ['idcomprador' => 'id']);
     }
+    public function getCountRates()
+    {
+        return $this->getAvaliacoes()->count();
+    }
+    public function getAvgRates()
+    {
+        $average = $this->getAvaliacoes()->average('escala');
+        // Se não houver avaliações, retorna 0, caso contrário, arredonda para 2 casas decimais
+        return $average === null ? 0 : round($average, 2);
+    }
+
+
+
 }

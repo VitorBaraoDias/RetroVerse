@@ -35,11 +35,10 @@ class Avaliacao extends \yii\db\ActiveRecord
     {
         return [
             [['descricao', 'escala', 'idremetente', 'iddestinatario', 'idlinhavenda'], 'required'],
-            [['descricao', 'idremetente', 'iddestinatario', 'idlinhavenda'], 'integer'],
-            [['escala'], 'string', 'max' => 30],
-            [['iddestinatario'], 'exist', 'skipOnError' => true, 'targetClass' => Perfils::class, 'targetAttribute' => ['iddestinatario' => 'id']],
-            [['idremetente'], 'exist', 'skipOnError' => true, 'targetClass' => Perfils::class, 'targetAttribute' => ['idremetente' => 'id']],
-            [['idlinhavenda'], 'exist', 'skipOnError' => true, 'targetClass' => Linhavendas::class, 'targetAttribute' => ['idlinhavenda' => 'id']],
+            [['idremetente', 'iddestinatario', 'idlinhavenda', 'escala'], 'integer'],
+            [['iddestinatario'], 'exist', 'skipOnError' => true, 'targetClass' => Perfil::class, 'targetAttribute' => ['iddestinatario' => 'id']],
+            [['idremetente'], 'exist', 'skipOnError' => true, 'targetClass' => Perfil::class, 'targetAttribute' => ['idremetente' => 'id']],
+            [['idlinhavenda'], 'exist', 'skipOnError' => true, 'targetClass' => Linhavenda::class, 'targetAttribute' => ['idlinhavenda' => 'id']],
         ];
     }
 
@@ -63,9 +62,9 @@ class Avaliacao extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getIddestinatario0()
+    public function getDistinatarrio()
     {
-        return $this->hasOne(Perfils::class, ['id' => 'iddestinatario']);
+        return $this->hasOne(Perfil::class, ['id' => 'iddestinatario']);
     }
 
     /**
@@ -73,9 +72,9 @@ class Avaliacao extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getIdlinhavenda0()
+    public function getLinhavenda()
     {
-        return $this->hasOne(Linhavendas::class, ['id' => 'idlinhavenda']);
+        return $this->hasOne(Linhavenda::class, ['id' => 'idlinhavenda']);
     }
 
     /**
@@ -83,8 +82,8 @@ class Avaliacao extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getIdremetente0()
+    public function getRemetente()
     {
-        return $this->hasOne(Perfils::class, ['id' => 'idremetente']);
+        return $this->hasOne(Perfil::class, ['id' => 'idremetente']);
     }
 }

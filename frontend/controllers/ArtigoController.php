@@ -178,6 +178,15 @@ class ArtigoController extends Controller
         ]);
     }
 
+    public function actionDisable($id){
+        $model = $this->findModel($id);
+        $model->ativo = 0;
+
+        Yii::$app->session->setFlash('info', 'The article has been disabled');
+
+        return $this->redirect(['perfil/index', 'id' => $model->idperfil]);
+
+    }
     /**
      * Updates an existing Artigo model.
      * If update is successful, the browser will be redirected to the 'view' page.

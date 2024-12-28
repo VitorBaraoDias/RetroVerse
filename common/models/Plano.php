@@ -62,7 +62,7 @@ class Plano extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getArtigosPremia()
+    public function getArtigosPremium()
     {
         return $this->hasMany(ArtigosPremium::class, ['idPlano' => 'id']);
     }

@@ -53,7 +53,7 @@ class VendaController extends Controller
         if ($tipoVenda === 'sales') {
             $searchModel = new LinhaVendaSearch();
             $queryParams['LinhavendaSearch']['statusFilter'] = $statusFilter; // Filtro para sales
-+            $viewType = 'sales'; // Parcial para vendas
+            $viewType = 'sales'; // Parcial para vendas
         } else {
             $searchModel = new VendaSearch();
             $queryParams['VendaSearch']['statusFilter'] = $statusFilter; // Filtro para purchases
@@ -130,7 +130,17 @@ class VendaController extends Controller
                         if (!$linhaVenda->save()) {
                             throw new \Exception('Erro ao salvar linha de venda: ' . json_encode($linhaVenda->errors));
                         }
+
+                        // Atualiza o saldo pendente do vendedor
+                        $vendedorPerfil = $linhaVenda->idvendedor0; // Obtém o perfil do vendedor
+                        if ($vendedorPerfil) {
+                            $vendedorPerfil->saldopendente += $linha->artigo->precoanuncio; // Adiciona o valor da linha ao saldo pendente
+                            if (!$vendedorPerfil->save(false)) {
+                                throw new \Exception('Erro ao atualizar saldo pendente: ' . json_encode($vendedorPerfil->errors));
+                            }
+                        }
                     }
+
                     // Limpa as linhas do carrinho após salvar as vendas
                     foreach ($linhasCarrinho as $linha) {
                         if (!$linha->delete()) {

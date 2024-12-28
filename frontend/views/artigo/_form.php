@@ -80,8 +80,23 @@ use yii\widgets\ActiveForm;
                 ])->label('PRICE'); ?>
             </div>
             <div class="form-group">
-                <?= Html::submitButton($textContentButton, ['class' => 'btn retroverse-btn active w-100 mt-3 px-5 py-2 rounded-0', 'id' => "retroverse-btn-active"]) ?>
+                <?= Html::submitButton($textContentButton, [
+                    'class' => 'btn retroverse-btn active w-100 mt-3 px-5 py-2 rounded-0',
+                    'id' => "retroverse-btn-active"
+                ]) ?>
+
+                <?php if ($disable): ?>
+                    <?= Html::a(
+                        'DISABLE',
+                        ['artigo/disable', 'id' => $model->id],
+                        [
+                            'class' => 'btn bg-secondary w-100 mt-1 px-5 py-2 rounded-0 text-white',
+                            'onclick' => "return confirm('Are you sure you want to disable this article?');"
+                        ]
+                    ) ?>
+                <?php endif; ?>
             </div>
+
         </div>
     </div>
 
