@@ -77,17 +77,7 @@ class Clientesplano extends \yii\db\ActiveRecord
         $this->expira = date('Y-m-d H:i:s', strtotime('+1 month'));
     }
 
-    public function validateUniquePremiumPlan($attribute, $params)
-    {
-        // Verifica se já existe um plano premium associado ao idperfil
-        $existingPlan = self::find()
-            ->where(['idperfil' => $this->idperfil, 'idplano' => $this->idplano])
-            ->exists();
 
-        if ($existingPlan) {
-            $this->addError($attribute, 'Você já possui um plano premium ativo.');
-        }
-    }
 
 
 }

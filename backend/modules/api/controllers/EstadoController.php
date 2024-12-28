@@ -3,6 +3,7 @@
 namespace backend\modules\api\controllers;
 
 use Yii;
+use yii\filters\auth\QueryParamAuth;
 use yii\rest\ActiveController;
 
 /**
@@ -12,6 +13,14 @@ class EstadoController extends ActiveController
 {
     public $modelClass = 'common\models\Estado';
 
+    public function behaviors()
+    {
+        $behaviors = parent::behaviors();
+        $behaviors['authenticator'] = [
+            'class' => QueryParamAuth::className(),
+        ];
+        return $behaviors;
+    }
     public function beforeAction($action)
     {
 

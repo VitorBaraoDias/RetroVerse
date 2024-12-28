@@ -61,14 +61,21 @@ return [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
-                ['class' => 'yii\rest\UrlRule', 'controller' => 'api/artigo',
+                ['class' => 'yii\rest\UrlRule',
+                    'controller' => 'api/artigo',
                 'extraPatterns' => [
-                    'GET {id}/preco' => 'preco', // 'preco' é 'actionPreco'
+                    'GET {id}' => 'artigodetalhes',
                     'GET {tipoartigo}/{tamanho}/{marca}/{estado}' => 'artigofiltro',
+<<<<<<< HEAD
                     'GET {tipoartigo}/{tamanho}/{marca}' => 'artigofiltro',
                     'GET {tipoartigo}/{tamanho}' => 'artigofiltro',
                     'GET {tipoartigo}' => 'artigofiltro',
                     'GET ' => 'artigofiltro',
+=======
+                        'GET {tipoartigo}/{tamanho}/{marca}' => 'artigofiltro',
+                        'GET {tipoartigo}/{tamanho}' => 'artigofiltro',
+                        'GET ' => 'artigofiltro'
+>>>>>>> cbcf776484f4fe200e92dc6275398a31182c4e07
                 ], 'tokens' => [
                         '{id}' => '<id:\\d+>',
                         '{tipoartigo}' => '<tipoartigo:\\w+>',
@@ -97,8 +104,10 @@ return [
                     'class' => 'yii\rest\UrlRule',
                     'controller' => 'api/carrinho',
                     'extraPatterns' => [
-                        'GET detalhes' => 'detalhes', // GET /api/carrinhos/user/{id} -> actionUser($id)
-                        'GET user/{id}' => 'user', // GET /api/carrinhos/user/{id} -> actionUser($id)
+                        'GET ' => 'detalhes',
+                        'GET user/{id}' => 'user',
+                        'POST' => 'create'
+
                     ],
                 ],
                 [
@@ -121,7 +130,8 @@ return [
                     'class' => 'yii\rest\UrlRule',
                     'controller' => 'api/favorito',
                     'extraPatterns' => [
-                        'GET {id}/favorito' => 'favorito',
+                        'GET user/{id}' => 'user'
+
                     ],
                 ],
             ],

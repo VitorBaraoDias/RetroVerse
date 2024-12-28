@@ -17,6 +17,15 @@ class CarrinhoController extends ActiveController
     public $modelClass = 'common\models\Carrinho';
 
 
+    public function actions()
+    {
+        $actions = parent::actions();
+
+        unset($actions['create']);
+
+        return $actions;
+    }
+
     public function behaviors()
     {
         $behaviors = parent::behaviors();
@@ -35,7 +44,7 @@ class CarrinhoController extends ActiveController
             Yii::$app->response->statusCode = 404;
             return [
                 'success' => false,
-                'message' => 'Nenhum carrinho encontrado para o usuário fornecido.',
+                'message' => 'Nenhum carrinho encontrado para o utilizador fornecido.',
             ];
         }
 
@@ -185,5 +194,70 @@ class CarrinhoController extends ActiveController
             'carrinhos' => $carrinhosFormatted,
         ];
     }
+
+    public function actionCreate()
+    {
+        $request = Yii::$app->request->post();
+
+        // Valida se o carrinho está presente no corpo da requisição
+        if (empty($request['carrinho'])) {
+            Yii::$app->response->statusCode = 400;
+            return [
+                'success' => false,
+                'message' => 'Os dados do carrinho são obrigatórios.',
+            ];
+        }
+
+        // Criação do Carrinho
+        $carrinho = new Carrinho();
+        $carrinho->iduser = $request['iduser'];
+        $carrinho->datacriacao = date('Y-m-d H:i:s');
+
+        if (!$carrinho->save()) {
+            Yii::$app->response->statusCode = 400;
+            return [
+                'success' => false,
+                'message' => 'Erro ao criar o carrinho.',
+                'errors' => $carrinho->errors,
+            ];
+        }
+
+        $linhasCarrinhoErrors = []; // Para coletar erros nas linhas
+
+        // Processa as linhas do carrinho enviadas
+        foreach ($request['carrinho'] as $linhaData) {
+            $linhaCarrinho = new Linhascarrinho();
+            $linhaCarrinho->idcarrinho = $carrinho->id;
+            $linhaCarrinho->idartigo = $linhaData['idartigo'];
+
+            // Tenta salvar a linha
+            if (!$linhaCarrinho->save()) {
+                $linhasCarrinhoErrors[] = [
+                    'linha' => $linhaData,
+                    'errors' => $linhaCarrinho->errors,
+                ];
+            }
+        }
+
+        // Verifica se houve erros nas linhas do carrinho
+        if (!empty($linhasCarrinhoErrors)) {
+            Yii::$app->response->statusCode = 400;
+            return [
+                'success' => false,
+                'message' => 'Erro ao salvar uma ou mais linhas do carrinho.',
+                'details' => $linhasCarrinhoErrors,
+            ];
+        }
+
+        return [
+            'success' => true,
+            'message' => 'Carrinho criado com sucesso!',
+            'data' => [
+                'idcarrinho' => $carrinho->id,
+                'iduser' => $carrinho->iduser,
+            ],
+        ];
+    }
+
 
 }

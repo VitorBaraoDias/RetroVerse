@@ -19,7 +19,7 @@ class CategoriaartigoController extends ActiveController
         $behaviors = parent::behaviors();
         $behaviors['authenticator'] = [
             'class' => QueryParamAuth::className(),
-            'only'=> ['index'], //Apenas para o GET
+
         ];
         return $behaviors;
     }
