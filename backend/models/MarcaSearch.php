@@ -17,7 +17,7 @@ class MarcaSearch extends Marca
     public function rules()
     {
         return [
-            [['id'], 'integer'],
+            [['id', 'ativo'], 'integer'],
             [['nome'], 'safe'],
         ];
     }
@@ -61,7 +61,9 @@ class MarcaSearch extends Marca
             'id' => $this->id,
         ]);
 
-        $query->andFilterWhere(['like', 'nome', $this->nome]);
+
+        $query->andFilterWhere(['like', 'nome', $this->nome])
+                ->andFilterWhere(['ativo' => $this->ativo]);
 
         return $dataProvider;
     }

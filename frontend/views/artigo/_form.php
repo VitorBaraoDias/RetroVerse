@@ -51,16 +51,18 @@ use yii\widgets\ActiveForm;
                 ])->label('DESCRIBE YOUR ARTICLE'); ?>
             </div>
             <div class="input-details">
-                    <?= $form->field($model, 'idcategoria')->dropDownList(
-                        ArrayHelper::map(\common\models\Categoriaartigo::find()->all(), 'id', 'nome'),
-                        ['prompt' => 'Select a category', 'class' => 'form-control w-100']
-                    )->label('CATEGORY', ['class' => 'custom-label-class']) ?>
+                <?= $form->field($model, 'idcategoria')->dropDownList(
+                    ArrayHelper::map(\common\models\Categoriaartigo::find()->where(['ativo' => 1])->all(), 'id', 'nome'),
+                    ['prompt' => 'Select a category', 'class' => 'form-control w-100']
+                )->label('CATEGORY', ['class' => 'custom-label-class']) ?>
             </div>
             <div class="input-details">
-                <?= $form->field($model, 'idmarca')->dropDownList(ArrayHelper::map(\common\models\Marca::find()->all(), 'id', 'nome'),
+                <?= $form->field($model, 'idmarca')->dropDownList(
+                    ArrayHelper::map(\common\models\Marca::find()->where(['ativo' => 1])->all(), 'id', 'nome'),
                     ['prompt' => 'Select a brand', 'class' => 'form-control input-details w-100']
                 )->label('BRAND', ['class' => 'custom-label-class mt-4']) ?>
             </div>
+
             <div class="row">
                 <div class="col-md-6">
                     <?= $form->field($model, 'idestado')->dropDownList(ArrayHelper::map(\common\models\Estado::find()->all(), 'id', 'descricao'),

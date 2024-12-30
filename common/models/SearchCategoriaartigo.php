@@ -19,6 +19,7 @@ class SearchCategoriaartigo extends Categoriaartigo
         return [
             [['id'], 'integer'],
             [['nome'], 'safe'],
+            [['ativo'], 'boolean'],
         ];
     }
 
@@ -59,6 +60,7 @@ class SearchCategoriaartigo extends Categoriaartigo
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
+            'ativo' => $this->ativo,
         ]);
 
         $query->andFilterWhere(['like', 'nome', $this->nome]);

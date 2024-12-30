@@ -10,15 +10,13 @@ use yii\grid\GridView;
 /** @var common\models\SearchTamanho $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = 'Tamanhos';
+$this->title = 'Sizes';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="tamanho-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
-
     <p>
-        <?= Html::a('Create Tamanho', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Create New Size', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
@@ -28,7 +26,10 @@ $this->params['breadcrumbs'][] = $this->title;
         'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-            'tamanho',
+            [
+                    'label' => "Size",
+              'attribute' =>    'tamanho',
+            ],
             [
                 'class' => ActionColumn::className(),
                 'urlCreator' => function ($action, Tamanho $model, $key, $index, $column) {

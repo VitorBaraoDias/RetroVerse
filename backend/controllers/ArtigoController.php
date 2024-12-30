@@ -2,7 +2,7 @@
 
 namespace backend\controllers;
 
-use backend\models\UploadForm;
+use backend\models\UploadMultipleForm;
 use common\models\Artigo;
 use app\models\SearchArtigo;
 use Yii;
@@ -73,7 +73,7 @@ class ArtigoController extends Controller
     public function actionView($id)
 
     {
-        $uploadForm = new UploadForm();
+        $uploadForm = new UploadMultipleForm();
 
         return $this->render('view', [
             'model' => $this->findModel($id),

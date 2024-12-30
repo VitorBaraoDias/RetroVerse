@@ -56,16 +56,29 @@ class Carrinho extends \yii\db\ActiveRecord
 
     public function getTotalVenda()
     {
-        $linhasCarrinho = $this->getLinhascarrinhos()->all(); // Obtém todas as linhas do carrinho
+        $userId = $this->iduser;
+        $linhasCarrinho = $this->getLinhascarrinhos()->all();
         $totalVenda = 0;
+
+        // Busca o perfil do utilizador usando o userId
+        $perfil = Perfil::findOne(['id' => $userId]);
+
+        // Verifica se o utilizador tem um plano premium ativo
+        $isPremium = $perfil && $perfil->hasActivePremiumPlano();
+
 
         foreach ($linhasCarrinho as $linha) {
             $artigo = $linha->artigo;
 
             if ($artigo->tipoartigo === 'MARKETPLACE' && $artigo->idcomissao0) {
-                // Aplica a comissão ao preço se o artigo for do tipo MARKETPLACE
-                $precoComComissao = round($artigo->precoanuncio * (1 + $artigo->idcomissao0->comissao / 100), 2);
-                $totalVenda += $precoComComissao;
+                if ($isPremium) {
+                    // Utilizadores Premium não pagam comissão
+                    $totalVenda += $artigo->precoanuncio;
+                } else {
+                    // Aplica a comissão ao preço se o utilizador não for Premium
+                    $precoComComissao = round($artigo->precoanuncio * (1 + $artigo->idcomissao0->comissao / 100), 2);
+                    $totalVenda += $precoComComissao;
+                }
             } else {
                 // Sem comissão, apenas soma o preço normal
                 $totalVenda += $artigo->precoanuncio;

@@ -216,6 +216,22 @@ class Venda extends \yii\db\ActiveRecord
         }
     }
 
+    public function getOrderSubtotal()
+    {
+        $userId = $this->idcomprador;
+        $linhasVenda = $this->getLinhavendas()->all();
+        $subtotalVenda = 0;
+
+        foreach ($linhasVenda as $linha) {
+            $artigo = $linha->idartigo0;
+
+            // Soma apenas o preço do anúncio, sem comissões
+            $subtotalVenda += $artigo->precoanuncio;
+        }
+
+        return $subtotalVenda;
+    }
+
 
 
 }

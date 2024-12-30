@@ -10,15 +10,12 @@ use yii\grid\GridView;
 /** @var backend\models\SearchMetodosexpedicao $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = 'Metodosexpedicaos';
+$this->title = 'Shipping Methods';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="metodosexpedicao-index">
-
-    <h1><?= Html::encode($this->title) ?></h1>
-
     <p>
-        <?= Html::a('Create Metodosexpedicao', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Create New Shipping Method', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
@@ -28,7 +25,9 @@ $this->params['breadcrumbs'][] = $this->title;
         'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-            'nome',
+            ['attribute' => 'nome',
+            'label' => 'Name',
+            ],
             [
                 'class' => ActionColumn::className(),
                 'urlCreator' => function ($action, Metodosexpedicao $model, $key, $index, $column) {

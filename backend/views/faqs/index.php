@@ -10,12 +10,10 @@ use yii\helpers\Url;
 /** @var backend\models\FaqsSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = 'Faqs';
+$this->title = 'FAQs';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="faqs-index">
-
-    <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
         <?= Html::a('Create Faqs', ['create'], ['class' => 'btn btn-success']) ?>
@@ -28,10 +26,18 @@ $this->params['breadcrumbs'][] = $this->title;
         'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-
-            'questao',
-            'resposta',
-            'categoria',
+            [
+                    'attribute' => 'questao',
+                    'label' => 'Question'
+            ],
+            [
+                'attribute' => 'resposta',
+                'label' => 'Answer'
+            ],
+            [
+                'attribute' => 'categoria',
+                'label' => 'Category'
+            ],
             [
                 'class' => ActionColumn::className(),
                 'urlCreator' => function ($action, Faqs $model, $key, $index, $column) {
@@ -40,6 +46,4 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
         ],
     ]); ?>
-
-
 </div>

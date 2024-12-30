@@ -221,7 +221,7 @@ class Artigo extends \yii\db\ActiveRecord
     }
 
 
-
+    //obtem preco com comissao
     public function getPrecoComComissao()
     {
         // Obter a comissão associada ao artigo
@@ -232,14 +232,16 @@ class Artigo extends \yii\db\ActiveRecord
 
         return round($precoComComissao, 2);
     }
+
+    //obtem a comissao formatada no preco
     public function getPrecoComComissaoFormatado()
     {
-        // Chama o método de preço com comissão e formata para o padrão Euro
         return '€ ' . number_format($this->getPrecoComComissao(), 2, ',', '.');
     }
+
+    //verifica se é vendedor
     public function isVendedor()
     {
-        // Verifica se o ID do perfil do artigo é igual ao ID do usuário logado
         return $this->idperfil === Yii::$app->user->id;
     }
 }

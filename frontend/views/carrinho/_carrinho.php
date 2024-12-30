@@ -1,15 +1,15 @@
 <?php
 
 use yii\helpers\Html;
-
-/* @var $model \common\models\Linhascarrinho */
-
+use common\models\Perfil;
 
 
-$precoBase = $model->artigo->precoanuncio;
-$porcentagemIVA = Yii::$app->params['iva'] ?? 20; // Ou use $iva->porcentagem se o IVA for específico para este item
-$valorIVA = $precoBase * ($porcentagemIVA / 100);
-$precoComIVA = $precoBase + $valorIVA;
+
+$userId = Yii::$app->user->id;
+$perfil = Perfil::findOne(['id' => $userId]);
+
+//verificar se ele tem premium
+$isPremium = $perfil ? $perfil->hasActivePremiumPlano() : false;
 
 ?>
 <div class="d-flex align-items-center gap-4">
@@ -52,17 +52,34 @@ $precoComIVA = $precoBase + $valorIVA;
 <div class="d-flex flex-column justify-content-between">
     <div>
         <div class="d-flex align-items-center gap-2">
+            <h1 style="font-size: 30px">
+                <strong>
+                    <?php
+                    // Exibe o preço baseado no status do usuário
+                    echo $isPremium
+                        ? Yii::$app->formatter->asCurrency($model->artigo->precoanuncio, 'EUR')
+                        : $model->artigo->getPrecoComComissaoFormatado();
+                    ?>
+                </strong>
+            </h1>
             <?php if ($model->artigo->tipoartigo === 'MARKETPLACE'): ?>
                 <h2 style="font-size: 20px">
-                    <?= $model->artigo->getPrecoComComissaoFormatado() ?>
+                    <?= Yii::$app->formatter->asCurrency($model->artigo->precoanuncio, 'EUR') ?>
                 </h2>
             <?php endif; ?>
-            <h1 style="font-size: 30px">
-                <strong><?= Yii::$app->formatter->asCurrency($model->artigo->precoanuncio, 'EUR') ?></strong>
-            </h1>
         </div>
-        <p>
-            <?= $model->artigo->tipoartigo === 'MARKETPLACE' ? 'WITH TAXES' : 'WITHOUT TAXES' ?>
+        <p class="d-flex align-items-center gap-2">
+            <?php if ($model->artigo->tipoartigo === 'MARKETPLACE'): ?>
+                <?php if ($isPremium): ?>
+                    <span style="color:#0000FF;">
+                    <img class="pr-2" src="<?= Yii::getAlias('@web') ?>/img/premium-user-verified.svg" alt="">WITHOUT TAXES (PREMIUM)
+                </span>
+                <?php else: ?>
+                    <span>WITH TAXES</span>
+                <?php endif; ?>
+            <?php else: ?>
+                <span>WITHOUT TAXES</span>
+            <?php endif; ?>
         </p>
     </div>
 

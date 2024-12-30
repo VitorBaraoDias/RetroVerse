@@ -29,7 +29,21 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'nome',
+            [
+                'attribute' =>  'nome',
+                'label' => 'Name',
+            ],
+
+            [
+                'attribute' => 'ativo',
+                'label' => 'Active Status',
+                'format' => 'raw', // Exibir HTML se necessário
+                'value' => function($model) {
+                    return $model->ativo
+                        ? Html::tag('span', 'Active', ['class' => 'badge bg-success'])
+                        : Html::tag('span', 'Inactive', ['class' => 'badge bg-danger']);
+                },
+            ],
         ],
     ]) ?>
 

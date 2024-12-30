@@ -95,6 +95,21 @@ class VendaController extends Controller
             'dataProvider' => $dataProvider,  // Passa o dataProvider para a view
         ]);
 
+    }
+
+    public function actionViewinvoice($id)
+    {
+        $model = $this->findModel($id);
+
+        // Criação do dataProvider para listar as linhas de venda associadas à venda atual
+        $dataProvider = new ActiveDataProvider([
+            'query' => $model->getLinhavendas(),  // Método que traz as Linhavendas associadas à venda
+        ]);
+
+        return $this->render('viewinvoice', [
+            'model' => $model,
+            'dataProvider' => $dataProvider,  // Passa o dataProvider para a view
+        ]);
 
     }
 

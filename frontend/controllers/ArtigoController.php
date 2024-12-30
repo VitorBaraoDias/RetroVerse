@@ -2,7 +2,7 @@
 
 namespace frontend\controllers;
 
-use backend\models\UploadForm;
+use backend\models\UploadMultipleForm;
 use yii\web\UploadedFile;
 use common\models\Comissao;
 use Yii;
@@ -152,7 +152,7 @@ class ArtigoController extends Controller
     public function actionCreate()
     {
         $model = new Artigo();
-        $uploadForm = new UploadForm();
+        $uploadForm = new UploadMultipleForm();
 
         if ($this->request->isPost) {
             $model->idperfil = Yii::$app->user->id;
@@ -161,6 +161,9 @@ class ArtigoController extends Controller
             $model->idcomissao = Comissao::getIdActiveComissao();
 
             if ($model->load($this->request->post()) && $model->save()) {
+                // Configurar os diretórios de upload para artigos
+                $uploadForm->backendUploadDir = Yii::getAlias('@imageurl/img-artigos/');
+                $uploadForm->frontendUploadDir = Yii::getAlias('@frontend/web/uploads/img-artigos/');
                 $uploadForm->imageFiles = UploadedFile::getInstances($uploadForm, 'imageFiles');
 
                 if ($uploadForm->upload($model->id)) {
@@ -187,7 +190,7 @@ class ArtigoController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-        $uploadForm = new UploadForm(); // Instancia o modelo do formulário de upload
+        $uploadForm = new UploadMultipleForm(); // Instancia o modelo do formulário de upload
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);

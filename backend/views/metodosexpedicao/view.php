@@ -6,21 +6,19 @@ use yii\widgets\DetailView;
 /** @var yii\web\View $this */
 /** @var common\models\Metodosexpedicao $model */
 
-$this->title = $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Metodosexpedicaos', 'url' => ['index']];
+$this->title = $model->nome;
+$this->params['breadcrumbs'][] = ['label' => 'Shipping Methods', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
 <div class="metodosexpedicao-view">
-
-    <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
         <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
         <?= Html::a('Delete', ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
             'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
+                'confirm' => 'Are you sure you want to delete this shipping method?',
                 'method' => 'post',
             ],
         ]) ?>
@@ -29,8 +27,9 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'id',
-            'nome',
+            ['attribute' => 'nome',
+                'label' => 'Name',
+            ],
         ],
     ]) ?>
 

@@ -4,7 +4,7 @@ namespace frontend\controllers;
 
 use common\models\Carrinho;
 use common\models\Perfil;
-use frontend\models\UploadForm;
+use common\models\UploadSingleForm;
 use Yii;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
@@ -79,44 +79,79 @@ class PerfilController extends Controller
     {
         $perfil = Perfil::findOne($id);
         if (!$perfil) {
-            Yii::$app->session->setFlash('info', 'erro');
-            return $this->redirect(['site/index']);
+            Yii::$app->session->setFlash('info', 'Erro: Perfil não encontrado.');
+            return $this->redirect(['perfil/index']);
         }
 
-        $uploadForm = new UploadForm();
+        $uploadForm = new UploadSingleForm();
+
         if (Yii::$app->request->isPost) {
             $perfil->load(Yii::$app->request->post());
+
+
+            $uploadForm->backendUploadDir = Yii::getAlias('@imageurl/img-profile/');
+            $uploadForm->frontendUploadDir = Yii::getAlias('@frontend/web/uploads/img-profile/');
+
+
             $uploadForm->imageFile = UploadedFile::getInstance($uploadForm, 'imageFile');
 
-            // Validação conjunta do perfil e do upload // verifica se possui alguma foto já
-            if ($perfil->validate() && $uploadForm->validate()) {
 
-                $oldProfileimg = $perfil->caminhofotoperfil;
-                if($uploadForm->upload()){
-                    $perfil->caminhofotoperfil = $uploadForm->imagepath;
+            if ($uploadForm->imageFile) {
+
+                if ($perfil->validate() && $uploadForm->validate() && $uploadForm->upload()) {
+
+                    $oldProfileImg = $perfil->caminhofotoperfil;
+
+
+                    $perfil->caminhofotoperfil = $uploadForm->imagePaths[0];
+
                     if ($perfil->save()) {
 
-                        $uploadForm->deleteProfileImageIfExist($oldProfileimg);
+                        $uploadForm->deleteImageIfExist($oldProfileImg);
+
                         Yii::$app->session->setFlash('success', 'Perfil atualizado com sucesso.');
-                        return $this->redirect(['view', 'id' => $perfil->id]);
+                        return $this->redirect(['perfil/index']);
+                    } else {
+
+                        $uploadForm->deleteProfileImageIfExist($uploadForm->imagePaths[0]);
+                        Yii::$app->session->setFlash('error', 'Erro ao salvar perfil.');
                     }
-                    else{
-                        $uploadForm->deleteProfileImageIfExist($perfil->caminhofotoperfil);
-                    }
+                } else {
+                    Yii::$app->session->setFlash('error', 'Erro ao fazer upload da imagem.');
                 }
-            }
-            else{
-                Yii::$app->session->setFlash('info', 'erro');
-                return $this->redirect(['site/index']);
+            } else {
+                // Se não houver arquivo, validar e salvar apenas os outros campos
+                if ($perfil->validate() && $perfil->save()) {
+                    Yii::$app->session->setFlash('success', 'Perfil atualizado com sucesso.');
+                    return $this->redirect(['perfil/index']);
+                } else {
+                    Yii::$app->session->setFlash('error', 'Erro ao salvar perfil.');
+                }
             }
         }
 
-        // Renderizar o formulário com os dados
         return $this->render('update', [
             'model' => $perfil,
             'uploadForm' => $uploadForm,
         ]);
     }
+
+
+    private function deleteProfileImageIfExist($fileName, $backendUploadDir, $frontendUploadDir)
+    {
+        if ($fileName) {
+            $backendFilePath = $backendUploadDir . DIRECTORY_SEPARATOR . $fileName;
+            $frontendFilePath = $frontendUploadDir . DIRECTORY_SEPARATOR . $fileName;
+
+            if (file_exists($backendFilePath)) {
+                unlink($backendFilePath);
+            }
+            if (file_exists($frontendFilePath)) {
+                unlink($frontendFilePath);
+            }
+        }
+    }
+
 
     /**
      * Deletes an existing Perfil model.

@@ -8,8 +8,8 @@ use yii\widgets\DetailView;
 /** @var yii\web\View $this */
 /** @var common\models\Artigo $model */
 
-$this->title = "Article:".$model->nome;
-$this->params['breadcrumbs'][] = ['label' => 'Artigos', 'url' => ['index']];
+$this->title = "Item: ".$model->nome;
+$this->params['breadcrumbs'][] = ['label' => 'Items', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 
@@ -69,9 +69,9 @@ $this->params['breadcrumbs'][] = $this->title;
                         'buttons' => [
                             'delete' => function($url, $model, $key) {
                                 // Formulário para exclusão
-                                return \yii\helpers\Html::a('Excluir', ['fotoartigo/delete', 'id' => $model->id], [
+                                return \yii\helpers\Html::a('Delete', ['fotoartigo/delete', 'id' => $model->id], [
                                     'class' => 'btn btn-danger btn-sm w-100 mt-2',
-                                    'data-confirm' => 'Tem certeza de que deseja excluir este artigo?',
+                                    'data-confirm' => 'Are you sure you want to delete this photo?',
                                     'data-method' => 'post',
                                 ]);
                             },
@@ -85,37 +85,50 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'nome',
-            'descricao',
-            'precoanuncio',
             [
-                'label' => 'Comissão',
+                'label' => 'Name',
+                'value' => $model->nome ?? 'N/A',
+            ],
+            [
+                'label' => 'Description',
+                'value' => $model->descricao ?? 'N/A',
+            ],
+            [
+                'label' => 'Price',
+                'value' => $model->precoanuncio ?? 'N/A',
+            ],
+            [
+                'label' => 'Comission',
                 'value' => $model->idcomissao0->comissao ?? 'N/A',
             ],
             [
-                'label' => 'Estado',
+                'label' => 'Condition',
                 'value' => $model->idestado0->descricao ?? 'N/A', // Exibe o nome do estado
             ],
             [
-                'label' => 'Marca',
+                'label' => 'Brand',
                 'value' => $model->idmarca0->nome ?? 'N/A', // Exibe o nome da marca
             ],
             [
-                'label' => 'Categoria',
+                'label' => 'Category',
                 'value' => $model->idcategoria0->nome ?? 'N/A', // Exibe o nome da categoria
             ],
             [
-                'label' => 'Tamanho',
+                'label' => 'Size',
                 'value' => $model->idtamanho0->tamanho ?? 'N/A', // Exibe a descrição do tamanho
             ],
             [
-                'label' => 'Perfil',
+                'label' => 'Profile',
                 'value' => $model->idperfil0->nome ?? 'N/A', // Exibe o nome do perfil
             ],
-            'tipoartigo',
+
             [
-                'label' => 'Ativo',
-                'value' => $model->ativo ? 'Sim' : 'Não', // Mostra "Sim" ou "Não" para ativo
+                'label' => 'Section',
+                'value' => $model->tipoartigo ?? 'N/A',
+            ],
+            [
+                'label' => 'Active Status',
+                'value' => $model->ativo ? 'Active' : 'Inactive', // Mostra "Sim" ou "Não" para ativo
             ],
         ],
     ]) ?>

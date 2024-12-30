@@ -20,6 +20,7 @@ use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
 use frontend\models\ContactForm;
 use common\models\Plano;
+use common\models\Banner;
 use common\models\Favorito;
 use yii\db\Query;
 
@@ -116,11 +117,14 @@ class SiteController extends Controller
             ],
         ]);
 
+        $banners = Banner::find()->where(['ativo' => 1])->asArray()->all();
+
 
         return $this->render('index', [
             'dataProvider1' => $dataProvider1,
             'dataProvider2' => $dataProvider2,
             'isPremiumActive' => $isPremiumActive,
+            'banners' => $banners
         ]);
     }
 

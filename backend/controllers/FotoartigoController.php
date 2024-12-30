@@ -1,7 +1,7 @@
 <?php
 
 namespace backend\controllers;
-use backend\models\UploadForm;
+use backend\models\UploadMultipleForm;
 use common\models\Fotosartigo;
 use Yii;
 use yii\data\ActiveDataProvider;
@@ -79,7 +79,7 @@ class FotoartigoController extends Controller
      */
     public function actionCreate($id)
     {
-        $model = new UploadForm();
+        $model = new UploadMultipleForm();
         if (Yii::$app->request->isPost && $model->load($this->request->post())) {
             $model->imageFiles = UploadedFile::getInstances($model, 'imageFiles');
             if ($model->upload($id)) {
@@ -122,7 +122,7 @@ class FotoartigoController extends Controller
     public function actionDelete($id)
     {
         $model = $this->findModel($id);
-        $modelForm = new UploadForm();
+        $modelForm = new UploadMultipleForm();
 
         $transaction = Yii::$app->db->beginTransaction();
         try {
