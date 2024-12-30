@@ -2,6 +2,7 @@
 
 namespace frontend\models;
 
+use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use common\models\Artigo;
@@ -62,6 +63,8 @@ class SearchArtigo extends Artigo
             return $dataProvider;
         }
 
+        $query->andWhere(['!=', 'idperfil', Yii::$app->user->id]);
+
         // Filtros existentes para os campos do artigo
         $query->andFilterWhere([
             'id' => $this->id,
@@ -70,7 +73,6 @@ class SearchArtigo extends Artigo
             'idmarca' => $this->idmarca,
             'idcategoria' => $this->idcategoria,
             'idtamanho' => $this->idtamanho,
-            'idperfil' => $this->idperfil,
             'ativo' => $this->ativo,
         ]);
 
@@ -92,4 +94,5 @@ class SearchArtigo extends Artigo
 
         return $dataProvider;
     }
+
 }

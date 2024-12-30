@@ -133,27 +133,9 @@ class ChatController extends Controller
             $chatAtual->idartigo = $artigo->id;
             $chatAtual->save();
         }
-        // Cria o DataProvider para listar todas as conversas relacionadas ao visitante
 
-        $query = Listachats::find()
-            ->where(['idremetente' => $idVisitante])
-            ->orWhere(['iddestinatario' => $idVisitante])
-            ->andWhere(['!=', 'id', $chatAtual->id]) // Exclui o chat atual da lista
-            ->orderBy('id DESC'); // Mantém a ordem mais recente no topo
-
-
-        $dataProvider = new ActiveDataProvider([
-            'query' => $query,
-        ]);
-
-        // Renderiza a view passando o artigo, o chat e o DataProvider
-        return $this->render('create', [
-            'artigo' => $artigo,
-            'chatAtual' => $chatAtual,
-            'dataProvider' => $dataProvider, // DataProvider para as conversas
-            'modelConversa' => new Conversa(),
-            'modelTexto' => new Mensagenstexto(),
-        ]);
+        //temos a certeza que possui um chato, entao redeciona para o actionView
+        return $this->redirect(['view', 'id' => $chatAtual->id]);
     }
 
     /**

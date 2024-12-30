@@ -234,4 +234,5 @@ class Venda extends \yii\db\ActiveRecord
 
 
 
+
 }

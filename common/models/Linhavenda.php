@@ -96,4 +96,66 @@ class Linhavenda extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Perfil::class, ['id' => 'idvendedor']);
     }
+    public function getAvaliacao()
+    {
+        return $this->hasOne(Avaliacao::class, ['idlinhavenda' => 'id']);
+    }
+    public static function getVendasMensaisPorTipoArtigo($tipoArtigo)
+    {
+        // Consulta SQL para contar as vendas por mês
+        $salesData = Yii::$app->db->createCommand('
+    SELECT YEAR(a.datacriacao) AS ano, MONTH(a.datacriacao) AS mes, COUNT(*) AS quantidade_vendas
+    FROM linhavendas l
+    INNER JOIN artigos a ON l.idartigo = a.id
+    WHERE a.tipoartigo = :tipoArtigo
+    GROUP BY ano, mes
+    ORDER BY ano, mes
+')
+            ->bindValue(':tipoArtigo', $tipoArtigo)  // Vincula o parâmetro :tipoArtigo
+            ->queryAll();  // Executa a consulta e retorna os resultados
+
+
+        // Inicializando o array de vendas mensais (1 a 12)
+        $salesArray = array_fill(1, 12, 0);  // Preencher com 0 para todos os meses
+
+        // Preencher o array com os dados retornados
+        foreach ($salesData as $sale) {
+            $month = $sale['mes'];
+            $salesArray[$month] = $sale['quantidade_vendas'];
+        }
+
+        // Retornar as vendas mensais (de 1 a 12)
+
+        return array_values($salesArray);
+    }
+    public static function getMarcasMaisVendidas()
+    {
+        // Consulta SQL para contar as vendas por marca (artigo)
+        $salesData = Yii::$app->db->createCommand('
+        SELECT a.idmarca, m.nome AS marca, COUNT(*) AS quantidade_vendas
+        FROM linhavendas lv
+        INNER JOIN artigos a ON lv.idartigo = a.id
+        INNER JOIN marcas m ON a.idmarca = m.id
+        GROUP BY a.idmarca
+        ORDER BY quantidade_vendas DESC
+    ')
+            ->queryAll();  // Executa a consulta e retorna os resultados
+
+        // Extrair os dados em arrays separados para as marcas e as quantidades de vendas
+        $marcas = [];
+        $quantidadeVendas = [];
+
+        foreach ($salesData as $sale) {
+            $marcas[] = $sale['marca'];  // Nome da marca
+            $quantidadeVendas[] = $sale['quantidade_vendas'];  // Quantidade de vendas
+        }
+
+        // Retornar os dados como arrays
+        return [
+            'marcas' => $marcas,
+            'quantidade_vendas' => $quantidadeVendas,
+        ];
+    }
+
+
 }

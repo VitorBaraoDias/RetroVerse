@@ -12,13 +12,8 @@ $valorIVA = $precoBase * ($porcentagemIVA / 100);
 $precoComIVA = $precoBase + $valorIVA;
 ?>
 
-
 <div class="position-relative d-flex align-items-center gap-4" style="padding-bottom: 20px;"> <!-- Adicionado padding-bottom para evitar sobreposição do botão -->
     <div>
-        <span><?= Html::encode($model->idartigo0->tipoartigo) ?></span>
-        <p style="font-size: 18px">
-            <strong><?= Html::encode($model->idartigo0->nome) ?></strong>
-        </p>
         <?php
         $firstPhoto = $model->idartigo0->fotosartigos[0] ?? null;
         $imagePath = Yii::getAlias('@web/uploads/img-artigos/') . ($firstPhoto->caminhofoto ?? '');
@@ -37,54 +32,58 @@ $precoComIVA = $precoBase + $valorIVA;
         }
         ?>
     </div>
-    <div class="h-100 d-flex flex-column">
-        <div>
-            <span><?= $model->idartigo0->tipoartigo ?></span>
-            <p style="font-size: 18px; margin: 0px">
-                <strong><?= Html::encode($model->idartigo0->nome) ?></strong>
-            </p>
-        </div>
-        <div class="d-flex flex-column h-100 justify-content-between">
-            <div class="d-flex gap-2">
-                <h2 style="font-size: 16px"><strong><?= Html::encode($model->idartigo0->idmarca0->nome ?? 'Unknown Brand') ?></strong></h2>
-                <h2 style="font-size: 16px"><?= Html::encode($model->idartigo0->idcategoria0->nome ?? 'Unknown Category') ?></h2>
-                <h2 style="font-size: 16px"><?= Html::encode($model->idartigo0->idtamanho0->tamanho ?? 'Unknown Size') ?></h2>
+        <div class="d-flex flex-column h-100">
+            <div>
+                <span><?= $model->idartigo0->tipoartigo ?></span>
+                <p style="font-size: 18px; margin: 0px">
+                    <strong><?= Html::encode($model->idartigo0->nome) ?></strong>
+                </p>
             </div>
-            <div class="d-flex flex-column align-items-start">
-                <h2 style="font-size: 24px">
-                    <strong><?= Yii::$app->formatter->asCurrency($model->idartigo0->precoanuncio, 'EUR') ?></strong>
-                </h2>
-                <h3 style="font-size: 18px">
-                    <?= Yii::$app->formatter->asCurrency($precoComIVA, 'EUR') ?>
-                </h3>
+            <div class="d-flex flex-column h-100 justify-content-between">
+                <div class="d-flex gap-2">
+                    <h2 style="font-size: 16px"><strong><?= Html::encode($model->idartigo0->idmarca0->nome ?? 'Unknown Brand') ?></strong></h2>
+                    <h2 style="font-size: 16px"><?= Html::encode($model->idartigo0->idcategoria0->nome ?? 'Unknown Category') ?></h2>
+                    <h2 style="font-size: 16px"><?= Html::encode($model->idartigo0->idtamanho0->tamanho ?? 'Unknown Size') ?></h2>
+                </div>
+                <div class="d-flex flex-column align-items-start">
+                    <h2 style="font-size: 24px">
+                        <strong><?= Yii::$app->formatter->asCurrency($model->idartigo0->getPrecoComComissao(), 'EUR') ?></strong>
+                    </h2>
+                    <h3 style="font-size: 18px">
+                        <?= Yii::$app->formatter->asCurrency($model->idartigo0->precoanuncio, 'EUR') ?>
+                    </h3>
+                </div>
             </div>
-        </div>
-    <div class="d-flex flex-column gap-2">
-        <h2 style="font-size: 18px"><strong><?= Html::encode($model->idartigo0->idmarca0->nome ?? 'Unknown Brand') ?></strong></h2>
-        <h2 style="font-size: 18px"><?= Html::encode($model->idartigo0->idcategoria0->nome ?? 'Unknown Category') ?></h2>
-        <h2 style="font-size: 18px"><?= Html::encode($model->idartigo0->idtamanho0->tamanho ?? 'Unknown Size') ?></h2>
     </div>
-
-
-
-
-    <!-- Adicionar o botão ao canto inferior direito -->
+</div>
     <?php
     $estadoAntesDoUltimo = Estadoencomenda::isBeforeLastState();
 
     if ($estadoAntesDoUltimo && $model->idestadoencomenda == $estadoAntesDoUltimo->id && Yii::$app->user->id === $model->idvenda0->idcomprador): ?>
-        <div class="position-absolute" style="bottom: 10px; right: 10px;">
             <?= Html::a(
                 'I´VE ALREADY RECEIVED THIS ITEM',
                 ['linhavenda/orderreceived', 'id' => $model->id],
                 [
-                    'class' => 'history-view-details',
+                    'class' => 'history-view-details ml-auto mr-4',
                     'style' => 'font-size: small;',
                     'data-confirm' => 'Are you sure you want to confirm that you received this item?',
                 ]
             ) ?>
-        </div>
     <?php endif; ?>
-</div>
+<?php if ($model->idestadoencomenda0->isFinalState() && $model->idartigo0->tipoartigo !== 'LOJA' && is_null($model->avaliacao)): ?>
+    <?= Html::a(
+        '<span>RATE</span> <img height="20px" src="' . Yii::getAlias('@web/img/star.svg') . '" alt="Star Icon">',
+        ['avaliacao/create', 'id' => $model->id], // Passa o ID da linhavenda como parâmetro
+        [
+            'class' => 'history-view-details ml-auto mr-',
+            'style' => 'font-size: x-small; gap: 10px',
+            'encode' => false, // Permitir HTML no conteúdo
+        ]
+    ) ?>
+<?php elseif ($model->idartigo0->tipoartigo === 'MARKETPLACE'): ?>
+    <span style="font-size: x-small; color: gray;">Rate already carried out</span>
+<?php endif; ?>
+
+
 
 

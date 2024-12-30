@@ -8,8 +8,8 @@
         'options' => ['enctype' => 'multipart/form-data'],
     ]); ?>
 
-    <div id="mensagem-texto" style="display: block;">
-        <?= $form->field($modelTexto, 'descricao')->textarea(['rows' => 3]) ?>
+    <div id="input-details" style="display: block;">
+        <?= $form->field($modelTexto, 'descricao')->textInput(['rows' => 3]) ?>
     </div>
 
     <div class="form-group">

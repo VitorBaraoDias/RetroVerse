@@ -79,10 +79,11 @@ class CarrinhoController extends Controller
      * @return string|\yii\web\Response
      */
 
-    public function actionCreate($id)
+     public function actionCreate($id)
     {
         // Tenta encontrar ou criar um carrinho
         $userId = Yii::$app->user->id;
+
         $carrinho = Carrinho::findOne(['iduser' => $userId]) ?? new Carrinho(['iduser' => $userId]);
 
         if ($carrinho->isNewRecord && !$carrinho->save()) {

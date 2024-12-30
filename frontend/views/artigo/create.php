@@ -13,8 +13,8 @@ use yii\helpers\Html;
     <?= $this->render('_form', [
         'model' => $model,
         'uploadForm' => $uploadForm,
-        'textContentButton' => 'PUBLISH ITEM'
-
+        'textContentButton' => 'PUBLISH ITEM',
+        'disable' => false,
     ]) ?>
 
 </div>

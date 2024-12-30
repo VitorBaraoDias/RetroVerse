@@ -113,8 +113,9 @@ class PerfilController extends Controller
                         return $this->redirect(['perfil/index']);
                     } else {
 
-                        $uploadForm->deleteProfileImageIfExist($uploadForm->imagePaths[0]);
+                        $uploadForm->deleteImageIfExist($uploadForm->imagePaths[0]);
                         Yii::$app->session->setFlash('error', 'Erro ao salvar perfil.');
+
                     }
                 } else {
                     Yii::$app->session->setFlash('error', 'Erro ao fazer upload da imagem.');
@@ -134,22 +135,6 @@ class PerfilController extends Controller
             'model' => $perfil,
             'uploadForm' => $uploadForm,
         ]);
-    }
-
-
-    private function deleteProfileImageIfExist($fileName, $backendUploadDir, $frontendUploadDir)
-    {
-        if ($fileName) {
-            $backendFilePath = $backendUploadDir . DIRECTORY_SEPARATOR . $fileName;
-            $frontendFilePath = $frontendUploadDir . DIRECTORY_SEPARATOR . $fileName;
-
-            if (file_exists($backendFilePath)) {
-                unlink($backendFilePath);
-            }
-            if (file_exists($frontendFilePath)) {
-                unlink($frontendFilePath);
-            }
-        }
     }
 
 

@@ -14,7 +14,8 @@ $this->title = 'Update Artigo: ' . $model->id;
     <?= $this->render('_form', [
         'model' => $model,
         'uploadForm' => $uploadForm, // Envie a variável para a view
-        'textContentButton' => 'EDIT ITEM'
+        'textContentButton' => 'EDIT ITEM',
+        'disable' => true,
     ]) ?>
 
 </div>

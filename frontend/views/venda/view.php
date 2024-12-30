@@ -22,7 +22,7 @@ $this->title = 'ORDER #' . $model->codigo;
                     'itemView' => '_venda',
                     'layout' => '<div class="row mt-4 gap-4">{items}</div>{pager}',
                     'options' => ['class' => 'list-view '],
-                    'itemOptions' => ['class' => 'col-4 card pl-4 py-3 pr-1', 'style' => 'max-width: 400px'],
+                    'itemOptions' => ['class' => 'col-4 card pl-3 py-3 ', 'style' => 'max-width: 400px; max-height: 350px'],
                     'pager' => [
                         'class' => \yii\bootstrap5\LinkPager::class,
                         'options' => ['class' => 'pagination justify-content-center'],

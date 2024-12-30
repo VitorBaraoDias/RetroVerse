@@ -226,4 +226,17 @@ class Perfil extends \yii\db\ActiveRecord
     {
         return $this->hasMany(Venda::class, ['idcomprador' => 'id']);
     }
+    public function getCountRates()
+    {
+        return $this->getAvaliacoes()->count();
+    }
+    public function getAvgRates()
+    {
+        $average = $this->getAvaliacoes()->average('escala');
+        // Se não houver avaliações, retorna 0, caso contrário, arredonda para 2 casas decimais
+        return $average === null ? 0 : round($average, 2);
+    }
+
+
+
 }

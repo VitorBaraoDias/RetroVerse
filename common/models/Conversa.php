@@ -95,10 +95,6 @@ class Conversa extends \yii\db\ActiveRecord
 //Obter dados do registo em causa
         if($insert){
 
-            $server = 'localhost'; // Endereço do broker MQTT
-            $port = 1883;          // Porta do MQTT
-            $clientId = 'phpPublisher'; // Identificador único do cliente
-
             $myObj=new \stdClass();
             $myObj->descricao= $this->mensagem->descricao;
             $myJSON = json_encode($myObj);
@@ -111,7 +107,7 @@ class Conversa extends \yii\db\ActiveRecord
     {
         $server = "127.0.0.1";
         $port = 1883;
-        $username = ""; // set your username
+        $username = "vitor"; // set your username
         $password = ""; // set your password
         $client_id = Yii::$app->user->identity ? Yii::$app->user->identity->id : 'guest'; // unique!
         $mqtt = new \Bluerhinos\phpMQTT($server, $port, $client_id);

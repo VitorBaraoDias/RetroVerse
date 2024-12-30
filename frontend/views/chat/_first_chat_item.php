@@ -31,6 +31,7 @@ use yii\bootstrap5\Html;
         ])
     ) . '
     </div>',
+
     // URL do link
     ['chat/view', 'id' => $model->id],
     // Opções do link

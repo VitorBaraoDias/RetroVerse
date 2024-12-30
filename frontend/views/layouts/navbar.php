@@ -62,14 +62,14 @@ $favoritosCount = Favorito::getFavoritosCount(Yii::$app->user->id);
                             'style' => 'font-size: x-small; gap: 10px',
                         ]) ?>
                         <?php }?>
-
                         <div class="navbar__icons">
                             <?php if (Yii::$app->user->isGuest) { ?>
-                                <a href="<?= Yii::$app->urlManager->createUrl(['site/signup']) ?>"><img src="<?= Yii::getAlias('@web') ?>/img/myaccount.svg" alt=""></a>
+                                <a href="<?= Yii::$app->urlManager->createUrl(['site/signup']) ?>">
+                                    <img src="<?= Yii::getAlias('@web') ?>/img/myaccount.svg" alt=""></a>
                             <?php } else { ?>
+
                                 <a href="<?= Yii::$app->urlManager->createUrl(['chat/index']) ?> " style="position: relative">
                                     <img src="<?= Yii::getAlias('@web') ?>/img/vector-chat.svg" alt="">
-
                                 </a>
                                 <a href="<?= Yii::$app->urlManager->createUrl(['favorito/index']) ?> " style="position: relative">
                                     <img src="<?= Yii::getAlias('@web') ?>/img/favourites.svg" alt="">
@@ -83,7 +83,6 @@ $favoritosCount = Favorito::getFavoritosCount(Yii::$app->user->id);
                                         <?= $carrinho ? $carrinho->getLinhascarrinhos()->count() : 0 ?>
                                     </div>
                                 </a>
-
                                 <?php if ($isPremiumActive) { ?>
                                 <a href="<?= Yii::$app->urlManager->createUrl(['perfil/index']) ?>"><img src="<?= Yii::getAlias('@web') ?>/img/myaccount-premium.svg" alt=""></a>
                                 <?php } else { ?>

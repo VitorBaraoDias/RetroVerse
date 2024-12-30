@@ -22,6 +22,28 @@ $isFavorito = Favorito::isFavorito($userId, $artigoId);
     <div class="row">
         <!-- Coluna para o carrossel -->
         <div class="col-md-6">
+            <div class="d-flex mt-2 align-items-center justify-content-between gap-2 mb-2">
+                <div class="d-flex gap-2 align-items-center">
+                    <?php if (!empty($model->idperfil0->caminhofotoperfil)): ?>
+                        <img class=" rounded-circle" style="object-fit: cover; width: 60px"
+                             src="<?= Yii::getAlias('@web') ?>/uploads/img-profile/<?= $model->idperfil0->caminhofotoperfil ?>"
+                             alt="Foto de Perfil" height="60">
+                    <?php else: ?>
+                        <img class="" src="<?= Yii::getAlias('@web') ?>/img/icon-profile.svg" alt="Ícone de Perfil"
+                             height="70">
+                    <?php endif; ?>
+                    <h2 class="text-uppercase"><strong> <?= $model->idperfil0->user->username ?> </strong></h2>
+                    <div class="d-flex">
+                        <span><?= $model->idperfil0->getAvgRates() ?></span>
+                        <img src="<?= Yii::getAlias('@web/img/star.svg') ?>" alt="Star Icon" style="height: 20px; margin-left: 10px;">
+                        <span>(<?= $model->idperfil0->getCountRates() ?>)</span>
+                    </div>
+                </div>
+
+                <?= Html::a('REPORT AD', ['denuncia/create', 'id' => $model->id],
+                    ['class' => 'btn btn-danger w-auto py-2', 'id' => 'retroverse-btn-active',
+                        'style' => 'font-size: 14px !important; font-weight: bold']) ?>
+            </div>
             <?php if (!empty($model->fotosartigos)): ?>
                 <div id="articleCarousel" class="carousel slide" data-bs-ride="carousel">
                     <!-- Indicadores -->
@@ -57,29 +79,14 @@ $isFavorito = Favorito::isFavorito($userId, $artigoId);
             <?php else: ?>
                 <p>Não há fotos disponíveis para este artigo.</p>
             <?php endif; ?>
-
-            <div class="d-flex justify-content-between">
-                <h2><strong> <?= $model->idperfil0->user->username ?> </strong></h2>
-                <?php if (!empty($model->idperfil0->caminhofotoperfil)): ?>
-                    <img class=" rounded-circle" style="object-fit: cover; width: 60px"
-                         src="<?= Yii::getAlias('@web') ?>/uploads/img-profile/<?= $model->idperfil0->caminhofotoperfil ?>"
-                         alt="Foto de Perfil" height="60">
-                <?php else: ?>
-                    <img class="" src="<?= Yii::getAlias('@web') ?>/img/icon-profile.svg" alt="Ícone de Perfil"
-                         height="70">
-                <?php endif; ?>
-            </div>
-            <?= Html::a('REPORT AD', ['carrinho/create', 'id' => $model->id],
-                ['class' => 'btn btn-danger w-10', 'id' => 'retroverse-btn-active',
-                    'style' => 'font-size: x-small; font-weight: bold']) ?>
         </div>
         <!-- Coluna de Informações -->
         <div class="col-md-6 d-flex flex-column align-self-lg-center">
             <div class="row">
                 <div class="col-md-12 row">
-                    <h1 class="font-weight-bold" style="font-size: 48px"><strong><?= $model->nome ?></strong></h1>
+                    <h1 class="font-weight-bold text-uppercase pl-0" style="font-size: 48px"><strong><?= $model->nome ?></strong></h1>
                     <hr>
-                    <div class="d-flex mt-2 align-items-end">
+                    <div class="d-flex mt-2 align-items-end pl-0">
                         <h2 style="font-weight: bold"><?= $model->getPrecoComComissaoFormatado() ?>€</h2>
                         <span style="font-weight: ; padding-bottom:3px">(inc.)
                            <img src="/RetroVerse/frontend/web/images/check_icon.svg" height="15">
@@ -87,47 +94,52 @@ $isFavorito = Favorito::isFavorito($userId, $artigoId);
                         <h4 style="font-weight: bolder; color: #0000FF; margin-left: 10px"><?= $model->precoanuncio ?>
                             €</h4>
                     </div>
-                    <div class="d-flex mt-2">
-                        <h2 style="font-size: 20px; font-weight: bold"><strong>CATEGORY:</strong></h2>
-                        <p style="font-size: 20px; margin: 0px"><?= $model->idcategoria0->nome ?></p>
-                    </div>
-                    <div class="d-flex">
+                    <div class="d-flex pl-0">
                         <h2 style="font-size: 20px; font-weight: bolder">BRAND:</h2>
                         <p style="font-size: 20px;; margin: 0;"><?= $model->descricao ?></p>
                     </div>
-                    <div class="d-flex">
+                    <div class="d-flex pl-0">
+                        <h2 style="font-size: 20px; font-weight: bold"><strong>CATEGORY:</strong></h2>
+                        <p style="font-size: 20px; margin: 0px"><?= $model->idcategoria0->nome ?></p>
+                    </div>
+                    <div class="d-flex pl-0">
                         <h2 style="font-size: 20px; font-weight: bolder">SIZE:</h2>
                         <p style="font-size: 20px; margin: 0px"><?= $model->idtamanho0->tamanho ?></p>
                     </div>
-                    <div class="d-flex">
+                    <div class="d-flex pl-0">
                         <h2 style="font-size: 20px; font-weight: bolder">CONDITION:</h2>
                         <p style="font-size: 20px;"><?= $model->idestado0->descricao ?></p>
                     </div>
-                    <span style="font-weight: bold">
+                    <span class="pl-0" style="font-weight: bold">
                       <img src="<?php echo Yii::getAlias('@web') ?>/img/check_icon.svg" height="20">
                         This item will be shipped to our HQ in order to be autenticated before being shipped to you.
                     </span>
 
-                    <div class="mt-4 row d-flex justify-content-between align-items-center p-0 m-0 mb-2">
+                    <div class="mt-4 row d-flex flex-column justify-content-center p-0 m-0">
                         <?= Html::a('ADD TO CART', ['carrinho/create', 'id' => $model->id],
-                            ['class' => 'retroverse-btn active col-md-9', 'id' => 'retroverse-btn-active',
-                                'style' => 'font-size: x-small; font-weight: bold',]) ?>
+                            [
+                                'class' => 'retroverse-btn active col-md-9',
+                                'id' => 'retroverse-btn-active',
+                                'style' => 'font-size: x-small; font-weight: bold',
+                            ]) ?>
+
                         <?php if ($isFavorito): ?>
                             <!-- Artigo está nos favoritos -->
-                            <a href="<?= \yii\helpers\Url::to(['favorito/delete', 'id' => $artigoId]) ?>">
+                            <a class="w-auto" href="<?= \yii\helpers\Url::to(['favorito/delete', 'id' => $artigoId]) ?>">
                                 <img height="40"
                                      src="<?= Yii::getAlias('@web/img/vector_liked.svg') ?>"
                                      alt="Remover dos Favoritos">
                             </a>
                         <?php else: ?>
                             <!-- Artigo não está nos favoritos -->
-                            <a href="<?= \yii\helpers\Url::to(['favorito/create', 'id' => $artigoId]) ?>">
+                            <a class="w-auto" href="<?= \yii\helpers\Url::to(['favorito/create', 'id' => $artigoId]) ?>">
                                 <img height="40"
                                      src="<?= Yii::getAlias('@web/img/vector_like.svg') ?>"
                                      alt="Adicionar aos Favoritos">
                             </a>
                         <?php endif; ?>
                     </div>
+
                     <?= Html::a('MAKE AN OFFER', ['carrinho/create', 'id' => $model->id],
                         ['class' => 'outline-retroverse-btn active w-100 col-md-9 m-0 mb-2 ', 'id' => 'retroverse-btn-active',
                             'style' => 'font-size: x-small; font-weight: bold',]) ?>
@@ -135,7 +147,7 @@ $isFavorito = Favorito::isFavorito($userId, $artigoId);
                         [    'class' => 'btn history-button  w-100 col-md-9 mb-2 text-white rounded-0 ',    'id' => 'retroverse-btn-active',
                             'style' => 'font-size: x-small; background: #121619; font-weight: bold',]) ?>
                     <hr>
-                    <div class="bg-light outline p-2 mb-4" style="min-height: 200px">
+                    <div class="bg-light outline p-2 mb-4" style="max-height: 200px">
                         <?= $model->descricao ?>
                     </div>
                     <hr>
@@ -149,7 +161,7 @@ $isFavorito = Favorito::isFavorito($userId, $artigoId);
             </div>
         </div>
     </div>
-    <h2><strong>OTHER MEMBER ITEMS</strong></h2>
+    <h2 class="mt-4"><strong>OTHER MEMBER ITEMS</strong></h2>
     <hr>
 </div>
 
