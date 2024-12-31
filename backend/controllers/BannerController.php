@@ -106,6 +106,8 @@ class BannerController extends Controller
     {
         $model = $this->findModel($id);
         $uploadModel = new UploadSingleForm();
+        $uploadModel->backendUploadDir = Yii::getAlias('@imageurl/img-banners/');
+        $uploadModel->frontendUploadDir = Yii::getAlias('@frontend/web/uploads/img-banners/');
 
         if ($this->request->isPost && $model->load($this->request->post())) {
             // Verificar se há uma nova imagem para upload

@@ -47,6 +47,7 @@ class Perfil extends \yii\db\ActiveRecord
             [['saldo', 'saldopendente'], 'integer'], // Validação para os campos saldo e saldopendente
             [['descricao', 'caminhofotoperfil', 'morada'], 'string', 'max' => 150],
             [['id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['id' => 'id']],
+            [['banido'], 'boolean'],
         ];
     }
 
@@ -62,6 +63,7 @@ class Perfil extends \yii\db\ActiveRecord
             'morada' => 'Morada',
             'saldo' => 'Saldo', // Rótulo para saldo
             'saldopendente' => 'Saldo Pendente', // Rótulo para saldopendente
+            'banido' => 'Ban'
         ];
     }
 

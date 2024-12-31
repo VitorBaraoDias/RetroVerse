@@ -200,17 +200,44 @@ class ArtigoController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-        $uploadForm = new UploadMultipleForm(); // Instancia o modelo do formulário de upload
+        $uploadForm = new UploadMultipleForm();
 
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        // Se for um POST request e o modelo for carregado e salvo corretamente
+        if ($this->request->isPost && $model->load($this->request->post())) {
+
+            // Salvar o modelo (Artigo)
+            if ($model->save()) {
+                // Configuração de diretórios de upload
+                $uploadForm->backendUploadDir = Yii::getAlias('@imageurl/img-artigos/');
+                $uploadForm->frontendUploadDir = Yii::getAlias('@frontend/web/uploads/img-artigos/');
+
+                // Obter as imagens enviadas
+                $uploadForm->imageFiles = UploadedFile::getInstances($uploadForm, 'imageFiles');
+
+                // Verificar se há imagens para fazer upload
+                if (!empty($uploadForm->imageFiles)) {
+                    // Salvar as imagens no servidor e associá-las ao artigo
+                    if ($uploadForm->upload($model->id)) {
+                        // Se o upload for bem-sucedido, redireciona para a página de visualização
+                        return $this->redirect(['view', 'id' => $model->id]);
+                    } else {
+                        // Caso haja falha no upload
+                        Yii::$app->session->setFlash('error', 'As imagens não puderam ser carregadas.');
+                    }
+                } else {
+                    // Caso não haja arquivos para enviar
+                    return $this->redirect(['view', 'id' => $model->id]);
+                }
+            }
         }
 
+        // Caso o método GET ou POST falhe, renderize o formulário de atualização
         return $this->render('update', [
             'model' => $model,
-            'uploadForm' => $uploadForm, // Envie a variável para a view
+            'uploadForm' => $uploadForm,
         ]);
     }
+
 
     /**
      * Deletes an existing Artigo model.

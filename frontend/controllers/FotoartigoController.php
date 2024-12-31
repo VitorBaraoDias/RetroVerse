@@ -1,6 +1,6 @@
 <?php
 
-namespace backend\controllers;
+namespace frontend\controllers;
 use backend\models\UploadMultipleForm;
 use common\models\Fotosartigo;
 use Yii;
@@ -103,9 +103,15 @@ class FotoartigoController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $model->backendUploadDir = Yii::getAlias('@imageurl/img-artigos/');
+        $model->frontendUploadDir = Yii::getAlias('@frontend/web/uploads/img-artigos/');
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            $model->imageFiles = UploadedFile::getInstances($model, 'imageFiles');
+            if ($model->upload($id)) {
+                // file is uploaded successfully
+                return $this->redirect(['artigo/view', 'id' => $id]);
+            }
         }
 
         return $this->render('update', [
@@ -135,7 +141,7 @@ class FotoartigoController extends Controller
                 $transaction->rollBack();
             }
             $transaction->commit();
-            return $this->redirect(['artigo/view', 'id' => $model->idartigo]);
+            return $this->redirect(['artigo/update', 'id' => $model->idartigo]);
         } catch (\Exception $e) {
             $transaction->rollBack();
             return $this->redirect(['artigo/view', 'id' => $model->idartigo]);

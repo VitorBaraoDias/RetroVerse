@@ -39,6 +39,8 @@ class Denuncia extends \yii\db\ActiveRecord
             [['idartigo'], 'exist', 'skipOnError' => true, 'targetClass' => Artigo::class, 'targetAttribute' => ['idartigo' => 'id']],
             [['iddenunciado'], 'exist', 'skipOnError' => true, 'targetClass' => Perfil::class, 'targetAttribute' => ['iddenunciado' => 'id']],
             [['iddenunciante'], 'exist', 'skipOnError' => true, 'targetClass' => Perfil::class, 'targetAttribute' => ['iddenunciante' => 'id']],
+            [['estado'], 'default', 'value' => 0], // Default para "pendente"
+            [['estado'], 'integer'],
         ];
     }
 
@@ -53,6 +55,7 @@ class Denuncia extends \yii\db\ActiveRecord
             'iddenunciado' => 'Iddenunciado',
             'idartigo' => 'Idartigo',
             'descricao' => 'Describe',
+            'estado' => 'Status',
         ];
     }
 

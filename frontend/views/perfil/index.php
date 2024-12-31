@@ -17,7 +17,7 @@ $query = $model->getArtigos()->where(['ativo' => '1']);
 $dataProvider = new ActiveDataProvider([
     'query' => $query,
     'pagination' => [
-        'pageSize' => 6, // Define o número de itens por página
+        'pageSize' => 8, // Define o número de itens por página
     ],
 ]);
 

@@ -80,15 +80,30 @@ class UploadMultipleForm extends Model
         $backendFilePath = $this->backendUploadDir . DIRECTORY_SEPARATOR . $fileName;
         $frontendFilePath = $this->frontendUploadDir . DIRECTORY_SEPARATOR . $fileName;
 
+        $result = true;
+
+        // Check if the backend file exists and attempt to delete
         if (file_exists($backendFilePath)) {
-            unlink($backendFilePath);
+            if (!unlink($backendFilePath)) {
+                Yii::error("Failed to delete backend file: " . $backendFilePath);
+                $result = false; // Indicate failure
+            }
+        } else {
+            Yii::error("Backend file not found: " . $backendFilePath);
         }
 
+        // Check if the frontend file exists and attempt to delete
         if (file_exists($frontendFilePath)) {
-            unlink($frontendFilePath);
+            if (!unlink($frontendFilePath)) {
+                Yii::error("Failed to delete frontend file: " . $frontendFilePath);
+                $result = false; // Indicate failure
+            }
+        } else {
+            Yii::error("Frontend file not found: " . $frontendFilePath);
         }
 
-        return true;
+        return $result; // Return true if both deletions were successful, false otherwise
     }
+
 }
 

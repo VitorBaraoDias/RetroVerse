@@ -80,6 +80,30 @@ class SiteController extends Controller
         ];
     }
 
+    public function beforeAction($action)
+    {
+        // Verifica se o usuário está logado
+        if (!Yii::$app->user->isGuest) {
+            $user = Yii::$app->user->identity;
+
+            // Verifica se o perfil do usuário está banido
+            if ($user && $user->perfil && $user->perfil->banido) {
+                // Desconecta o usuário
+                Yii::$app->user->logout();
+
+                // Define uma mensagem de erro
+                Yii::$app->session->setFlash('error', 'Sua conta foi banida. Você não pode acessar esta página.');
+
+                // Redireciona para a página de login
+                return $this->redirect(['site/login']);
+            }
+        }
+
+        // Caso contrário, o fluxo normal continua
+        return parent::beforeAction($action);
+    }
+
+
     /**
      * Displays homepage.
      *

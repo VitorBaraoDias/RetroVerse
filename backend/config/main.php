@@ -66,16 +66,11 @@ return [
                 'extraPatterns' => [
                     'GET {id}' => 'artigodetalhes',
                     'GET {tipoartigo}/{tamanho}/{marca}/{estado}' => 'artigofiltro',
-<<<<<<< HEAD
                     'GET {tipoartigo}/{tamanho}/{marca}' => 'artigofiltro',
                     'GET {tipoartigo}/{tamanho}' => 'artigofiltro',
                     'GET {tipoartigo}' => 'artigofiltro',
                     'GET ' => 'artigofiltro',
-=======
-                        'GET {tipoartigo}/{tamanho}/{marca}' => 'artigofiltro',
-                        'GET {tipoartigo}/{tamanho}' => 'artigofiltro',
-                        'GET ' => 'artigofiltro'
->>>>>>> cbcf776484f4fe200e92dc6275398a31182c4e07
+
                 ], 'tokens' => [
                         '{id}' => '<id:\\d+>',
                         '{tipoartigo}' => '<tipoartigo:\\w+>',

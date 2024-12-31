@@ -155,8 +155,11 @@ class ArtigoController extends Controller
 
         $model->ativo = 0;
         $model->save();
-        return $this->redirect(['index']);
+
+        // Redirecionar para a página que fez a solicitação, ou para 'index' se não houver referrer
+        return $this->redirect(Yii::$app->request->referrer ?: ['index']);
     }
+
 
     /**
      * Finds the Artigo model based on its primary key value.
