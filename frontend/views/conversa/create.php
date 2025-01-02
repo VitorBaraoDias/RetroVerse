@@ -1,9 +1,7 @@
 <?php
 
-use yii\helpers\Html;
-
 /** @var yii\web\View $this */
-/** @var common\models\Listachats $model */
+/** @var \common\models\Listachats $model */
 
 ?>
 <div class="conversa-create">

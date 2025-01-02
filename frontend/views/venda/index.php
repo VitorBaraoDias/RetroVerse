@@ -1,11 +1,6 @@
 <?php
 
-use common\models\Venda;
-use yii\helpers\Html;
-use yii\helpers\Url;
-use yii\grid\ActionColumn;
 use yii\widgets\ListView;
-
 
 
 /** @var yii\web\View $this */

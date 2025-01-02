@@ -3,7 +3,7 @@
 use yii\helpers\Html;
 
 /** @var yii\web\View $this */
-/** @var common\models\Denuncia $model */
+/** @var \common\models\Denuncia $model */
 
 ?>
 <div class="denuncia-create container d-flex justify-content-center">

@@ -4,7 +4,6 @@ namespace common\models;
 
 use app\models\ArtigosPremium;
 use app\models\Clientesplanos;
-use common\models\Iva;
 
 /**
  * This is the model class for table "planos".
@@ -14,7 +13,7 @@ use common\models\Iva;
  * @property int $idiva
  * @property string $descricao
  *
- * @property ArtigosPremium[] $artigosPremia
+ * @property \site\models\\common\models\ArtigosPremium[] $artigosPremia
  * @property Clientesplanos[] $clientesplanos
  * @property Iva $idiva0
  */

@@ -1,12 +1,11 @@
 <?php
 
 use yii\data\ActiveDataProvider;
-use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\widgets\ListView;
 
 /** @var yii\web\View $this */
-/** @var common\models\Venda $model */
+/** @var \common\models\Venda $model */
 
 $this->title = 'CHECKOUT';
 

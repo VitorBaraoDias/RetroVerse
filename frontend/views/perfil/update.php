@@ -1,9 +1,7 @@
 <?php
 
-use yii\helpers\Html;
-
 /** @var yii\web\View $this */
-/** @var common\models\Perfil $model */
+/** @var \common\models\Perfil $model */
 
 ?>
 <div class="perfil-update container-lg">

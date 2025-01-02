@@ -1,10 +1,9 @@
 <?php
 
-use yii\helpers\Html;
-use yii\helpers\Url;
 use common\models\Estadoencomenda;
+use yii\helpers\Html;
 
-/* @var $model common\models\Linhavenda */
+/* @var $model \common\models\Linhavenda */
 
 $precoBase = $model->idartigo0->precoanuncio;
 $porcentagemIVA = Yii::$app->params['iva'] ?? 20;

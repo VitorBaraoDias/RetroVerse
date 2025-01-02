@@ -2,18 +2,17 @@
 
 namespace frontend\controllers;
 
-use common\models\Artigo;
 use common\models\Carrinho;
 use common\models\Estadoencomenda;
 use common\models\Linhavenda;
+use common\models\LinhavendaSearch;
 use common\models\Venda;
 use common\models\VendaSearch;
-use common\models\LinhavendaSearch;
 use Yii;
 use yii\data\ActiveDataProvider;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 
 /**
  * VendaController implements the CRUD actions for Venda model.

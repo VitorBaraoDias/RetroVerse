@@ -3,20 +3,16 @@
 namespace frontend\controllers;
 
 use backend\models\UploadForm;
-use yii\web\UploadedFile;
-use common\models\Comissao;
-use Yii;
-use common\models\Artigospremium;
 use common\models\Artigo;
-use common\models\Favorito;
+use common\models\Artigospremium;
+use common\models\Comissao;
 use frontend\models\SearchArtigo;
+use Yii;
 use yii\data\ActiveDataProvider;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
-use yii\db\Query;
-
-
+use yii\web\UploadedFile;
 
 
 /**

@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 
 /** @var yii\web\View $this */
-/** @var common\models\Tamanho $model */
+/** @var \common\models\Tamanho $model */
 
 $this->title = $model->id;
 $this->params['breadcrumbs'][] = ['label' => 'Tamanhos', 'url' => ['index']];

@@ -1,10 +1,9 @@
 <?php
 
 use yii\helpers\Html;
-use yii\widgets\ActiveForm;
 
 /** @var yii\web\View $this */
-/** @var common\models\User $model */
+/** @var \common\models\User $model */
 
 $this->title = 'Create User';
 $this->params['breadcrumbs'][] = ['label' => 'Users', 'url' => ['index']];

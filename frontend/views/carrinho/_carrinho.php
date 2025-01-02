@@ -58,7 +58,7 @@ $precoComIVA = $precoBase + $valorIVA;
                 </h2>
             <?php endif; ?>
             <h1 style="font-size: 30px">
-                <strong><?= Yii::$app->formatter->asCurrency($model->artigo->precoanuncio, 'EUR') ?></strong>
+                <strong><?= $model->artigo->getPriceWithProposalIfExist() ?>€</strong>
             </h1>
         </div>
         <p>

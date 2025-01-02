@@ -6,9 +6,9 @@ use common\models\Artigo;
 use common\models\Denuncia;
 use Yii;
 use yii\data\ActiveDataProvider;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 
 /**
  * DenunciaController implements the CRUD actions for Denuncia model.

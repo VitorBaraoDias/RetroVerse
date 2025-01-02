@@ -6,9 +6,9 @@ use common\models\Conversa;
 use common\models\Mensagenstexto;
 use Yii;
 use yii\data\ActiveDataProvider;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 
 /**
  * ConversaController implements the CRUD actions for Conversa model.
@@ -96,10 +96,6 @@ class ConversaController extends Controller
                     Yii::$app->session->setFlash('error', 'Por favor, insira uma mensagem!');
                     return $this->redirect(['chat/view', 'id' => $id]); // Redireciona se a mensagem estiver vazia
                 }
-
-
-
-                // Salvar o modelo de conversa
                 if ($modelTexto->save()) {
 
                     $model->idchat = (int)$id;

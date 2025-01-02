@@ -1,12 +1,12 @@
 <?php
 
 use kartik\file\FileInput;
-use yii\bootstrap5\BootstrapAsset;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\widgets\DetailView;
+
 /** @var yii\web\View $this */
-/** @var common\models\Artigo $model */
+/** @var \common\models\Artigo $model */
 
 $this->title = "Article:".$model->nome;
 $this->params['breadcrumbs'][] = ['label' => 'Artigos', 'url' => ['index']];

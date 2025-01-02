@@ -1,13 +1,7 @@
 <?php
 
-use common\models\Artigo;
-use yii\helpers\Html;
-use yii\helpers\Url;
-use yii\grid\ActionColumn;
-use yii\grid\GridView;
-
-use yii\widgets\ActiveForm;
 use yii\helpers\ArrayHelper;
+use yii\widgets\ActiveForm;
 use yii\widgets\ListView;
 
 

@@ -2,12 +2,12 @@
 
 namespace backend\controllers;
 
-use common\models\Iva;
 use backend\models\SearchIva;
+use common\models\Iva;
 use yii\filters\AccessControl;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 
 /**
  * IvaController implements the CRUD actions for Iva model.

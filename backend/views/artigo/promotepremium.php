@@ -4,7 +4,7 @@
 use yii\helpers\Html;
 
 /** @var yii\web\View $this */
-/** @var common\models\Artigo $model */
+/** @var \common\models\Artigo $model */
 
 $this->title = 'Atribuir como Artigo Premium: ' . $model->id;
 $this->params['breadcrumbs'][] = ['label' => 'Artigos', 'url' => ['index']];

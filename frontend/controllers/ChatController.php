@@ -8,9 +8,9 @@ use common\models\Listachats;
 use common\models\Mensagenstexto;
 use Yii;
 use yii\data\ActiveDataProvider;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 
 /**
  * ChatController implements the CRUD actions for Chat model.

@@ -25296,3 +25296,1207 @@ $_SERVER = [
     'REQUEST_TIME_FLOAT' => 1735327597.6294
     'REQUEST_TIME' => 1735327597
 ]
+2024-12-28 16:19:10 [127.0.0.1][-][-][error][yii\web\HttpException:401] yii\web\UnauthorizedHttpException: Your request was made with invalid credentials. in /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/filters/auth/AuthMethod.php:93
+Stack trace:
+#0 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/filters/auth/AuthMethod.php(76): yii\filters\auth\AuthMethod->handleFailure(Object(yii\web\Response))
+#1 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/ActionFilter.php(77): yii\filters\auth\AuthMethod->beforeAction(Object(yii\base\InlineAction))
+#2 [internal function]: yii\base\ActionFilter->beforeFilter(Object(yii\base\ActionEvent))
+#3 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Component.php(641): call_user_func(Array, Object(yii\base\ActionEvent))
+#4 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Controller.php(297): yii\base\Component->trigger('beforeAction', Object(yii\base\ActionEvent))
+#5 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/web/Controller.php(219): yii\base\Controller->beforeAction(Object(yii\base\InlineAction))
+#6 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Controller.php(176): yii\web\Controller->beforeAction(Object(yii\base\InlineAction))
+#7 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Module.php(552): yii\base\Controller->runAction('login', Array)
+#8 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/web/Application.php(103): yii\base\Module->runAction('api/user/login', Array)
+#9 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Application.php(384): yii\web\Application->handleRequest(Object(yii\web\Request))
+#10 /Applications/MAMP/htdocs/RetroVerse/backend/web/index.php(18): yii\base\Application->run()
+#11 {main}
+2024-12-28 16:19:10 [127.0.0.1][-][-][info][application] $_GET = []
+
+$_POST = [
+    'password' => '12345678'
+    'username' => 'admin123'
+]
+
+$_FILES = []
+
+$_COOKIE = []
+
+$_SERVER = [
+    'REDIRECT_STATUS' => '200'
+    'CONTENT_TYPE' => 'application/x-www-form-urlencoded; charset=UTF-8'
+    'HTTP_USER_AGENT' => 'Dalvik/2.1.0 (Linux; U; Android 14; sdk_gphone64_arm64 Build/UE1A.230829.038.B2)'
+    'HTTP_HOST' => '10.0.2.2'
+    'HTTP_CONNECTION' => 'Keep-Alive'
+    'HTTP_ACCEPT_ENCODING' => 'gzip'
+    'CONTENT_LENGTH' => '36'
+    'PATH' => '/usr/bin:/bin:/usr/sbin:/sbin'
+    'SERVER_SIGNATURE' => ''
+    'SERVER_SOFTWARE' => 'Apache/2.4.54 (Unix) OpenSSL/1.0.2u PHP/8.1.13 mod_wsgi/3.5 Python/2.7.18 mod_fastcgi/mod_fastcgi-SNAP-0910052141 mod_perl/2.0.11 Perl/v5.30.1'
+    'SERVER_NAME' => '10.0.2.2'
+    'SERVER_ADDR' => '127.0.0.1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '127.0.0.1'
+    'DOCUMENT_ROOT' => '/Applications/MAMP/htdocs'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/Applications/MAMP/htdocs'
+    'SERVER_ADMIN' => 'you@example.com'
+    'SCRIPT_FILENAME' => '/Applications/MAMP/htdocs/RetroVerse/backend/web/index.php'
+    'REMOTE_PORT' => '61015'
+    'REDIRECT_URL' => '/RetroVerse/backend/web/api/users/login'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/RetroVerse/backend/web/api/users/login'
+    'SCRIPT_NAME' => '/RetroVerse/backend/web/index.php'
+    'PHP_SELF' => '/RetroVerse/backend/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1735402749.9864
+    'REQUEST_TIME' => 1735402749
+]
+2024-12-28 16:19:10 [127.0.0.1][-][-][error][yii\web\HttpException:401] yii\web\UnauthorizedHttpException: Your request was made with invalid credentials. in /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/filters/auth/AuthMethod.php:93
+Stack trace:
+#0 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/filters/auth/AuthMethod.php(76): yii\filters\auth\AuthMethod->handleFailure(Object(yii\web\Response))
+#1 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/ActionFilter.php(77): yii\filters\auth\AuthMethod->beforeAction(Object(yii\base\InlineAction))
+#2 [internal function]: yii\base\ActionFilter->beforeFilter(Object(yii\base\ActionEvent))
+#3 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Component.php(641): call_user_func(Array, Object(yii\base\ActionEvent))
+#4 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Controller.php(297): yii\base\Component->trigger('beforeAction', Object(yii\base\ActionEvent))
+#5 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/web/Controller.php(219): yii\base\Controller->beforeAction(Object(yii\base\InlineAction))
+#6 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Controller.php(176): yii\web\Controller->beforeAction(Object(yii\base\InlineAction))
+#7 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Module.php(552): yii\base\Controller->runAction('login', Array)
+#8 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/web/Application.php(103): yii\base\Module->runAction('api/user/login', Array)
+#9 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Application.php(384): yii\web\Application->handleRequest(Object(yii\web\Request))
+#10 /Applications/MAMP/htdocs/RetroVerse/backend/web/index.php(18): yii\base\Application->run()
+#11 {main}
+2024-12-28 16:19:10 [127.0.0.1][-][-][info][application] $_GET = []
+
+$_POST = [
+    'password' => '12345678'
+    'username' => 'admin123'
+]
+
+$_FILES = []
+
+$_COOKIE = []
+
+$_SERVER = [
+    'REDIRECT_STATUS' => '200'
+    'CONTENT_TYPE' => 'application/x-www-form-urlencoded; charset=UTF-8'
+    'HTTP_USER_AGENT' => 'Dalvik/2.1.0 (Linux; U; Android 14; sdk_gphone64_arm64 Build/UE1A.230829.038.B2)'
+    'HTTP_HOST' => '10.0.2.2'
+    'HTTP_CONNECTION' => 'Keep-Alive'
+    'HTTP_ACCEPT_ENCODING' => 'gzip'
+    'CONTENT_LENGTH' => '36'
+    'PATH' => '/usr/bin:/bin:/usr/sbin:/sbin'
+    'SERVER_SIGNATURE' => ''
+    'SERVER_SOFTWARE' => 'Apache/2.4.54 (Unix) OpenSSL/1.0.2u PHP/8.1.13 mod_wsgi/3.5 Python/2.7.18 mod_fastcgi/mod_fastcgi-SNAP-0910052141 mod_perl/2.0.11 Perl/v5.30.1'
+    'SERVER_NAME' => '10.0.2.2'
+    'SERVER_ADDR' => '127.0.0.1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '127.0.0.1'
+    'DOCUMENT_ROOT' => '/Applications/MAMP/htdocs'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/Applications/MAMP/htdocs'
+    'SERVER_ADMIN' => 'you@example.com'
+    'SCRIPT_FILENAME' => '/Applications/MAMP/htdocs/RetroVerse/backend/web/index.php'
+    'REMOTE_PORT' => '61015'
+    'REDIRECT_URL' => '/RetroVerse/backend/web/api/users/login'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/RetroVerse/backend/web/api/users/login'
+    'SCRIPT_NAME' => '/RetroVerse/backend/web/index.php'
+    'PHP_SELF' => '/RetroVerse/backend/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1735402750.2577
+    'REQUEST_TIME' => 1735402750
+]
+2024-12-28 16:19:40 [127.0.0.1][-][-][error][yii\web\HttpException:401] yii\web\UnauthorizedHttpException: Your request was made with invalid credentials. in /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/filters/auth/AuthMethod.php:93
+Stack trace:
+#0 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/filters/auth/AuthMethod.php(76): yii\filters\auth\AuthMethod->handleFailure(Object(yii\web\Response))
+#1 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/ActionFilter.php(77): yii\filters\auth\AuthMethod->beforeAction(Object(yii\base\InlineAction))
+#2 [internal function]: yii\base\ActionFilter->beforeFilter(Object(yii\base\ActionEvent))
+#3 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Component.php(641): call_user_func(Array, Object(yii\base\ActionEvent))
+#4 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Controller.php(297): yii\base\Component->trigger('beforeAction', Object(yii\base\ActionEvent))
+#5 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/web/Controller.php(219): yii\base\Controller->beforeAction(Object(yii\base\InlineAction))
+#6 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Controller.php(176): yii\web\Controller->beforeAction(Object(yii\base\InlineAction))
+#7 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Module.php(552): yii\base\Controller->runAction('login', Array)
+#8 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/web/Application.php(103): yii\base\Module->runAction('api/user/login', Array)
+#9 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Application.php(384): yii\web\Application->handleRequest(Object(yii\web\Request))
+#10 /Applications/MAMP/htdocs/RetroVerse/backend/web/index.php(18): yii\base\Application->run()
+#11 {main}
+2024-12-28 16:19:40 [127.0.0.1][-][-][info][application] $_GET = []
+
+$_POST = [
+    'password' => '12345678'
+    'username' => 'admin123'
+]
+
+$_FILES = []
+
+$_COOKIE = []
+
+$_SERVER = [
+    'REDIRECT_STATUS' => '200'
+    'CONTENT_TYPE' => 'application/x-www-form-urlencoded; charset=UTF-8'
+    'HTTP_USER_AGENT' => 'Dalvik/2.1.0 (Linux; U; Android 14; sdk_gphone64_arm64 Build/UE1A.230829.038.B2)'
+    'HTTP_HOST' => '10.0.2.2'
+    'HTTP_CONNECTION' => 'Keep-Alive'
+    'HTTP_ACCEPT_ENCODING' => 'gzip'
+    'CONTENT_LENGTH' => '36'
+    'PATH' => '/usr/bin:/bin:/usr/sbin:/sbin'
+    'SERVER_SIGNATURE' => ''
+    'SERVER_SOFTWARE' => 'Apache/2.4.54 (Unix) OpenSSL/1.0.2u PHP/8.1.13 mod_wsgi/3.5 Python/2.7.18 mod_fastcgi/mod_fastcgi-SNAP-0910052141 mod_perl/2.0.11 Perl/v5.30.1'
+    'SERVER_NAME' => '10.0.2.2'
+    'SERVER_ADDR' => '127.0.0.1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '127.0.0.1'
+    'DOCUMENT_ROOT' => '/Applications/MAMP/htdocs'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/Applications/MAMP/htdocs'
+    'SERVER_ADMIN' => 'you@example.com'
+    'SCRIPT_FILENAME' => '/Applications/MAMP/htdocs/RetroVerse/backend/web/index.php'
+    'REMOTE_PORT' => '61064'
+    'REDIRECT_URL' => '/RetroVerse/backend/web/api/users/login'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/RetroVerse/backend/web/api/users/login'
+    'SCRIPT_NAME' => '/RetroVerse/backend/web/index.php'
+    'PHP_SELF' => '/RetroVerse/backend/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1735402780.4527
+    'REQUEST_TIME' => 1735402780
+]
+2024-12-28 16:19:40 [127.0.0.1][-][-][error][yii\web\HttpException:401] yii\web\UnauthorizedHttpException: Your request was made with invalid credentials. in /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/filters/auth/AuthMethod.php:93
+Stack trace:
+#0 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/filters/auth/AuthMethod.php(76): yii\filters\auth\AuthMethod->handleFailure(Object(yii\web\Response))
+#1 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/ActionFilter.php(77): yii\filters\auth\AuthMethod->beforeAction(Object(yii\base\InlineAction))
+#2 [internal function]: yii\base\ActionFilter->beforeFilter(Object(yii\base\ActionEvent))
+#3 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Component.php(641): call_user_func(Array, Object(yii\base\ActionEvent))
+#4 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Controller.php(297): yii\base\Component->trigger('beforeAction', Object(yii\base\ActionEvent))
+#5 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/web/Controller.php(219): yii\base\Controller->beforeAction(Object(yii\base\InlineAction))
+#6 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Controller.php(176): yii\web\Controller->beforeAction(Object(yii\base\InlineAction))
+#7 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Module.php(552): yii\base\Controller->runAction('login', Array)
+#8 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/web/Application.php(103): yii\base\Module->runAction('api/user/login', Array)
+#9 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Application.php(384): yii\web\Application->handleRequest(Object(yii\web\Request))
+#10 /Applications/MAMP/htdocs/RetroVerse/backend/web/index.php(18): yii\base\Application->run()
+#11 {main}
+2024-12-28 16:19:40 [127.0.0.1][-][-][info][application] $_GET = []
+
+$_POST = [
+    'password' => '12345678'
+    'username' => 'admin123'
+]
+
+$_FILES = []
+
+$_COOKIE = []
+
+$_SERVER = [
+    'REDIRECT_STATUS' => '200'
+    'CONTENT_TYPE' => 'application/x-www-form-urlencoded; charset=UTF-8'
+    'HTTP_USER_AGENT' => 'Dalvik/2.1.0 (Linux; U; Android 14; sdk_gphone64_arm64 Build/UE1A.230829.038.B2)'
+    'HTTP_HOST' => '10.0.2.2'
+    'HTTP_CONNECTION' => 'Keep-Alive'
+    'HTTP_ACCEPT_ENCODING' => 'gzip'
+    'CONTENT_LENGTH' => '36'
+    'PATH' => '/usr/bin:/bin:/usr/sbin:/sbin'
+    'SERVER_SIGNATURE' => ''
+    'SERVER_SOFTWARE' => 'Apache/2.4.54 (Unix) OpenSSL/1.0.2u PHP/8.1.13 mod_wsgi/3.5 Python/2.7.18 mod_fastcgi/mod_fastcgi-SNAP-0910052141 mod_perl/2.0.11 Perl/v5.30.1'
+    'SERVER_NAME' => '10.0.2.2'
+    'SERVER_ADDR' => '127.0.0.1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '127.0.0.1'
+    'DOCUMENT_ROOT' => '/Applications/MAMP/htdocs'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/Applications/MAMP/htdocs'
+    'SERVER_ADMIN' => 'you@example.com'
+    'SCRIPT_FILENAME' => '/Applications/MAMP/htdocs/RetroVerse/backend/web/index.php'
+    'REMOTE_PORT' => '61064'
+    'REDIRECT_URL' => '/RetroVerse/backend/web/api/users/login'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/RetroVerse/backend/web/api/users/login'
+    'SCRIPT_NAME' => '/RetroVerse/backend/web/index.php'
+    'PHP_SELF' => '/RetroVerse/backend/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1735402780.6501
+    'REQUEST_TIME' => 1735402780
+]
+2024-12-28 16:19:41 [127.0.0.1][-][-][error][yii\web\HttpException:401] yii\web\UnauthorizedHttpException: Your request was made with invalid credentials. in /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/filters/auth/AuthMethod.php:93
+Stack trace:
+#0 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/filters/auth/AuthMethod.php(76): yii\filters\auth\AuthMethod->handleFailure(Object(yii\web\Response))
+#1 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/ActionFilter.php(77): yii\filters\auth\AuthMethod->beforeAction(Object(yii\base\InlineAction))
+#2 [internal function]: yii\base\ActionFilter->beforeFilter(Object(yii\base\ActionEvent))
+#3 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Component.php(641): call_user_func(Array, Object(yii\base\ActionEvent))
+#4 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Controller.php(297): yii\base\Component->trigger('beforeAction', Object(yii\base\ActionEvent))
+#5 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/web/Controller.php(219): yii\base\Controller->beforeAction(Object(yii\base\InlineAction))
+#6 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Controller.php(176): yii\web\Controller->beforeAction(Object(yii\base\InlineAction))
+#7 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Module.php(552): yii\base\Controller->runAction('login', Array)
+#8 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/web/Application.php(103): yii\base\Module->runAction('api/user/login', Array)
+#9 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Application.php(384): yii\web\Application->handleRequest(Object(yii\web\Request))
+#10 /Applications/MAMP/htdocs/RetroVerse/backend/web/index.php(18): yii\base\Application->run()
+#11 {main}
+2024-12-28 16:19:41 [127.0.0.1][-][-][info][application] $_GET = []
+
+$_POST = [
+    'password' => '12345678'
+    'username' => 'admin123'
+]
+
+$_FILES = []
+
+$_COOKIE = []
+
+$_SERVER = [
+    'REDIRECT_STATUS' => '200'
+    'CONTENT_TYPE' => 'application/x-www-form-urlencoded; charset=UTF-8'
+    'HTTP_USER_AGENT' => 'Dalvik/2.1.0 (Linux; U; Android 14; sdk_gphone64_arm64 Build/UE1A.230829.038.B2)'
+    'HTTP_HOST' => '10.0.2.2'
+    'HTTP_CONNECTION' => 'Keep-Alive'
+    'HTTP_ACCEPT_ENCODING' => 'gzip'
+    'CONTENT_LENGTH' => '36'
+    'PATH' => '/usr/bin:/bin:/usr/sbin:/sbin'
+    'SERVER_SIGNATURE' => ''
+    'SERVER_SOFTWARE' => 'Apache/2.4.54 (Unix) OpenSSL/1.0.2u PHP/8.1.13 mod_wsgi/3.5 Python/2.7.18 mod_fastcgi/mod_fastcgi-SNAP-0910052141 mod_perl/2.0.11 Perl/v5.30.1'
+    'SERVER_NAME' => '10.0.2.2'
+    'SERVER_ADDR' => '127.0.0.1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '127.0.0.1'
+    'DOCUMENT_ROOT' => '/Applications/MAMP/htdocs'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/Applications/MAMP/htdocs'
+    'SERVER_ADMIN' => 'you@example.com'
+    'SCRIPT_FILENAME' => '/Applications/MAMP/htdocs/RetroVerse/backend/web/index.php'
+    'REMOTE_PORT' => '61064'
+    'REDIRECT_URL' => '/RetroVerse/backend/web/api/users/login'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/RetroVerse/backend/web/api/users/login'
+    'SCRIPT_NAME' => '/RetroVerse/backend/web/index.php'
+    'PHP_SELF' => '/RetroVerse/backend/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1735402781.5115
+    'REQUEST_TIME' => 1735402781
+]
+2024-12-28 16:19:41 [127.0.0.1][-][-][error][yii\web\HttpException:401] yii\web\UnauthorizedHttpException: Your request was made with invalid credentials. in /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/filters/auth/AuthMethod.php:93
+Stack trace:
+#0 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/filters/auth/AuthMethod.php(76): yii\filters\auth\AuthMethod->handleFailure(Object(yii\web\Response))
+#1 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/ActionFilter.php(77): yii\filters\auth\AuthMethod->beforeAction(Object(yii\base\InlineAction))
+#2 [internal function]: yii\base\ActionFilter->beforeFilter(Object(yii\base\ActionEvent))
+#3 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Component.php(641): call_user_func(Array, Object(yii\base\ActionEvent))
+#4 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Controller.php(297): yii\base\Component->trigger('beforeAction', Object(yii\base\ActionEvent))
+#5 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/web/Controller.php(219): yii\base\Controller->beforeAction(Object(yii\base\InlineAction))
+#6 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Controller.php(176): yii\web\Controller->beforeAction(Object(yii\base\InlineAction))
+#7 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Module.php(552): yii\base\Controller->runAction('login', Array)
+#8 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/web/Application.php(103): yii\base\Module->runAction('api/user/login', Array)
+#9 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Application.php(384): yii\web\Application->handleRequest(Object(yii\web\Request))
+#10 /Applications/MAMP/htdocs/RetroVerse/backend/web/index.php(18): yii\base\Application->run()
+#11 {main}
+2024-12-28 16:19:41 [127.0.0.1][-][-][info][application] $_GET = []
+
+$_POST = [
+    'password' => '12345678'
+    'username' => 'admin123'
+]
+
+$_FILES = []
+
+$_COOKIE = []
+
+$_SERVER = [
+    'REDIRECT_STATUS' => '200'
+    'CONTENT_TYPE' => 'application/x-www-form-urlencoded; charset=UTF-8'
+    'HTTP_USER_AGENT' => 'Dalvik/2.1.0 (Linux; U; Android 14; sdk_gphone64_arm64 Build/UE1A.230829.038.B2)'
+    'HTTP_HOST' => '10.0.2.2'
+    'HTTP_CONNECTION' => 'Keep-Alive'
+    'HTTP_ACCEPT_ENCODING' => 'gzip'
+    'CONTENT_LENGTH' => '36'
+    'PATH' => '/usr/bin:/bin:/usr/sbin:/sbin'
+    'SERVER_SIGNATURE' => ''
+    'SERVER_SOFTWARE' => 'Apache/2.4.54 (Unix) OpenSSL/1.0.2u PHP/8.1.13 mod_wsgi/3.5 Python/2.7.18 mod_fastcgi/mod_fastcgi-SNAP-0910052141 mod_perl/2.0.11 Perl/v5.30.1'
+    'SERVER_NAME' => '10.0.2.2'
+    'SERVER_ADDR' => '127.0.0.1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '127.0.0.1'
+    'DOCUMENT_ROOT' => '/Applications/MAMP/htdocs'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/Applications/MAMP/htdocs'
+    'SERVER_ADMIN' => 'you@example.com'
+    'SCRIPT_FILENAME' => '/Applications/MAMP/htdocs/RetroVerse/backend/web/index.php'
+    'REMOTE_PORT' => '61064'
+    'REDIRECT_URL' => '/RetroVerse/backend/web/api/users/login'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/RetroVerse/backend/web/api/users/login'
+    'SCRIPT_NAME' => '/RetroVerse/backend/web/index.php'
+    'PHP_SELF' => '/RetroVerse/backend/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1735402781.6457
+    'REQUEST_TIME' => 1735402781
+]
+2024-12-28 16:20:18 [127.0.0.1][-][-][error][yii\web\HttpException:401] yii\web\UnauthorizedHttpException: Your request was made with invalid credentials. in /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/filters/auth/AuthMethod.php:93
+Stack trace:
+#0 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/filters/auth/AuthMethod.php(76): yii\filters\auth\AuthMethod->handleFailure(Object(yii\web\Response))
+#1 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/ActionFilter.php(77): yii\filters\auth\AuthMethod->beforeAction(Object(yii\base\InlineAction))
+#2 [internal function]: yii\base\ActionFilter->beforeFilter(Object(yii\base\ActionEvent))
+#3 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Component.php(641): call_user_func(Array, Object(yii\base\ActionEvent))
+#4 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Controller.php(297): yii\base\Component->trigger('beforeAction', Object(yii\base\ActionEvent))
+#5 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/web/Controller.php(219): yii\base\Controller->beforeAction(Object(yii\base\InlineAction))
+#6 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Controller.php(176): yii\web\Controller->beforeAction(Object(yii\base\InlineAction))
+#7 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Module.php(552): yii\base\Controller->runAction('login', Array)
+#8 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/web/Application.php(103): yii\base\Module->runAction('api/user/login', Array)
+#9 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Application.php(384): yii\web\Application->handleRequest(Object(yii\web\Request))
+#10 /Applications/MAMP/htdocs/RetroVerse/backend/web/index.php(18): yii\base\Application->run()
+#11 {main}
+2024-12-28 16:20:18 [127.0.0.1][-][-][info][application] $_GET = []
+
+$_POST = [
+    'password' => '12345678'
+    'username' => 'admin123'
+]
+
+$_FILES = []
+
+$_COOKIE = []
+
+$_SERVER = [
+    'REDIRECT_STATUS' => '200'
+    'CONTENT_TYPE' => 'application/x-www-form-urlencoded; charset=UTF-8'
+    'HTTP_USER_AGENT' => 'Dalvik/2.1.0 (Linux; U; Android 14; sdk_gphone64_arm64 Build/UE1A.230829.038.B2)'
+    'HTTP_HOST' => '10.0.2.2'
+    'HTTP_CONNECTION' => 'Keep-Alive'
+    'HTTP_ACCEPT_ENCODING' => 'gzip'
+    'CONTENT_LENGTH' => '36'
+    'PATH' => '/usr/bin:/bin:/usr/sbin:/sbin'
+    'SERVER_SIGNATURE' => ''
+    'SERVER_SOFTWARE' => 'Apache/2.4.54 (Unix) OpenSSL/1.0.2u PHP/8.1.13 mod_wsgi/3.5 Python/2.7.18 mod_fastcgi/mod_fastcgi-SNAP-0910052141 mod_perl/2.0.11 Perl/v5.30.1'
+    'SERVER_NAME' => '10.0.2.2'
+    'SERVER_ADDR' => '127.0.0.1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '127.0.0.1'
+    'DOCUMENT_ROOT' => '/Applications/MAMP/htdocs'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/Applications/MAMP/htdocs'
+    'SERVER_ADMIN' => 'you@example.com'
+    'SCRIPT_FILENAME' => '/Applications/MAMP/htdocs/RetroVerse/backend/web/index.php'
+    'REMOTE_PORT' => '61109'
+    'REDIRECT_URL' => '/RetroVerse/backend/web/api/users/login'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/RetroVerse/backend/web/api/users/login'
+    'SCRIPT_NAME' => '/RetroVerse/backend/web/index.php'
+    'PHP_SELF' => '/RetroVerse/backend/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1735402818.4345
+    'REQUEST_TIME' => 1735402818
+]
+2024-12-28 16:20:18 [127.0.0.1][-][-][error][yii\web\HttpException:401] yii\web\UnauthorizedHttpException: Your request was made with invalid credentials. in /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/filters/auth/AuthMethod.php:93
+Stack trace:
+#0 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/filters/auth/AuthMethod.php(76): yii\filters\auth\AuthMethod->handleFailure(Object(yii\web\Response))
+#1 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/ActionFilter.php(77): yii\filters\auth\AuthMethod->beforeAction(Object(yii\base\InlineAction))
+#2 [internal function]: yii\base\ActionFilter->beforeFilter(Object(yii\base\ActionEvent))
+#3 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Component.php(641): call_user_func(Array, Object(yii\base\ActionEvent))
+#4 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Controller.php(297): yii\base\Component->trigger('beforeAction', Object(yii\base\ActionEvent))
+#5 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/web/Controller.php(219): yii\base\Controller->beforeAction(Object(yii\base\InlineAction))
+#6 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Controller.php(176): yii\web\Controller->beforeAction(Object(yii\base\InlineAction))
+#7 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Module.php(552): yii\base\Controller->runAction('login', Array)
+#8 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/web/Application.php(103): yii\base\Module->runAction('api/user/login', Array)
+#9 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Application.php(384): yii\web\Application->handleRequest(Object(yii\web\Request))
+#10 /Applications/MAMP/htdocs/RetroVerse/backend/web/index.php(18): yii\base\Application->run()
+#11 {main}
+2024-12-28 16:20:18 [127.0.0.1][-][-][info][application] $_GET = []
+
+$_POST = [
+    'password' => '12345678'
+    'username' => 'admin123'
+]
+
+$_FILES = []
+
+$_COOKIE = []
+
+$_SERVER = [
+    'REDIRECT_STATUS' => '200'
+    'CONTENT_TYPE' => 'application/x-www-form-urlencoded; charset=UTF-8'
+    'HTTP_USER_AGENT' => 'Dalvik/2.1.0 (Linux; U; Android 14; sdk_gphone64_arm64 Build/UE1A.230829.038.B2)'
+    'HTTP_HOST' => '10.0.2.2'
+    'HTTP_CONNECTION' => 'Keep-Alive'
+    'HTTP_ACCEPT_ENCODING' => 'gzip'
+    'CONTENT_LENGTH' => '36'
+    'PATH' => '/usr/bin:/bin:/usr/sbin:/sbin'
+    'SERVER_SIGNATURE' => ''
+    'SERVER_SOFTWARE' => 'Apache/2.4.54 (Unix) OpenSSL/1.0.2u PHP/8.1.13 mod_wsgi/3.5 Python/2.7.18 mod_fastcgi/mod_fastcgi-SNAP-0910052141 mod_perl/2.0.11 Perl/v5.30.1'
+    'SERVER_NAME' => '10.0.2.2'
+    'SERVER_ADDR' => '127.0.0.1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '127.0.0.1'
+    'DOCUMENT_ROOT' => '/Applications/MAMP/htdocs'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/Applications/MAMP/htdocs'
+    'SERVER_ADMIN' => 'you@example.com'
+    'SCRIPT_FILENAME' => '/Applications/MAMP/htdocs/RetroVerse/backend/web/index.php'
+    'REMOTE_PORT' => '61109'
+    'REDIRECT_URL' => '/RetroVerse/backend/web/api/users/login'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/RetroVerse/backend/web/api/users/login'
+    'SCRIPT_NAME' => '/RetroVerse/backend/web/index.php'
+    'PHP_SELF' => '/RetroVerse/backend/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1735402818.6301
+    'REQUEST_TIME' => 1735402818
+]
+2024-12-28 16:21:06 [127.0.0.1][-][-][error][yii\web\HttpException:401] yii\web\UnauthorizedHttpException: Your request was made with invalid credentials. in /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/filters/auth/AuthMethod.php:93
+Stack trace:
+#0 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/filters/auth/AuthMethod.php(76): yii\filters\auth\AuthMethod->handleFailure(Object(yii\web\Response))
+#1 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/ActionFilter.php(77): yii\filters\auth\AuthMethod->beforeAction(Object(yii\base\InlineAction))
+#2 [internal function]: yii\base\ActionFilter->beforeFilter(Object(yii\base\ActionEvent))
+#3 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Component.php(641): call_user_func(Array, Object(yii\base\ActionEvent))
+#4 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Controller.php(297): yii\base\Component->trigger('beforeAction', Object(yii\base\ActionEvent))
+#5 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/web/Controller.php(219): yii\base\Controller->beforeAction(Object(yii\base\InlineAction))
+#6 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Controller.php(176): yii\web\Controller->beforeAction(Object(yii\base\InlineAction))
+#7 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Module.php(552): yii\base\Controller->runAction('login', Array)
+#8 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/web/Application.php(103): yii\base\Module->runAction('api/user/login', Array)
+#9 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Application.php(384): yii\web\Application->handleRequest(Object(yii\web\Request))
+#10 /Applications/MAMP/htdocs/RetroVerse/backend/web/index.php(18): yii\base\Application->run()
+#11 {main}
+2024-12-28 16:21:05 [127.0.0.1][-][-][info][application] $_GET = []
+
+$_POST = [
+    'password' => '12345678'
+    'username' => 'admin12,'
+]
+
+$_FILES = []
+
+$_COOKIE = []
+
+$_SERVER = [
+    'REDIRECT_STATUS' => '200'
+    'CONTENT_TYPE' => 'application/x-www-form-urlencoded; charset=UTF-8'
+    'HTTP_USER_AGENT' => 'Dalvik/2.1.0 (Linux; U; Android 14; sdk_gphone64_arm64 Build/UE1A.230829.038.B2)'
+    'HTTP_HOST' => '10.0.2.2'
+    'HTTP_CONNECTION' => 'Keep-Alive'
+    'HTTP_ACCEPT_ENCODING' => 'gzip'
+    'CONTENT_LENGTH' => '38'
+    'PATH' => '/usr/bin:/bin:/usr/sbin:/sbin'
+    'SERVER_SIGNATURE' => ''
+    'SERVER_SOFTWARE' => 'Apache/2.4.54 (Unix) OpenSSL/1.0.2u PHP/8.1.13 mod_wsgi/3.5 Python/2.7.18 mod_fastcgi/mod_fastcgi-SNAP-0910052141 mod_perl/2.0.11 Perl/v5.30.1'
+    'SERVER_NAME' => '10.0.2.2'
+    'SERVER_ADDR' => '127.0.0.1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '127.0.0.1'
+    'DOCUMENT_ROOT' => '/Applications/MAMP/htdocs'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/Applications/MAMP/htdocs'
+    'SERVER_ADMIN' => 'you@example.com'
+    'SCRIPT_FILENAME' => '/Applications/MAMP/htdocs/RetroVerse/backend/web/index.php'
+    'REMOTE_PORT' => '61158'
+    'REDIRECT_URL' => '/RetroVerse/backend/web/api/users/login'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/RetroVerse/backend/web/api/users/login'
+    'SCRIPT_NAME' => '/RetroVerse/backend/web/index.php'
+    'PHP_SELF' => '/RetroVerse/backend/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1735402865.9451
+    'REQUEST_TIME' => 1735402865
+]
+2024-12-28 16:21:06 [127.0.0.1][-][-][error][yii\web\HttpException:401] yii\web\UnauthorizedHttpException: Your request was made with invalid credentials. in /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/filters/auth/AuthMethod.php:93
+Stack trace:
+#0 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/filters/auth/AuthMethod.php(76): yii\filters\auth\AuthMethod->handleFailure(Object(yii\web\Response))
+#1 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/ActionFilter.php(77): yii\filters\auth\AuthMethod->beforeAction(Object(yii\base\InlineAction))
+#2 [internal function]: yii\base\ActionFilter->beforeFilter(Object(yii\base\ActionEvent))
+#3 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Component.php(641): call_user_func(Array, Object(yii\base\ActionEvent))
+#4 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Controller.php(297): yii\base\Component->trigger('beforeAction', Object(yii\base\ActionEvent))
+#5 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/web/Controller.php(219): yii\base\Controller->beforeAction(Object(yii\base\InlineAction))
+#6 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Controller.php(176): yii\web\Controller->beforeAction(Object(yii\base\InlineAction))
+#7 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Module.php(552): yii\base\Controller->runAction('login', Array)
+#8 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/web/Application.php(103): yii\base\Module->runAction('api/user/login', Array)
+#9 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Application.php(384): yii\web\Application->handleRequest(Object(yii\web\Request))
+#10 /Applications/MAMP/htdocs/RetroVerse/backend/web/index.php(18): yii\base\Application->run()
+#11 {main}
+2024-12-28 16:21:06 [127.0.0.1][-][-][info][application] $_GET = []
+
+$_POST = [
+    'password' => '12345678'
+    'username' => 'admin12,'
+]
+
+$_FILES = []
+
+$_COOKIE = []
+
+$_SERVER = [
+    'REDIRECT_STATUS' => '200'
+    'CONTENT_TYPE' => 'application/x-www-form-urlencoded; charset=UTF-8'
+    'HTTP_USER_AGENT' => 'Dalvik/2.1.0 (Linux; U; Android 14; sdk_gphone64_arm64 Build/UE1A.230829.038.B2)'
+    'HTTP_HOST' => '10.0.2.2'
+    'HTTP_CONNECTION' => 'Keep-Alive'
+    'HTTP_ACCEPT_ENCODING' => 'gzip'
+    'CONTENT_LENGTH' => '38'
+    'PATH' => '/usr/bin:/bin:/usr/sbin:/sbin'
+    'SERVER_SIGNATURE' => ''
+    'SERVER_SOFTWARE' => 'Apache/2.4.54 (Unix) OpenSSL/1.0.2u PHP/8.1.13 mod_wsgi/3.5 Python/2.7.18 mod_fastcgi/mod_fastcgi-SNAP-0910052141 mod_perl/2.0.11 Perl/v5.30.1'
+    'SERVER_NAME' => '10.0.2.2'
+    'SERVER_ADDR' => '127.0.0.1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '127.0.0.1'
+    'DOCUMENT_ROOT' => '/Applications/MAMP/htdocs'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/Applications/MAMP/htdocs'
+    'SERVER_ADMIN' => 'you@example.com'
+    'SCRIPT_FILENAME' => '/Applications/MAMP/htdocs/RetroVerse/backend/web/index.php'
+    'REMOTE_PORT' => '61158'
+    'REDIRECT_URL' => '/RetroVerse/backend/web/api/users/login'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/RetroVerse/backend/web/api/users/login'
+    'SCRIPT_NAME' => '/RetroVerse/backend/web/index.php'
+    'PHP_SELF' => '/RetroVerse/backend/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1735402866.1615
+    'REQUEST_TIME' => 1735402866
+]
+2024-12-28 16:21:10 [127.0.0.1][-][-][error][yii\web\HttpException:401] yii\web\UnauthorizedHttpException: Your request was made with invalid credentials. in /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/filters/auth/AuthMethod.php:93
+Stack trace:
+#0 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/filters/auth/AuthMethod.php(76): yii\filters\auth\AuthMethod->handleFailure(Object(yii\web\Response))
+#1 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/ActionFilter.php(77): yii\filters\auth\AuthMethod->beforeAction(Object(yii\base\InlineAction))
+#2 [internal function]: yii\base\ActionFilter->beforeFilter(Object(yii\base\ActionEvent))
+#3 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Component.php(641): call_user_func(Array, Object(yii\base\ActionEvent))
+#4 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Controller.php(297): yii\base\Component->trigger('beforeAction', Object(yii\base\ActionEvent))
+#5 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/web/Controller.php(219): yii\base\Controller->beforeAction(Object(yii\base\InlineAction))
+#6 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Controller.php(176): yii\web\Controller->beforeAction(Object(yii\base\InlineAction))
+#7 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Module.php(552): yii\base\Controller->runAction('login', Array)
+#8 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/web/Application.php(103): yii\base\Module->runAction('api/user/login', Array)
+#9 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Application.php(384): yii\web\Application->handleRequest(Object(yii\web\Request))
+#10 /Applications/MAMP/htdocs/RetroVerse/backend/web/index.php(18): yii\base\Application->run()
+#11 {main}
+2024-12-28 16:21:10 [127.0.0.1][-][-][info][application] $_GET = []
+
+$_POST = [
+    'password' => '12345678'
+    'username' => 'admin12'
+]
+
+$_FILES = []
+
+$_COOKIE = []
+
+$_SERVER = [
+    'REDIRECT_STATUS' => '200'
+    'CONTENT_TYPE' => 'application/x-www-form-urlencoded; charset=UTF-8'
+    'HTTP_USER_AGENT' => 'Dalvik/2.1.0 (Linux; U; Android 14; sdk_gphone64_arm64 Build/UE1A.230829.038.B2)'
+    'HTTP_HOST' => '10.0.2.2'
+    'HTTP_CONNECTION' => 'Keep-Alive'
+    'HTTP_ACCEPT_ENCODING' => 'gzip'
+    'CONTENT_LENGTH' => '35'
+    'PATH' => '/usr/bin:/bin:/usr/sbin:/sbin'
+    'SERVER_SIGNATURE' => ''
+    'SERVER_SOFTWARE' => 'Apache/2.4.54 (Unix) OpenSSL/1.0.2u PHP/8.1.13 mod_wsgi/3.5 Python/2.7.18 mod_fastcgi/mod_fastcgi-SNAP-0910052141 mod_perl/2.0.11 Perl/v5.30.1'
+    'SERVER_NAME' => '10.0.2.2'
+    'SERVER_ADDR' => '127.0.0.1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '127.0.0.1'
+    'DOCUMENT_ROOT' => '/Applications/MAMP/htdocs'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/Applications/MAMP/htdocs'
+    'SERVER_ADMIN' => 'you@example.com'
+    'SCRIPT_FILENAME' => '/Applications/MAMP/htdocs/RetroVerse/backend/web/index.php'
+    'REMOTE_PORT' => '61158'
+    'REDIRECT_URL' => '/RetroVerse/backend/web/api/users/login'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/RetroVerse/backend/web/api/users/login'
+    'SCRIPT_NAME' => '/RetroVerse/backend/web/index.php'
+    'PHP_SELF' => '/RetroVerse/backend/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1735402870.3374
+    'REQUEST_TIME' => 1735402870
+]
+2024-12-28 16:21:10 [127.0.0.1][-][-][error][yii\web\HttpException:401] yii\web\UnauthorizedHttpException: Your request was made with invalid credentials. in /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/filters/auth/AuthMethod.php:93
+Stack trace:
+#0 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/filters/auth/AuthMethod.php(76): yii\filters\auth\AuthMethod->handleFailure(Object(yii\web\Response))
+#1 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/ActionFilter.php(77): yii\filters\auth\AuthMethod->beforeAction(Object(yii\base\InlineAction))
+#2 [internal function]: yii\base\ActionFilter->beforeFilter(Object(yii\base\ActionEvent))
+#3 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Component.php(641): call_user_func(Array, Object(yii\base\ActionEvent))
+#4 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Controller.php(297): yii\base\Component->trigger('beforeAction', Object(yii\base\ActionEvent))
+#5 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/web/Controller.php(219): yii\base\Controller->beforeAction(Object(yii\base\InlineAction))
+#6 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Controller.php(176): yii\web\Controller->beforeAction(Object(yii\base\InlineAction))
+#7 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Module.php(552): yii\base\Controller->runAction('login', Array)
+#8 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/web/Application.php(103): yii\base\Module->runAction('api/user/login', Array)
+#9 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Application.php(384): yii\web\Application->handleRequest(Object(yii\web\Request))
+#10 /Applications/MAMP/htdocs/RetroVerse/backend/web/index.php(18): yii\base\Application->run()
+#11 {main}
+2024-12-28 16:21:10 [127.0.0.1][-][-][info][application] $_GET = []
+
+$_POST = [
+    'password' => '12345678'
+    'username' => 'admin12'
+]
+
+$_FILES = []
+
+$_COOKIE = []
+
+$_SERVER = [
+    'REDIRECT_STATUS' => '200'
+    'CONTENT_TYPE' => 'application/x-www-form-urlencoded; charset=UTF-8'
+    'HTTP_USER_AGENT' => 'Dalvik/2.1.0 (Linux; U; Android 14; sdk_gphone64_arm64 Build/UE1A.230829.038.B2)'
+    'HTTP_HOST' => '10.0.2.2'
+    'HTTP_CONNECTION' => 'Keep-Alive'
+    'HTTP_ACCEPT_ENCODING' => 'gzip'
+    'CONTENT_LENGTH' => '35'
+    'PATH' => '/usr/bin:/bin:/usr/sbin:/sbin'
+    'SERVER_SIGNATURE' => ''
+    'SERVER_SOFTWARE' => 'Apache/2.4.54 (Unix) OpenSSL/1.0.2u PHP/8.1.13 mod_wsgi/3.5 Python/2.7.18 mod_fastcgi/mod_fastcgi-SNAP-0910052141 mod_perl/2.0.11 Perl/v5.30.1'
+    'SERVER_NAME' => '10.0.2.2'
+    'SERVER_ADDR' => '127.0.0.1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '127.0.0.1'
+    'DOCUMENT_ROOT' => '/Applications/MAMP/htdocs'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/Applications/MAMP/htdocs'
+    'SERVER_ADMIN' => 'you@example.com'
+    'SCRIPT_FILENAME' => '/Applications/MAMP/htdocs/RetroVerse/backend/web/index.php'
+    'REMOTE_PORT' => '61158'
+    'REDIRECT_URL' => '/RetroVerse/backend/web/api/users/login'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/RetroVerse/backend/web/api/users/login'
+    'SCRIPT_NAME' => '/RetroVerse/backend/web/index.php'
+    'PHP_SELF' => '/RetroVerse/backend/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1735402870.4709
+    'REQUEST_TIME' => 1735402870
+]
+2024-12-28 16:21:37 [127.0.0.1][-][-][error][yii\web\HttpException:401] yii\web\UnauthorizedHttpException: Your request was made with invalid credentials. in /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/filters/auth/AuthMethod.php:93
+Stack trace:
+#0 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/filters/auth/AuthMethod.php(76): yii\filters\auth\AuthMethod->handleFailure(Object(yii\web\Response))
+#1 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/ActionFilter.php(77): yii\filters\auth\AuthMethod->beforeAction(Object(yii\base\InlineAction))
+#2 [internal function]: yii\base\ActionFilter->beforeFilter(Object(yii\base\ActionEvent))
+#3 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Component.php(641): call_user_func(Array, Object(yii\base\ActionEvent))
+#4 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Controller.php(297): yii\base\Component->trigger('beforeAction', Object(yii\base\ActionEvent))
+#5 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/web/Controller.php(219): yii\base\Controller->beforeAction(Object(yii\base\InlineAction))
+#6 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Controller.php(176): yii\web\Controller->beforeAction(Object(yii\base\InlineAction))
+#7 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Module.php(552): yii\base\Controller->runAction('login', Array)
+#8 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/web/Application.php(103): yii\base\Module->runAction('api/user/login', Array)
+#9 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Application.php(384): yii\web\Application->handleRequest(Object(yii\web\Request))
+#10 /Applications/MAMP/htdocs/RetroVerse/backend/web/index.php(18): yii\base\Application->run()
+#11 {main}
+2024-12-28 16:21:36 [127.0.0.1][-][-][info][application] $_GET = []
+
+$_POST = [
+    'password' => '12345678'
+    'username' => 'admin12'
+]
+
+$_FILES = []
+
+$_COOKIE = []
+
+$_SERVER = [
+    'REDIRECT_STATUS' => '200'
+    'CONTENT_TYPE' => 'application/x-www-form-urlencoded; charset=UTF-8'
+    'HTTP_USER_AGENT' => 'Dalvik/2.1.0 (Linux; U; Android 14; sdk_gphone64_arm64 Build/UE1A.230829.038.B2)'
+    'HTTP_HOST' => '10.0.2.2'
+    'HTTP_CONNECTION' => 'Keep-Alive'
+    'HTTP_ACCEPT_ENCODING' => 'gzip'
+    'CONTENT_LENGTH' => '35'
+    'PATH' => '/usr/bin:/bin:/usr/sbin:/sbin'
+    'SERVER_SIGNATURE' => ''
+    'SERVER_SOFTWARE' => 'Apache/2.4.54 (Unix) OpenSSL/1.0.2u PHP/8.1.13 mod_wsgi/3.5 Python/2.7.18 mod_fastcgi/mod_fastcgi-SNAP-0910052141 mod_perl/2.0.11 Perl/v5.30.1'
+    'SERVER_NAME' => '10.0.2.2'
+    'SERVER_ADDR' => '127.0.0.1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '127.0.0.1'
+    'DOCUMENT_ROOT' => '/Applications/MAMP/htdocs'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/Applications/MAMP/htdocs'
+    'SERVER_ADMIN' => 'you@example.com'
+    'SCRIPT_FILENAME' => '/Applications/MAMP/htdocs/RetroVerse/backend/web/index.php'
+    'REMOTE_PORT' => '61193'
+    'REDIRECT_URL' => '/RetroVerse/backend/web/api/users/login'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/RetroVerse/backend/web/api/users/login'
+    'SCRIPT_NAME' => '/RetroVerse/backend/web/index.php'
+    'PHP_SELF' => '/RetroVerse/backend/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1735402896.8764
+    'REQUEST_TIME' => 1735402896
+]
+2024-12-28 16:21:37 [127.0.0.1][-][-][error][yii\web\HttpException:401] yii\web\UnauthorizedHttpException: Your request was made with invalid credentials. in /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/filters/auth/AuthMethod.php:93
+Stack trace:
+#0 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/filters/auth/AuthMethod.php(76): yii\filters\auth\AuthMethod->handleFailure(Object(yii\web\Response))
+#1 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/ActionFilter.php(77): yii\filters\auth\AuthMethod->beforeAction(Object(yii\base\InlineAction))
+#2 [internal function]: yii\base\ActionFilter->beforeFilter(Object(yii\base\ActionEvent))
+#3 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Component.php(641): call_user_func(Array, Object(yii\base\ActionEvent))
+#4 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Controller.php(297): yii\base\Component->trigger('beforeAction', Object(yii\base\ActionEvent))
+#5 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/web/Controller.php(219): yii\base\Controller->beforeAction(Object(yii\base\InlineAction))
+#6 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Controller.php(176): yii\web\Controller->beforeAction(Object(yii\base\InlineAction))
+#7 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Module.php(552): yii\base\Controller->runAction('login', Array)
+#8 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/web/Application.php(103): yii\base\Module->runAction('api/user/login', Array)
+#9 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Application.php(384): yii\web\Application->handleRequest(Object(yii\web\Request))
+#10 /Applications/MAMP/htdocs/RetroVerse/backend/web/index.php(18): yii\base\Application->run()
+#11 {main}
+2024-12-28 16:21:37 [127.0.0.1][-][-][info][application] $_GET = []
+
+$_POST = [
+    'password' => '12345678'
+    'username' => 'admin12'
+]
+
+$_FILES = []
+
+$_COOKIE = []
+
+$_SERVER = [
+    'REDIRECT_STATUS' => '200'
+    'CONTENT_TYPE' => 'application/x-www-form-urlencoded; charset=UTF-8'
+    'HTTP_USER_AGENT' => 'Dalvik/2.1.0 (Linux; U; Android 14; sdk_gphone64_arm64 Build/UE1A.230829.038.B2)'
+    'HTTP_HOST' => '10.0.2.2'
+    'HTTP_CONNECTION' => 'Keep-Alive'
+    'HTTP_ACCEPT_ENCODING' => 'gzip'
+    'CONTENT_LENGTH' => '35'
+    'PATH' => '/usr/bin:/bin:/usr/sbin:/sbin'
+    'SERVER_SIGNATURE' => ''
+    'SERVER_SOFTWARE' => 'Apache/2.4.54 (Unix) OpenSSL/1.0.2u PHP/8.1.13 mod_wsgi/3.5 Python/2.7.18 mod_fastcgi/mod_fastcgi-SNAP-0910052141 mod_perl/2.0.11 Perl/v5.30.1'
+    'SERVER_NAME' => '10.0.2.2'
+    'SERVER_ADDR' => '127.0.0.1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '127.0.0.1'
+    'DOCUMENT_ROOT' => '/Applications/MAMP/htdocs'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/Applications/MAMP/htdocs'
+    'SERVER_ADMIN' => 'you@example.com'
+    'SCRIPT_FILENAME' => '/Applications/MAMP/htdocs/RetroVerse/backend/web/index.php'
+    'REMOTE_PORT' => '61193'
+    'REDIRECT_URL' => '/RetroVerse/backend/web/api/users/login'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/RetroVerse/backend/web/api/users/login'
+    'SCRIPT_NAME' => '/RetroVerse/backend/web/index.php'
+    'PHP_SELF' => '/RetroVerse/backend/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1735402897.0477
+    'REQUEST_TIME' => 1735402897
+]
+2024-12-28 16:21:59 [::1][-][-][error][yii\web\HttpException:401] yii\web\UnauthorizedHttpException: Your request was made with invalid credentials. in /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/filters/auth/AuthMethod.php:93
+Stack trace:
+#0 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/filters/auth/AuthMethod.php(76): yii\filters\auth\AuthMethod->handleFailure(Object(yii\web\Response))
+#1 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/ActionFilter.php(77): yii\filters\auth\AuthMethod->beforeAction(Object(yii\base\InlineAction))
+#2 [internal function]: yii\base\ActionFilter->beforeFilter(Object(yii\base\ActionEvent))
+#3 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Component.php(641): call_user_func(Array, Object(yii\base\ActionEvent))
+#4 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Controller.php(297): yii\base\Component->trigger('beforeAction', Object(yii\base\ActionEvent))
+#5 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/web/Controller.php(219): yii\base\Controller->beforeAction(Object(yii\base\InlineAction))
+#6 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Controller.php(176): yii\web\Controller->beforeAction(Object(yii\base\InlineAction))
+#7 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Module.php(552): yii\base\Controller->runAction('login', Array)
+#8 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/web/Application.php(103): yii\base\Module->runAction('api/user/login', Array)
+#9 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Application.php(384): yii\web\Application->handleRequest(Object(yii\web\Request))
+#10 /Applications/MAMP/htdocs/RetroVerse/backend/web/index.php(18): yii\base\Application->run()
+#11 {main}
+2024-12-28 16:21:59 [::1][-][-][info][application] $_GET = []
+
+$_POST = []
+
+$_FILES = []
+
+$_COOKIE = [
+    '_csrf-backend' => '03ad20fb23e69a36cc605cea0f13bb7858e430b0deae83c010c790e36911eb7ca:2:{i:0;s:13:\"_csrf-backend\";i:1;s:32:\"PgRvOMWEmFFcY9N_hD37IdgQmvpzgIcO\";}'
+]
+
+$_SERVER = [
+    'REDIRECT_STATUS' => '200'
+    'CONTENT_TYPE' => 'application/json'
+    'HTTP_USER_AGENT' => 'PostmanRuntime/7.43.0'
+    'HTTP_ACCEPT' => '*/*'
+    'HTTP_POSTMAN_TOKEN' => '15f3dcfd-7be9-4c27-b054-5c3d192ba782'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, br'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'CONTENT_LENGTH' => '58'
+    'HTTP_COOKIE' => '_csrf-backend=03ad20fb23e69a36cc605cea0f13bb7858e430b0deae83c010c790e36911eb7ca%3A2%3A%7Bi%3A0%3Bs%3A13%3A%22_csrf-backend%22%3Bi%3A1%3Bs%3A32%3A%22PgRvOMWEmFFcY9N_hD37IdgQmvpzgIcO%22%3B%7D'
+    'PATH' => '/usr/bin:/bin:/usr/sbin:/sbin'
+    'SERVER_SIGNATURE' => ''
+    'SERVER_SOFTWARE' => 'Apache/2.4.54 (Unix) OpenSSL/1.0.2u PHP/8.1.13 mod_wsgi/3.5 Python/2.7.18 mod_fastcgi/mod_fastcgi-SNAP-0910052141 mod_perl/2.0.11 Perl/v5.30.1'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => '/Applications/MAMP/htdocs'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/Applications/MAMP/htdocs'
+    'SERVER_ADMIN' => 'you@example.com'
+    'SCRIPT_FILENAME' => '/Applications/MAMP/htdocs/RetroVerse/backend/web/index.php'
+    'REMOTE_PORT' => '61237'
+    'REDIRECT_URL' => '/RetroVerse/backend/web/api/users/login'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/RetroVerse/backend/web/api/users/login'
+    'SCRIPT_NAME' => '/RetroVerse/backend/web/index.php'
+    'PHP_SELF' => '/RetroVerse/backend/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1735402919.7803
+    'REQUEST_TIME' => 1735402919
+]
+2024-12-28 16:25:59 [127.0.0.1][-][-][error][yii\web\HttpException:401] yii\web\UnauthorizedHttpException: Your request was made with invalid credentials. in /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/filters/auth/AuthMethod.php:93
+Stack trace:
+#0 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/filters/auth/AuthMethod.php(76): yii\filters\auth\AuthMethod->handleFailure(Object(yii\web\Response))
+#1 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/ActionFilter.php(77): yii\filters\auth\AuthMethod->beforeAction(Object(yii\base\InlineAction))
+#2 [internal function]: yii\base\ActionFilter->beforeFilter(Object(yii\base\ActionEvent))
+#3 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Component.php(641): call_user_func(Array, Object(yii\base\ActionEvent))
+#4 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Controller.php(297): yii\base\Component->trigger('beforeAction', Object(yii\base\ActionEvent))
+#5 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/web/Controller.php(219): yii\base\Controller->beforeAction(Object(yii\base\InlineAction))
+#6 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Controller.php(176): yii\web\Controller->beforeAction(Object(yii\base\InlineAction))
+#7 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Module.php(552): yii\base\Controller->runAction('login', Array)
+#8 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/web/Application.php(103): yii\base\Module->runAction('api/user/login', Array)
+#9 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Application.php(384): yii\web\Application->handleRequest(Object(yii\web\Request))
+#10 /Applications/MAMP/htdocs/RetroVerse/backend/web/index.php(18): yii\base\Application->run()
+#11 {main}
+2024-12-28 16:25:59 [127.0.0.1][-][-][info][application] $_GET = []
+
+$_POST = [
+    'password' => '12345678'
+    'username' => 'admin12'
+]
+
+$_FILES = []
+
+$_COOKIE = []
+
+$_SERVER = [
+    'REDIRECT_STATUS' => '200'
+    'CONTENT_TYPE' => 'application/x-www-form-urlencoded; charset=UTF-8'
+    'HTTP_USER_AGENT' => 'Dalvik/2.1.0 (Linux; U; Android 14; sdk_gphone64_arm64 Build/UE1A.230829.038.B2)'
+    'HTTP_HOST' => '10.0.2.2'
+    'HTTP_CONNECTION' => 'Keep-Alive'
+    'HTTP_ACCEPT_ENCODING' => 'gzip'
+    'CONTENT_LENGTH' => '35'
+    'PATH' => '/usr/bin:/bin:/usr/sbin:/sbin'
+    'SERVER_SIGNATURE' => ''
+    'SERVER_SOFTWARE' => 'Apache/2.4.54 (Unix) OpenSSL/1.0.2u PHP/8.1.13 mod_wsgi/3.5 Python/2.7.18 mod_fastcgi/mod_fastcgi-SNAP-0910052141 mod_perl/2.0.11 Perl/v5.30.1'
+    'SERVER_NAME' => '10.0.2.2'
+    'SERVER_ADDR' => '127.0.0.1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '127.0.0.1'
+    'DOCUMENT_ROOT' => '/Applications/MAMP/htdocs'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/Applications/MAMP/htdocs'
+    'SERVER_ADMIN' => 'you@example.com'
+    'SCRIPT_FILENAME' => '/Applications/MAMP/htdocs/RetroVerse/backend/web/index.php'
+    'REMOTE_PORT' => '61464'
+    'REDIRECT_URL' => '/RetroVerse/backend/web/api/users/login'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/RetroVerse/backend/web/api/users/login'
+    'SCRIPT_NAME' => '/RetroVerse/backend/web/index.php'
+    'PHP_SELF' => '/RetroVerse/backend/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1735403159.3682
+    'REQUEST_TIME' => 1735403159
+]
+2024-12-28 16:25:59 [127.0.0.1][-][-][error][yii\web\HttpException:401] yii\web\UnauthorizedHttpException: Your request was made with invalid credentials. in /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/filters/auth/AuthMethod.php:93
+Stack trace:
+#0 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/filters/auth/AuthMethod.php(76): yii\filters\auth\AuthMethod->handleFailure(Object(yii\web\Response))
+#1 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/ActionFilter.php(77): yii\filters\auth\AuthMethod->beforeAction(Object(yii\base\InlineAction))
+#2 [internal function]: yii\base\ActionFilter->beforeFilter(Object(yii\base\ActionEvent))
+#3 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Component.php(641): call_user_func(Array, Object(yii\base\ActionEvent))
+#4 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Controller.php(297): yii\base\Component->trigger('beforeAction', Object(yii\base\ActionEvent))
+#5 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/web/Controller.php(219): yii\base\Controller->beforeAction(Object(yii\base\InlineAction))
+#6 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Controller.php(176): yii\web\Controller->beforeAction(Object(yii\base\InlineAction))
+#7 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Module.php(552): yii\base\Controller->runAction('login', Array)
+#8 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/web/Application.php(103): yii\base\Module->runAction('api/user/login', Array)
+#9 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Application.php(384): yii\web\Application->handleRequest(Object(yii\web\Request))
+#10 /Applications/MAMP/htdocs/RetroVerse/backend/web/index.php(18): yii\base\Application->run()
+#11 {main}
+2024-12-28 16:25:59 [127.0.0.1][-][-][info][application] $_GET = []
+
+$_POST = [
+    'password' => '12345678'
+    'username' => 'admin12'
+]
+
+$_FILES = []
+
+$_COOKIE = []
+
+$_SERVER = [
+    'REDIRECT_STATUS' => '200'
+    'CONTENT_TYPE' => 'application/x-www-form-urlencoded; charset=UTF-8'
+    'HTTP_USER_AGENT' => 'Dalvik/2.1.0 (Linux; U; Android 14; sdk_gphone64_arm64 Build/UE1A.230829.038.B2)'
+    'HTTP_HOST' => '10.0.2.2'
+    'HTTP_CONNECTION' => 'Keep-Alive'
+    'HTTP_ACCEPT_ENCODING' => 'gzip'
+    'CONTENT_LENGTH' => '35'
+    'PATH' => '/usr/bin:/bin:/usr/sbin:/sbin'
+    'SERVER_SIGNATURE' => ''
+    'SERVER_SOFTWARE' => 'Apache/2.4.54 (Unix) OpenSSL/1.0.2u PHP/8.1.13 mod_wsgi/3.5 Python/2.7.18 mod_fastcgi/mod_fastcgi-SNAP-0910052141 mod_perl/2.0.11 Perl/v5.30.1'
+    'SERVER_NAME' => '10.0.2.2'
+    'SERVER_ADDR' => '127.0.0.1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '127.0.0.1'
+    'DOCUMENT_ROOT' => '/Applications/MAMP/htdocs'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/Applications/MAMP/htdocs'
+    'SERVER_ADMIN' => 'you@example.com'
+    'SCRIPT_FILENAME' => '/Applications/MAMP/htdocs/RetroVerse/backend/web/index.php'
+    'REMOTE_PORT' => '61464'
+    'REDIRECT_URL' => '/RetroVerse/backend/web/api/users/login'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/RetroVerse/backend/web/api/users/login'
+    'SCRIPT_NAME' => '/RetroVerse/backend/web/index.php'
+    'PHP_SELF' => '/RetroVerse/backend/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1735403159.5678
+    'REQUEST_TIME' => 1735403159
+]
+2024-12-28 16:26:46 [127.0.0.1][-][-][error][yii\web\HttpException:403] yii\web\ForbiddenHttpException: No authentication in /Applications/MAMP/htdocs/RetroVerse/backend/modules/api/controllers/UserController.php:36
+Stack trace:
+#0 [internal function]: backend\modules\api\controllers\UserController->actionLogin()
+#1 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/InlineAction.php(57): call_user_func_array(Array, Array)
+#2 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Controller.php(178): yii\base\InlineAction->runWithParams(Array)
+#3 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Module.php(552): yii\base\Controller->runAction('login', Array)
+#4 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/web/Application.php(103): yii\base\Module->runAction('api/user/login', Array)
+#5 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Application.php(384): yii\web\Application->handleRequest(Object(yii\web\Request))
+#6 /Applications/MAMP/htdocs/RetroVerse/backend/web/index.php(18): yii\base\Application->run()
+#7 {main}
+2024-12-28 16:26:46 [127.0.0.1][-][-][info][application] $_GET = []
+
+$_POST = [
+    'password' => '12345678'
+    'username' => 'admin12'
+]
+
+$_FILES = []
+
+$_COOKIE = []
+
+$_SERVER = [
+    'REDIRECT_STATUS' => '200'
+    'CONTENT_TYPE' => 'application/x-www-form-urlencoded; charset=UTF-8'
+    'HTTP_USER_AGENT' => 'Dalvik/2.1.0 (Linux; U; Android 14; sdk_gphone64_arm64 Build/UE1A.230829.038.B2)'
+    'HTTP_HOST' => '10.0.2.2'
+    'HTTP_CONNECTION' => 'Keep-Alive'
+    'HTTP_ACCEPT_ENCODING' => 'gzip'
+    'CONTENT_LENGTH' => '35'
+    'PATH' => '/usr/bin:/bin:/usr/sbin:/sbin'
+    'SERVER_SIGNATURE' => ''
+    'SERVER_SOFTWARE' => 'Apache/2.4.54 (Unix) OpenSSL/1.0.2u PHP/8.1.13 mod_wsgi/3.5 Python/2.7.18 mod_fastcgi/mod_fastcgi-SNAP-0910052141 mod_perl/2.0.11 Perl/v5.30.1'
+    'SERVER_NAME' => '10.0.2.2'
+    'SERVER_ADDR' => '127.0.0.1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '127.0.0.1'
+    'DOCUMENT_ROOT' => '/Applications/MAMP/htdocs'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/Applications/MAMP/htdocs'
+    'SERVER_ADMIN' => 'you@example.com'
+    'SCRIPT_FILENAME' => '/Applications/MAMP/htdocs/RetroVerse/backend/web/index.php'
+    'REMOTE_PORT' => '61507'
+    'REDIRECT_URL' => '/RetroVerse/backend/web/api/users/login'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/RetroVerse/backend/web/api/users/login'
+    'SCRIPT_NAME' => '/RetroVerse/backend/web/index.php'
+    'PHP_SELF' => '/RetroVerse/backend/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1735403206.2116
+    'REQUEST_TIME' => 1735403206
+]
+2024-12-28 16:26:46 [127.0.0.1][-][-][error][yii\web\HttpException:403] yii\web\ForbiddenHttpException: No authentication in /Applications/MAMP/htdocs/RetroVerse/backend/modules/api/controllers/UserController.php:36
+Stack trace:
+#0 [internal function]: backend\modules\api\controllers\UserController->actionLogin()
+#1 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/InlineAction.php(57): call_user_func_array(Array, Array)
+#2 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Controller.php(178): yii\base\InlineAction->runWithParams(Array)
+#3 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Module.php(552): yii\base\Controller->runAction('login', Array)
+#4 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/web/Application.php(103): yii\base\Module->runAction('api/user/login', Array)
+#5 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Application.php(384): yii\web\Application->handleRequest(Object(yii\web\Request))
+#6 /Applications/MAMP/htdocs/RetroVerse/backend/web/index.php(18): yii\base\Application->run()
+#7 {main}
+2024-12-28 16:26:46 [127.0.0.1][-][-][info][application] $_GET = []
+
+$_POST = [
+    'password' => '12345678'
+    'username' => 'admin12'
+]
+
+$_FILES = []
+
+$_COOKIE = []
+
+$_SERVER = [
+    'REDIRECT_STATUS' => '200'
+    'CONTENT_TYPE' => 'application/x-www-form-urlencoded; charset=UTF-8'
+    'HTTP_USER_AGENT' => 'Dalvik/2.1.0 (Linux; U; Android 14; sdk_gphone64_arm64 Build/UE1A.230829.038.B2)'
+    'HTTP_HOST' => '10.0.2.2'
+    'HTTP_CONNECTION' => 'Keep-Alive'
+    'HTTP_ACCEPT_ENCODING' => 'gzip'
+    'CONTENT_LENGTH' => '35'
+    'PATH' => '/usr/bin:/bin:/usr/sbin:/sbin'
+    'SERVER_SIGNATURE' => ''
+    'SERVER_SOFTWARE' => 'Apache/2.4.54 (Unix) OpenSSL/1.0.2u PHP/8.1.13 mod_wsgi/3.5 Python/2.7.18 mod_fastcgi/mod_fastcgi-SNAP-0910052141 mod_perl/2.0.11 Perl/v5.30.1'
+    'SERVER_NAME' => '10.0.2.2'
+    'SERVER_ADDR' => '127.0.0.1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '127.0.0.1'
+    'DOCUMENT_ROOT' => '/Applications/MAMP/htdocs'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/Applications/MAMP/htdocs'
+    'SERVER_ADMIN' => 'you@example.com'
+    'SCRIPT_FILENAME' => '/Applications/MAMP/htdocs/RetroVerse/backend/web/index.php'
+    'REMOTE_PORT' => '61507'
+    'REDIRECT_URL' => '/RetroVerse/backend/web/api/users/login'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/RetroVerse/backend/web/api/users/login'
+    'SCRIPT_NAME' => '/RetroVerse/backend/web/index.php'
+    'PHP_SELF' => '/RetroVerse/backend/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1735403206.4813
+    'REQUEST_TIME' => 1735403206
+]
+2024-12-28 16:27:07 [127.0.0.1][-][-][error][yii\web\HttpException:403] yii\web\ForbiddenHttpException: Invalid in /Applications/MAMP/htdocs/RetroVerse/backend/modules/api/controllers/UserController.php:36
+Stack trace:
+#0 [internal function]: backend\modules\api\controllers\UserController->actionLogin()
+#1 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/InlineAction.php(57): call_user_func_array(Array, Array)
+#2 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Controller.php(178): yii\base\InlineAction->runWithParams(Array)
+#3 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Module.php(552): yii\base\Controller->runAction('login', Array)
+#4 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/web/Application.php(103): yii\base\Module->runAction('api/user/login', Array)
+#5 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Application.php(384): yii\web\Application->handleRequest(Object(yii\web\Request))
+#6 /Applications/MAMP/htdocs/RetroVerse/backend/web/index.php(18): yii\base\Application->run()
+#7 {main}
+2024-12-28 16:27:06 [127.0.0.1][-][-][info][application] $_GET = []
+
+$_POST = [
+    'password' => '12345678'
+    'username' => 'admin12'
+]
+
+$_FILES = []
+
+$_COOKIE = []
+
+$_SERVER = [
+    'REDIRECT_STATUS' => '200'
+    'CONTENT_TYPE' => 'application/x-www-form-urlencoded; charset=UTF-8'
+    'HTTP_USER_AGENT' => 'Dalvik/2.1.0 (Linux; U; Android 14; sdk_gphone64_arm64 Build/UE1A.230829.038.B2)'
+    'HTTP_HOST' => '10.0.2.2'
+    'HTTP_CONNECTION' => 'Keep-Alive'
+    'HTTP_ACCEPT_ENCODING' => 'gzip'
+    'CONTENT_LENGTH' => '35'
+    'PATH' => '/usr/bin:/bin:/usr/sbin:/sbin'
+    'SERVER_SIGNATURE' => ''
+    'SERVER_SOFTWARE' => 'Apache/2.4.54 (Unix) OpenSSL/1.0.2u PHP/8.1.13 mod_wsgi/3.5 Python/2.7.18 mod_fastcgi/mod_fastcgi-SNAP-0910052141 mod_perl/2.0.11 Perl/v5.30.1'
+    'SERVER_NAME' => '10.0.2.2'
+    'SERVER_ADDR' => '127.0.0.1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '127.0.0.1'
+    'DOCUMENT_ROOT' => '/Applications/MAMP/htdocs'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/Applications/MAMP/htdocs'
+    'SERVER_ADMIN' => 'you@example.com'
+    'SCRIPT_FILENAME' => '/Applications/MAMP/htdocs/RetroVerse/backend/web/index.php'
+    'REMOTE_PORT' => '61528'
+    'REDIRECT_URL' => '/RetroVerse/backend/web/api/users/login'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/RetroVerse/backend/web/api/users/login'
+    'SCRIPT_NAME' => '/RetroVerse/backend/web/index.php'
+    'PHP_SELF' => '/RetroVerse/backend/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1735403226.8953
+    'REQUEST_TIME' => 1735403226
+]
+2024-12-28 16:27:07 [127.0.0.1][-][-][error][yii\web\HttpException:403] yii\web\ForbiddenHttpException: Invalid in /Applications/MAMP/htdocs/RetroVerse/backend/modules/api/controllers/UserController.php:36
+Stack trace:
+#0 [internal function]: backend\modules\api\controllers\UserController->actionLogin()
+#1 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/InlineAction.php(57): call_user_func_array(Array, Array)
+#2 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Controller.php(178): yii\base\InlineAction->runWithParams(Array)
+#3 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Module.php(552): yii\base\Controller->runAction('login', Array)
+#4 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/web/Application.php(103): yii\base\Module->runAction('api/user/login', Array)
+#5 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Application.php(384): yii\web\Application->handleRequest(Object(yii\web\Request))
+#6 /Applications/MAMP/htdocs/RetroVerse/backend/web/index.php(18): yii\base\Application->run()
+#7 {main}
+2024-12-28 16:27:07 [127.0.0.1][-][-][info][application] $_GET = []
+
+$_POST = [
+    'password' => '12345678'
+    'username' => 'admin12'
+]
+
+$_FILES = []
+
+$_COOKIE = []
+
+$_SERVER = [
+    'REDIRECT_STATUS' => '200'
+    'CONTENT_TYPE' => 'application/x-www-form-urlencoded; charset=UTF-8'
+    'HTTP_USER_AGENT' => 'Dalvik/2.1.0 (Linux; U; Android 14; sdk_gphone64_arm64 Build/UE1A.230829.038.B2)'
+    'HTTP_HOST' => '10.0.2.2'
+    'HTTP_CONNECTION' => 'Keep-Alive'
+    'HTTP_ACCEPT_ENCODING' => 'gzip'
+    'CONTENT_LENGTH' => '35'
+    'PATH' => '/usr/bin:/bin:/usr/sbin:/sbin'
+    'SERVER_SIGNATURE' => ''
+    'SERVER_SOFTWARE' => 'Apache/2.4.54 (Unix) OpenSSL/1.0.2u PHP/8.1.13 mod_wsgi/3.5 Python/2.7.18 mod_fastcgi/mod_fastcgi-SNAP-0910052141 mod_perl/2.0.11 Perl/v5.30.1'
+    'SERVER_NAME' => '10.0.2.2'
+    'SERVER_ADDR' => '127.0.0.1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '127.0.0.1'
+    'DOCUMENT_ROOT' => '/Applications/MAMP/htdocs'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/Applications/MAMP/htdocs'
+    'SERVER_ADMIN' => 'you@example.com'
+    'SCRIPT_FILENAME' => '/Applications/MAMP/htdocs/RetroVerse/backend/web/index.php'
+    'REMOTE_PORT' => '61528'
+    'REDIRECT_URL' => '/RetroVerse/backend/web/api/users/login'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/RetroVerse/backend/web/api/users/login'
+    'SCRIPT_NAME' => '/RetroVerse/backend/web/index.php'
+    'PHP_SELF' => '/RetroVerse/backend/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1735403227.1433
+    'REQUEST_TIME' => 1735403227
+]

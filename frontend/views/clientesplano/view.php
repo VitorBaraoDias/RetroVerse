@@ -1,14 +1,13 @@
 <?php
 
 use yii\helpers\Html;
-use yii\widgets\DetailView;
 use yii\web\YiiAsset;
 use yii\widgets\ActiveForm;
 
 YiiAsset::register($this);
 
 /** @var yii\web\View $this */
-/** @var common\models\Clientesplano $model */
+/** @var \common\models\Clientesplano $model */
 
 $this->title = "Plano de Assinatura - " . $model->id;
 \yii\web\YiiAsset::register($this);

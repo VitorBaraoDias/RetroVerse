@@ -2,9 +2,9 @@
 
 namespace app\models;
 
+use common\models\Venda;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\Venda;
 
 /**
  * VendaSearch represents the model behind the search form of `common\models\Venda`.

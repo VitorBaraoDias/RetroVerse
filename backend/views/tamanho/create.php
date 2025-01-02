@@ -3,7 +3,7 @@
 use yii\helpers\Html;
 
 /** @var yii\web\View $this */
-/** @var common\models\Tamanho $model */
+/** @var \common\models\Tamanho $model */
 
 $this->title = 'Create Tamanho';
 $this->params['breadcrumbs'][] = ['label' => 'Tamanhos', 'url' => ['index']];

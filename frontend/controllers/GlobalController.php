@@ -2,8 +2,6 @@
 
 namespace frontend\controllers;
 
-use common\models\Carrinho;
-use Yii;
 use yii\base\Controller;
 
 class GlobalController extends Controller

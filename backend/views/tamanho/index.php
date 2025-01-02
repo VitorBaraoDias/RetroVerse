@@ -1,13 +1,13 @@
 <?php
 
 use common\models\Tamanho;
-use yii\helpers\Html;
-use yii\helpers\Url;
 use yii\grid\ActionColumn;
 use yii\grid\GridView;
+use yii\helpers\Html;
+use yii\helpers\Url;
 
 /** @var yii\web\View $this */
-/** @var common\models\SearchTamanho $searchModel */
+/** @var \common\models\SearchTamanho $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
 $this->title = 'Tamanhos';

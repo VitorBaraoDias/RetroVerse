@@ -2,11 +2,11 @@
 
 namespace backend\modules\api\controllers;
 
-use yii\rest\ActiveController;
 use common\models\Carrinho;
-use yii\filters\auth\QueryParamAuth;
-use Yii;
 use common\models\Linhascarrinho;
+use Yii;
+use yii\filters\auth\QueryParamAuth;
+use yii\rest\ActiveController;
 
 
 /**

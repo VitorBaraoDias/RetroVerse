@@ -1,12 +1,10 @@
 <?php
 
-use kartik\file\FileInput;
-use yii\bootstrap5\BootstrapAsset;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /** @var yii\web\View $this */
-/** @var common\models\Perfil $model */
+/** @var \common\models\Perfil $model */
 /** @var yii\widgets\ActiveForm $form */
 ?>
 

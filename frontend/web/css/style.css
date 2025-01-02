@@ -50,6 +50,10 @@
 	box-shadow: 0 0 32px rgb(0 0 0 / 8%),
 	0rem 16px 16px -16px rgb(0 0 0 / 10%);
 }
+.propostaEsq{
+	box-shadow: 0 0 32px rgb(0 0 0 / 8%),
+	0rem 16px 16px -16px rgb(0 0 0 / 10%);
+}
 .chat-box .outgoing{
 	display: flex;
 }
@@ -57,11 +61,12 @@
 	margin-left: auto;
 	max-width: calc(100% - 130px);
 }
-.outgoing .details p{
-	background: #333;
-	color: #fff;
+.outgoing .details p, .cardProposta{
+	background: #F3F3F3;
+	color: black;
 	border-radius: 18px 18px 0 18px;
 }
+
 .chat-box .incoming{
 	display: flex;
 	align-items: flex-end;

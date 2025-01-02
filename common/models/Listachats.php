@@ -2,11 +2,6 @@
 
 namespace common\models;
 
-use common\models\Artigo;
-use common\models\Mensagemfoto;
-use common\models\Mensagemproposta;
-use common\models\Mensagenstextos;
-use common\models\Perfil;
 //use common\models\;
 
 /**

@@ -2,9 +2,9 @@
 
 namespace app\models;
 
+use common\models\Artigospremium;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\Artigospremium;
 
 /**
  * SearchArtigopremium represents the model behind the search form of `common\models\Artigospremium`.

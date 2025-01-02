@@ -4,9 +4,9 @@ namespace frontend\controllers;
 
 use common\models\Faqs;
 use yii\data\ActiveDataProvider;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 
 /**
  * FaqsController implements the CRUD actions for Faqs model.

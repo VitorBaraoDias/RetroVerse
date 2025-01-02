@@ -2,11 +2,9 @@
 
 namespace backend\modules\api\controllers;
 
-use yii\rest\ActiveController;
-use yii\web\Controller;
-use yii\filters\auth\QueryParamAuth;
-
 use Yii;
+use yii\filters\auth\QueryParamAuth;
+use yii\rest\ActiveController;
 
 /**
  * Default controller for the `api` module

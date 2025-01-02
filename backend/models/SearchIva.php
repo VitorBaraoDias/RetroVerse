@@ -2,9 +2,9 @@
 
 namespace backend\models;
 
+use common\models\Iva;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\Iva;
 
 /**
  * SearchIva represents the model behind the search form of `common\models\Iva`.
