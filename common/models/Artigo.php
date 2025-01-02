@@ -236,7 +236,7 @@ class Artigo extends \yii\db\ActiveRecord
         return round($originalPriceWithCommission, 2);
     }
     public function getPriceWithProposalIfExist()
-    //obtem preco com comissao
+    //obtem preco com ou sem proposta
     {
         $lastAcceptedProposal = $this->getLastAcceptedProposalByUser();
         if ($lastAcceptedProposal) {

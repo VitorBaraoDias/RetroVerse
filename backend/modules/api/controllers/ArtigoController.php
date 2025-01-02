@@ -2,9 +2,15 @@
 
 namespace backend\modules\api\controllers;
 use common\models\Artigo;
-use Yii;
+use common\models\Categoriaartigo;
+use common\models\Estado;
+use common\models\Marca;
+use common\models\Tamanho;
 use yii\filters\auth\QueryParamAuth;
+use yii\rest\Controller;
 use yii\rest\ActiveController;
+use Yii;
+
 
 /**
  * Default controller for the `api` module
@@ -27,11 +33,11 @@ class ArtigoController extends ActiveController
         if (!parent::beforeAction($action)) {
             return false;
         }
-        if (Yii::$app->request->method !== 'GET') {
+        if (Yii::$app->request->method !== 'GET' && Yii::$app->request->method !== 'POST' && Yii::$app->request->method !== 'PUT') {
 
             Yii::$app->response->statusCode = 405;
             Yii::$app->response->data = [
-                'message' => 'Este método não é permitido.'
+                'message' => 'THIS METHOD IS NOT ALLOWED'
             ];
             return false;
         }
@@ -94,7 +100,7 @@ class ArtigoController extends ActiveController
 
         // Se o artigo não for encontrado, lançar uma exceção
         if (!$artigo) {
-            throw new \yii\web\NotFoundHttpException("Artigo não encontrado.");
+            throw new \yii\web\NotFoundHttpException("ITEM NOT FOUND");
         }
 
         // Montar o resultado substituindo os IDs pelos nomes e outras informações
@@ -126,6 +132,175 @@ class ArtigoController extends ActiveController
             ] : null,
         ];
     }
+
+    public function actionCriarartigo()
+    {
+        $model = new Artigo();
+        $request = Yii::$app->request->post();
+        $userId = $request['iduser'] ?? null;
+
+
+        $transaction = Yii::$app->db->beginTransaction();
+
+        try {
+            if (Yii::$app->request->isPost) {
+                $model->load($request, '');
+
+                $model->datacriacao = date('Y-m-d H:i:s');
+                $model->nome = $request['nome'] ?? null;
+                $model->descricao = $request['descricao'] ?? null;
+                $model->precoanuncio = $request['precoanuncio'] ?? null;
+                $model->idcomissao = $request['idcomissao'] ?? null;
+
+                if (!empty($request['estado'])) {
+                    $estado = Estado::find()->where(['descricao' => $request['estado']])->one();
+                    if ($estado) {
+                        $model->idestado = $estado->id;
+                    } else {
+                        throw new \Exception("State not found " . $request['estado']);
+                    }
+                }
+
+                if (!empty($request['nomemarca'])) {
+                    $marca = Marca::find()->where(['nome' => $request['nomemarca']])->one();
+                    if ($marca) {
+                        $model->idmarca = $marca->id;
+                    } else {
+                        throw new \Exception("Brand not found " . $request['nomemarca']);
+                    }
+                }
+
+                if (!empty($request['categoria'])) {
+                    $categoria = Categoriaartigo::find()->where(['nome' => $request['categoria']])->one();
+                    if ($categoria) {
+                        $model->idcategoria = $categoria->id;
+                    } else {
+                        throw new \Exception("Category not found " . $request['categoria']);
+                    }
+                }
+
+                if (!empty($request['tamanho'])) {
+                    $tamanho = Tamanho::find()->where(['tamanho' => $request['tamanho']])->one();
+                    if ($tamanho) {
+                        $model->idtamanho = $tamanho->id;
+                    } else {
+                        throw new \Exception("Size not found " . $request['tamanho']);
+                    }
+                }
+
+                $model->idperfil = $userId; // ID do perfil
+                $model->tipoartigo = $request['tipoartigo'] ?? null;
+                $model->ativo = 1;
+
+                if (!$model->save()) {
+                    throw new \Exception('Error: This item could not be saved ');
+                }
+
+                $transaction->commit();
+
+                return [
+                    'status' => 'success',
+                    'message' => 'Item added with success',
+                    'artigo' => $model,
+                ];
+            }
+        } catch (\Exception $e) {
+            $transaction->rollBack();
+            return [
+                'status' => 'error',
+                'message' => 'Error creating this item: ' . $e->getMessage(),
+            ];
+        }
+    }
+
+
+    public function actionEditarartigo($id)
+    {
+        $model = Artigo::findOne($id);
+
+        if (!$model) {
+            return [
+                'status' => 'error',
+                'message' => 'Item not found.',
+            ];
+        }
+
+        $request = Yii::$app->request->bodyParams;
+        $userId = $request['iduser'] ?? null;
+
+        $transaction = Yii::$app->db->beginTransaction();
+
+        try {
+            if (Yii::$app->request->isPut) {
+                $model->load($request, '');
+
+
+                $model->nome = $request['nome'] ?? $model->nome;
+                $model->descricao = $request['descricao'] ?? $model->descricao;
+                $model->precoanuncio = $request['precoanuncio'] ?? $model->precoanuncio;
+                $model->idcomissao = $request['idcomissao'] ?? $model->idcomissao;
+
+                if (!empty($request['estado'])) {
+                    $estado = Estado::find()->where(['descricao' => $request['estado']])->one();
+                    if ($estado) {
+                        $model->idestado = $estado->id;
+                    } else {
+                        throw new \Exception("Size not found: " . $request['estado']);
+                    }
+                }
+
+                if (!empty($request['nomemarca'])) {
+                    $marca = Marca::find()->where(['nome' => $request['nomemarca']])->one();
+                    if ($marca) {
+                        $model->idmarca = $marca->id;
+                    } else {
+                        throw new \Exception("Brand not found: " . $request['nomemarca']);
+                    }
+                }
+
+                if (!empty($request['categoria'])) {
+                    $categoria = Categoriaartigo::find()->where(['nome' => $request['categoria']])->one();
+                    if ($categoria) {
+                        $model->idcategoria = $categoria->id;
+                    } else {
+                        throw new \Exception("Category not found: " . $request['categoria']);
+                    }
+                }
+
+                if (!empty($request['tamanho'])) {
+                    $tamanho = Tamanho::find()->where(['tamanho' => $request['tamanho']])->one();
+                    if ($tamanho) {
+                        $model->idtamanho = $tamanho->id;
+                    } else {
+                        throw new \Exception("Size not found: " . $request['tamanho']);
+                    }
+                }
+
+                $model->idperfil = $userId ?? $model->idperfil;
+                $model->tipoartigo = $request['tipoartigo'] ?? $model->tipoartigo;
+                $model->ativo = $request['ativo'] ?? $model->ativo;
+
+                if (!$model->save()) {
+                    throw new \Exception('Error saving this item ');
+                }
+
+                $transaction->commit();
+
+                return [
+                    'status' => 'success',
+                    'message' => 'Item updated with success.',
+                    'artigo' => $model,
+                ];
+            }
+        } catch (\Exception $e) {
+            $transaction->rollBack();
+            return [
+                'status' => 'error',
+                'message' => 'Error updating this item: ' . $e->getMessage(),
+            ];
+        }
+    }
+
 
 
 

@@ -102,9 +102,9 @@ $dataProviderChata = new ActiveDataProvider([
     client.on('connect', function () {
         console.log("Conectado ao broker MQTT via WebSocket");
         // Inscrever-se no tópico 'chat/12'
-        client.subscribe("chat/12", function (err) {
+        client.subscribe('chat/${<?= $chatAtual->id ?>}', function (err) {
             if (!err) {
-                console.log("Inscrito no tópico: chat/12");
+                console.log("Inscrito no tópico: chat/${<?= $chatAtual->id ?>}");
             } else {
                 console.log("Erro ao se inscrever: " + err);
             }

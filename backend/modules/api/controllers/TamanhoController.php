@@ -36,7 +36,7 @@ class TamanhoController extends ActiveController
 
             Yii::$app->response->statusCode = 405;
             Yii::$app->response->data = [
-                'message' => 'Este método não é permitido. ',
+                'message' => 'METHOD NOT ALLOWED ',
             ];
             return false;
         }

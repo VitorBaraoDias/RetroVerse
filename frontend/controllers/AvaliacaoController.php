@@ -91,7 +91,7 @@ class AvaliacaoController extends Controller
             $model->iddestinatario = $linhaVenda->idvendedor;
             $model->idlinhavenda = $linhaVenda->id;
             if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['venda/view', 'id' => $id]);
+                return $this->redirect(['venda/view', 'id' => $linhaVenda->idvenda]);
             }
         } else {
             $model->loadDefaultValues();

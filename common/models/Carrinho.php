@@ -71,10 +71,10 @@ class Carrinho extends \yii\db\ActiveRecord
             if ($artigo->tipoartigo === 'MARKETPLACE' && $artigo->idcomissao0) {
                 if ($isPremium) {
                     // Utilizadores Premium não pagam comissão
-                    $totalVenda += $artigo->precoanuncio;
+                    $totalVenda += $artigo->getPriceWithProposalIfExist();
                 } else {
                     // Aplica a comissão ao preço se o utilizador não for Premium
-                    $precoComComissao = round($artigo->precoanuncio * (1 + $artigo->idcomissao0->comissao / 100), 2);
+                    $precoComComissao = $artigo->getPriceWithCommissionOrProposal();
                     $totalVenda += $precoComComissao;
                 }
             } else {

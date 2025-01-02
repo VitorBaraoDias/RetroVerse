@@ -46,10 +46,10 @@ $precoComIVA = $precoBase + $valorIVA;
                 </div>
                 <div class="d-flex flex-column align-items-start">
                     <h2 style="font-size: 24px">
-                        <strong><?= Yii::$app->formatter->asCurrency($model->idartigo0->getPrecoComComissao(), 'EUR') ?></strong>
+                        <strong><?= Yii::$app->formatter->asCurrency($model->idartigo0->getPriceWithCommissionOrProposal(), 'EUR') ?></strong>
                     </h2>
                     <h3 style="font-size: 18px">
-                        <?= Yii::$app->formatter->asCurrency($model->idartigo0->precoanuncio, 'EUR') ?>
+                        <?= Yii::$app->formatter->asCurrency($model->idartigo0->getPriceWithProposalIfExist(), 'EUR') ?>
                     </h3>
                 </div>
             </div>

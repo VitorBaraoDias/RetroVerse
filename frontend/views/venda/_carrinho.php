@@ -64,7 +64,7 @@ $isPremium = $perfil ? $perfil->hasActivePremiumPlano() : false;
                     </h1>
                 <?php endif; ?>
                 <h2 style="font-size: 20px">
-                    <?= Yii::$app->formatter->asCurrency($model->artigo->precoanuncio, 'EUR') ?>
+                    <?= $model->artigo->getPriceWithProposalIfExist() . " EUR"?>
                 </h2>
             </div>
             <p class="d-flex align-items-center gap-2">

@@ -10,7 +10,7 @@ $this->registerJsFile('https://cdn.jsdelivr.net/npm/chart.js', ['position' => \y
             <!-- small box -->
             <div class="small-box bg-info">
                 <div class="inner">
-                    <h3>150</h3>
+                    <h3></h3>
 
                     <p>New Orders</p>
                 </div>
@@ -25,8 +25,8 @@ $this->registerJsFile('https://cdn.jsdelivr.net/npm/chart.js', ['position' => \y
             <!-- small box -->
             <div class="small-box bg-success">
                 <div class="inner">
-                    <h3>53<sup style="font-size: 20px">%</sup></h3>
-                    <p>MarketPlace Processed Orders</p>
+                    <h3><?= $marketplaceSalesCount ?></h3>
+                    <p>MarketPlace Orders</p>
                 </div>
                 <div class="icon">
                     <i class="ion ion-stats-bars"></i>
@@ -68,7 +68,7 @@ $this->registerJsFile('https://cdn.jsdelivr.net/npm/chart.js', ['position' => \y
         <div class="col-md-8">
             <div class="box">
                 <div class="box-header">
-                    <h3 class="box-title">Marketplace vs Loja</h3>
+                    <h3 class="box-title">Marketplace vs Store</h3>
                 </div>
                 <div class="box-body">
                     <!-- Gráfico de Barras com duas séries: Marketplace e Loja -->

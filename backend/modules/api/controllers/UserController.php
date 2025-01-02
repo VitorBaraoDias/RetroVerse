@@ -45,7 +45,8 @@ class UserController extends ActiveController
         if (!$username || !$email || !$password) {
             return [
                 'status' => 'error',
-                'message' => 'Os campos username, email e password são obrigatórios.'
+                'message' => 'Fields username, email and password are required.'
+
             ];
         }
         

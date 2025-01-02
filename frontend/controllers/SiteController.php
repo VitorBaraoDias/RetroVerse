@@ -2,6 +2,7 @@
 
 namespace frontend\controllers;
 
+use Yii;
 use common\models\Artigo;
 use common\models\Artigospremium;
 use common\models\LoginForm;
