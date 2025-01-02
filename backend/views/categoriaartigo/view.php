@@ -6,8 +6,8 @@ use yii\widgets\DetailView;
 /** @var yii\web\View $this */
 /** @var \common\models\Categoriaartigo $model */
 
-$this->title = $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Categoriaartigos', 'url' => ['index']];
+$this->title = $model->nome;
+$this->params['breadcrumbs'][] = ['label' => 'Categories', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
@@ -29,8 +29,28 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'id',
-            'nome',
+            [
+                'attribute' => 'nome',
+                'label' => 'Name',
+            ],
+            [
+                'attribute' => 'ativo',
+                'label' => 'Active Status',
+                'format' => 'raw', // Exibir HTML se necessário
+                'value' => function($model) {
+                    return $model->ativo
+                        ? Html::tag('span', 'Active', ['class' => 'badge bg-success'])
+                        : Html::tag('span', 'Inactive', ['class' => 'badge bg-danger']);
+                },
+                'filter' => [
+                    1 => 'Active',         // Opção para Ativo
+                    0 => 'Inactive',       // Opção para Inativo
+                ],
+                'filterInputOptions' => [
+                    'class' => 'form-control', // Estilo do dropdown
+                    'prompt' => 'Select Status' // Texto do prompt no dropdown
+                ]
+            ],
         ],
     ]) ?>
 

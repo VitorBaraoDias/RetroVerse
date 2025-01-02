@@ -8,9 +8,9 @@ use yii\helpers\Html;
             <div class="d-flex align-items-center flex-column">
                 <?php
 
-                if ($model->perfils && !is_null($model->perfils->caminhofotoperfil) && file_exists(Yii::getAlias('@webroot/images/') . $model->perfils->caminhofotoperfil)) {
+                if ($model->perfils && !is_null($model->perfils->caminhofotoperfil) && file_exists(Yii::getAlias('../../common/uploads/img-profile/') . $model->perfils->caminhofotoperfil)) {
                     // Se a imagem existir, exibe a imagem
-                    echo Html::img(Yii::getAlias('@web/images/') . $model->perfils->caminhofotoperfil, [
+                    echo Html::img(('../../../common/uploads/img-profile/') . $model->perfils->caminhofotoperfil, [
                         'alt' => 'User Image',
                         'class' => 'rounded-circle img-thumbnail',
                         'style' => 'width: 100px; height: 100px; object-fit: cover;',

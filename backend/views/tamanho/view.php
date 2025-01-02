@@ -6,14 +6,12 @@ use yii\widgets\DetailView;
 /** @var yii\web\View $this */
 /** @var \common\models\Tamanho $model */
 
-$this->title = $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Tamanhos', 'url' => ['index']];
+$this->title = $model->tamanho;
+$this->params['breadcrumbs'][] = ['label' => 'Sizes', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
 <div class="tamanho-view">
-
-    <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
         <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
@@ -29,7 +27,6 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'id',
             'tamanho',
         ],
     ]) ?>

@@ -236,14 +236,13 @@ class Artigo extends \yii\db\ActiveRecord
         return round($originalPriceWithCommission, 2);
     }
     public function getPriceWithProposalIfExist()
+    //obtem preco com comissao
     {
         $lastAcceptedProposal = $this->getLastAcceptedProposalByUser();
-        // Se existir uma proposta aceita, calcula o preço com base na proposta e a comissão
         if ($lastAcceptedProposal) {
             return round( $lastAcceptedProposal->preco, 2);
         }
 
-        // Caso contrário, calcula o preço original com a comissão
         return round($this->precoanuncio, 2);
     }
 
@@ -252,9 +251,10 @@ class Artigo extends \yii\db\ActiveRecord
         // Chama o método de preço com comissão e formata para o padrão Euro
         return '€ ' . number_format($this->getPriceWithCommissionOrProposal(), 2, ',', '.');
     }
+
+    //verifica se é vendedor
     public function isVendedor()
     {
-        // Verifica se o ID do perfil do artigo é igual ao ID do usuário logado
         return $this->idperfil === Yii::$app->user->id;
     }
     public function getMensagempropostas()

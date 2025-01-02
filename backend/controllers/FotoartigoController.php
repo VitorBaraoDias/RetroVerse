@@ -1,7 +1,7 @@
 <?php
 
 namespace backend\controllers;
-use backend\models\UploadForm;
+use backend\models\UploadMultipleForm;
 use common\models\Fotosartigo;
 use Yii;
 use yii\data\ActiveDataProvider;
@@ -26,7 +26,6 @@ class FotoartigoController extends Controller
                 'verbs' => [
                     'class' => VerbFilter::className(),
                     'actions' => [
-                        'delete' => ['POST'],
                     ],
                 ],
             ]
@@ -79,7 +78,9 @@ class FotoartigoController extends Controller
      */
     public function actionCreate($id)
     {
-        $model = new UploadForm();
+        $model = new UploadMultipleForm();
+        $model->backendUploadDir = Yii::getAlias('@imageurl/img-artigos/');
+        $model->frontendUploadDir = Yii::getAlias('@frontend/web/uploads/img-artigos/');
         if (Yii::$app->request->isPost && $model->load($this->request->post())) {
             $model->imageFiles = UploadedFile::getInstances($model, 'imageFiles');
             if ($model->upload($id)) {
@@ -122,7 +123,9 @@ class FotoartigoController extends Controller
     public function actionDelete($id)
     {
         $model = $this->findModel($id);
-        $modelForm = new UploadForm();
+        $modelForm = new UploadMultipleForm();
+        $modelForm->backendUploadDir = Yii::getAlias('@imageurl/img-artigos/');
+        $modelForm->frontendUploadDir = Yii::getAlias('@frontend/web/uploads/img-artigos/');
 
         $transaction = Yii::$app->db->beginTransaction();
         try {

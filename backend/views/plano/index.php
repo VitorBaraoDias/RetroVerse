@@ -10,15 +10,14 @@ use yii\helpers\Url;
 /** @var app\models\SearchPlano $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = 'Planos';
+$this->title = 'Plans';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="plano-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Create Plano', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Create New Plan', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
@@ -30,7 +29,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
             [
                     'attribute' => 'precomensal',
-                    'label' => 'Preço Mensal', // Rótulo personalizado para a coluna
+                    'label' => 'Monthly Payment',
             ],
             [
                 'attribute' => 'idiva',
@@ -39,14 +38,17 @@ $this->params['breadcrumbs'][] = $this->title;
                 },
                 'label' => 'IVA (%)', // Rótulo personalizado para a coluna
             ],
-            'descricao',
+            [
+                    'attribute' => 'descricao',
+                    'label' => 'Description',
+                ],
             [
                 'attribute' => 'ativo',
                 'format' => 'raw', // Exibir HTML se necessário
                 'value' => function($model) {
                     return $model->ativo
-                        ? Html::tag('span', 'Ativo', ['class' => 'badge bg-success'])
-                        : Html::tag('span', 'Inativo', ['class' => 'badge bg-danger']);
+                        ? Html::tag('span', 'Active', ['class' => 'badge bg-success'])
+                        : Html::tag('span', 'Inactive', ['class' => 'badge bg-danger']);
                 },
             ],
             [

@@ -1,4 +1,8 @@
 <?php
+use kartik\file\FileInput;
+use yii\bootstrap5\BootstrapAsset;
+use yii\web\AssetBundle;
+use yii\helpers\Html;
 
 /** @var yii\web\View $this */
 /** @var \common\models\Artigo $model */

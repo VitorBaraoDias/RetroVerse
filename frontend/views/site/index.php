@@ -1,42 +1,34 @@
 
 <?php
 use yii\helpers\Html;
+use yii\helpers\Url;
 use yii\widgets\ListView;
 use yii\data\ActiveDataProvider;
 ?>
 
-<!-- Hero Section Begin -->
+<!-- Banners Begin-->
 <section class="hero">
-        <div class="hero__slider owl-carousel">
-            <div class="hero__items set-bg" data-setbg="<?= Yii::getAlias('@web') ?>/img/banner_home_1.jpg">
+    <div class="hero__slider owl-carousel owl-loaded owl-drag">
+        <?php foreach ($banners as $banner): ?>
+            <div class="hero__items set-bg" data-setbg="<?= Yii::getAlias('@web/uploads/img-banners/') . $banner['caminhoimagem'] ?>" style="background-image: url('<?= Yii::getAlias('@web/uploads/img-banners/') . $banner['caminhoimagem'] ?>');">
                 <div class="container">
                     <div class="row">
                         <div class="col-xl-5 col-lg-7 col-md-8">
                             <div class="hero__text">
-                                <h2>WINTER DROP</h2>
-                                <p>Our latest winter drop is already available</p>
-                                <a href="#" class="primary-btn btn_banner">SHOP NOW<span class="arrow_right"></span></a>
+                                <h2><?= $banner['titulo']; ?></h2>
+                                <p><?=$banner['descricao']; ?></p>
+                                <?php if ($banner['link']): ?>
+                                    <a href="<?= Yii::getAlias('@web') . '/' . ltrim($banner['link'], '/') ?>" class="primary-btn btn_banner"><?= Html::encode($banner['textobotao'] ?: 'SHOP NOW') ?><span class="arrow_right"></span></a>
+                                <?php endif; ?>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="hero__items set-bg" data-setbg="<?= Yii::getAlias('@web') ?>/img/banner_home_2.jpg">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-xl-5 col-lg-7 col-md-8">
-                            <div class="hero__text">
-                                <h2>ADIDAS VINTAGE WINDBREAKERS</h2>
-                                <p>Our new Adidas Vintage Windbreakers are now available in our store!</p>
-                                <a href="#" class="primary-btn btn_banner">SHOW NOW <span class="arrow_right"></span></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- Hero Section End -->
+        <?php endforeach; ?>
+    </div>
+</section>
+<!-- Banners End-->
 
     <!-- Banner Section Begin -->
 <article class="container" style="margin-top: 45px;">
@@ -99,7 +91,7 @@ use yii\data\ActiveDataProvider;
             </div>
         </div>
     </div>
-</section S>
+</section>
 
     <!-- Banner Section End -->
 <article class="mb-4 container" style="margin-top: 45px;">

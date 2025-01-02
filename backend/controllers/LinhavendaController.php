@@ -1,11 +1,11 @@
 <?php
 
 namespace backend\controllers;
-
-use common\models\Estadoencomenda;
-use common\models\Linhavenda;
-use common\models\LinhavendaSearch;
 use Yii;
+use yii\data\ActiveDataProvider;
+use common\models\Linhavenda;
+use common\models\Estadoencomenda;
+use common\models\LinhavendaSearch;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -116,6 +116,38 @@ class LinhavendaController extends Controller
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
+    }
+
+    public function actionReport()
+    {
+        // Captura o valor do mês do formulário
+        $month = Yii::$app->request->get('month');
+
+        if (!$month) {
+            $month = date('m');  // Mês atual
+        }
+
+
+        if (Yii::$app->user->can('admin')) {
+            $dataProvider = new ActiveDataProvider([
+                'query' => Linhavenda::find()
+                    ->joinWith('idvenda0 as venda')
+                    ->where(['MONTH(DATE(venda.datavenda))' => $month])
+                    ->andWhere(['idvendedor' => Yii::$app->user->id]),
+                'pagination' => [
+                    'pageSize' => 10,
+                ],
+            ]);
+        } else {
+            return $this->render('index');
+        }
+
+
+        return $this->render('report', [
+            'dataProvider' => $dataProvider,
+            'month' => $month,
+        ]);
+
     }
 
 

@@ -2,17 +2,17 @@
 
 namespace frontend\controllers;
 
-use backend\models\UploadForm;
-use common\models\Artigo;
-use common\models\Artigospremium;
+use backend\models\UploadMultipleForm;
+use yii\web\UploadedFile;
 use common\models\Comissao;
-use frontend\models\SearchArtigo;
 use Yii;
+use common\models\Artigospremium;
+use common\models\Artigo;
+use frontend\models\SearchArtigo;
 use yii\data\ActiveDataProvider;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\web\UploadedFile;
 
 
 /**
@@ -149,7 +149,7 @@ class ArtigoController extends Controller
     public function actionCreate()
     {
         $model = new Artigo();
-        $uploadForm = new UploadForm();
+        $uploadForm = new UploadMultipleForm();
 
         if ($this->request->isPost) {
             $model->idperfil = Yii::$app->user->id;
@@ -158,6 +158,9 @@ class ArtigoController extends Controller
             $model->idcomissao = Comissao::getIdActiveComissao();
 
             if ($model->load($this->request->post()) && $model->save()) {
+                // Configurar os diretórios de upload para artigos
+                $uploadForm->backendUploadDir = Yii::getAlias('@imageurl/img-artigos/');
+                $uploadForm->frontendUploadDir = Yii::getAlias('@frontend/web/uploads/img-artigos/');
                 $uploadForm->imageFiles = UploadedFile::getInstances($uploadForm, 'imageFiles');
 
                 if ($uploadForm->upload($model->id)) {
@@ -193,17 +196,44 @@ class ArtigoController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-        $uploadForm = new UploadForm(); // Instancia o modelo do formulário de upload
+        $uploadForm = new UploadMultipleForm();
 
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        // Se for um POST request e o modelo for carregado e salvo corretamente
+        if ($this->request->isPost && $model->load($this->request->post())) {
+
+            // Salvar o modelo (Artigo)
+            if ($model->save()) {
+                // Configuração de diretórios de upload
+                $uploadForm->backendUploadDir = Yii::getAlias('@imageurl/img-artigos/');
+                $uploadForm->frontendUploadDir = Yii::getAlias('@frontend/web/uploads/img-artigos/');
+
+                // Obter as imagens enviadas
+                $uploadForm->imageFiles = UploadedFile::getInstances($uploadForm, 'imageFiles');
+
+                // Verificar se há imagens para fazer upload
+                if (!empty($uploadForm->imageFiles)) {
+                    // Salvar as imagens no servidor e associá-las ao artigo
+                    if ($uploadForm->upload($model->id)) {
+                        // Se o upload for bem-sucedido, redireciona para a página de visualização
+                        return $this->redirect(['view', 'id' => $model->id]);
+                    } else {
+                        // Caso haja falha no upload
+                        Yii::$app->session->setFlash('error', 'As imagens não puderam ser carregadas.');
+                    }
+                } else {
+                    // Caso não haja arquivos para enviar
+                    return $this->redirect(['view', 'id' => $model->id]);
+                }
+            }
         }
 
+        // Caso o método GET ou POST falhe, renderize o formulário de atualização
         return $this->render('update', [
             'model' => $model,
-            'uploadForm' => $uploadForm, // Envie a variável para a view
+            'uploadForm' => $uploadForm,
         ]);
     }
+
 
     /**
      * Deletes an existing Artigo model.

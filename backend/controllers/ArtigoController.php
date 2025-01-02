@@ -4,6 +4,7 @@ namespace backend\controllers;
 
 use app\models\SearchArtigo;
 use backend\models\UploadForm;
+use backend\models\UploadMultipleForm;
 use common\models\Artigo;
 use Yii;
 use yii\filters\VerbFilter;
@@ -73,7 +74,7 @@ class ArtigoController extends Controller
     public function actionView($id)
 
     {
-        $uploadForm = new UploadForm();
+        $uploadForm = new UploadMultipleForm();
 
         return $this->render('view', [
             'model' => $this->findModel($id),
@@ -155,8 +156,11 @@ class ArtigoController extends Controller
 
         $model->ativo = 0;
         $model->save();
-        return $this->redirect(['index']);
+
+        // Redirecionar para a página que fez a solicitação, ou para 'index' se não houver referrer
+        return $this->redirect(Yii::$app->request->referrer ?: ['index']);
     }
+
 
     /**
      * Finds the Artigo model based on its primary key value.

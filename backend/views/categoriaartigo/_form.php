@@ -12,7 +12,12 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'nome')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'nome')->textInput(['maxlength' => true])->label("Name") ?>
+
+    <?= $form->field($model, 'ativo')->checkbox([
+        'label' => 'Active', // Texto ao lado da checkbox
+        'checked' => $model->ativo ? true : false, // Define se a checkbox estará marcada ou não
+    ]) ?>
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>

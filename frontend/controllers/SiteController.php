@@ -13,9 +13,10 @@ use frontend\models\ResendVerificationEmailForm;
 use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
 use frontend\models\VerifyEmailForm;
-use Yii;
 use yii\base\InvalidArgumentException;
 use yii\data\ActiveDataProvider;
+use common\models\Banner;
+use common\models\Favorito;
 use yii\db\Query;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
@@ -78,6 +79,30 @@ class SiteController extends Controller
         ];
     }
 
+    public function beforeAction($action)
+    {
+        // Verifica se o usuário está logado
+        if (!Yii::$app->user->isGuest) {
+            $user = Yii::$app->user->identity;
+
+            // Verifica se o perfil do usuário está banido
+            if ($user && $user->perfil && $user->perfil->banido) {
+                // Desconecta o usuário
+                Yii::$app->user->logout();
+
+                // Define uma mensagem de erro
+                Yii::$app->session->setFlash('error', 'Sua conta foi banida. Você não pode acessar esta página.');
+
+                // Redireciona para a página de login
+                return $this->redirect(['site/login']);
+            }
+        }
+
+        // Caso contrário, o fluxo normal continua
+        return parent::beforeAction($action);
+    }
+
+
     /**
      * Displays homepage.
      *
@@ -115,11 +140,14 @@ class SiteController extends Controller
             ],
         ]);
 
+        $banners = Banner::find()->where(['ativo' => 1])->asArray()->all();
+
 
         return $this->render('index', [
             'dataProvider1' => $dataProvider1,
             'dataProvider2' => $dataProvider2,
             'isPremiumActive' => $isPremiumActive,
+            'banners' => $banners
         ]);
     }
 

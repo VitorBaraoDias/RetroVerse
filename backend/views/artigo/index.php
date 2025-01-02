@@ -2,6 +2,8 @@
 
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
+use yii\helpers\Url;
+use yii\grid\ActionColumn;
 use yii\widgets\ActiveForm;
 use yii\widgets\ListView;
 
@@ -9,7 +11,7 @@ use yii\widgets\ListView;
 /** @var app\models\SearchArtigo $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = 'Artigos';
+$this->title = 'Items';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="artigo-index">
@@ -22,53 +24,65 @@ $this->params['breadcrumbs'][] = $this->title;
             'options' => ['class' => 'w-100'], // Garante largura total
         ]); ?>
 
-        <!-- Inputs na parte superior -->
+        <!-- Filtros no topo -->
         <div class="row g-3 mb-3">
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <?= $form->field($searchModel, 'nome')->textInput([
-                    'placeholder' => 'Search by title',
+                    'placeholder' => 'Search by name',
                     'class' => 'form-control w-100',
-                ]) ?>
+                ])->label('Search by Name') ?>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <?= $form->field($searchModel, 'idmarca')->dropDownList(
                     ArrayHelper::map(\common\models\Marca::find()->all(), 'id', 'nome'),
-                    ['prompt' => 'Selecione a marca']
-                )->label('Selecione a marca') ?>
+                    ['prompt' => 'Select the brand']
+                )->label('Filter by Brand') ?>
+            </div>
+            <div class="col-md-4">
+                <?= $form->field($searchModel, 'tipoartigo')->dropDownList(
+                    ['marketplace' => 'Marketplace', 'loja' => 'Loja'], // Opções do dropdown
+                    [
+                        'prompt' => 'Select the section',
+                    ]
+                )->label('Filter by Section') ?>
+            </div>
+
+        </div>
+
+        <!-- Filtros abaixo -->
+        <div class="row g-3 mb-3">
+            <div class="col-md-3">
+                <?= $form->field($searchModel, 'tipo')->dropDownList(
+                    ['premium' => 'Artigo Premium', 'normal' => 'Artigo Normal'], // Opções do dropdown
+                    [
+                        'prompt' => 'Select the type',
+                    ]
+                )->label('Filter by type') ?>
             </div>
             <div class="col-md-3">
                 <?= $form->field($searchModel, 'idcategoria')->dropDownList(
                     ArrayHelper::map(\common\models\Categoriaartigo::find()->all(), 'id', 'nome'),
-                    ['prompt' => 'Selecione a categoria']
-                )->label('Selecione a categoria') ?>
+                    ['prompt' => 'Select the category']
+                )->label('Filter by category') ?>
             </div>
             <div class="col-md-3">
                 <?= $form->field($searchModel, 'idtamanho')->dropDownList(
                     ArrayHelper::map(\common\models\Tamanho::find()->all(), 'id', 'tamanho'),
-                    ['prompt' => 'Selecione o tamanho']
-                )->label('Selecione o tamanho') ?>
+                    ['prompt' => 'Select the size']
+                )->label('Filter by Size') ?>
             </div>
             <div class="col-md-3">
                 <?= $form->field($searchModel, 'ativo')->dropDownList(
-                    [1 => 'Active', 0 => 'Inactive'], // Opções do dropdown
+                    [1 => 'Active', 0 => 'Inactive'],
                     [
                         'prompt' => 'Select Status',
-                        'options' => [1 => ['Selected' => true]], // Define o "Active" como selecionado por padrão
+                        'options' => [1 => ['Selected' => true]],
                     ]
                 )->label('Status') ?>
             </div>
-                        <!-- Filtro por tipo de artigo (Premium ou Normal) -->
-                        <div class="col-md-3">
-                <?= $form->field($searchModel, 'tipo')->dropDownList(
-                    ['premium' => ' Artigo Premium', 'normal' => 'Artigo Normal'], // Opções do dropdown
-                    [
-                        'prompt' => 'Selecione o tipo de artigo',
-                    ]
-                )->label('Tipo de artigo') ?>
-            </div>
-
         </div>
-        <!-- Botões na parte inferior -->
+
+        <!-- Botões -->
         <div class="row g-3">
             <div class="col-md-3">
                 <?= Html::submitButton('Search', [
@@ -81,7 +95,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 ]) ?>
             </div>
             <div class="col-md-3">
-                <?= Html::a('Create Artigo', ['create'], [
+                <?= Html::a('Create New Item', ['create'], [
                     'class' => 'btn btn-success w-100',
                 ]) ?>
             </div>

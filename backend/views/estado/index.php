@@ -14,8 +14,6 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="estado-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
-
     <p>
         <?= Html::a('Create Condition', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
@@ -25,8 +23,10 @@ $this->params['breadcrumbs'][] = $this->title;
         'dataProvider' => $dataProvider,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-
-            'descricao',
+            [
+               'attribute' => 'descricao',
+                'label' => 'Description',
+            ],
             [
                 'class' => ActionColumn::className(),
                 'urlCreator' => function ($action, Estado $model, $key, $index, $column) {

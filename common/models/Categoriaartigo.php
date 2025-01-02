@@ -28,6 +28,7 @@ class Categoriaartigo extends \yii\db\ActiveRecord
         return [
             [['nome'], 'required'],
             [['nome'], 'string', 'max' => 100],
+            [['ativo'], 'boolean'],
         ];
     }
 
@@ -39,6 +40,7 @@ class Categoriaartigo extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'nome' => 'Nome',
+            'ativo', 'Ativo',
         ];
     }
 

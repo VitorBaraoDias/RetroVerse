@@ -16,13 +16,13 @@ use yii\widgets\ActiveForm;
     <?php $form = ActiveForm::begin(); ?>
 
 
-    <?= $form->field($model, 'precomensal')->textInput(['maxlength' => true])->label('Preço Mensal', ['class' => 'custom-label-class']) ?>
+    <?= $form->field($model, 'precomensal')->textInput(['maxlength' => true])->label('Monthly Price', ['class' => 'custom-label-class']) ?>
 
 
-    <?= $form->field($model, 'idiva')->dropDownList(ArrayHelper::map(Iva::find()->where(['emvigor' => 1])->all(), 'id', 'percentagem'), ['prompt' => 'Selecione o IVA']
-    )->label('Selecione o IVA (%)', ['class' => 'custom-label-class']) ?>
+    <?= $form->field($model, 'idiva')->dropDownList(ArrayHelper::map(Iva::find()->where(['emvigor' => 1])->all(), 'id', 'percentagem'), ['prompt' => 'Select the IVA']
+    )->label('IVA (%)', ['class' => 'custom-label-class']) ?>
 
-    <?= $form->field($model, 'descricao')->textInput(['maxlength' => true])->label('Descrição do Plano', ['class' => 'custom-label-class']) ?>
+    <?= $form->field($model, 'descricao')->textInput(['maxlength' => true])->label('Description', ['class' => 'custom-label-class']) ?>
 
     <?= $form->field($model, 'ativo')->checkbox([
         'label' => 'Active',

@@ -54,18 +54,15 @@
                         'label' => 'MarketPlace',
                         'icon' => 'fa-solid fa-users',
                         'items' => [
-                            ['label' => 'Members', 'url' => ['orders/index'], 'iconStyle' => 'far'],
-                            ['label' => 'Processed Orders', 'url' => ['items/index'], 'iconStyle' => 'far'],
-                            ['label' => 'Reports', 'url' => ['plans/index'], 'iconStyle' => 'far'],
+                            ['label' => 'Item Reports', 'url' => ['denuncia/index'], 'iconStyle' => 'far'],
                         ]
                     ],
                     [
                         'label' => 'General',
                         'icon' => 'fa-solid fa-hammer',
                         'items' => [
-                            ['label' => 'Store Banner', 'url' => ['orders/index'], 'iconStyle' => 'far'],
+                            ['label' => 'Store Banner', 'url' => ['banner/index'], 'iconStyle' => 'far'],
                             ['label' => 'Shipping methods', 'url' => ['metodosexpedicao/index'], 'iconStyle' => 'far'],
-                            ['label' => 'Shipping states', 'url' => ['estadoencomenda/index'], 'iconStyle' => 'far'],
                             ['label' => 'FAQS', 'url' => ['faqs/index'], 'iconStyle' => 'far'],
                             ['label' => 'Users', 'url' => ['user/index'], 'iconStyle' => 'far'],
                             ['label' => 'IVA', 'url' => ['iva/index'], 'iconStyle' => 'far'],

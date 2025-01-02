@@ -85,6 +85,9 @@ class CategoriaartigoController extends Controller
         $model = new Categoriaartigo();
 
         if ($this->request->isPost) {
+
+            $model->ativo = true;
+
             if ($model->load($this->request->post()) && $model->save()) {
                 return $this->redirect(['view', 'id' => $model->id]);
             }

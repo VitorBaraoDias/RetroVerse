@@ -6,14 +6,12 @@ use yii\widgets\DetailView;
 /** @var yii\web\View $this */
 /** @var \common\models\Plano $model */
 
-$this->title = $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Planos', 'url' => ['index']];
+$this->title = $model->descricao;
+$this->params['breadcrumbs'][] = ['label' => 'Plans', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
 <div class="plano-view">
-
-    <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
         <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
@@ -29,8 +27,10 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'id',
-            'precomensal',
+            [
+                'attribute' => 'precomensal',
+                'label' => 'Monthly Payment',
+            ],
             [
                 'attribute' => 'idiva',
                 'value' => function ($model) {
@@ -39,6 +39,15 @@ $this->params['breadcrumbs'][] = $this->title;
                 'label' => 'IVA (%)', // Rótulo personalizado para a coluna
             ],
             'descricao',
+            [
+                'attribute' => 'ativo',
+                'format' => 'raw', // Exibir HTML se necessário
+                'value' => function($model) {
+                    return $model->ativo
+                        ? Html::tag('span', 'Active', ['class' => 'badge bg-success'])
+                        : Html::tag('span', 'Inactive', ['class' => 'badge bg-danger']);
+                },
+            ],
         ],
     ]) ?>
 

@@ -214,7 +214,7 @@ class User extends ActiveRecord implements IdentityInterface
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getPerfils()
+    public function getPerfil()
     {
         return $this->hasOne(Perfil::class, ['id' => 'id']);
     }

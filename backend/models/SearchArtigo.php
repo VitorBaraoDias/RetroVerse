@@ -11,7 +11,7 @@ use yii\data\ActiveDataProvider;
  */
 class SearchArtigo extends Artigo
 {
-    public $tipo; // Campo para filtro (premium ou normal)
+    public $tipo; // campo para filtragem (premium ou normal)
 
     /**
      * {@inheritdoc}
@@ -23,7 +23,7 @@ class SearchArtigo extends Artigo
             [['nome', 'descricao'], 'string', 'max' => 255],
             [['precoanuncio'], 'number'],
             [['tipoartigo'], 'safe'],
-            [['tipo'], 'string'], // Adiciona o tipo (premium ou normal)
+            [['tipo'], 'string'],
         ];
     }
 
@@ -47,7 +47,7 @@ class SearchArtigo extends Artigo
     {
         $query = Artigo::find();
 
-        // Junta com a tabela Artigospremium para verificar os artigos premium
+        // join com artigospremium para verificar os artigos que sao premium
         $query->joinWith('artigospremium', false);
 
 
@@ -81,11 +81,11 @@ class SearchArtigo extends Artigo
         $query->andFilterWhere(['like', 'nome', $this->nome])
             ->andFilterWhere(['like', 'descricao', $this->descricao]);
 
-        // Filtro para tipo de artigo
+        // filtro para tipo de artigo
         if ($this->tipo === 'premium') {
-            $query->andWhere(['IS NOT', 'artigospremium.id', null]); // Artigos premium
+            $query->andWhere(['IS NOT', 'artigospremium.id', null]);
         } elseif ($this->tipo === 'normal') {
-            $query->andWhere(['artigospremium.id' => null]); // Artigos normais (sem correspondência na tabela premium)
+            $query->andWhere(['artigospremium.id' => null]);
         }
 
         $query->andFilterWhere(['like', 'tipoartigo', $this->tipoartigo]);

@@ -15,8 +15,6 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="marca-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
-
     <p>
         <?= Html::a('Add Brand', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
@@ -30,7 +28,31 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'nome',
+            [
+                'attribute' =>  'nome',
+                'label' => 'Name',
+                    ],
+
+
+
+            [
+                'attribute' => 'ativo',
+                'label' => 'Active Status',
+                'format' => 'raw', // Exibir HTML se necessário
+                'value' => function($model) {
+                    return $model->ativo
+                        ? Html::tag('span', 'Active', ['class' => 'badge bg-success'])
+                        : Html::tag('span', 'Inactive', ['class' => 'badge bg-danger']);
+                },
+                'filter' => [
+                    1 => 'Active',         // Opção para Ativo
+                    0 => 'Inactive',       // Opção para Inativo
+                ],
+                'filterInputOptions' => [
+                    'class' => 'form-control', // Estilo do dropdown
+                    'prompt' => 'Select Status' // Texto do prompt no dropdown
+                ]
+            ],
             [
                 'class' => ActionColumn::className(),
                 'urlCreator' => function ($action, Marca $model, $key, $index, $column) {
