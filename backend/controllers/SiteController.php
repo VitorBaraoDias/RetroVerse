@@ -75,24 +75,29 @@ class SiteController extends Controller
         $lojaSales = Linhavenda::getVendasMensaisPorTipoArtigo('LOJA');
         $marcasData = Linhavenda::getMarcasMaisVendidas();
 
+        $lojaSalesCount = $this->getSalesData("LOJA");
+        $marketplaceSalesCount = $this->getSalesData("MARKETPLACE");
+
         return $this->render('index', [
             'marketplaceSales' => json_encode($marketplaceSales),
             'lojaSales' => json_encode($lojaSales),
             'userCount' => $userCount,
             'marcas' => json_encode($marcasData['marcas']),
             'quantidadeVendas' => json_encode($marcasData['quantidade_vendas']),
+            'lojaSalesCount' => $lojaSalesCount,
+            'marketplaceSalesCount' => $marketplaceSalesCount,
         ]);
     }
     private function getSalesData($type)
     {
-        // Ajustar a consulta para usar a relação correta
-        $salesCount = Linhavenda::find()
-            ->joinWith('idartigo0')  // Aqui é a relação correta
-            ->where(['artigos.tipoartigo' => $type])  // Filtra pelo tipo de artigo
-            ->andWhere(['artigos.ativo' => 1])  // Somente artigos ativos
-            ->count();  // Conta as vendas
 
-        return $salesCount ?: 0;  // Retorna 0 se não houver vendas
+        $salesCount = Linhavenda::find()
+            ->joinWith('idartigo0')
+            ->where(['artigos.tipoartigo' => $type])
+            ->andWhere(['artigos.ativo' => 1])
+            ->count();
+
+        return $salesCount ?: 0;
     }
     /**
      * Login action.

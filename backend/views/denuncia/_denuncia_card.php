@@ -17,7 +17,7 @@ use yii\helpers\Html;
                     'style' => 'width: 370px; height: 270px; object-fit: cover;',
                 ]);
             } else {
-                // Se não houver imagem, exibir uma div cinza
+
                 echo Html::tag('div', '', [
                     'class' => 'img-thumbnail',
                     'style' => 'width: 370px; height: 270px; background-color: grey; display: flex; align-items: center; justify-content: center;',
@@ -26,7 +26,7 @@ use yii\helpers\Html;
             ?>
         </div>
         <hr>
-        <h5 class="text-start">Artigo Denunciado: <?= Html::encode($artigo->nome) ?></h5>
+        <h5 class="text-start">Reported Item: <?= Html::encode($artigo->nome) ?></h5>
         <hr>
 
         <p class="text-center">
@@ -34,11 +34,11 @@ use yii\helpers\Html;
             <?= $model->estado ? '<span class="badge bg-success">Resolved</span>' : '<span class="badge bg-warning">Pending</span>' ?>
         </p>
         <hr>
-        <p class="text-start"><strong>Descrição da Denúncia:</strong> <?= Html::encode($model->descricao) ?></p>
+        <p class="text-start"><strong>Report Description:</strong> <?= Html::encode($model->descricao) ?></p>
         <hr>
 
-        <!-- Informações do denunciador -->
-        <p class="text-start"><strong>Denunciante:</strong></p>
+
+        <p class="text-start"><strong>Reporting user:</strong></p>
         <div class="d-flex align-items-center">
             <?php
             $denunciante = $model->iddenunciante0;
@@ -54,11 +54,11 @@ use yii\helpers\Html;
         </div>
         <hr>
 
-        <!-- Informações do denunciado -->
-        <p class="text-start"><strong>Denunciado:</strong></p>
+
+        <p class="text-start"><strong>Reported User:</strong></p>
         <div class="d-flex align-items-center">
             <?php
-            $denunciado = $model->iddenunciado0; // Relacionamento para acessar o usuário denunciado
+            $denunciado = $model->iddenunciado0;
             if ($denunciado && file_exists('../../common/uploads/img-profile/' . $denunciado->caminhofotoperfil)) {
                 echo Html::img(('../../../common/uploads/img-profile/') . $denunciado->caminhofotoperfil, [
                     'alt' => $denunciado->user->username,
@@ -94,7 +94,7 @@ use yii\helpers\Html;
                 <p class="text-muted">This user has already been banned.</p>
             <?php endif; ?>
 
-            <!-- Botão para marcar como resolvido -->
+            <!-- Botão para marcar como resolvida a denuncia -->
             <?= Html::a(
                 'Mark as Resolved',
                 ['denuncia/markasresolved', 'id' => $model->id],

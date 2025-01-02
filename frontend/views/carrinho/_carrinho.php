@@ -55,7 +55,7 @@ $isPremium = $perfil ? $perfil->hasActivePremiumPlano() : false;
             <h1 style="font-size: 30px">
                 <strong>
                     <?php
-                    // Exibe o preço baseado no status do usuário
+
                     echo $isPremium
                         ? Yii::$app->formatter->asCurrency($model->artigo->precoanuncio, 'EUR')
                         : $model->artigo->getPrecoComComissaoFormatado();
