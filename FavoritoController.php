@@ -25,45 +25,35 @@ class FavoritoController extends ActiveController
         return $behaviors;
     }
 
-    public function actionFavorito($id)
+    public function actionUser($id)
     {
-        $favoritos = Favorito::find()->where(['idperfil' => $id])->all();
+        $favoritos = Favorito::find()
+            ->with([
+                'artigo',               // Carrega a relação com o artigo
+                'artigo.idcomissao0',   // Carrega a comissão associada ao artigo
+                'artigo.idestado0',     // Carrega o estado do artigo
+                'artigo.idmarca0',      // Carrega a marca do artigo
+                'artigo.idcategoria0',  // Carrega a categoria do artigo
+                'artigo.idtamanho0',    // Carrega o tamanho do artigo
+                'artigo.idperfil0',     // Carrega o perfil associado ao artigo
+            ])
+            ->where(['idperfil' => $id]) // Filtra pelo ID do perfil
+            ->all();
 
+        // Verifica se encontrou algum favorito
         if (!$favoritos) {
             Yii::$app->response->statusCode = 404;
             return [
                 'success' => false,
-                'message' => 'Nenhum favorito encontrado para o utilizador fornecido.',
+                'message' => 'No favourites found for this user',
             ];
         }
 
-        $favoritos = Favorito::find()
-            ->with([
-                'artigo',        // Carrega a relação com o artigo
-                'artigo.idestado0', // Carrega o estado do artigo
-                'artigo.idmarca0', // Carrega a marca do artigo
-                'artigo.idcategoria0', // Carrega a categoria do artigo
-                'artigo.idtamanho0', // Carrega o tamanho do artigo
-                'artigo.idperfil0', // Carrega o perfil associado ao artigo
-            ])
-            ->where(['idperfil' => $id])
-            ->all();
-
-        // Verifica se as linhas foram encontradas
-        if (!$favoritos) {
-            return [
-                'success' => true,
-                'carrinho' => [],
-                'message' => 'Nenhuma favorito encontrado.',
-            ];
-        }
-
-        $favoritoFormatted = [];
-
+        // Formata os favoritos com detalhes dos artigos
+        $favoritosFormatted = [];
         foreach ($favoritos as $favorito) {
             $artigo = $favorito->artigo;
-
-            $favoritoFormatted[] = [
+            $favoritosFormatted[] = [
                 'id' => $favorito->id,
                 'idartigo' => $favorito->idartigo,
                 'artigo' => $artigo ? [
@@ -83,44 +73,8 @@ class FavoritoController extends ActiveController
 
         return [
             'success' => true,
-            'favoritos' => $favoritoFormatted,
+            'favoritos' => $favoritosFormatted,
         ];
     }
-
-
-
-
-
-
-    public function actionDeleteFavorito($userId, $favoritoId)
-    {
-        // Busca o favorito pelo ID do usuário e pelo ID do favorito
-        $favorito = Favorito::find()->where(['idperfil' => $userId, 'id' => $favoritoId])->one();
-
-        // Verifica se o favorito existe
-        if (!$favorito) {
-            Yii::$app->response->statusCode = 404;
-            return [
-                'success' => false,
-                'message' => 'Favorito não encontrado para o utilizador fornecido.',
-            ];
-        }
-
-        // Exclui o favorito
-        if ($favorito->delete()) {
-            return [
-                'success' => true,
-                'message' => 'Favorito excluído com sucesso.',
-            ];
-        } else {
-            Yii::$app->response->statusCode = 500;
-            return [
-                'success' => false,
-                'message' => 'Erro ao excluir o favorito.',
-            ];
-        }
-    }
-
-
 
 }

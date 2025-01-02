@@ -1,0 +1,274 @@
+<?php
+
+namespace backend\modules\api\controllers;
+
+use common\models\Carrinho;
+use common\models\Estadoencomenda;
+use common\models\Linhavenda;
+use common\models\Venda;
+use Yii;
+use yii\filters\auth\QueryParamAuth;
+use yii\rest\ActiveController;
+
+/**
+ * Default controller for the `api` module
+ */
+class VendaController extends ActiveController
+{
+    //modelo a criar artigo
+    public $modelClass = 'common\models\Venda';
+
+    public function actions()
+    {
+        $actions = parent::actions();
+        unset($actions['delete']);
+        return $actions;
+    }
+
+    public function behaviors()
+    {
+        $behaviors = parent::behaviors();
+        $behaviors['authenticator'] = [
+            'class' => QueryParamAuth::className(),
+        ];
+        return $behaviors;
+    }
+
+    public function actionDetalhesvenda($id)
+    {
+        $venda = Venda::find()
+            ->where(['id' => $id])
+            ->with('linhavendas.idartigo0')
+            ->one();
+
+        if (!$venda) {
+            return [
+                'status' => 'error',
+                'message' => 'Sale not found',
+            ];
+        }
+
+        $linhasVenda = [];
+        foreach ($venda->linhavendas as $linha) {
+            $artigo = $linha->idartigo0;
+
+            $linhasVenda[] = [
+                'idartigo' => $linha->idartigo,
+                'idvendedor' => $linha->idvendedor,
+                'nome' => $artigo ? $artigo->nome : null,
+                'preco' => $artigo ? $artigo->precoanuncio : null,
+                'descricao' => $artigo ? $artigo->descricao : null,
+                'marca' => $artigo && $artigo->idmarca0 ? $artigo->idmarca0->nome : null,
+                'tamanho' => $artigo && $artigo->idtamanho0 ? $artigo->idtamanho0->tamanho : null,
+                'categoria' => $artigo && $artigo->idcategoria0 ? $artigo->idcategoria0->nome : null,
+                'tipo' => $artigo ? $artigo->tipoartigo : null,
+                'idperfil' => $artigo ? $artigo->idperfil : null,
+            ];
+        }
+
+        $detalhes = [
+            'idvenda' => $venda->id,
+            'total' => $venda->total,
+            'datavenda' => $venda->datavenda,
+            'idestadoencomenda' => $venda->idestadoencomenda,
+            'idmetodoexpedicao' => $venda->idmetodoexpedicao,
+            'idtipopagamento' => $venda->idtipopagamento,
+            'linhas_venda' => $linhasVenda,
+        ];
+
+        return [
+            'status' => 'success',
+            'detalhesVenda' => $detalhes,
+        ];
+    }
+
+
+
+    public function actionComprar()
+    {
+        $modelClass = new Venda();
+
+        $request = Yii::$app->request->post();
+        $userId = $request['iduser'];
+        $carrinho = Carrinho::findOne(['iduser' => $userId]);
+
+        $transaction = Yii::$app->db->beginTransaction();
+
+        if (!$carrinho->ifExistsCart()) {
+            throw new \yii\web\ForbiddenHttpException('CART NOT FOUND');
+        }
+
+
+        try {
+            if ($carrinho->ifExistsCart() && Yii::$app->request->isPost)
+            {
+                $modelClass->idcomprador = $userId;
+                $modelClass->total = $carrinho->getTotalVenda();
+                $modelClass->idestadoencomenda = Estadoencomenda::getIdByStatusCode1();
+                $modelClass->idmetodoexpedicao = $request['idmetodoexpedicao'] ?? null;
+                $modelClass->idtipopagamento = $request['idtipopagamento'] ?? null;
+                $modelClass->nome = $request['nome'] ?? null;
+                $modelClass->codigopostal = $request['codigopostal'] ?? null;
+                $modelClass->morada = $request['morada'] ?? null;
+                $modelClass->pais = $request['pais'] ?? null;
+                $modelClass->cidade = $request['cidade'] ?? null;
+
+
+                  // Tenta salvar o modelo Venda
+                    if (!$modelClass->save()) {
+                        // Loga os erros de validação
+                        throw new \Exception('ERROR: Could not save this purchase. ' . json_encode($modelClass->errors));
+                    }
+
+
+                    // Processa as linhas do carrinho
+                    $linhasCarrinho = $carrinho->getLinhascarrinhos()->all();
+
+                    foreach ($linhasCarrinho as $linha) {
+                        $linhaVenda = new Linhavenda();
+                        $linhaVenda->idvenda = $modelClass->id;
+                        $linhaVenda->idartigo = $linha->idartigo;
+                        $linhaVenda->idvendedor = $linha->artigo->idperfil;
+                        $linhaVenda->idestadoencomenda = Estadoencomenda::getIdByStatusCode1();
+
+                        if (!$linhaVenda->save()) {
+                            throw new \Exception('ERROR: Could not save this purchase' . json_encode($linhaVenda->errors));
+                        }
+
+                        // Atualiza o saldo pendente do vendedor
+                        $vendedorPerfil = $linhaVenda->idvendedor0;
+                        if ($vendedorPerfil) {
+                            $vendedorPerfil->saldopendente += $linha->artigo->precoanuncio;
+                            if (!$vendedorPerfil->save(false)) {
+                                throw new \Exception('ERROR: Could not save pending balance: ' . json_encode($vendedorPerfil->errors));
+                            }
+                        }
+                    }
+
+                    // Limpar as linhas do carrinho
+                    foreach ($linhasCarrinho as $linha) {
+                        if (!$linha->delete()) {
+                            throw new \Exception('ERROR: Could not save this purchase' . json_encode($linha->errors));
+                        }
+                    }
+
+                    // Desativar artigo após a venda
+                    $linhaVenda->idartigo0->ativo = 0;
+                    $linhaVenda->idartigo0->save();
+                    $transaction->commit();
+
+                    return [
+                        'status' => 'success',
+                        'message' => 'Purchase completed.',
+                    ];
+
+            }
+
+
+        } catch (\Exception $e) {
+            $transaction->rollBack();
+            throw new \Exception('ERROR: Could not complete this purchase.' . json_encode($modelClass->errors));
+        }
+
+    }
+
+    public function actionHistoricocompras($iduser)
+    {
+        $vendas = Venda::find()
+            ->where(['idcomprador' => $iduser])
+            ->with('linhavendas.idartigo0')  // Inclui as informações do artigo relacionado
+            ->all();
+
+        if (empty($vendas)) {
+            return [
+                'status' => 'error',
+                'message' => 'No purchases found.',
+            ];
+        }
+
+        // Prepara a resposta com as informações das compras
+        $historico = [];
+        foreach ($vendas as $venda) {
+            $linhasVenda = [];
+            foreach ($venda->linhavendas as $linha) {
+                // Acessa o artigo relacionado usando o método getIdartigo0()
+                $artigo = $linha->idartigo0; // Acessa o artigo relacionado à linha de venda
+
+                $linhasVenda[] = [
+                    'idartigo' => $linha->idartigo,
+                    'idvendedor' => $linha->idvendedor,
+                    'nome' => $artigo ? $artigo->nome : null,
+                    'preco' => $artigo ? $artigo->precoanuncio : null,
+                    'descricao' => $artigo ? $artigo->descricao : null,
+                    'marca' => $artigo ? $artigo->idmarca0->nome : null,
+                    'tamanho' => $artigo ? $artigo->idtamanho0->tamanho : null,
+                    'categoria' => $artigo ? $artigo->idcategoria0->nome: null,
+                    'tipo' => $artigo ? $artigo->tipoartigo : null,
+                    'idperfil' => $artigo ? $artigo->idperfil : null,
+
+
+                ];
+            }
+
+            $historico[] = [
+                'idvenda' => $venda->id,
+                'total' => $venda->total,
+                'datavenda' => $venda->datavenda,
+                'idestadoencomenda' => $venda->idestadoencomenda,
+                'idmetodoexpedicao' => $venda->idmetodoexpedicao,
+                'idtipopagamento' => $venda->idtipopagamento,
+                'linhas_venda' => $linhasVenda,  // Inclui as linhas de venda associadas
+            ];
+        }
+
+        return [
+            'status' => 'success',
+            'historicocompras' => $historico,
+        ];
+    }
+
+    public function actionHistoricovendas($iduser)
+    {
+        // Procurar as compras realizadas pelo user especificado
+        $linhasVenda = Linhavenda::find()
+            ->where(['idvendedor' => $iduser])
+            ->with(['idvenda0', 'idartigo0.idmarca0', 'idartigo0.idtamanho0', 'idartigo0.idcategoria0']) // Inclui as relações necessárias
+            ->all();
+
+        // Verifica se encontrou alguma linha de venda
+        if (empty($linhasVenda)) {
+            return [
+                'status' => 'error',
+                'message' => 'No sales found for this user.',
+            ];
+        }
+
+        // Prepara a resposta com as informações das linhas de venda
+        $historico = [];
+        foreach ($linhasVenda as $linha) {
+            $artigo = $linha->idartigo0; // Acessa o artigo relacionado à linha de venda
+            $venda = $linha->idvenda0;  // Acessa a venda relacionada à linha de venda
+
+            $historico[] = [
+                'idlinhavenda' => $linha->id,
+                'idvenda' => $linha->idvenda,
+                'datavenda' => $venda ? $venda->datavenda : null, // Data da venda
+                'idestadoencomenda' => $linha->idestadoencomenda,
+                'idartigo' => $linha->idartigo,
+                'nome' => $artigo ? $artigo->nome : null,
+                'preco' => $artigo ? $artigo->precoanuncio : null,
+                'descricao' => $artigo ? $artigo->descricao : null,
+                'marca' => $artigo && $artigo->idmarca0 ? $artigo->idmarca0->nome : null,
+                'tamanho' => $artigo && $artigo->idtamanho0 ? $artigo->idtamanho0->tamanho : null,
+                'categoria' => $artigo && $artigo->idcategoria0 ? $artigo->idcategoria0->nome : null,
+                'tipo' => $artigo ? $artigo->tipoartigo : null,
+            ];
+        }
+
+        return [
+            'status' => 'success',
+            'historicovendas' => $historico,
+        ];
+
+    }
+}
