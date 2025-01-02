@@ -6,8 +6,8 @@ use common\models\Linhavenda;
 use common\models\LoginForm;
 use common\models\User;
 use Yii;
-use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\Response;
 

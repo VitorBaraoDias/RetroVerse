@@ -5,12 +5,12 @@ namespace frontend\controllers;
 use common\models\Artigo;
 use common\models\Conversa;
 use common\models\Listachats;
-use common\models\Mensagenstexto;
+use common\models\Mensagemtexto;
 use Yii;
 use yii\data\ActiveDataProvider;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 
 /**
  * ChatController implements the CRUD actions for Chat model.
@@ -93,7 +93,7 @@ class ChatController extends Controller
             'chatAtual' => $chatAtual,
             'dataProvider' => $dataProvider, // DataProvider para as conversas
             'modelConversa' => new Conversa(),
-            'modelTexto' => new Mensagenstexto(),
+            'modelTexto' => new Mensagemtexto(),
         ]);
     }
 

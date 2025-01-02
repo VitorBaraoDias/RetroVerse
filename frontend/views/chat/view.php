@@ -2,12 +2,10 @@
 
 use common\models\Conversa;
 use yii\data\ActiveDataProvider;
-use yii\helpers\Html;
-use yii\widgets\DetailView;
 use yii\widgets\ListView;
 
 /** @var yii\web\View $this */
-/** @var common\models\Listachats $model */
+/** @var \common\models\Listachats $model */
 
 \yii\web\YiiAsset::register($this);
 
@@ -54,12 +52,29 @@ $dataProviderChata = new ActiveDataProvider([
                 'itemView' => '../conversa/_chat',
                 'layout' => '<div class="chat-box" id="chat">{items}</div>',
             ]) ?>
-            <div style="margin-top: auto;">
-                <?= $this->render('../conversa/create', [
-                    'model' => $modelConversa,
-                    'idchat' => $chatAtual->id, // Passa o id do chat atual
-                    'modelTexto' => $modelTexto,
-                ]) ?>
+            <div style="margin-top: auto;" class="row mr-0 ml-0">
+                <hr class="p-0 m-0 border-0">
+                <?php if (Yii::$app->user->identity->id !== $chatAtual->artigo->idperfil): ?>
+                    <div class="col-md-8  pt-3">
+                        <?= $this->render('../conversa/create', [
+                            'model' => $modelConversa,
+                            'idchat' => $chatAtual->id, // Passa o id do chat atual
+                            'modelTexto' => $modelTexto,
+                        ]) ?></div>
+                    <div class="col-md-4 pt-3">
+                        <?= $this->render('../mensagemproposta/create', [
+                            'model' => new \common\models\Mensagemproposta(),
+                            'idchat' => $chatAtual->id,
+                        ]) ?>
+                    </div>
+                <?php else: ?>
+                    <div class="col-md-12  pt-3">
+                        <?= $this->render('../conversa/create', [
+                            'model' => $modelConversa,
+                            'idchat' => $chatAtual->id, // Passa o id do chat atual
+                            'modelTexto' => $modelTexto,
+                        ]) ?></div>
+                <?php endif; ?>
             </div>
         </div>
     </div>
@@ -87,9 +102,9 @@ $dataProviderChata = new ActiveDataProvider([
     client.on('connect', function () {
         console.log("Conectado ao broker MQTT via WebSocket");
         // Inscrever-se no tópico 'chat/12'
-        client.subscribe("chat/12", function (err) {
+        client.subscribe('chat/${<?= $chatAtual->id ?>}', function (err) {
             if (!err) {
-                console.log("Inscrito no tópico: chat/12");
+                console.log("Inscrito no tópico: chat/${<?= $chatAtual->id ?>}");
             } else {
                 console.log("Erro ao se inscrever: " + err);
             }

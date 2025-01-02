@@ -2,7 +2,6 @@
 
 namespace common\models;
 
-use Bluerhinos\phpMQTT;
 use Yii;
 
 /**
@@ -69,7 +68,6 @@ class Conversa extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Listachats::class, ['id' => 'idchat']);
     }
-
     /**
      * Gets query for [[Idmensagem0]].
      *
@@ -77,7 +75,7 @@ class Conversa extends \yii\db\ActiveRecord
      */
     public function getMensagem()
     {
-        return $this->hasOne(Mensagenstexto::class, ['id' => 'idmensagem']);
+        return $this->hasOne(Mensagemtexto::class, ['id' => 'idmensagem']);
     }
 
     /**
@@ -89,6 +87,10 @@ class Conversa extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Mensagemfoto::class, ['id' => 'idmensagem']);
     }
+    public function getMensagemproposta()
+    {
+        return $this->hasOne(Mensagemproposta::class, ['id' => 'idmensagem']);
+    }
     public function afterSave($insert, $changedAttributes)
     {
         parent::afterSave($insert, $changedAttributes);
@@ -96,11 +98,18 @@ class Conversa extends \yii\db\ActiveRecord
         if($insert){
 
             $myObj=new \stdClass();
-            $myObj->descricao= $this->mensagem->descricao;
-            $myJSON = json_encode($myObj);
-            $topic = "chat/{$this->idchat}";
+            if($this->mensagem){
+                $myObj->descricao= $this->mensagem->descricao;
+                $myJSON = json_encode($myObj);
+                $topic = "chat/{$this->idchat}";
 
-            $this->FazPublishNoMosquitto($topic,$myJSON);
+                $this->FazPublishNoMosquitto($topic,$myJSON);
+            }
+            else if($this->mensagemfoto){
+                var_dump($this->mensagemfoto);
+                die();
+            }
+
         }
     }
     public function FazPublishNoMosquitto($canal,$msg)

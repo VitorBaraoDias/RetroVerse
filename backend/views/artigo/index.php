@@ -1,6 +1,5 @@
 <?php
 
-use common\models\Artigo;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\helpers\Url;

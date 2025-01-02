@@ -3,7 +3,7 @@
 use yii\helpers\Html;
 
 /** @var yii\web\View $this */
-/** @var common\models\Carrinho $model */
+/** @var \common\models\Carrinho $model */
 
 $this->title = 'Create Carrinho';
 $this->params['breadcrumbs'][] = ['label' => 'Carrinhos', 'url' => ['index']];

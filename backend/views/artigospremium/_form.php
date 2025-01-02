@@ -1,13 +1,15 @@
 <?php
 
+use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-use yii\helpers\ArrayHelper; // Para mapear dados para o dropdown
+
+// Para mapear dados para o dropdown
 
 /** @var yii\web\View $this */
-/** @var common\models\Artigospremium $model */
+/** @var \common\models\Artigospremium $model */
 /** @var yii\widgets\ActiveForm $form */
-/** @var common\models\Plano[] $planos */
+/** @var \common\models\Plano[] $planos */
 
 ?>
 

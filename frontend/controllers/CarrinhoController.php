@@ -3,15 +3,13 @@
 namespace frontend\controllers;
 
 use common\models\Carrinho;
-
 use common\models\Iva;
-
 use common\models\Linhascarrinho;
 use Yii;
 use yii\data\ActiveDataProvider;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 
 /**
  * CarrinhoController implements the CRUD actions for Carrinho model.

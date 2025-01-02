@@ -5,7 +5,6 @@ namespace backend\modules\api\controllers;
 use Yii;
 use yii\filters\auth\QueryParamAuth;
 use yii\rest\ActiveController;
-use common\models\Linhascarrinho;
 
 /**
  * Default controller for the `api` module

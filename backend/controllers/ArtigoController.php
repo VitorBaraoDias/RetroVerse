@@ -2,13 +2,14 @@
 
 namespace backend\controllers;
 
+use app\models\SearchArtigo;
+use backend\models\UploadForm;
 use backend\models\UploadMultipleForm;
 use common\models\Artigo;
-use app\models\SearchArtigo;
 use Yii;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 
 /**
  * ArtigoController implements the CRUD actions for Artigo model.

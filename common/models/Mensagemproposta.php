@@ -2,17 +2,18 @@
 
 namespace common\models;
 
-use Yii;
-
 /**
  * This is the model class for table "mensagempropostas".
  *
  * @property int $id
- * @property float $preço
+ * @property float $preco
  * @property int $estado
+ * @property int $iduser
+ * @property int $idartigo
  * @property int $idchat
  *
- * @property Chats $idchat0
+ * @property Artigos $idartigo0
+ * @property Perfils $iduser0
  */
 class Mensagemproposta extends \yii\db\ActiveRecord
 {
@@ -30,10 +31,12 @@ class Mensagemproposta extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['preço', 'estado', 'idchat'], 'required'],
-            [['preço'], 'number'],
-            [['estado', 'idchat'], 'integer'],
-            [['idchat'], 'exist', 'skipOnError' => true, 'targetClass' => Chats::class, 'targetAttribute' => ['idchat' => 'id']],
+            [['preco', 'estado', 'iduser', 'idartigo', 'idchat'], 'required'],
+            [['preco'], 'number'],
+            ['estado', 'in', 'range' => [0, 1, 2]], // 0 = Pendente, 1 = Recusado, 2 = Aceite
+            [['estado', 'iduser', 'idartigo', 'idchat'], 'integer'],
+            [['idartigo'], 'exist', 'skipOnError' => true, 'targetClass' => Artigo::class, 'targetAttribute' => ['idartigo' => 'id']],
+            [['iduser'], 'exist', 'skipOnError' => true, 'targetClass' => Perfil::class, 'targetAttribute' => ['iduser' => 'id']],
         ];
     }
 
@@ -44,19 +47,39 @@ class Mensagemproposta extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'preço' => 'Preço',
+            'preco' => 'preco',
             'estado' => 'Estado',
-            'idchat' => 'Idchat',
+            'iduser' => 'Iduser',
+            'idartigo' => 'Idartigo',
         ];
     }
 
+    /**
+     * Gets query for [[Idartigo0]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getArtigo()
+    {
+        return $this->hasOne(Artigo::class, ['id' => 'idartigo']);
+    }
+
+    /**
+     * Gets query for [[Iduser0]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getIduser0()
+    {
+        return $this->hasOne(Perfils::class, ['id' => 'iduser']);
+    }
     /**
      * Gets query for [[Idchat0]].
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getIdchat0()
+    public function getChat()
     {
-        return $this->hasOne(Chats::class, ['id' => 'idchat']);
+        return $this->hasOne(Listachats::class, ['id' => 'idchat']);
     }
 }

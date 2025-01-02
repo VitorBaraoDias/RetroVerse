@@ -2,12 +2,12 @@
 
 namespace backend\controllers;
 
-use common\models\Metodosexpedicao;
 use backend\models\SearchMetodosexpedicao;
+use common\models\Metodosexpedicao;
 use yii\filters\AccessControl;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 
 /**
  * MetodosexpedicaoController implements the CRUD actions for Metodosexpedicao model.

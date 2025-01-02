@@ -2,12 +2,12 @@
 
 namespace backend\controllers;
 
-use common\models\Tamanho;
 use common\models\SearchTamanho;
+use common\models\Tamanho;
 use yii\filters\AccessControl;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 
 /**
  * TamanhoController implements the CRUD actions for Tamanho model.

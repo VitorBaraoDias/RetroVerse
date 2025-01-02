@@ -8,15 +8,11 @@ use common\models\Comissao;
 use Yii;
 use common\models\Artigospremium;
 use common\models\Artigo;
-use common\models\Favorito;
 use frontend\models\SearchArtigo;
 use yii\data\ActiveDataProvider;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
-use yii\db\Query;
-
-
 
 
 /**

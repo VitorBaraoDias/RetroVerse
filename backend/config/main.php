@@ -63,14 +63,13 @@ return [
             'rules' => [
                 ['class' => 'yii\rest\UrlRule',
                     'controller' => 'api/artigo',
-                'extraPatterns' => [
+                    'extraPatterns' => [
                     'GET {id}' => 'artigodetalhes',
                     'GET {tipoartigo}/{tamanho}/{marca}/{estado}' => 'artigofiltro',
                     'GET {tipoartigo}/{tamanho}/{marca}' => 'artigofiltro',
                     'GET {tipoartigo}/{tamanho}' => 'artigofiltro',
                     'GET {tipoartigo}' => 'artigofiltro',
                     'GET ' => 'artigofiltro',
-
                 ], 'tokens' => [
                         '{id}' => '<id:\\d+>',
                         '{tipoartigo}' => '<tipoartigo:\\w+>',

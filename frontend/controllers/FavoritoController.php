@@ -5,9 +5,9 @@ namespace frontend\controllers;
 use common\models\Favorito;
 use Yii;
 use yii\data\ActiveDataProvider;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 
 /**
  * FavoritoController implements the CRUD actions for Favorito model.

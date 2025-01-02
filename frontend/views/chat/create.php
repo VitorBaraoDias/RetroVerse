@@ -1,12 +1,7 @@
 <?php
 
 use common\models\Conversa;
-use common\models\Listachats;
 use yii\data\ActiveDataProvider;
-use yii\helpers\Html;
-use yii\helpers\Url;
-use yii\grid\ActionColumn;
-use yii\grid\GridView;
 use yii\widgets\ListView;
 
 /** @var yii\web\View $this */

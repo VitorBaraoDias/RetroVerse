@@ -3,7 +3,7 @@
 use yii\helpers\Html;
 
 /** @var yii\web\View $this */
-/** @var common\models\Iva $model */
+/** @var \common\models\Iva $model */
 
 $this->title = 'Update Iva: ' . $model->id;
 $this->params['breadcrumbs'][] = ['label' => 'Ivas', 'url' => ['index']];

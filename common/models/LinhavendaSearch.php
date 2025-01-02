@@ -4,8 +4,6 @@ namespace common\models;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\Linhavenda;
-use common\models\Estadoencomenda;
 
 /**
  * LinhavendaSearch represents the model behind the search form of `common\models\Linhavenda`.

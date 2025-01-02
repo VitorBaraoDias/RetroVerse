@@ -2,8 +2,6 @@
 
 namespace common\models;
 
-use Yii;
-
 /**
  * This is the model class for table "perfils".
  *
@@ -237,6 +235,10 @@ class Perfil extends \yii\db\ActiveRecord
         $average = $this->getAvaliacoes()->average('escala');
         // Se não houver avaliações, retorna 0, caso contrário, arredonda para 2 casas decimais
         return $average === null ? 0 : round($average, 2);
+    }
+    public function getMensagempropostas()
+    {
+        return $this->hasMany(Mensagemproposta::class, ['iduser' => 'id']);
     }
 
 

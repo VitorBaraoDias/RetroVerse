@@ -1,9 +1,7 @@
 <?php
 
-use yii\helpers\Html;
-
 /** @var yii\web\View $this */
-/** @var common\models\Artigo $model */
+/** @var \common\models\Artigo $model */
 
 $this->title = 'Update Item: ' . $model->nome;
 $this->params['breadcrumbs'][] = ['label' => 'Items', 'url' => ['index']];

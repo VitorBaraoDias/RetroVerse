@@ -1,10 +1,9 @@
 <?php
 
-use yii\helpers\Html;
-use yii\helpers\Url;
 use common\models\Estadoencomenda;
+use yii\helpers\Html;
 
-/* @var $model common\models\Linhavenda */
+/* @var $model \common\models\Linhavenda */
 
 $precoBase = $model->idartigo0->precoanuncio;
 $porcentagemIVA = Yii::$app->params['iva'] ?? 20;
@@ -47,10 +46,10 @@ $precoComIVA = $precoBase + $valorIVA;
                 </div>
                 <div class="d-flex flex-column align-items-start">
                     <h2 style="font-size: 24px">
-                        <strong><?= Yii::$app->formatter->asCurrency($model->idartigo0->getPrecoComComissao(), 'EUR') ?></strong>
+                        <strong><?= Yii::$app->formatter->asCurrency($model->idartigo0->getPriceWithCommissionOrProposal(), 'EUR') ?></strong>
                     </h2>
                     <h3 style="font-size: 18px">
-                        <?= Yii::$app->formatter->asCurrency($model->idartigo0->precoanuncio, 'EUR') ?>
+                        <?= Yii::$app->formatter->asCurrency($model->idartigo0->getPriceWithProposalIfExist(), 'EUR') ?>
                     </h3>
                 </div>
             </div>

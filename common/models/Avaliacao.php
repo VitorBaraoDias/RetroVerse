@@ -2,8 +2,6 @@
 
 namespace common\models;
 
-use Yii;
-
 /**
  * This is the model class for table "avaliacoes".
  *
@@ -35,12 +33,14 @@ class Avaliacao extends \yii\db\ActiveRecord
     {
         return [
             [['descricao', 'escala', 'idremetente', 'iddestinatario', 'idlinhavenda'], 'required'],
-            [['idremetente', 'iddestinatario', 'idlinhavenda', 'escala'], 'integer'],
+            [['idremetente', 'iddestinatario', 'idlinhavenda'], 'integer'],
+            [['escala'], 'integer', 'min' => 1, 'max' => 5, 'message' => 'The scale should be from 0 to 5!'],
             [['iddestinatario'], 'exist', 'skipOnError' => true, 'targetClass' => Perfil::class, 'targetAttribute' => ['iddestinatario' => 'id']],
             [['idremetente'], 'exist', 'skipOnError' => true, 'targetClass' => Perfil::class, 'targetAttribute' => ['idremetente' => 'id']],
             [['idlinhavenda'], 'exist', 'skipOnError' => true, 'targetClass' => Linhavenda::class, 'targetAttribute' => ['idlinhavenda' => 'id']],
         ];
     }
+
 
     /**
      * {@inheritdoc}

@@ -2,11 +2,11 @@
 
 namespace backend\controllers;
 
-use common\models\comissao;
 use backend\models\SearchComissao;
+use common\models\comissao;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 
 /**
  * ComissaoController implements the CRUD actions for comissao model.

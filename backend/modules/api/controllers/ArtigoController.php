@@ -2,10 +2,9 @@
 
 namespace backend\modules\api\controllers;
 use common\models\Artigo;
-use yii\filters\auth\QueryParamAuth;
-use yii\rest\Controller;
-use yii\rest\ActiveController;
 use Yii;
+use yii\filters\auth\QueryParamAuth;
+use yii\rest\ActiveController;
 
 /**
  * Default controller for the `api` module

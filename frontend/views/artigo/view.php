@@ -1,10 +1,8 @@
 <?php
 
-use yii\helpers\Html;
-use yii\widgets\DetailView;
-use yii\widgets\ListView;
-use yii\db\Query;
 use common\models\Favorito;
+use yii\helpers\Html;
+use yii\widgets\ListView;
 
 $userId = Yii::$app->user->id;
 $artigoId = $model->id;

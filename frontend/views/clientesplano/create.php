@@ -3,7 +3,7 @@
 use yii\helpers\Html;
 
 /** @var yii\web\View $this */
-/** @var common\models\Clientesplano $model */
+/** @var \common\models\Clientesplano $model */
 
 $this->title = 'Create Clientesplano';
 

@@ -3,7 +3,7 @@
 use yii\helpers\Html;
 
 /** @var yii\web\View $this */
-/** @var common\models\Categoriaartigo $model */
+/** @var \common\models\Categoriaartigo $model */
 
 $this->title = 'Update Category: ' . $model->nome;
 $this->params['breadcrumbs'][] = ['label' => 'Categories', 'url' => ['index']];

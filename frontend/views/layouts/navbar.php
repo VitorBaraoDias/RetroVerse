@@ -1,6 +1,5 @@
 <?php
 
-use common\models\Carrinho;
 use common\models\Favorito;
 use common\models\Perfil;
 use yii\bootstrap5\Html;

@@ -2,10 +2,10 @@
 
 namespace frontend\models;
 
+use common\models\Artigo;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\Artigo;
 
 /**
  * SearchArtigo represents the model behind the search form of common\models\Artigo.

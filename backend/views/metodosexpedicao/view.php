@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 
 /** @var yii\web\View $this */
-/** @var common\models\Metodosexpedicao $model */
+/** @var \common\models\Metodosexpedicao $model */
 
 $this->title = $model->nome;
 $this->params['breadcrumbs'][] = ['label' => 'Shipping Methods', 'url' => ['index']];

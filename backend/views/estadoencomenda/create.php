@@ -3,7 +3,7 @@
 use yii\helpers\Html;
 
 /** @var yii\web\View $this */
-/** @var common\models\Estadoencomenda $model */
+/** @var \common\models\Estadoencomenda $model */
 
 $this->title = 'Create Estadoencomenda';
 $this->params['breadcrumbs'][] = ['label' => 'Estadoencomendas', 'url' => ['index']];

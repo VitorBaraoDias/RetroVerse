@@ -2,8 +2,6 @@
 
 namespace common\models;
 
-use Yii;
-
 /**
  * This is the model class for table "mensagenstextos".
  *
@@ -13,14 +11,14 @@ use Yii;
  *
  * @property Chats $idchat0
  */
-class Mensagenstexto extends \yii\db\ActiveRecord
+class Mensagemtexto extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
-        return 'mensagenstextos';
+        return 'mensagemtextos';
     }
 
     /**

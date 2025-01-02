@@ -3,7 +3,7 @@
 use yii\helpers\Html;
 
 /** @var yii\web\View $this */
-/** @var common\models\Perfil $model */
+/** @var \common\models\Perfil $model */
 
 $this->title = 'Create Perfil';
 $this->params['breadcrumbs'][] = ['label' => 'Perfils', 'url' => ['index']];

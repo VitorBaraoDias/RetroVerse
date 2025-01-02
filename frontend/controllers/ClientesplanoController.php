@@ -2,13 +2,12 @@
 namespace frontend\controllers;
 
 use common\models\Clientesplano;
-use common\models\Perfil;
 use common\models\Plano;
 use Yii;
 use yii\data\ActiveDataProvider;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 
 
 /**

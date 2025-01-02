@@ -5,9 +5,9 @@ namespace backend\controllers;
 use common\models\Categoriaartigo;
 use common\models\SearchCategoriaartigo;
 use yii\filters\AccessControl;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 
 /**
  * CatergoriaartigoController implements the CRUD actions for Categoriaartigo model.

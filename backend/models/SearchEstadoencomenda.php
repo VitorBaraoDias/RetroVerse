@@ -2,9 +2,9 @@
 
 namespace backend\models;
 
+use common\models\Estadoencomenda;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\Estadoencomenda;
 
 /**
  * SearchEstadoencomenda represents the model behind the search form of `common\models\Estadoencomenda`.

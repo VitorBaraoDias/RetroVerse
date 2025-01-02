@@ -3,12 +3,9 @@
 namespace backend\modules\api\controllers;
 
 use common\models\Perfil;
-use Yii;
-use yii\filters\auth\QueryParamAuth;
-use yii\rest\ActiveController;
 use common\models\User;
-use yii\web\Response;
-use function Psy\debug;
+use Yii;
+use yii\rest\ActiveController;
 
 /** * Default controller for the `api` module */
 class UserController extends ActiveController
@@ -18,9 +15,6 @@ class UserController extends ActiveController
     public function behaviors()
     {
         $behaviors = parent::behaviors();
-        $behaviors['authenticator'] = [
-            'class' => QueryParamAuth::className(),
-        ];
         return $behaviors;
     }
 
@@ -36,7 +30,7 @@ class UserController extends ActiveController
         {
             return ['auth_key' => $user->auth_key];
         }
-        throw new \yii\web\ForbiddenHttpException('No authentication');
+        throw new \yii\web\ForbiddenHttpException('Invalid');
     }
 
     public function actionUsercreate()

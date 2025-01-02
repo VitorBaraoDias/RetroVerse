@@ -1,10 +1,8 @@
 <?php
 
 namespace backend\controllers;
-use Yii;
 use app\models\SearchPlano;
 use common\models\Plano;
-use common\models\Iva;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\web\Controller;

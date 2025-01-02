@@ -3,7 +3,7 @@
 use yii\helpers\Html;
 
 /** @var yii\web\View $this */
-/** @var common\models\Artigospremium $model */
+/** @var \common\models\Artigospremium $model */
 
 $this->title = 'Update Artigospremium: ' . $model->id;
 $this->params['breadcrumbs'][] = ['label' => 'Artigospremia', 'url' => ['index']];

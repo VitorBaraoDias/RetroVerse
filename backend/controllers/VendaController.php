@@ -5,9 +5,9 @@ namespace backend\controllers;
 use common\models\Venda;
 use common\models\VendaSearch;
 use Yii;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 
 /**
  * VendaController implements the CRUD actions for Venda model.

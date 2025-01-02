@@ -3,7 +3,7 @@
 use yii\helpers\Html;
 
 /** @var yii\web\View $this */
-/** @var common\models\Artigospremium $model */
+/** @var \common\models\Artigospremium $model */
 
 $this->title = 'Atrbuir como artigo premium';
 //$this->params['breadcrumbs'][] = ['label' => 'Artigospremium', 'url' => ['index']];

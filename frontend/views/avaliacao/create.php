@@ -1,9 +1,7 @@
 <?php
 
-use yii\helpers\Html;
-
 /** @var yii\web\View $this */
-/** @var common\models\Avaliacao $model */
+/** @var \common\models\Avaliacao $model */
 ?>
 <div class="avaliacao-create container">
 

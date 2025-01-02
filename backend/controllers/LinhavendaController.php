@@ -1,15 +1,14 @@
 <?php
 
 namespace backend\controllers;
-
 use Yii;
 use yii\data\ActiveDataProvider;
 use common\models\Linhavenda;
 use common\models\Estadoencomenda;
 use common\models\LinhavendaSearch;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 
 /**
  * LinhavendaController implements the CRUD actions for Linhavenda model.

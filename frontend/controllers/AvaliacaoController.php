@@ -7,9 +7,9 @@ use common\models\Linhavenda;
 use common\models\Perfil;
 use Yii;
 use yii\data\ActiveDataProvider;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 
 /**
  * AvaliacaoController implements the CRUD actions for Avaliacao model.
@@ -91,7 +91,7 @@ class AvaliacaoController extends Controller
             $model->iddestinatario = $linhaVenda->idvendedor;
             $model->idlinhavenda = $linhaVenda->id;
             if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['venda/view', 'id' => $id]);
+                return $this->redirect(['venda/view', 'id' => $linhaVenda->idvenda]);
             }
         } else {
             $model->loadDefaultValues();

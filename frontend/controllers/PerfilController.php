@@ -2,14 +2,12 @@
 
 namespace frontend\controllers;
 
-use common\models\Carrinho;
 use common\models\Perfil;
 use common\models\UploadSingleForm;
 use Yii;
-use yii\data\ActiveDataProvider;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 use yii\web\UploadedFile;
 
 /**
