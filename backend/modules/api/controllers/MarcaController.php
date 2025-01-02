@@ -28,7 +28,7 @@ class MarcaController extends ActiveController
             Yii::$app->response->statusCode = 405;
             Yii::$app->response->data = [
                 'success' => false,
-                'message' => 'Este método não é permitido.',
+                'message' => 'METHOD NOT ALLOWED.',
             ];
             return false;
         }

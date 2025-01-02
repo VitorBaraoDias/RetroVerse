@@ -44,7 +44,7 @@ class CarrinhoController extends ActiveController
             Yii::$app->response->statusCode = 404;
             return [
                 'success' => false,
-                'message' => 'Nenhum carrinho encontrado para o utilizador fornecido.',
+                'message' => 'Could not find a cart for this user.',
             ];
         }
 
@@ -67,7 +67,7 @@ class CarrinhoController extends ActiveController
             return [
                 'success' => true,
                 'carrinho' => [],
-                'message' => 'Nenhuma linha encontrada para este carrinho.',
+                'message' => 'No item found in this cart.',
             ];
         }
 
@@ -112,7 +112,7 @@ class CarrinhoController extends ActiveController
             Yii::$app->response->statusCode = 405;
             Yii::$app->response->data = [
                 'success' => false,
-                'message' => 'Este método não é permitido.',
+                'message' => 'METHOD NOT ALLOWED.',
             ];
             return false;
         }
@@ -146,7 +146,7 @@ class CarrinhoController extends ActiveController
                 $carrinhosFormatted[] = [
                     'id' => $carrinho->id,
                     'iduser' => $carrinho->iduser,
-                    'message' => 'Nenhuma linha encontrada para este carrinho.',
+                    'message' => 'Could not find any item in this cart.',
                 ];
                 continue;  // Vai para o próximo carrinho
             }
@@ -199,65 +199,25 @@ class CarrinhoController extends ActiveController
     {
         $request = Yii::$app->request->post();
 
-        // Valida se o carrinho está presente no corpo da requisição
-        if (empty($request['carrinho'])) {
-            Yii::$app->response->statusCode = 400;
-            return [
-                'success' => false,
-                'message' => 'Os dados do carrinho são obrigatórios.',
-            ];
-        }
+        $carrinho = Carrinho::findOne(['iduser' => $request['iduser']]) ?? new Carrinho(['iduser' => $request['iduser']]);
 
-        // Criação do Carrinho
-        $carrinho = new Carrinho();
-        $carrinho->iduser = $request['iduser'];
-        $carrinho->datacriacao = date('Y-m-d H:i:s');
+        if ($carrinho->isNewRecord && !$carrinho->save()) {
+            throw new \yii\web\ForbiddenHttpException('Failed to create a cart');
+    }
 
-        if (!$carrinho->save()) {
-            Yii::$app->response->statusCode = 400;
-            return [
-                'success' => false,
-                'message' => 'Erro ao criar o carrinho.',
-                'errors' => $carrinho->errors,
-            ];
-        }
-
-        $linhasCarrinhoErrors = []; // Para coletar erros nas linhas
-
-        // Processa as linhas do carrinho enviadas
-        foreach ($request['carrinho'] as $linhaData) {
-            $linhaCarrinho = new Linhascarrinho();
-            $linhaCarrinho->idcarrinho = $carrinho->id;
-            $linhaCarrinho->idartigo = $linhaData['idartigo'];
-
-            // Tenta salvar a linha
-            if (!$linhaCarrinho->save()) {
-                $linhasCarrinhoErrors[] = [
-                    'linha' => $linhaData,
-                    'errors' => $linhaCarrinho->errors,
-                ];
-            }
-        }
-
-        // Verifica se houve erros nas linhas do carrinho
-        if (!empty($linhasCarrinhoErrors)) {
-            Yii::$app->response->statusCode = 400;
-            return [
-                'success' => false,
-                'message' => 'Erro ao salvar uma ou mais linhas do carrinho.',
-                'details' => $linhasCarrinhoErrors,
-            ];
+        if (Linhascarrinho::findOne(['idcarrinho' => $carrinho->id, 'idartigo' => $request['idartigo']])) {
+            throw new \yii\web\ForbiddenHttpException('This item is already in the cart for this user.');
+        } else {
+            $linhaCarrinho = new Linhascarrinho(['idcarrinho' => $carrinho->id, 'idartigo' => $request['idartigo']]);
+            $linhaCarrinho->save();
         }
 
         return [
-            'success' => true,
-            'message' => 'Carrinho criado com sucesso!',
-            'data' => [
-                'idcarrinho' => $carrinho->id,
-                'iduser' => $carrinho->iduser,
-            ],
+            'status' => 'success',
+            'message' => 'Cart created!',
         ];
     }
+
 
 
 }

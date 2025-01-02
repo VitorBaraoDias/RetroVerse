@@ -27,7 +27,6 @@ class FavoritoController extends ActiveController
 
     public function actionUser($id)
     {
-        // Busca os favoritos associados ao perfil
         $favoritos = Favorito::find()
             ->with([
                 'artigo',               // Carrega a relação com o artigo
@@ -46,7 +45,7 @@ class FavoritoController extends ActiveController
             Yii::$app->response->statusCode = 404;
             return [
                 'success' => false,
-                'message' => 'Nenhum favorito encontrado para o utilizador fornecido.',
+                'message' => 'No favourites found for this user',
             ];
         }
 
@@ -72,7 +71,6 @@ class FavoritoController extends ActiveController
             ];
         }
 
-        // Retorna a lista de favoritos formatados
         return [
             'success' => true,
             'favoritos' => $favoritosFormatted,
