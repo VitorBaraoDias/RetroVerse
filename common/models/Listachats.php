@@ -19,7 +19,7 @@ namespace common\models;
  * @property Tipomensagem $idtipomensagem0
  * @property \common\models\Mensagemfoto[] $mensagemfotos
  * @property \common\models\Mensagemproposta[] $mensagempropostas
- * @property Mensagenstexto[] $mensagenstextos
+ * @property Mensagemtexto[] $mensagenstextos
  */
 class Listachats extends \yii\db\ActiveRecord
 {
@@ -142,6 +142,6 @@ class Listachats extends \yii\db\ActiveRecord
      */
     public function getMensagenstextos()
     {
-        return $this->hasMany(Mensagenstexto::class, ['idchat' => 'id']);
+        return $this->hasMany(Mensagemtexto::class, ['idchat' => 'id']);
     }
 }

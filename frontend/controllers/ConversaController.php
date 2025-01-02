@@ -3,7 +3,7 @@
 namespace frontend\controllers;
 
 use common\models\Conversa;
-use common\models\Mensagenstexto;
+use common\models\Mensagemtexto;
 use Yii;
 use yii\data\ActiveDataProvider;
 use yii\filters\VerbFilter;
@@ -81,7 +81,7 @@ class ConversaController extends Controller
     {
         // Criar novo modelo de conversa
         $model = new Conversa();
-        $modelTexto = new Mensagenstexto(); // Supondo que o modelo seja Mensagenstextos
+        $modelTexto = new Mensagemtexto(); // Supondo que o modelo seja Mensagenstextos
 
 
         if ($this->request->isPost) {

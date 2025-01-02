@@ -11,14 +11,14 @@ namespace common\models;
  *
  * @property Chats $idchat0
  */
-class Mensagenstexto extends \yii\db\ActiveRecord
+class Mensagemtexto extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
-        return 'mensagenstextos';
+        return 'mensagemtextos';
     }
 
     /**

@@ -75,7 +75,7 @@ class Conversa extends \yii\db\ActiveRecord
      */
     public function getMensagem()
     {
-        return $this->hasOne(Mensagenstexto::class, ['id' => 'idmensagem']);
+        return $this->hasOne(Mensagemtexto::class, ['id' => 'idmensagem']);
     }
 
     /**

@@ -82,7 +82,7 @@ class AvaliacaoController extends Controller
 
         if($linhaVenda->avaliacao){
             Yii::$app->session->setFlash('error', 'Já possui avaliação');
-            return $this->redirect(['venda/view', 'id' => $linhaVenda->idvenda]);
+            return $this->redirect(['venda/view', 'id' => $id]);
 
         }
         if ($this->request->isPost) {

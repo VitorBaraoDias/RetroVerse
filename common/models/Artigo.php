@@ -271,7 +271,6 @@ class Artigo extends \yii\db\ActiveRecord
         // Get the logged-in user's ID
         $userId = Yii::$app->user->id;
 
-        // Find the last accepted proposal (status = 2) by the user for this article
         return $this->getMensagempropostas()
             ->where(['iduser' => $userId, 'estado' => 2]) // status 2 = Accepted
             ->orderBy(['id' => SORT_DESC]) // Sort by ID, newest first
