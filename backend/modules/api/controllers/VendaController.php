@@ -52,17 +52,25 @@ class VendaController extends ActiveController
         foreach ($venda->linhavendas as $linha) {
             $artigo = $linha->idartigo0;
 
+
+            $fotos = [];
+            foreach ($artigo->fotosartigos as $foto) {
+                $fotos[] = $foto->caminhofoto;
+            }
             $linhasVenda[] = [
-                'idartigo' => $linha->idartigo,
                 'idvendedor' => $linha->idvendedor,
-                'nome' => $artigo ? $artigo->nome : null,
-                'preco' => $artigo ? $artigo->precoanuncio : null,
-                'descricao' => $artigo ? $artigo->descricao : null,
-                'marca' => $artigo && $artigo->idmarca0 ? $artigo->idmarca0->nome : null,
-                'tamanho' => $artigo && $artigo->idtamanho0 ? $artigo->idtamanho0->tamanho : null,
-                'categoria' => $artigo && $artigo->idcategoria0 ? $artigo->idcategoria0->nome : null,
-                'tipo' => $artigo ? $artigo->tipoartigo : null,
-                'idperfil' => $artigo ? $artigo->idperfil : null,
+                'artigo' => [
+                    'idartigo' => $linha->idartigo,
+                    'nome' => $artigo ? $artigo->nome : null,
+                    'preco' => $artigo ? $artigo->precoanuncio : null,
+                    'descricao' => $artigo ? $artigo->descricao : null,
+                    'marca' => $artigo && $artigo->idmarca0 ? $artigo->idmarca0->nome : null,
+                    'tamanho' => $artigo && $artigo->idtamanho0 ? $artigo->idtamanho0->tamanho : null,
+                    'categoria' => $artigo && $artigo->idcategoria0 ? $artigo->idcategoria0->nome : null,
+                    'tipo' => $artigo ? $artigo->tipoartigo : null,
+                    'idperfil' => $artigo ? $artigo->idperfil : null,
+                    'fotos' => $fotos,
+                ],
             ];
         }
 
@@ -172,10 +180,10 @@ class VendaController extends ActiveController
 
     }
 
-    public function actionHistoricocompras($iduser)
+    public function actionHistoricocompras($id)
     {
         $vendas = Venda::find()
-            ->where(['idcomprador' => $iduser])
+            ->where(['idcomprador' => $id])
             ->with('linhavendas.idartigo0')  // Inclui as informações do artigo relacionado
             ->all();
 
@@ -186,7 +194,6 @@ class VendaController extends ActiveController
             ];
         }
 
-        // Prepara a resposta com as informações das compras
         $historico = [];
         foreach ($vendas as $venda) {
             $linhasVenda = [];
@@ -194,19 +201,25 @@ class VendaController extends ActiveController
                 // Acessa o artigo relacionado usando o método getIdartigo0()
                 $artigo = $linha->idartigo0; // Acessa o artigo relacionado à linha de venda
 
+                $fotos = [];
+                foreach ($artigo->fotosartigos as $foto) {
+                    $fotos[] = $foto->caminhofoto;
+                }
                 $linhasVenda[] = [
-                    'idartigo' => $linha->idartigo,
-                    'idvendedor' => $linha->idvendedor,
-                    'nome' => $artigo ? $artigo->nome : null,
-                    'preco' => $artigo ? $artigo->precoanuncio : null,
-                    'descricao' => $artigo ? $artigo->descricao : null,
-                    'marca' => $artigo ? $artigo->idmarca0->nome : null,
-                    'tamanho' => $artigo ? $artigo->idtamanho0->tamanho : null,
-                    'categoria' => $artigo ? $artigo->idcategoria0->nome: null,
-                    'tipo' => $artigo ? $artigo->tipoartigo : null,
-                    'idperfil' => $artigo ? $artigo->idperfil : null,
-
-
+                    'artigo' =>[
+                        'idartigo' => $linha->idartigo,
+                        'idvendedor' => $linha->idvendedor,
+                        'nome' => $artigo ? $artigo->nome : null,
+                        'preco' => $artigo ? $artigo->precoanuncio : null,
+                        'descricao' => $artigo ? $artigo->descricao : null,
+                        'marca' => $artigo ? $artigo->idmarca0->nome : null,
+                        'tamanho' => $artigo ? $artigo->idtamanho0->tamanho : null,
+                        'categoria' => $artigo ? $artigo->idcategoria0->nome: null,
+                        'tipo' => $artigo ? $artigo->tipoartigo : null,
+                        'idperfil' => $artigo ? $artigo->idperfil : null,
+                        'fotos' => $fotos,
+                    ],
+                    'estadoencomenda' => $linha->idestadoencomenda0->descricao
                 ];
             }
 
@@ -214,24 +227,23 @@ class VendaController extends ActiveController
                 'idvenda' => $venda->id,
                 'total' => $venda->total,
                 'datavenda' => $venda->datavenda,
-                'idestadoencomenda' => $venda->idestadoencomenda,
-                'idmetodoexpedicao' => $venda->idmetodoexpedicao,
-                'idtipopagamento' => $venda->idtipopagamento,
+                'estadoencomenda' => $venda->estadoEncomenda->descricao,
+                'idmetodoexpedicao' => $venda->metodoExpedicao->nome,
+                'idtipopagamento' => $venda->tipoPagamento->descricao,
                 'linhas_venda' => $linhasVenda,  // Inclui as linhas de venda associadas
             ];
         }
-
         return [
             'status' => 'success',
             'historicocompras' => $historico,
         ];
     }
 
-    public function actionHistoricovendas($iduser)
+    public function actionHistoricovendas($id)
     {
         // Procurar as compras realizadas pelo user especificado
         $linhasVenda = Linhavenda::find()
-            ->where(['idvendedor' => $iduser])
+            ->where(['idvendedor' => $id])
             ->with(['idvenda0', 'idartigo0.idmarca0', 'idartigo0.idtamanho0', 'idartigo0.idcategoria0']) // Inclui as relações necessárias
             ->all();
 
@@ -243,26 +255,32 @@ class VendaController extends ActiveController
             ];
         }
 
-        // Prepara a resposta com as informações das linhas de venda
         $historico = [];
         foreach ($linhasVenda as $linha) {
             $artigo = $linha->idartigo0; // Acessa o artigo relacionado à linha de venda
             $venda = $linha->idvenda0;  // Acessa a venda relacionada à linha de venda
-
+            $fotos = [];
+            foreach ($artigo->fotosartigos as $foto) {
+                $fotos[] = $foto->caminhofoto;
+            }
             $historico[] = [
-                'idlinhavenda' => $linha->id,
-                'idvenda' => $linha->idvenda,
-                'datavenda' => $venda ? $venda->datavenda : null, // Data da venda
-                'idestadoencomenda' => $linha->idestadoencomenda,
-                'idartigo' => $linha->idartigo,
-                'nome' => $artigo ? $artigo->nome : null,
-                'preco' => $artigo ? $artigo->precoanuncio : null,
-                'descricao' => $artigo ? $artigo->descricao : null,
-                'marca' => $artigo && $artigo->idmarca0 ? $artigo->idmarca0->nome : null,
-                'tamanho' => $artigo && $artigo->idtamanho0 ? $artigo->idtamanho0->tamanho : null,
-                'categoria' => $artigo && $artigo->idcategoria0 ? $artigo->idcategoria0->nome : null,
-                'tipo' => $artigo ? $artigo->tipoartigo : null,
-            ];
+                'linhavenda' => [
+                    'idvenda' => $linha->idvenda,
+                    'idlinhavenda' => $linha->id,
+                    'datavenda' => $venda ? $venda->datavenda : null, // Data da venda
+                    'idestadoencomenda' => $linha->idestadoencomenda,
+                    'artigo' =>[
+                        'idartigo' => $linha->idartigo,
+                        'nome' => $artigo ? $artigo->nome : null,
+                        'descricao' => $artigo ? $artigo->descricao : null,
+                        'marca' => $artigo && $artigo->idmarca0 ? $artigo->idmarca0->nome : null,
+                        'tamanho' => $artigo && $artigo->idtamanho0 ? $artigo->idtamanho0->tamanho : null,
+                        'categoria' => $artigo && $artigo->idcategoria0 ? $artigo->idcategoria0->nome : null,
+                        'tipo' => $artigo ? $artigo->tipoartigo : null,
+                        'fotos' => $fotos,
+
+                    ]
+            ]];
         }
 
         return [

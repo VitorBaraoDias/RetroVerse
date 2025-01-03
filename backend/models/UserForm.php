@@ -70,6 +70,7 @@ class UserForm extends Model
 
             $perfil = new Perfil();
             $perfil->id = $user->getId();
+            $perfil->banido = 0;
 
             if (!$perfil->save(false)) {
                 $transaction->rollBack();

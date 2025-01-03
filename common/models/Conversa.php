@@ -75,8 +75,16 @@ class Conversa extends \yii\db\ActiveRecord
      */
     public function getMensagem()
     {
-        return $this->hasOne(Mensagemtexto::class, ['id' => 'idmensagem']);
+        if ($this->tipo === 'TEXTO') {
+            return $this->hasOne(Mensagemtexto::class, ['id' => 'idmensagem']);
+        } elseif ($this->tipo === 'PROPOSTA') {
+            return $this->hasOne(Mensagemproposta::class, ['id' => 'idmensagem']);
+        } elseif ($this->tipo === 'FOTO') {
+            return $this->hasOne(Mensagemfoto::class, ['id' => 'idmensagem']);
+        }
+        return null; // Caso o tipo não seja reconhecido
     }
+
 
     /**
      * Gets query for [[Idmensagem1]].
@@ -94,29 +102,45 @@ class Conversa extends \yii\db\ActiveRecord
     public function afterSave($insert, $changedAttributes)
     {
         parent::afterSave($insert, $changedAttributes);
-//Obter dados do registo em causa
-        if($insert){
 
-            $myObj=new \stdClass();
-            if($this->mensagem){
-                $myObj->descricao= $this->mensagem->descricao;
-                $myJSON = json_encode($myObj);
-                $topic = "chat/{$this->idchat}";
+        if ($insert) {
+            $myObj = new \stdClass();
+            $myObj->iduser = $this->iduser;
+            $myObj->idchat = $this->idchat;
 
-                $this->FazPublishNoMosquitto($topic,$myJSON);
+            // Verifica o tipo de mensagem e obtém os dados correspondentes
+            if ($this->tipo === 'TEXTO' && $this->mensagem) {
+                $myObj->tipo = 'TEXTO';
+                $myObj->descricao = $this->mensagem->descricao;
+            } elseif ($this->tipo === 'PROPOSTA' && $this->mensagemproposta) {
+                $myObj->id = $this->id;
+                $myObj->tipo = 'PROPOSTA';
+                $myObj->idProposta = $this->mensagemproposta->id;
+                $myObj->preco = $this->mensagemproposta->preco;
+                $myObj->estado = $this->mensagemproposta->estado;
+                $myObj->idartigo = $this->mensagemproposta->idartigo;
+                $myObj->artigoPreco = $this->mensagemproposta->artigo->precoanuncio;
+            } elseif ($this->tipo === 'FOTO' && $this->mensagemfoto) {
+                $myObj->tipo = 'FOTO';
+                $myObj->url = $this->mensagemfoto->url;
+                $myObj->legenda = $this->mensagemfoto->legenda;
+            } else {
+                Yii::error("Tipo de mensagem não reconhecido ou dados ausentes. Tipo: {$this->tipo}", __METHOD__);
+                return;
             }
-            else if($this->mensagemfoto){
-                var_dump($this->mensagemfoto);
-                die();
-            }
 
+            // Publica no MQTT
+            $myJSON = json_encode($myObj);
+            $topic = "chat/{$this->idchat}";
+
+            $this->FazPublishNoMosquitto($topic, $myJSON);
         }
     }
     public function FazPublishNoMosquitto($canal,$msg)
     {
         $server = "127.0.0.1";
         $port = 1883;
-        $username = "vitor"; // set your username
+        $username = Yii::$app->user->identity->username; // set your username
         $password = ""; // set your password
         $client_id = Yii::$app->user->identity ? Yii::$app->user->identity->id : 'guest'; // unique!
         $mqtt = new \Bluerhinos\phpMQTT($server, $port, $client_id);

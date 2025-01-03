@@ -98,7 +98,6 @@ return [
                     'class' => 'yii\rest\UrlRule',
                     'controller' => 'api/carrinho',
                     'extraPatterns' => [
-                        'GET ' => 'detalhes',
                         'GET user/{id}' => 'user',
                         'POST' => 'create'
 
@@ -108,8 +107,10 @@ return [
                     'class' => 'yii\rest\UrlRule',
                     'controller' => 'api/venda',
                     'extraPatterns' => [
-                        'GET compras/{id}' => 'compras', //buscar as venda do user
-                        'GET linhasvendas/{id}' => 'vendas', //buscar as venda do user
+                        'POST comprar' => 'comprar',
+                        'GET detalhes/{id}' => 'detalhesvenda',
+                        'GET compras/{id}' => 'historicocompras',
+                        'GET {id}' => 'historicovendas',
                     ],
                 ],
                 [
