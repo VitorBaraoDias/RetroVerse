@@ -164,7 +164,7 @@ class ArtigoController extends Controller
                 $uploadForm->imageFiles = UploadedFile::getInstances($uploadForm, 'imageFiles');
 
                 if ($uploadForm->upload($model->id)) {
-                    return $this->redirect(['artigo/view-marketplace', 'id' => $model->id]);
+                    return $this->redirect(['profile/index', 'id' => $model->idperfil]);
                 } else {
                     Yii::$app->session->setFlash('error', 'O artigo foi salvo, mas as imagens não puderam ser carregadas.');
                 }

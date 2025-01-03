@@ -83,66 +83,220 @@ $dataProviderChata = new ActiveDataProvider([
 
 <script>
     const chatContainer = document.getElementById("chat");
+    scrollToBottom();
+    // Função para manter o scroll na parte inferior do chat
 
-    // Manter o scroll na parte inferior do chat
-    chatContainer.scrollTop = chatContainer.scrollHeight;
     // Configurações de conexão
     const options = {
-        hostname: "127.0.0.1",  // Endereço do broker
-        port: 9001,  // Porta do WebSocket
+        hostname: "127.0.0.1", // Endereço do broker
+        port: 9001, // Porta do WebSocket
         clientId: "client_" + Math.random().toString(16).substr(2, 8),
-        username: "user1",  // Nome de usuário (se necessário)
-        password: "password"  // Senha (se necessário)
+        username: "<?= Yii::$app->user->identity->username ?>", // Nome de usuário
+        password: "password" // Senha (se necessário)
     };
 
     // Criar uma nova instância do cliente MQTT
-    const client = mqtt.connect(`ws://${options.hostname}:${options.port}`, options);
+    const client = mqtt.connect(`ws://${options.hostname}:${options.port}`, {
+        clientId: options.clientId,
+        username: options.username,
+        password: options.password
+    });
 
     // Quando o cliente se conectar ao broker
-    client.on('connect', function () {
+    client.on("connect", function () {
         console.log("Conectado ao broker MQTT via WebSocket");
-        // Inscrever-se no tópico 'chat/12'
-        client.subscribe('chat/${<?= $chatAtual->id ?>}', function (err) {
+
+        // Inscrever-se no tópico 'chat/<?= $chatAtual->id ?>'
+        const topic = "chat/<?= $chatAtual->id ?>";
+        client.subscribe(topic, function (err) {
             if (!err) {
-                console.log("Inscrito no tópico: chat/${<?= $chatAtual->id ?>}");
+                console.log("Inscrito no tópico: " + topic);
             } else {
-                console.log("Erro ao se inscrever: " + err);
+                console.error("Erro ao se inscrever: " + err);
             }
         });
     });
 
     // Quando uma nova mensagem chegar
-    client.on('message', function (topic, message) {
+    client.on("message", function (topic, message) {
         console.log("Mensagem recebida: " + message.toString());
-        //
-        const data = JSON.parse(message.toString());
-        const descricao = data.descricao;  // Acessar a propriedade "descricao"
 
-        // Criar o div para o card de mensagem
-        const chatCard = document.createElement("div");
-        chatCard.classList.add("chat", "incoming");
-
-        // Criar a div com os detalhes da mensagem
-        const messageDetails = document.createElement("div");
-        messageDetails.classList.add("details");
-
-        // Criar o parágrafo com a descrição da mensagem
-        const messageDescription = document.createElement("p");
-        messageDescription.textContent = descricao; // Aqui você usa o conteúdo da mensagem
-
-        // Adicionar o parágrafo dentro da div de detalhes
-        messageDetails.appendChild(messageDescription);
-
-        // Adicionar a div de detalhes dentro do card
-        chatCard.appendChild(messageDetails);
-
-        // Adicionar o card no container de mensagens
-        chatContainer.appendChild(chatCard);    });
-        chatContainer.scrollTop = chatContainer.scrollHeight;
-
+        try {
+            const data = JSON.parse(message.toString());
+            renderMessage(data);
+        } catch (e) {
+            console.error("Erro ao processar mensagem recebida:", e);
+        }
+    });
 
     // Caso haja erro na conexão
-    client.on('error', function (err) {
-        console.log("Erro de conexão: " + err);
+    client.on("error", function (err) {
+        console.error("Erro de conexão: " + err);
     });
+
+    function renderMessage(data) {
+        const isOutgoing = data.idUser === <?= Yii::$app->user->identity->id ?>; // Substitua `currentUserId` pelo ID do usuário logado
+
+        if (data.tipo === "TEXTO") {
+            renderTextMessage(data, isOutgoing);
+        } else if (data.tipo === "PROPOSTA") {
+            renderPropostaMessage(data, isOutgoing);
+        } else {
+            console.error("Tipo de mensagem não reconhecido:", data.tipo);
+        }
+
+        scrollToBottom();
+    }
+    function renderTextMessage(data, isOutgoing) {
+        const chatCard = document.createElement("div");
+        chatCard.classList.add("chat", isOutgoing ? "outgoing" : "incoming");
+
+        const details = document.createElement("div");
+        details.classList.add("details");
+
+        const messageText = document.createElement("p");
+        messageText.textContent = data.descricao;
+
+        details.appendChild(messageText);
+        chatCard.appendChild(details);
+        chatContainer.appendChild(chatCard);
+    }
+    // Função para criar um card de mensagem de texto
+    function renderPropostaMessage(data, isOutgoing) {
+        // Verifique se o estado é 0 (nova proposta) e adicione um novo card
+        if (data.estado === 0) {
+            const chatCard = document.createElement("div");
+            chatCard.classList.add("chat", isOutgoing ? "outgoing" : "incoming");
+
+            const details = document.createElement("div");
+            details.classList.add("details");
+            details.setAttribute("data-index", data.idProposta); // Adiciona o ID da proposta para referência
+
+            const propostaContainer = document.createElement("div");
+            propostaContainer.classList.add(
+                "d-flex",
+                "flex-column",
+                "justify-content-center",
+                "align-items-center",
+                "p-2",
+                isOutgoing ? "cardProposta" : "propostaEsq"
+            );
+
+            // Preço da proposta
+            const priceRow = document.createElement("div");
+            priceRow.classList.add("d-flex", "gap-2");
+
+            const propostaPrice = document.createElement("span");
+            propostaPrice.classList.add("font-weight-bold");
+            propostaPrice.textContent = `${parseFloat(data.preco).toFixed(2).replace('.', ',')}€`;
+            priceRow.appendChild(propostaPrice);
+
+            const artigoPriceContainer = document.createElement("div");
+            artigoPriceContainer.classList.add("position-relative");
+
+            const artigoPrice = document.createElement("span");
+            artigoPrice.textContent = `${parseFloat(data.artigoPreco).toFixed(2).replace('.', ',')}€`;
+            artigoPriceContainer.appendChild(artigoPrice);
+
+            const divider = document.createElement("img");
+            divider.src = "/img/dividerPropose.svg";
+            divider.alt = "";
+            divider.style.position = "absolute";
+            divider.style.right = "3px";
+            divider.style.top = "11px";
+            divider.style.height = "3px";
+            artigoPriceContainer.appendChild(divider);
+
+            priceRow.appendChild(artigoPriceContainer);
+            propostaContainer.appendChild(priceRow);
+
+            // Estado da proposta
+            const propostaStatus = document.createElement("span");
+            if (!isOutgoing) {
+                const buttonContainer = document.createElement("div");
+                buttonContainer.classList.add("d-flex", "gap-2");
+
+                // Botão de rejeitar
+                const rejectButton = document.createElement("a");
+                rejectButton.classList.add(
+                    "btn",
+                    "retroverse-btn",
+                    "active",
+                    "w-auto",
+                    "px-3",
+                    "py-0",
+                    "rounded-3",
+                    "text-white"
+                );
+                rejectButton.textContent = "x";
+                rejectButton.setAttribute(
+                    "href",
+                    `/RetroVerse/frontend/web/mensagemproposta/update?id=${data.idProposta}&state=1`
+                );
+                rejectButton.setAttribute("id", "retroverse-btn-active");
+                buttonContainer.appendChild(rejectButton);
+
+                // Botão de aceitar
+                const acceptButton = document.createElement("a");
+                acceptButton.classList.add(
+                    "btn",
+                    "retroverse-btn",
+                    "active",
+                    "w-auto",
+                    "px-3",
+                    "py-0",
+                    "rounded-3",
+                    "text-white"
+                );
+                acceptButton.textContent = "accept";
+                acceptButton.setAttribute(
+                    "href",
+                    `/RetroVerse/frontend/web/mensagemproposta/update?id=${data.idProposta}&state=2`
+                );
+                acceptButton.setAttribute("id", "retroverse-btn-active");
+                buttonContainer.appendChild(acceptButton);
+
+                propostaContainer.appendChild(buttonContainer);
+            }
+            details.appendChild(propostaContainer);
+            chatCard.appendChild(details);
+            chatContainer.appendChild(chatCard);
+        }
+        // Caso o estado da proposta seja 1 ou 2 (alterar o status)
+        else {
+            const detailsDiv = document.querySelector(`.cardProposta[data-index="${data.idProposta}"]`);
+
+            if (detailsDiv) {
+                const propostaStatus = detailsDiv.querySelector(".status"); // Localizando o status
+                if (data.estado === "1") {
+                    propostaStatus.classList.add("text-danger");
+                    propostaStatus.textContent = "Recusado";
+                } else if (data.estado === "2") {
+                    propostaStatus.classList.remove("text-warning");
+                    propostaStatus.classList.add("text-success");
+                    propostaStatus.textContent = "Accept";
+
+                    // Se for uma proposta de saída, criar o botão de adicionar ao carrinho
+                        const addToCartButton = document.createElement("a");
+                        addToCartButton.classList.add(
+                            "btn",
+                            "retroverse-btn",
+                            "active",
+                            "w-auto",
+                            "px-3",
+                            "py-0",
+                            "rounded-3",
+                            "text-white"
+                        );
+                    addToCartButton.setAttribute("id", "retroverse-btn-active");
+                        addToCartButton.textContent = "ADD";
+                        addToCartButton.href = `/RetroVerse/frontend/web/carrinho/create?id=${data.idArtigo}`;
+                        detailsDiv.appendChild(addToCartButton);
+                }
+            }
+        }
+    }
+    function scrollToBottom() {
+        chatContainer.scrollTop = chatContainer.scrollHeight;
+    }
 </script>

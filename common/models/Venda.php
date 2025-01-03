@@ -50,6 +50,7 @@ class Venda extends \yii\db\ActiveRecord
             [['datavenda'], 'safe'],
             [['nome'], 'string', 'max' => 150],
             [['codigopostal'], 'string', 'max' => 10],
+            [['codigopostal'], 'match', 'pattern' => '/^\d{4}-\d{3}$/', 'message' => 'The postcode must be in the format 1234-567.'],
             [['morada'], 'string', 'max' => 350],
             [['pais', 'cidade'], 'string', 'max' => 100],
             [['codigo'], 'string', 'max' => 255],
@@ -59,6 +60,7 @@ class Venda extends \yii\db\ActiveRecord
             [['idestadoencomenda'], 'exist', 'skipOnError' => true, 'targetClass' => Estadoencomenda::class, 'targetAttribute' => ['idestadoencomenda' => 'id']],
         ];
     }
+
 
     /**
      * {@inheritdoc}

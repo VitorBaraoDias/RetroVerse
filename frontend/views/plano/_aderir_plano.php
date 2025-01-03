@@ -21,7 +21,11 @@ use yii\helpers\Url;
     <div class="premium-plan">
         <div class="premium-label">PREMIUM PLAN</div>
         <h2>PREMIUM</h2>
-        <p class="premium-price">€<?= Html::encode($plano->precomensal) ?></p>
+        <div class="d-flex justify-content-center align-items-center gap-2 position-relative mb-4">
+            <p class="premium-price">€<?= $plano->precomensal * (1 + ($plano->iva->percentagem / 100)) ?></p>
+            <span class="position-absolute" style="top: 70px">With IVA</span>
+            <h3 class="">€<?= Html::encode($plano->precomensal) ?></h3>
+        </div>
         <a href="<?= Url::to(['clientesplano/create', 'idplano' => $plano->id]) ?>" class="premium-btn">Get Started</a>
         <div class="premium-features">
             <h3>Features</h3>

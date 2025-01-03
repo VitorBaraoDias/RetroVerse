@@ -2,6 +2,7 @@
 
 namespace frontend\controllers;
 
+use common\models\Artigo;
 use common\models\Carrinho;
 use common\models\Iva;
 use common\models\Linhascarrinho;
@@ -77,25 +78,39 @@ class CarrinhoController extends Controller
      * @return string|\yii\web\Response
      */
 
-     public function actionCreate($id)
+    public function actionCreate($id)
     {
-        // Tenta encontrar ou criar um carrinho
         $userId = Yii::$app->user->id;
 
+        // Verifica se o carrinho já existe, se não, cria um novo
         $carrinho = Carrinho::findOne(['iduser' => $userId]) ?? new Carrinho(['iduser' => $userId]);
 
+        // Verifica se o carrinho foi salvo corretamente
         if ($carrinho->isNewRecord && !$carrinho->save()) {
-            Yii::$app->session->setFlash('error', 'Erro ao criar o carrinho.');
+            Yii::$app->session->setFlash('error', 'Error creating the cart.');
             return $this->redirect(['site/index']);
         }
+
+        // Verifica se o artigo já está no carrinho
         if (Linhascarrinho::findOne(['idcarrinho' => $carrinho->id, 'idartigo' => $id])) {
-            Yii::$app->session->setFlash('info', 'Artigo já está no carrinho.');
+            Yii::$app->session->setFlash('info', 'Item is already in the cart.');
         } else {
-            $linhaCarrinho = new Linhascarrinho(['idcarrinho' => $carrinho->id, 'idartigo' => $id]);
-            $linhaCarrinho->save();
-            Yii::$app->session->setFlash('success', 'Item successfully added to basket!!');
+            // Verifica se o artigo existe e se está ativo
+            $artigo = Artigo::findOne($id);
+            if (!$artigo || !$artigo->ativo) {
+                Yii::$app->session->setFlash('error', 'Item is not available.');
+            } else {
+                // Adiciona o artigo no carrinho se estiver ativo
+                $linhaCarrinho = new Linhascarrinho(['idcarrinho' => $carrinho->id, 'idartigo' => $id]);
+                if ($linhaCarrinho->save()) {
+                    Yii::$app->session->setFlash('success', 'Item successfully added to the cart!');
+                } else {
+                    Yii::$app->session->setFlash('error', 'Error adding item to the cart.');
+                }
+            }
         }
 
+        // Redireciona de volta para a página principal após tentar adicionar o item
         return $this->redirect(['site/index']);
     }
 

@@ -65,13 +65,13 @@ return [
                     'controller' => 'api/artigo',
                     'extraPatterns' => [
                         'GET {id}' => 'artigodetalhes',
-                        'GET user/{idperfil}' => 'userartigos',
+                        'GET user/{userid}' => 'userartigos',
                         'GET filtro' => 'filtro',
                         'PUT {id}/editar' => 'editarartigo',
                         'POST' => 'criarartigo',
                     ], 'tokens' => [
                     '{id}' => '<id:\\d+>',
-                    '{idperfil}' => '<idperfil:\\d+>',
+                    '{userid}' => '<userid:\\d+>',
                     ],
                 ],
                 [
@@ -94,23 +94,20 @@ return [
                     'class' => 'yii\rest\UrlRule',
                     'controller' => 'api/carrinho',
                     'extraPatterns' => [
-                        'GET ' => 'detalhes',
                         'GET user/{id}' => 'user',
-                        'POST' => 'create'
-
+                        'POST' => 'createcarrinho'
                     ],
                 ],
                 [
                     'class' => 'yii\rest\UrlRule',
                     'controller' => 'api/venda',
                     'extraPatterns' => [
-                        'POST ' => 'comprar',
-                        'GET historicocompras/{iduser}' => 'historicocompras', //buscar as compras do user
-                        'GET historicovendas/{iduser}' => 'historicovendas', //buscar as vendas do user
-                    ], 'tokens' => [
-                    '{id}' => '<id:\\d+>',
-                    '{iduser}' => '<iduser:\\d+>',
-                ],
+
+                        'POST comprar' => 'comprar',
+                        'GET detalhes/{id}' => 'detalhesvenda',
+                        'GET compras/{id}' => 'historicocompras',
+                        'GET {id}' => 'historicovendas',
+                    ],
                 ],
                 [
                     'class' => 'yii\rest\UrlRule',

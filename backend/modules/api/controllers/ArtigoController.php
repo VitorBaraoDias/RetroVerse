@@ -177,12 +177,12 @@ class ArtigoController extends ActiveController
     }
 
 
-    public function actionUserartigos($idperfil)
+    public function actionUserartigos($userid)
     {
         // Buscar todos os artigos associados ao perfil com todas as relações necessárias
         $artigos = Artigo::find()
             ->with(['idestado0', 'idmarca0', 'idtamanho0', 'idcategoria0', 'idperfil0', 'fotosartigos'])
-            ->where(['idperfil' => $idperfil])
+            ->where(['idperfil' => $userid])
             ->all();
 
         // Se não houver artigos, lançar uma exceção

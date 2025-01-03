@@ -2,6 +2,8 @@
 
 namespace common\models;
 
+use Yii;
+
 /**
  * This is the model class for table "mensagempropostas".
  *
@@ -81,5 +83,43 @@ class Mensagemproposta extends \yii\db\ActiveRecord
     public function getChat()
     {
         return $this->hasOne(Listachats::class, ['id' => 'idchat']);
+    }
+    public function afterSave($insert, $changedAttributes)
+    {
+        parent::afterSave($insert, $changedAttributes);
+
+        if (!$insert) {
+            $myObj = new \stdClass();
+            $myObj->iduser = $this->iduser;
+            $myObj->idchat = $this->idchat;
+            $myObj->tipo = 'PROPOSTA';
+            $myObj->idProposta = $this->id;
+            $myObj->preco = $this->preco;
+            $myObj->estado = $this->estado;
+            $myObj->idartigo = $this->idartigo;
+            $myObj->artigoPreco = $this->artigo->precoanuncio;
+
+            //buscar o id da mensagem que esta relacionado na tabela conversa
+            // Publica no MQTT
+            $myJSON = json_encode($myObj);
+            $topic = "chat/{$this->idchat}";
+
+            $this->FazPublishNoMosquitto($topic, $myJSON);
+        }
+    }
+    public function FazPublishNoMosquitto($canal,$msg)
+    {
+        $server = "127.0.0.1";
+        $port = 1883;
+        $username = Yii::$app->user->identity->username; // set your username
+        $password = ""; // set your password
+        $client_id = Yii::$app->user->identity ? Yii::$app->user->identity->id : 'guest'; // unique!
+        $mqtt = new \Bluerhinos\phpMQTT($server, $port, $client_id);
+        if ($mqtt->connect(true, NULL, $username, $password))
+        {
+            $mqtt->publish($canal, $msg, 0);
+            $mqtt->close();
+        }
+        else { file_put_contents("debug.output","Time out!"); }
     }
 }

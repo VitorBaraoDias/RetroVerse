@@ -52,6 +52,11 @@ class FavoritoController extends ActiveController
         // Formata os favoritos com detalhes dos artigos
         $favoritosFormatted = [];
         foreach ($favoritos as $favorito) {
+
+            $fotos = [];
+            foreach ($favorito->artigo->fotosartigos as $foto) {
+                $fotos[] = $foto->caminhofoto;
+            }
             $artigo = $favorito->artigo;
             $favoritosFormatted[] = [
                 'id' => $favorito->id,
@@ -65,8 +70,9 @@ class FavoritoController extends ActiveController
                     'marca' => $artigo->idmarca0->nome,
                     'categoria' => $artigo->idcategoria0->nome,
                     'tamanho' => $artigo->idtamanho0->tamanho,
-                    'perfil' => "@" . $artigo->idperfil0->username,
+                    'username' => $artigo->idperfil0->user->username,
                     'tipoartigo' => $artigo->tipoartigo,
+                    'fotos' => $fotos,
                 ] : null,
             ];
         }

@@ -7,6 +7,7 @@ use common\models\Linhascarrinho;
 use Yii;
 use yii\filters\auth\QueryParamAuth;
 use yii\rest\ActiveController;
+use backend\modules\api\components\CustomAuth;
 
 
 /**
@@ -15,30 +16,74 @@ use yii\rest\ActiveController;
 class CarrinhoController extends ActiveController
 {
     public $modelClass = 'common\models\Carrinho';
+    public $user = null;
 
-
-    public function actions()
-    {
-        $actions = parent::actions();
-
-        unset($actions['create']);
-
-        return $actions;
-    }
 
     public function behaviors()
     {
         $behaviors = parent::behaviors();
         $behaviors['authenticator'] = [
-            'class' => QueryParamAuth::className(),
+            'class' => CustomAuth::className(),
+            'auth' => [$this, 'authCustom'],
         ];
         return $behaviors;
+    }
+
+    public function authCustom($token)
+    {
+
+        $user_ = Yii::$app->user->identity->findIdentityByAccessToken($token);
+
+        if ($user_) {
+            $this->user = $user_;
+            return $user_;
+        }
+
+        throw new \yii\web\ForbiddenHttpException('No authentication');
+    }
+
+
+    public function checkAccess($action, $model = null, $params = [])
+    {
+        if ($this->user) {
+            if ($action === 'create' || $action === 'view') {
+                // O usuário só pode criar um carrinho para ele mesmo
+                if ($model && $model->iduser != $this->user->id) {
+                    throw new \yii\web\ForbiddenHttpException('You don´t have permission to do this action!');
+                }
+            }
+        } else {
+            throw new \yii\web\ForbiddenHttpException('User not authenticated.');
+        }
+    }
+
+
+    public function beforeAction($action)
+    {
+
+        if (!parent::beforeAction($action)) {
+            return false;
+        }
+
+        if (Yii::$app->request->method !== 'POST' && Yii::$app->request->method !== 'GET') {
+
+            Yii::$app->response->statusCode = 405;
+            Yii::$app->response->data = [
+                'success' => false,
+                'message' => 'METHOD NOT ALLOWED!',
+            ];
+            return false;
+        }
+
+        return true;
     }
 
     public function actionUser($id)
     {
         // Busca o carrinho do usuário pelo ID
         $carrinho = Carrinho::find()->where(['iduser' => $id])->one();
+
+        $this->checkAccess('view', $carrinho);
 
         if (!$carrinho) {
             Yii::$app->response->statusCode = 404;
@@ -76,6 +121,10 @@ class CarrinhoController extends ActiveController
         foreach ($linhasCarrinho as $linha) {
             $artigo = $linha->artigo;
 
+            $fotos = [];
+            foreach ($artigo->fotosartigos as $foto) {
+                $fotos[] = $foto->caminhofoto;
+            }
             $linhasCarrinhoFormatted[] = [
                 'id' => $linha->id,
                 'idcarrinho' => $linha->idcarrinho,
@@ -89,8 +138,10 @@ class CarrinhoController extends ActiveController
                     'marca' => $artigo->idmarca0->nome,
                     'categoria' => $artigo->idcategoria0->nome,
                     'tamanho' => $artigo->idtamanho0->tamanho,
-                    'perfil' => "@" . $artigo->idperfil0->username,
+                    'username' =>  $artigo->idperfil0->user->username,
                     'tipoartigo' => $artigo->tipoartigo,
+                    'fotos' => $fotos,
+
                 ] : null,
             ];
         }
@@ -100,110 +151,19 @@ class CarrinhoController extends ActiveController
             'carrinho' => $linhasCarrinhoFormatted,
         ];
     }
-    public function beforeAction($action)
-    {
 
-        if (!parent::beforeAction($action)) {
-            return false;
-        }
-
-        if (Yii::$app->request->method !== 'POST' && Yii::$app->request->method !== 'GET') {
-
-            Yii::$app->response->statusCode = 405;
-            Yii::$app->response->data = [
-                'success' => false,
-                'message' => 'METHOD NOT ALLOWED.',
-            ];
-            return false;
-        }
-
-        return true;
-    }
-
-    public function actionDetalhes()
-    {
-        // Busca todos os carrinhos
-        $carrinhos = Carrinho::find()->all();
-
-        $carrinhosFormatted = [];
-
-        foreach ($carrinhos as $carrinho) {
-            $linhasCarrinho = Linhascarrinho::find()
-                ->with([
-                    'artigo',
-                    'artigo.idcomissao0',
-                    'artigo.idestado0',
-                    'artigo.idmarca0',
-                    'artigo.idcategoria0',
-                    'artigo.idtamanho0',
-                    'artigo.idperfil0',
-                ])
-                ->where(['idcarrinho' => $carrinho->id]) // Relaciona as linhas ao carrinho
-                ->all();
-
-            // Verifica se as linhas foram encontradas
-            if (!$linhasCarrinho) {
-                $carrinhosFormatted[] = [
-                    'id' => $carrinho->id,
-                    'iduser' => $carrinho->iduser,
-                    'message' => 'Could not find any item in this cart.',
-                ];
-                continue;  // Vai para o próximo carrinho
-            }
-
-            $linhasCarrinhoFormatted = [];
-
-            foreach ($linhasCarrinho as $linha) {
-                $artigo = $linha->artigo;
-                $fotos = [];
-                foreach ($artigo->fotosartigos as $foto) {
-                    $fotos[] = $foto->caminhofoto;
-
-                    $linhasCarrinhoFormatted[] = [
-                        'id' => $linha->id,
-                        'idcarrinho' => $linha->idcarrinho,
-                        'idartigo' => $linha->idartigo,
-                        'artigo' => $artigo ? [
-                            'nome' => $artigo->nome,
-                            'descricao' => $artigo->descricao,
-                            'precoanuncio' => $artigo->precoanuncio,
-                            'comissao' => $artigo->idcomissao0->comissao,
-                            'estado' => $artigo->idestado0->descricao,
-                            'marca' => $artigo->idmarca0->nome,
-                            'categoria' => $artigo->idcategoria0->nome,
-                            'tamanho' => $artigo->idtamanho0->tamanho,
-                            'perfil' => "@" . $artigo->idperfil0->username,
-                            'tipoartigo' => $artigo->tipoartigo,
-                            'fotos' => $fotos,  // Adicionando as fotos ao resultado
-
-                        ] : null,
-                    ];
-                }
-            }
-
-            // Adiciona o carrinho com as linhas formatadas
-            $carrinhosFormatted[] = [
-                'id' => $carrinho->id,
-                'iduser' => $carrinho->iduser,
-                'linhas_carrinho' => $linhasCarrinhoFormatted,
-            ];
-        }
-
-        return [
-            'success' => true,
-            'carrinhos' => $carrinhosFormatted,
-        ];
-    }
-
-    public function actionCreate()
+    public function actionCreatecarrinho()
     {
         $request = Yii::$app->request->post();
 
         $carrinho = Carrinho::findOne(['iduser' => $request['iduser']]) ?? new Carrinho(['iduser' => $request['iduser']]);
 
+        $this->checkAccess('create', $carrinho);
+
+
         if ($carrinho->isNewRecord && !$carrinho->save()) {
             throw new \yii\web\ForbiddenHttpException('Failed to create a cart');
-    }
+        }
 
         if (Linhascarrinho::findOne(['idcarrinho' => $carrinho->id, 'idartigo' => $request['idartigo']])) {
             throw new \yii\web\ForbiddenHttpException('This item is already in the cart for this user.');
@@ -211,13 +171,10 @@ class CarrinhoController extends ActiveController
             $linhaCarrinho = new Linhascarrinho(['idcarrinho' => $carrinho->id, 'idartigo' => $request['idartigo']]);
             $linhaCarrinho->save();
         }
-
         return [
             'status' => 'success',
-            'message' => 'Cart created!',
+            'message' => 'Item added to cart!',
         ];
     }
-
-
 
 }

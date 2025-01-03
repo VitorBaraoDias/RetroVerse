@@ -70,9 +70,13 @@ class UserController extends ActiveController
             }
             $perfil = new Perfil();
             $perfil->id = $user->getId();
+            $perfil->banido = 0;
             if (!$perfil->save(false)) {
                 $transaction->rollBack();
-                return null;
+                return [
+                    'status' => 'error',
+                    'message' => 'Erro ao criar o perfil'
+                ];
             }
             $transaction->commit();
             return $user->save();
@@ -80,7 +84,15 @@ class UserController extends ActiveController
         } catch (\Exception $e) {
             $transaction->rollBack();
             Yii::error($e->getMessage(), __METHOD__);
-            return null;
+
+            // Log da mensagem de erro
+
+            // Retornar a resposta de erro com detalhes
+            return [
+                'status' => 'error',
+                'message' => 'Erro ao criar o perfil',
+                'errorDetails' => $e->getMessage(), // Aqui você retorna a mensagem de erro completa
+            ];
         }
     }
 }

@@ -1,5 +1,6 @@
 <?php
 
+use common\models\LocationHelper;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
@@ -39,19 +40,32 @@ use yii\widgets\ActiveForm;
         </div>
         </div>
         <div class="col-md-12">
-            <div class="input-details">
-            <?= $form->field($model, 'pais')->textInput([
-                'autofocus' => true,
-                'placeholder' => 'Enter your contry'
-            ])->label('Country'); ?>
+            <div class="">
+
+                <?= $form->field($model, 'pais')->textInput([
+                    'list' => 'country-list', // Associa o datalist
+                    'id' => 'country-input',  // Define o ID do campo de entrada
+                    'placeholder' => 'Enter your country', // Placeholder para orientação
+                ]) ?>
+                <datalist id="country-list">
+                    <?php foreach (LocationHelper::getCountries() as $code => $country): ?>
+                        <option value="<?= $country ?>"></option>
+                    <?php endforeach; ?>
+                </datalist>
         </div>
         </div>
         <div class="col-md-12">
-            <div class="input-details">
-            <?= $form->field($model, 'cidade')->textInput([
-                'autofocus' => true,
-                'placeholder' => 'Enter your city'
-            ])->label('City'); ?>
+            <div class="">
+
+                <?= $form->field($model, 'cidade')->textInput([
+                    'list' => 'city-list', // Associa o datalist para cidades
+                    'id' => 'city-input',  // ID do campo de entrada da cidade
+                    'placeholder' => 'Enter your city', // Placeholder para orientação
+                ]) ?>
+
+                <datalist id="city-list">
+                    <!-- Este será preenchido dinamicamente -->
+                </datalist>
         </div>
         </div>
         <div class="col-12">
@@ -92,4 +106,5 @@ use yii\widgets\ActiveForm;
 
     </div>
 </div>
+
 

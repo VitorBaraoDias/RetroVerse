@@ -54,7 +54,13 @@ class Artigo extends \yii\db\ActiveRecord
             [['nome', 'descricao', 'precoanuncio', 'idcomissao', 'idestado', 'idmarca', 'idcategoria', 'idtamanho', 'idperfil', 'tipoartigo', 'ativo'], 'required'],
             [['nome', 'descricao'], 'string', 'max' => 255],
             [['idcomissao', 'idestado', 'idmarca', 'idcategoria', 'idtamanho', 'idperfil'], 'integer'],
-            [['precoanuncio'], 'number'],
+
+            // Validação para o campo precoanuncio
+            [['precoanuncio'], 'number', 'min' => 0, 'message' => 'The price must be a valid number greater than zero.'],
+
+            // Validação para garantir que o preço seja maior que zero
+            [['precoanuncio'], 'compare', 'compareValue' => 0, 'operator' => '>', 'message' => 'The advert price must be greater than zero.'],
+
             [['ativo'], 'boolean'],
 
             [['idcategoria'], 'exist', 'skipOnError' => true, 'targetClass' => Categoriaartigo::class, 'targetAttribute' => ['idcategoria' => 'id']],
@@ -64,9 +70,9 @@ class Artigo extends \yii\db\ActiveRecord
             [['idtamanho'], 'exist', 'skipOnError' => true, 'targetClass' => Tamanho::class, 'targetAttribute' => ['idtamanho' => 'id']],
             [['idcomissao'], 'exist', 'skipOnError' => true, 'targetClass' => Comissao::class, 'targetAttribute' => ['idcomissao' => 'id']],
             [['datacriacao'], 'safe'],
-
         ];
     }
+
 
     /**
      * {@inheritdoc}
@@ -271,7 +277,6 @@ class Artigo extends \yii\db\ActiveRecord
         // Get the logged-in user's ID
         $userId = Yii::$app->user->id;
 
-        // Find the last accepted proposal (status = 2) by the user for this article
         return $this->getMensagempropostas()
             ->where(['iduser' => $userId, 'estado' => 2]) // status 2 = Accepted
             ->orderBy(['id' => SORT_DESC]) // Sort by ID, newest first
