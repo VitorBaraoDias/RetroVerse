@@ -18,11 +18,20 @@ class VendaController extends ActiveController
     //modelo a criar artigo
     public $modelClass = 'common\models\Venda';
 
-    public function actions()
+    public function BeforeAction($action)
     {
-        $actions = parent::actions();
-        unset($actions['delete']);
-        return $actions;
+        if (!parent::beforeAction($action)) {
+            return false;
+        }
+        if (Yii::$app->request->method !== 'GET' && Yii::$app->request->method !== 'POST' && Yii::$app->request->method !== 'PUT') {
+
+            Yii::$app->response->statusCode = 405;
+            Yii::$app->response->data = [
+                'message' => 'THIS METHOD IS NOT ALLOWED'
+            ];
+            return false;
+        }
+        return true;
     }
 
     public function behaviors()

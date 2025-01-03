@@ -64,18 +64,14 @@ return [
                 ['class' => 'yii\rest\UrlRule',
                     'controller' => 'api/artigo',
                     'extraPatterns' => [
-                    'GET {id}' => 'artigodetalhes',
-                    'GET {tipoartigo}/{tamanho}/{marca}/{estado}' => 'artigofiltro',
-                    'GET {tipoartigo}/{tamanho}/{marca}' => 'artigofiltro',
-                    'GET {tipoartigo}/{tamanho}' => 'artigofiltro',
-                    'GET {tipoartigo}' => 'artigofiltro',
-                    'GET ' => 'artigofiltro',
-                ], 'tokens' => [
-                        '{id}' => '<id:\\d+>',
-                        '{tipoartigo}' => '<tipoartigo:\\w+>',
-                        '{tamanho}' => '<tamanho:\\w+>',
-                        '{marca}' => '<marca:\\w+>',
-                        '{estado}' => '<estado:\\w+>',
+                        'GET {id}' => 'artigodetalhes',
+                        'GET user/{idperfil}' => 'userartigos',
+                        'GET filtro' => 'filtro',
+                        'PUT {id}/editar' => 'editarartigo',
+                        'POST' => 'criarartigo',
+                    ], 'tokens' => [
+                    '{id}' => '<id:\\d+>',
+                    '{idperfil}' => '<idperfil:\\d+>',
                     ],
                 ],
                 [
@@ -108,9 +104,13 @@ return [
                     'class' => 'yii\rest\UrlRule',
                     'controller' => 'api/venda',
                     'extraPatterns' => [
-                        'GET compras/{id}' => 'compras', //buscar as venda do user
-                        'GET linhasvendas/{id}' => 'vendas', //buscar as venda do user
-                    ],
+                        'POST ' => 'comprar',
+                        'GET historicocompras/{iduser}' => 'historicocompras', //buscar as compras do user
+                        'GET historicovendas/{iduser}' => 'historicovendas', //buscar as vendas do user
+                    ], 'tokens' => [
+                    '{id}' => '<id:\\d+>',
+                    '{iduser}' => '<iduser:\\d+>',
+                ],
                 ],
                 [
                     'class' => 'yii\rest\UrlRule',
@@ -127,6 +127,10 @@ return [
                         'GET user/{id}' => 'user'
 
                     ],
+                ],
+                [
+                    'class' => 'yii\rest\UrlRule',
+                    'controller' => 'api/perfil',
                 ],
             ],
         ],
