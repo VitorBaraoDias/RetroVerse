@@ -100,7 +100,6 @@ return [
                     'extraPatterns' => [
                         'GET user/{id}' => 'user',
                         'POST' => 'create'
-
                     ],
                 ],
                 [

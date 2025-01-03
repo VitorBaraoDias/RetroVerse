@@ -34,6 +34,25 @@ class CarrinhoController extends ActiveController
         ];
         return $behaviors;
     }
+    public function beforeAction($action)
+    {
+
+        if (!parent::beforeAction($action)) {
+            return false;
+        }
+
+        if (Yii::$app->request->method !== 'POST' && Yii::$app->request->method !== 'GET') {
+
+            Yii::$app->response->statusCode = 405;
+            Yii::$app->response->data = [
+                'success' => false,
+                'message' => 'METHOD NOT ALLOWED.',
+            ];
+            return false;
+        }
+
+        return true;
+    }
 
     public function actionUser($id)
     {
@@ -106,30 +125,10 @@ class CarrinhoController extends ActiveController
             'carrinho' => $linhasCarrinhoFormatted,
         ];
     }
-    public function beforeAction($action)
-    {
-
-        if (!parent::beforeAction($action)) {
-            return false;
-        }
-
-        if (Yii::$app->request->method !== 'POST' && Yii::$app->request->method !== 'GET') {
-
-            Yii::$app->response->statusCode = 405;
-            Yii::$app->response->data = [
-                'success' => false,
-                'message' => 'METHOD NOT ALLOWED.',
-            ];
-            return false;
-        }
-
-        return true;
-    }
 
     public function actionCreate()
     {
         $request = Yii::$app->request->post();
-
         $carrinho = Carrinho::findOne(['iduser' => $request['iduser']]) ?? new Carrinho(['iduser' => $request['iduser']]);
 
         if ($carrinho->isNewRecord && !$carrinho->save()) {

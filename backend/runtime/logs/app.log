@@ -47103,3 +47103,1008 @@ $_SERVER = [
     'REQUEST_TIME_FLOAT' => 1735927753.0234
     'REQUEST_TIME' => 1735927753
 ]
+2025-01-03 19:07:09 [::1][5][hn0pvon63h8nro2ma724dd9k0r][error][yii\web\HttpException:400] yii\web\BadRequestHttpException: Invalid JSON data in request body: Syntax error in /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/web/JsonParser.php:60
+Stack trace:
+#0 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/web/Request.php(591): yii\web\JsonParser->parse('{\n    "iduser":...', 'application/jso...')
+#1 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/web/Request.php(658): yii\web\Request->getBodyParams()
+#2 /Applications/MAMP/htdocs/RetroVerse/backend/modules/api/controllers/CarrinhoController.php(131): yii\web\Request->post()
+#3 [internal function]: backend\modules\api\controllers\CarrinhoController->actionCreate()
+#4 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/InlineAction.php(57): call_user_func_array(Array, Array)
+#5 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Controller.php(178): yii\base\InlineAction->runWithParams(Array)
+#6 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Module.php(552): yii\base\Controller->runAction('create', Array)
+#7 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/web/Application.php(103): yii\base\Module->runAction('api/carrinho/cr...', Array)
+#8 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Application.php(384): yii\web\Application->handleRequest(Object(yii\web\Request))
+#9 /Applications/MAMP/htdocs/RetroVerse/backend/web/index.php(18): yii\base\Application->run()
+#10 {main}
+2025-01-03 19:07:09 [::1][5][hn0pvon63h8nro2ma724dd9k0r][info][application] $_GET = [
+    'access-token' => 'L_Rx5sONON_35MCbdXDXAXzvSmbEgSg-'
+]
+
+$_POST = []
+
+$_FILES = []
+
+$_COOKIE = [
+    '_csrf-backend' => 'e993e4cbc6c75c7bf995d7491c303062abc6840413e83260f8829ca2cb007ad7a:2:{i:0;s:13:\"_csrf-backend\";i:1;s:32:\"UJiZ0nI1SugBu3LNkNpgkF9kyNuL0KAx\";}'
+    'advanced-backend' => '8nititgbh2kqlgki4uk4pkdsmv'
+]
+
+$_SESSION = [
+    '__flash' => []
+    '__id' => 5
+    '__authKey' => 'L_Rx5sONON_35MCbdXDXAXzvSmbEgSg-'
+]
+
+$_SERVER = [
+    'REDIRECT_STATUS' => '200'
+    'CONTENT_TYPE' => 'application/json'
+    'HTTP_USER_AGENT' => 'PostmanRuntime/7.43.0'
+    'HTTP_ACCEPT' => '*/*'
+    'HTTP_POSTMAN_TOKEN' => '1b63e882-5ced-48d8-b6ba-d3e1ec1f9236'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, br'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'CONTENT_LENGTH' => '40'
+    'HTTP_COOKIE' => '_csrf-backend=e993e4cbc6c75c7bf995d7491c303062abc6840413e83260f8829ca2cb007ad7a%3A2%3A%7Bi%3A0%3Bs%3A13%3A%22_csrf-backend%22%3Bi%3A1%3Bs%3A32%3A%22UJiZ0nI1SugBu3LNkNpgkF9kyNuL0KAx%22%3B%7D; advanced-backend=8nititgbh2kqlgki4uk4pkdsmv'
+    'PATH' => '/usr/bin:/bin:/usr/sbin:/sbin'
+    'SERVER_SIGNATURE' => ''
+    'SERVER_SOFTWARE' => 'Apache/2.4.54 (Unix) OpenSSL/1.0.2u PHP/8.1.13 mod_wsgi/3.5 Python/2.7.18 mod_fastcgi/mod_fastcgi-SNAP-0910052141 mod_perl/2.0.11 Perl/v5.30.1'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => '/Applications/MAMP/htdocs'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/Applications/MAMP/htdocs'
+    'SERVER_ADMIN' => 'you@example.com'
+    'SCRIPT_FILENAME' => '/Applications/MAMP/htdocs/RetroVerse/backend/web/index.php'
+    'REMOTE_PORT' => '59173'
+    'REDIRECT_URL' => '/RetroVerse/backend/web/api/carrinhos'
+    'REDIRECT_QUERY_STRING' => 'access-token=L_Rx5sONON_35MCbdXDXAXzvSmbEgSg-'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => 'access-token=L_Rx5sONON_35MCbdXDXAXzvSmbEgSg-'
+    'REQUEST_URI' => '/RetroVerse/backend/web/api/carrinhos?access-token=L_Rx5sONON_35MCbdXDXAXzvSmbEgSg-'
+    'SCRIPT_NAME' => '/RetroVerse/backend/web/index.php'
+    'PHP_SELF' => '/RetroVerse/backend/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1735931229.1842
+    'REQUEST_TIME' => 1735931229
+]
+2025-01-03 19:07:34 [::1][5][lgqc6q80egj58avu1evie9ogl1][error][yii\web\HttpException:403] yii\web\ForbiddenHttpException: This item is already in the cart for this user. in /Applications/MAMP/htdocs/RetroVerse/backend/modules/api/controllers/CarrinhoController.php:140
+Stack trace:
+#0 [internal function]: backend\modules\api\controllers\CarrinhoController->actionCreate()
+#1 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/InlineAction.php(57): call_user_func_array(Array, Array)
+#2 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Controller.php(178): yii\base\InlineAction->runWithParams(Array)
+#3 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Module.php(552): yii\base\Controller->runAction('create', Array)
+#4 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/web/Application.php(103): yii\base\Module->runAction('api/carrinho/cr...', Array)
+#5 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Application.php(384): yii\web\Application->handleRequest(Object(yii\web\Request))
+#6 /Applications/MAMP/htdocs/RetroVerse/backend/web/index.php(18): yii\base\Application->run()
+#7 {main}
+2025-01-03 19:07:34 [::1][5][lgqc6q80egj58avu1evie9ogl1][info][application] $_GET = [
+    'access-token' => 'L_Rx5sONON_35MCbdXDXAXzvSmbEgSg-'
+]
+
+$_POST = []
+
+$_FILES = []
+
+$_COOKIE = [
+    '_csrf-backend' => '03d448cb62262d41dfb14af5ac97e724245d6eb295291a5e54e648091434b49ba:2:{i:0;s:13:\"_csrf-backend\";i:1;s:32:\"fypU5Er9QKGJOZn_EPNwEh0zAA4bxwCp\";}'
+    'advanced-backend' => 'tifd86kv1clkh42nnjnus6s4la'
+]
+
+$_SESSION = [
+    '__flash' => []
+    '__id' => 5
+    '__authKey' => 'L_Rx5sONON_35MCbdXDXAXzvSmbEgSg-'
+]
+
+$_SERVER = [
+    'REDIRECT_STATUS' => '200'
+    'CONTENT_TYPE' => 'application/json'
+    'HTTP_USER_AGENT' => 'PostmanRuntime/7.43.0'
+    'HTTP_ACCEPT' => '*/*'
+    'HTTP_POSTMAN_TOKEN' => 'fd590c82-84e1-4750-8ac7-70f4553562b7'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, br'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'CONTENT_LENGTH' => '39'
+    'HTTP_COOKIE' => '_csrf-backend=03d448cb62262d41dfb14af5ac97e724245d6eb295291a5e54e648091434b49ba%3A2%3A%7Bi%3A0%3Bs%3A13%3A%22_csrf-backend%22%3Bi%3A1%3Bs%3A32%3A%22fypU5Er9QKGJOZn_EPNwEh0zAA4bxwCp%22%3B%7D; advanced-backend=tifd86kv1clkh42nnjnus6s4la'
+    'PATH' => '/usr/bin:/bin:/usr/sbin:/sbin'
+    'SERVER_SIGNATURE' => ''
+    'SERVER_SOFTWARE' => 'Apache/2.4.54 (Unix) OpenSSL/1.0.2u PHP/8.1.13 mod_wsgi/3.5 Python/2.7.18 mod_fastcgi/mod_fastcgi-SNAP-0910052141 mod_perl/2.0.11 Perl/v5.30.1'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => '/Applications/MAMP/htdocs'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/Applications/MAMP/htdocs'
+    'SERVER_ADMIN' => 'you@example.com'
+    'SCRIPT_FILENAME' => '/Applications/MAMP/htdocs/RetroVerse/backend/web/index.php'
+    'REMOTE_PORT' => '59185'
+    'REDIRECT_URL' => '/RetroVerse/backend/web/api/carrinhos'
+    'REDIRECT_QUERY_STRING' => 'access-token=L_Rx5sONON_35MCbdXDXAXzvSmbEgSg-'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => 'access-token=L_Rx5sONON_35MCbdXDXAXzvSmbEgSg-'
+    'REQUEST_URI' => '/RetroVerse/backend/web/api/carrinhos?access-token=L_Rx5sONON_35MCbdXDXAXzvSmbEgSg-'
+    'SCRIPT_NAME' => '/RetroVerse/backend/web/index.php'
+    'PHP_SELF' => '/RetroVerse/backend/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1735931254.4184
+    'REQUEST_TIME' => 1735931254
+]
+2025-01-03 19:08:05 [::1][5][lgqc6q80egj58avu1evie9ogl1][error][yii\web\HttpException:401] yii\web\UnauthorizedHttpException: Your request was made with invalid credentials. in /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/filters/auth/AuthMethod.php:93
+Stack trace:
+#0 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/filters/auth/QueryParamAuth.php(37): yii\filters\auth\AuthMethod->handleFailure(Object(yii\web\Response))
+#1 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/filters/auth/AuthMethod.php(59): yii\filters\auth\QueryParamAuth->authenticate(Object(yii\web\User), Object(yii\web\Request), Object(yii\web\Response))
+#2 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/ActionFilter.php(77): yii\filters\auth\AuthMethod->beforeAction(Object(yii\base\InlineAction))
+#3 [internal function]: yii\base\ActionFilter->beforeFilter(Object(yii\base\ActionEvent))
+#4 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Component.php(641): call_user_func(Array, Object(yii\base\ActionEvent))
+#5 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Controller.php(297): yii\base\Component->trigger('beforeAction', Object(yii\base\ActionEvent))
+#6 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/web/Controller.php(219): yii\base\Controller->beforeAction(Object(yii\base\InlineAction))
+#7 /Applications/MAMP/htdocs/RetroVerse/backend/modules/api/controllers/CarrinhoController.php(112): yii\web\Controller->beforeAction(Object(yii\base\InlineAction))
+#8 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Controller.php(176): backend\modules\api\controllers\CarrinhoController->beforeAction(Object(yii\base\InlineAction))
+#9 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Module.php(552): yii\base\Controller->runAction('create', Array)
+#10 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/web/Application.php(103): yii\base\Module->runAction('api/carrinho/cr...', Array)
+#11 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Application.php(384): yii\web\Application->handleRequest(Object(yii\web\Request))
+#12 /Applications/MAMP/htdocs/RetroVerse/backend/web/index.php(18): yii\base\Application->run()
+#13 {main}
+2025-01-03 19:08:05 [::1][5][lgqc6q80egj58avu1evie9ogl1][info][application] $_GET = [
+    'access-token' => 'nwO64uNkjqIG0D0OWg-4BSwwUDWuzGHc-'
+]
+
+$_POST = []
+
+$_FILES = []
+
+$_COOKIE = [
+    '_csrf-backend' => '98f66c94c21befe2f5629f1bfe79c72a0912b6b10e2f3d33a0bfd1eb806de456a:2:{i:0;s:13:\"_csrf-backend\";i:1;s:32:\"eC50bMKgUvbO8PPF-p-_Kd0bAKSnzo3Y\";}'
+    'advanced-backend' => 'lgqc6q80egj58avu1evie9ogl1'
+]
+
+$_SESSION = [
+    '__flash' => []
+    '__id' => 5
+    '__authKey' => 'L_Rx5sONON_35MCbdXDXAXzvSmbEgSg-'
+]
+
+$_SERVER = [
+    'REDIRECT_STATUS' => '200'
+    'CONTENT_TYPE' => 'application/json'
+    'HTTP_USER_AGENT' => 'PostmanRuntime/7.43.0'
+    'HTTP_ACCEPT' => '*/*'
+    'HTTP_POSTMAN_TOKEN' => '7699ab92-740e-4f27-abbf-dda4007e11cd'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, br'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'CONTENT_LENGTH' => '39'
+    'HTTP_COOKIE' => '_csrf-backend=98f66c94c21befe2f5629f1bfe79c72a0912b6b10e2f3d33a0bfd1eb806de456a%3A2%3A%7Bi%3A0%3Bs%3A13%3A%22_csrf-backend%22%3Bi%3A1%3Bs%3A32%3A%22eC50bMKgUvbO8PPF-p-_Kd0bAKSnzo3Y%22%3B%7D; advanced-backend=lgqc6q80egj58avu1evie9ogl1'
+    'PATH' => '/usr/bin:/bin:/usr/sbin:/sbin'
+    'SERVER_SIGNATURE' => ''
+    'SERVER_SOFTWARE' => 'Apache/2.4.54 (Unix) OpenSSL/1.0.2u PHP/8.1.13 mod_wsgi/3.5 Python/2.7.18 mod_fastcgi/mod_fastcgi-SNAP-0910052141 mod_perl/2.0.11 Perl/v5.30.1'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => '/Applications/MAMP/htdocs'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/Applications/MAMP/htdocs'
+    'SERVER_ADMIN' => 'you@example.com'
+    'SCRIPT_FILENAME' => '/Applications/MAMP/htdocs/RetroVerse/backend/web/index.php'
+    'REMOTE_PORT' => '59189'
+    'REDIRECT_URL' => '/RetroVerse/backend/web/api/carrinhos'
+    'REDIRECT_QUERY_STRING' => 'access-token=nwO64uNkjqIG0D0OWg-4BSwwUDWuzGHc-'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => 'access-token=nwO64uNkjqIG0D0OWg-4BSwwUDWuzGHc-'
+    'REQUEST_URI' => '/RetroVerse/backend/web/api/carrinhos?access-token=nwO64uNkjqIG0D0OWg-4BSwwUDWuzGHc-'
+    'SCRIPT_NAME' => '/RetroVerse/backend/web/index.php'
+    'PHP_SELF' => '/RetroVerse/backend/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1735931285.421
+    'REQUEST_TIME' => 1735931285
+]
+2025-01-03 19:08:07 [::1][5][lgqc6q80egj58avu1evie9ogl1][error][yii\web\HttpException:401] yii\web\UnauthorizedHttpException: Your request was made with invalid credentials. in /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/filters/auth/AuthMethod.php:93
+Stack trace:
+#0 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/filters/auth/QueryParamAuth.php(37): yii\filters\auth\AuthMethod->handleFailure(Object(yii\web\Response))
+#1 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/filters/auth/AuthMethod.php(59): yii\filters\auth\QueryParamAuth->authenticate(Object(yii\web\User), Object(yii\web\Request), Object(yii\web\Response))
+#2 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/ActionFilter.php(77): yii\filters\auth\AuthMethod->beforeAction(Object(yii\base\InlineAction))
+#3 [internal function]: yii\base\ActionFilter->beforeFilter(Object(yii\base\ActionEvent))
+#4 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Component.php(641): call_user_func(Array, Object(yii\base\ActionEvent))
+#5 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Controller.php(297): yii\base\Component->trigger('beforeAction', Object(yii\base\ActionEvent))
+#6 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/web/Controller.php(219): yii\base\Controller->beforeAction(Object(yii\base\InlineAction))
+#7 /Applications/MAMP/htdocs/RetroVerse/backend/modules/api/controllers/CarrinhoController.php(112): yii\web\Controller->beforeAction(Object(yii\base\InlineAction))
+#8 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Controller.php(176): backend\modules\api\controllers\CarrinhoController->beforeAction(Object(yii\base\InlineAction))
+#9 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Module.php(552): yii\base\Controller->runAction('create', Array)
+#10 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/web/Application.php(103): yii\base\Module->runAction('api/carrinho/cr...', Array)
+#11 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Application.php(384): yii\web\Application->handleRequest(Object(yii\web\Request))
+#12 /Applications/MAMP/htdocs/RetroVerse/backend/web/index.php(18): yii\base\Application->run()
+#13 {main}
+2025-01-03 19:08:07 [::1][5][lgqc6q80egj58avu1evie9ogl1][info][application] $_GET = [
+    'access-token' => 'nwO64uNkjqIG0D0OWg-4BSwwUDWuzGHc-'
+]
+
+$_POST = []
+
+$_FILES = []
+
+$_COOKIE = [
+    '_csrf-backend' => '98f66c94c21befe2f5629f1bfe79c72a0912b6b10e2f3d33a0bfd1eb806de456a:2:{i:0;s:13:\"_csrf-backend\";i:1;s:32:\"eC50bMKgUvbO8PPF-p-_Kd0bAKSnzo3Y\";}'
+    'advanced-backend' => 'lgqc6q80egj58avu1evie9ogl1'
+]
+
+$_SESSION = [
+    '__flash' => []
+    '__id' => 5
+    '__authKey' => 'L_Rx5sONON_35MCbdXDXAXzvSmbEgSg-'
+]
+
+$_SERVER = [
+    'REDIRECT_STATUS' => '200'
+    'CONTENT_TYPE' => 'application/json'
+    'HTTP_USER_AGENT' => 'PostmanRuntime/7.43.0'
+    'HTTP_ACCEPT' => '*/*'
+    'HTTP_POSTMAN_TOKEN' => '8e45ea85-3661-4ebf-83ff-0b59413abd77'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, br'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'CONTENT_LENGTH' => '39'
+    'HTTP_COOKIE' => '_csrf-backend=98f66c94c21befe2f5629f1bfe79c72a0912b6b10e2f3d33a0bfd1eb806de456a%3A2%3A%7Bi%3A0%3Bs%3A13%3A%22_csrf-backend%22%3Bi%3A1%3Bs%3A32%3A%22eC50bMKgUvbO8PPF-p-_Kd0bAKSnzo3Y%22%3B%7D; advanced-backend=lgqc6q80egj58avu1evie9ogl1'
+    'PATH' => '/usr/bin:/bin:/usr/sbin:/sbin'
+    'SERVER_SIGNATURE' => ''
+    'SERVER_SOFTWARE' => 'Apache/2.4.54 (Unix) OpenSSL/1.0.2u PHP/8.1.13 mod_wsgi/3.5 Python/2.7.18 mod_fastcgi/mod_fastcgi-SNAP-0910052141 mod_perl/2.0.11 Perl/v5.30.1'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => '/Applications/MAMP/htdocs'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/Applications/MAMP/htdocs'
+    'SERVER_ADMIN' => 'you@example.com'
+    'SCRIPT_FILENAME' => '/Applications/MAMP/htdocs/RetroVerse/backend/web/index.php'
+    'REMOTE_PORT' => '59189'
+    'REDIRECT_URL' => '/RetroVerse/backend/web/api/carrinhos'
+    'REDIRECT_QUERY_STRING' => 'access-token=nwO64uNkjqIG0D0OWg-4BSwwUDWuzGHc-'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => 'access-token=nwO64uNkjqIG0D0OWg-4BSwwUDWuzGHc-'
+    'REQUEST_URI' => '/RetroVerse/backend/web/api/carrinhos?access-token=nwO64uNkjqIG0D0OWg-4BSwwUDWuzGHc-'
+    'SCRIPT_NAME' => '/RetroVerse/backend/web/index.php'
+    'PHP_SELF' => '/RetroVerse/backend/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1735931287.6332
+    'REQUEST_TIME' => 1735931287
+]
+2025-01-03 19:08:19 [::1][5][59hcdlttb9t6pb3cho8826llu7][error][yii\web\HttpException:403] yii\web\ForbiddenHttpException: This item is already in the cart for this user. in /Applications/MAMP/htdocs/RetroVerse/backend/modules/api/controllers/CarrinhoController.php:140
+Stack trace:
+#0 [internal function]: backend\modules\api\controllers\CarrinhoController->actionCreate()
+#1 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/InlineAction.php(57): call_user_func_array(Array, Array)
+#2 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Controller.php(178): yii\base\InlineAction->runWithParams(Array)
+#3 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Module.php(552): yii\base\Controller->runAction('create', Array)
+#4 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/web/Application.php(103): yii\base\Module->runAction('api/carrinho/cr...', Array)
+#5 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Application.php(384): yii\web\Application->handleRequest(Object(yii\web\Request))
+#6 /Applications/MAMP/htdocs/RetroVerse/backend/web/index.php(18): yii\base\Application->run()
+#7 {main}
+2025-01-03 19:08:18 [::1][5][59hcdlttb9t6pb3cho8826llu7][info][application] $_GET = [
+    'access-token' => 'L_Rx5sONON_35MCbdXDXAXzvSmbEgSg-'
+]
+
+$_POST = []
+
+$_FILES = []
+
+$_COOKIE = [
+    '_csrf-backend' => '98f66c94c21befe2f5629f1bfe79c72a0912b6b10e2f3d33a0bfd1eb806de456a:2:{i:0;s:13:\"_csrf-backend\";i:1;s:32:\"eC50bMKgUvbO8PPF-p-_Kd0bAKSnzo3Y\";}'
+    'advanced-backend' => 'lgqc6q80egj58avu1evie9ogl1'
+]
+
+$_SESSION = [
+    '__flash' => []
+    '__id' => 5
+    '__authKey' => 'L_Rx5sONON_35MCbdXDXAXzvSmbEgSg-'
+]
+
+$_SERVER = [
+    'REDIRECT_STATUS' => '200'
+    'CONTENT_TYPE' => 'application/json'
+    'HTTP_USER_AGENT' => 'PostmanRuntime/7.43.0'
+    'HTTP_ACCEPT' => '*/*'
+    'HTTP_POSTMAN_TOKEN' => '5ae3ae1d-866b-45c1-942b-4443dd2b6ee9'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, br'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'CONTENT_LENGTH' => '39'
+    'HTTP_COOKIE' => '_csrf-backend=98f66c94c21befe2f5629f1bfe79c72a0912b6b10e2f3d33a0bfd1eb806de456a%3A2%3A%7Bi%3A0%3Bs%3A13%3A%22_csrf-backend%22%3Bi%3A1%3Bs%3A32%3A%22eC50bMKgUvbO8PPF-p-_Kd0bAKSnzo3Y%22%3B%7D; advanced-backend=lgqc6q80egj58avu1evie9ogl1'
+    'PATH' => '/usr/bin:/bin:/usr/sbin:/sbin'
+    'SERVER_SIGNATURE' => ''
+    'SERVER_SOFTWARE' => 'Apache/2.4.54 (Unix) OpenSSL/1.0.2u PHP/8.1.13 mod_wsgi/3.5 Python/2.7.18 mod_fastcgi/mod_fastcgi-SNAP-0910052141 mod_perl/2.0.11 Perl/v5.30.1'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => '/Applications/MAMP/htdocs'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/Applications/MAMP/htdocs'
+    'SERVER_ADMIN' => 'you@example.com'
+    'SCRIPT_FILENAME' => '/Applications/MAMP/htdocs/RetroVerse/backend/web/index.php'
+    'REMOTE_PORT' => '59194'
+    'REDIRECT_URL' => '/RetroVerse/backend/web/api/carrinhos'
+    'REDIRECT_QUERY_STRING' => 'access-token=L_Rx5sONON_35MCbdXDXAXzvSmbEgSg-'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => 'access-token=L_Rx5sONON_35MCbdXDXAXzvSmbEgSg-'
+    'REQUEST_URI' => '/RetroVerse/backend/web/api/carrinhos?access-token=L_Rx5sONON_35MCbdXDXAXzvSmbEgSg-'
+    'SCRIPT_NAME' => '/RetroVerse/backend/web/index.php'
+    'PHP_SELF' => '/RetroVerse/backend/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1735931298.9174
+    'REQUEST_TIME' => 1735931298
+]
+2025-01-03 19:10:43 [::1][5][8bpoi1m0tcn6dee54r8gfgsivi][error][yii\web\HttpException:403] yii\web\ForbiddenHttpException: This item is already in the cart for this user. in /Applications/MAMP/htdocs/RetroVerse/backend/modules/api/controllers/CarrinhoController.php:140
+Stack trace:
+#0 [internal function]: backend\modules\api\controllers\CarrinhoController->actionCreate()
+#1 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/InlineAction.php(57): call_user_func_array(Array, Array)
+#2 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Controller.php(178): yii\base\InlineAction->runWithParams(Array)
+#3 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Module.php(552): yii\base\Controller->runAction('create', Array)
+#4 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/web/Application.php(103): yii\base\Module->runAction('api/carrinho/cr...', Array)
+#5 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Application.php(384): yii\web\Application->handleRequest(Object(yii\web\Request))
+#6 /Applications/MAMP/htdocs/RetroVerse/backend/web/index.php(18): yii\base\Application->run()
+#7 {main}
+2025-01-03 19:10:43 [::1][5][8bpoi1m0tcn6dee54r8gfgsivi][info][application] $_GET = [
+    'access-token' => 'L_Rx5sONON_35MCbdXDXAXzvSmbEgSg-'
+]
+
+$_POST = []
+
+$_FILES = []
+
+$_COOKIE = [
+    '_csrf-backend' => '62ca0240991fb2cd4424737efa4c49ed77cd5601a80c97e653889944c662e411a:2:{i:0;s:13:\"_csrf-backend\";i:1;s:32:\"yJxoSBIDFQHafD-DNv9Deq2XdwxjYraA\";}'
+    'advanced-backend' => '8n5593qrtkokq51s9iiqb3n813'
+]
+
+$_SESSION = [
+    '__flash' => []
+    '__id' => 5
+    '__authKey' => 'L_Rx5sONON_35MCbdXDXAXzvSmbEgSg-'
+]
+
+$_SERVER = [
+    'REDIRECT_STATUS' => '200'
+    'CONTENT_TYPE' => 'application/json'
+    'HTTP_USER_AGENT' => 'PostmanRuntime/7.43.0'
+    'HTTP_ACCEPT' => '*/*'
+    'HTTP_POSTMAN_TOKEN' => 'b6880985-2d8a-4ee9-b899-d5f1d8c154ee'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, br'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'CONTENT_LENGTH' => '38'
+    'HTTP_COOKIE' => '_csrf-backend=62ca0240991fb2cd4424737efa4c49ed77cd5601a80c97e653889944c662e411a%3A2%3A%7Bi%3A0%3Bs%3A13%3A%22_csrf-backend%22%3Bi%3A1%3Bs%3A32%3A%22yJxoSBIDFQHafD-DNv9Deq2XdwxjYraA%22%3B%7D; advanced-backend=8n5593qrtkokq51s9iiqb3n813'
+    'PATH' => '/usr/bin:/bin:/usr/sbin:/sbin'
+    'SERVER_SIGNATURE' => ''
+    'SERVER_SOFTWARE' => 'Apache/2.4.54 (Unix) OpenSSL/1.0.2u PHP/8.1.13 mod_wsgi/3.5 Python/2.7.18 mod_fastcgi/mod_fastcgi-SNAP-0910052141 mod_perl/2.0.11 Perl/v5.30.1'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => '/Applications/MAMP/htdocs'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/Applications/MAMP/htdocs'
+    'SERVER_ADMIN' => 'you@example.com'
+    'SCRIPT_FILENAME' => '/Applications/MAMP/htdocs/RetroVerse/backend/web/index.php'
+    'REMOTE_PORT' => '59202'
+    'REDIRECT_URL' => '/RetroVerse/backend/web/api/carrinhos'
+    'REDIRECT_QUERY_STRING' => 'access-token=L_Rx5sONON_35MCbdXDXAXzvSmbEgSg-'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => 'access-token=L_Rx5sONON_35MCbdXDXAXzvSmbEgSg-'
+    'REQUEST_URI' => '/RetroVerse/backend/web/api/carrinhos?access-token=L_Rx5sONON_35MCbdXDXAXzvSmbEgSg-'
+    'SCRIPT_NAME' => '/RetroVerse/backend/web/index.php'
+    'PHP_SELF' => '/RetroVerse/backend/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1735931443.164
+    'REQUEST_TIME' => 1735931443
+]
+2025-01-03 19:12:09 [::1][5][4desb430njcr27561f7cur10jm][error][yii\web\HttpException:403] yii\web\ForbiddenHttpException: This item is already in the cart for this user. in /Applications/MAMP/htdocs/RetroVerse/backend/modules/api/controllers/CarrinhoController.php:140
+Stack trace:
+#0 [internal function]: backend\modules\api\controllers\CarrinhoController->actionCreate()
+#1 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/InlineAction.php(57): call_user_func_array(Array, Array)
+#2 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Controller.php(178): yii\base\InlineAction->runWithParams(Array)
+#3 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Module.php(552): yii\base\Controller->runAction('create', Array)
+#4 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/web/Application.php(103): yii\base\Module->runAction('api/carrinho/cr...', Array)
+#5 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Application.php(384): yii\web\Application->handleRequest(Object(yii\web\Request))
+#6 /Applications/MAMP/htdocs/RetroVerse/backend/web/index.php(18): yii\base\Application->run()
+#7 {main}
+2025-01-03 19:12:09 [::1][5][4desb430njcr27561f7cur10jm][info][application] $_GET = [
+    'access-token' => 'L_Rx5sONON_35MCbdXDXAXzvSmbEgSg-'
+]
+
+$_POST = []
+
+$_FILES = []
+
+$_COOKIE = [
+    '_csrf-backend' => 'e71a54a59a314e66c0b101ee9b056d87b6a27733a95c6e6753f14d1f7a0db850a:2:{i:0;s:13:\"_csrf-backend\";i:1;s:32:\"fq6EAfXkzxU56XvPdSVkqXW_dH2AfaQY\";}'
+    'advanced-backend' => '8bpoi1m0tcn6dee54r8gfgsivi'
+]
+
+$_SESSION = [
+    '__flash' => []
+    '__id' => 5
+    '__authKey' => 'L_Rx5sONON_35MCbdXDXAXzvSmbEgSg-'
+]
+
+$_SERVER = [
+    'REDIRECT_STATUS' => '200'
+    'CONTENT_TYPE' => 'application/json'
+    'HTTP_USER_AGENT' => 'PostmanRuntime/7.43.0'
+    'HTTP_ACCEPT' => '*/*'
+    'HTTP_POSTMAN_TOKEN' => '33f7d214-d0fe-4742-bc3e-8cca82ed03a7'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, br'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'CONTENT_LENGTH' => '38'
+    'HTTP_COOKIE' => '_csrf-backend=e71a54a59a314e66c0b101ee9b056d87b6a27733a95c6e6753f14d1f7a0db850a%3A2%3A%7Bi%3A0%3Bs%3A13%3A%22_csrf-backend%22%3Bi%3A1%3Bs%3A32%3A%22fq6EAfXkzxU56XvPdSVkqXW_dH2AfaQY%22%3B%7D; advanced-backend=8bpoi1m0tcn6dee54r8gfgsivi'
+    'PATH' => '/usr/bin:/bin:/usr/sbin:/sbin'
+    'SERVER_SIGNATURE' => ''
+    'SERVER_SOFTWARE' => 'Apache/2.4.54 (Unix) OpenSSL/1.0.2u PHP/8.1.13 mod_wsgi/3.5 Python/2.7.18 mod_fastcgi/mod_fastcgi-SNAP-0910052141 mod_perl/2.0.11 Perl/v5.30.1'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => '/Applications/MAMP/htdocs'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/Applications/MAMP/htdocs'
+    'SERVER_ADMIN' => 'you@example.com'
+    'SCRIPT_FILENAME' => '/Applications/MAMP/htdocs/RetroVerse/backend/web/index.php'
+    'REMOTE_PORT' => '59215'
+    'REDIRECT_URL' => '/RetroVerse/backend/web/api/carrinhos'
+    'REDIRECT_QUERY_STRING' => 'access-token=L_Rx5sONON_35MCbdXDXAXzvSmbEgSg-'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => 'access-token=L_Rx5sONON_35MCbdXDXAXzvSmbEgSg-'
+    'REQUEST_URI' => '/RetroVerse/backend/web/api/carrinhos?access-token=L_Rx5sONON_35MCbdXDXAXzvSmbEgSg-'
+    'SCRIPT_NAME' => '/RetroVerse/backend/web/index.php'
+    'PHP_SELF' => '/RetroVerse/backend/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1735931529.0009
+    'REQUEST_TIME' => 1735931529
+]
+2025-01-03 19:12:10 [::1][5][bhbc67r39tf07oidooo5sn789g][error][yii\web\HttpException:403] yii\web\ForbiddenHttpException: This item is already in the cart for this user. in /Applications/MAMP/htdocs/RetroVerse/backend/modules/api/controllers/CarrinhoController.php:140
+Stack trace:
+#0 [internal function]: backend\modules\api\controllers\CarrinhoController->actionCreate()
+#1 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/InlineAction.php(57): call_user_func_array(Array, Array)
+#2 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Controller.php(178): yii\base\InlineAction->runWithParams(Array)
+#3 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Module.php(552): yii\base\Controller->runAction('create', Array)
+#4 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/web/Application.php(103): yii\base\Module->runAction('api/carrinho/cr...', Array)
+#5 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Application.php(384): yii\web\Application->handleRequest(Object(yii\web\Request))
+#6 /Applications/MAMP/htdocs/RetroVerse/backend/web/index.php(18): yii\base\Application->run()
+#7 {main}
+2025-01-03 19:12:10 [::1][5][bhbc67r39tf07oidooo5sn789g][info][application] $_GET = [
+    'access-token' => 'L_Rx5sONON_35MCbdXDXAXzvSmbEgSg-'
+]
+
+$_POST = []
+
+$_FILES = []
+
+$_COOKIE = [
+    '_csrf-backend' => '3ddb06739cf0ba7f901644a1a88be2fb7afa1e68a642468ca882e4b481164f28a:2:{i:0;s:13:\"_csrf-backend\";i:1;s:32:\"gnLyUM1Iins5icPtmegrvDTchArNs0m-\";}'
+    'advanced-backend' => '4desb430njcr27561f7cur10jm'
+]
+
+$_SESSION = [
+    '__flash' => []
+    '__id' => 5
+    '__authKey' => 'L_Rx5sONON_35MCbdXDXAXzvSmbEgSg-'
+]
+
+$_SERVER = [
+    'REDIRECT_STATUS' => '200'
+    'CONTENT_TYPE' => 'application/json'
+    'HTTP_USER_AGENT' => 'PostmanRuntime/7.43.0'
+    'HTTP_ACCEPT' => '*/*'
+    'HTTP_POSTMAN_TOKEN' => '95f4b49a-b151-4f39-b1cf-6409c1bdf99a'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, br'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'CONTENT_LENGTH' => '38'
+    'HTTP_COOKIE' => '_csrf-backend=3ddb06739cf0ba7f901644a1a88be2fb7afa1e68a642468ca882e4b481164f28a%3A2%3A%7Bi%3A0%3Bs%3A13%3A%22_csrf-backend%22%3Bi%3A1%3Bs%3A32%3A%22gnLyUM1Iins5icPtmegrvDTchArNs0m-%22%3B%7D; advanced-backend=4desb430njcr27561f7cur10jm'
+    'PATH' => '/usr/bin:/bin:/usr/sbin:/sbin'
+    'SERVER_SIGNATURE' => ''
+    'SERVER_SOFTWARE' => 'Apache/2.4.54 (Unix) OpenSSL/1.0.2u PHP/8.1.13 mod_wsgi/3.5 Python/2.7.18 mod_fastcgi/mod_fastcgi-SNAP-0910052141 mod_perl/2.0.11 Perl/v5.30.1'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => '/Applications/MAMP/htdocs'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/Applications/MAMP/htdocs'
+    'SERVER_ADMIN' => 'you@example.com'
+    'SCRIPT_FILENAME' => '/Applications/MAMP/htdocs/RetroVerse/backend/web/index.php'
+    'REMOTE_PORT' => '59215'
+    'REDIRECT_URL' => '/RetroVerse/backend/web/api/carrinhos'
+    'REDIRECT_QUERY_STRING' => 'access-token=L_Rx5sONON_35MCbdXDXAXzvSmbEgSg-'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => 'access-token=L_Rx5sONON_35MCbdXDXAXzvSmbEgSg-'
+    'REQUEST_URI' => '/RetroVerse/backend/web/api/carrinhos?access-token=L_Rx5sONON_35MCbdXDXAXzvSmbEgSg-'
+    'SCRIPT_NAME' => '/RetroVerse/backend/web/index.php'
+    'PHP_SELF' => '/RetroVerse/backend/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1735931530.1132
+    'REQUEST_TIME' => 1735931530
+]
+2025-01-03 19:12:14 [::1][5][b9qdn3t45m1g6e9265mbf9rje3][error][yii\web\HttpException:403] yii\web\ForbiddenHttpException: This item is already in the cart for this user. in /Applications/MAMP/htdocs/RetroVerse/backend/modules/api/controllers/CarrinhoController.php:140
+Stack trace:
+#0 [internal function]: backend\modules\api\controllers\CarrinhoController->actionCreate()
+#1 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/InlineAction.php(57): call_user_func_array(Array, Array)
+#2 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Controller.php(178): yii\base\InlineAction->runWithParams(Array)
+#3 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Module.php(552): yii\base\Controller->runAction('create', Array)
+#4 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/web/Application.php(103): yii\base\Module->runAction('api/carrinho/cr...', Array)
+#5 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Application.php(384): yii\web\Application->handleRequest(Object(yii\web\Request))
+#6 /Applications/MAMP/htdocs/RetroVerse/backend/web/index.php(18): yii\base\Application->run()
+#7 {main}
+2025-01-03 19:12:14 [::1][5][b9qdn3t45m1g6e9265mbf9rje3][info][application] $_GET = [
+    'access-token' => 'L_Rx5sONON_35MCbdXDXAXzvSmbEgSg-'
+]
+
+$_POST = []
+
+$_FILES = []
+
+$_COOKIE = [
+    '_csrf-backend' => '53a35540b83929c47d578159d548eef0a8f65db72d59e8e51814986625010513a:2:{i:0;s:13:\"_csrf-backend\";i:1;s:32:\"PW1pCgv3CQfa90e7v5Yp1Wfyab2T4P3O\";}'
+    'advanced-backend' => 'enkik4e38jrbp4lb18cvtofida'
+]
+
+$_SESSION = [
+    '__flash' => []
+    '__id' => 5
+    '__authKey' => 'L_Rx5sONON_35MCbdXDXAXzvSmbEgSg-'
+]
+
+$_SERVER = [
+    'REDIRECT_STATUS' => '200'
+    'CONTENT_TYPE' => 'application/json'
+    'HTTP_USER_AGENT' => 'PostmanRuntime/7.43.0'
+    'HTTP_ACCEPT' => '*/*'
+    'HTTP_POSTMAN_TOKEN' => 'b7c7ca01-f55c-4477-828e-5e3a2c9adf05'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, br'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'CONTENT_LENGTH' => '39'
+    'HTTP_COOKIE' => '_csrf-backend=53a35540b83929c47d578159d548eef0a8f65db72d59e8e51814986625010513a%3A2%3A%7Bi%3A0%3Bs%3A13%3A%22_csrf-backend%22%3Bi%3A1%3Bs%3A32%3A%22PW1pCgv3CQfa90e7v5Yp1Wfyab2T4P3O%22%3B%7D; advanced-backend=enkik4e38jrbp4lb18cvtofida'
+    'PATH' => '/usr/bin:/bin:/usr/sbin:/sbin'
+    'SERVER_SIGNATURE' => ''
+    'SERVER_SOFTWARE' => 'Apache/2.4.54 (Unix) OpenSSL/1.0.2u PHP/8.1.13 mod_wsgi/3.5 Python/2.7.18 mod_fastcgi/mod_fastcgi-SNAP-0910052141 mod_perl/2.0.11 Perl/v5.30.1'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => '/Applications/MAMP/htdocs'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/Applications/MAMP/htdocs'
+    'SERVER_ADMIN' => 'you@example.com'
+    'SCRIPT_FILENAME' => '/Applications/MAMP/htdocs/RetroVerse/backend/web/index.php'
+    'REMOTE_PORT' => '59215'
+    'REDIRECT_URL' => '/RetroVerse/backend/web/api/carrinhos'
+    'REDIRECT_QUERY_STRING' => 'access-token=L_Rx5sONON_35MCbdXDXAXzvSmbEgSg-'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => 'access-token=L_Rx5sONON_35MCbdXDXAXzvSmbEgSg-'
+    'REQUEST_URI' => '/RetroVerse/backend/web/api/carrinhos?access-token=L_Rx5sONON_35MCbdXDXAXzvSmbEgSg-'
+    'SCRIPT_NAME' => '/RetroVerse/backend/web/index.php'
+    'PHP_SELF' => '/RetroVerse/backend/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1735931534.7004
+    'REQUEST_TIME' => 1735931534
+]
+2025-01-03 19:15:09 [::1][5][e0t0omg0unv1rger8ofdhnvhfv][error][yii\web\HttpException:403] yii\web\ForbiddenHttpException: This item is already in the cart for this user. in /Applications/MAMP/htdocs/RetroVerse/backend/modules/api/controllers/CarrinhoController.php:140
+Stack trace:
+#0 [internal function]: backend\modules\api\controllers\CarrinhoController->actionCreate()
+#1 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/InlineAction.php(57): call_user_func_array(Array, Array)
+#2 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Controller.php(178): yii\base\InlineAction->runWithParams(Array)
+#3 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Module.php(552): yii\base\Controller->runAction('create', Array)
+#4 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/web/Application.php(103): yii\base\Module->runAction('api/carrinho/cr...', Array)
+#5 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Application.php(384): yii\web\Application->handleRequest(Object(yii\web\Request))
+#6 /Applications/MAMP/htdocs/RetroVerse/backend/web/index.php(18): yii\base\Application->run()
+#7 {main}
+2025-01-03 19:15:09 [::1][5][e0t0omg0unv1rger8ofdhnvhfv][info][application] $_GET = [
+    'access-token' => 'L_Rx5sONON_35MCbdXDXAXzvSmbEgSg-'
+]
+
+$_POST = []
+
+$_FILES = []
+
+$_COOKIE = [
+    '_csrf-backend' => '3e157d4f65bd26df43f3cc880caec891e25d212a3206475922b1705a0c0d3775a:2:{i:0;s:13:\"_csrf-backend\";i:1;s:32:\"zsyP5TbOB0Cecww3NS8qZR3VkFd_htFf\";}'
+    'advanced-backend' => 'b9qdn3t45m1g6e9265mbf9rje3'
+]
+
+$_SESSION = [
+    '__flash' => []
+    '__id' => 5
+    '__authKey' => 'L_Rx5sONON_35MCbdXDXAXzvSmbEgSg-'
+]
+
+$_SERVER = [
+    'REDIRECT_STATUS' => '200'
+    'CONTENT_TYPE' => 'application/json'
+    'HTTP_USER_AGENT' => 'PostmanRuntime/7.43.0'
+    'HTTP_ACCEPT' => '*/*'
+    'HTTP_POSTMAN_TOKEN' => '5f6149ec-d40d-4144-826b-2593d9838e68'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, br'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'CONTENT_LENGTH' => '39'
+    'HTTP_COOKIE' => '_csrf-backend=3e157d4f65bd26df43f3cc880caec891e25d212a3206475922b1705a0c0d3775a%3A2%3A%7Bi%3A0%3Bs%3A13%3A%22_csrf-backend%22%3Bi%3A1%3Bs%3A32%3A%22zsyP5TbOB0Cecww3NS8qZR3VkFd_htFf%22%3B%7D; advanced-backend=b9qdn3t45m1g6e9265mbf9rje3'
+    'PATH' => '/usr/bin:/bin:/usr/sbin:/sbin'
+    'SERVER_SIGNATURE' => ''
+    'SERVER_SOFTWARE' => 'Apache/2.4.54 (Unix) OpenSSL/1.0.2u PHP/8.1.13 mod_wsgi/3.5 Python/2.7.18 mod_fastcgi/mod_fastcgi-SNAP-0910052141 mod_perl/2.0.11 Perl/v5.30.1'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => '/Applications/MAMP/htdocs'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/Applications/MAMP/htdocs'
+    'SERVER_ADMIN' => 'you@example.com'
+    'SCRIPT_FILENAME' => '/Applications/MAMP/htdocs/RetroVerse/backend/web/index.php'
+    'REMOTE_PORT' => '59224'
+    'REDIRECT_URL' => '/RetroVerse/backend/web/api/carrinhos'
+    'REDIRECT_QUERY_STRING' => 'access-token=L_Rx5sONON_35MCbdXDXAXzvSmbEgSg-'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => 'access-token=L_Rx5sONON_35MCbdXDXAXzvSmbEgSg-'
+    'REQUEST_URI' => '/RetroVerse/backend/web/api/carrinhos?access-token=L_Rx5sONON_35MCbdXDXAXzvSmbEgSg-'
+    'SCRIPT_NAME' => '/RetroVerse/backend/web/index.php'
+    'PHP_SELF' => '/RetroVerse/backend/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1735931709.1903
+    'REQUEST_TIME' => 1735931709
+]
+2025-01-03 19:20:22 [::1][5][aohhhta1vh3fc6kaofihnqb94v][error][yii\web\HttpException:403] yii\web\ForbiddenHttpException: This item is already in the cart for this user. in /Applications/MAMP/htdocs/RetroVerse/backend/modules/api/controllers/CarrinhoController.php:140
+Stack trace:
+#0 [internal function]: backend\modules\api\controllers\CarrinhoController->actionCreate()
+#1 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/InlineAction.php(57): call_user_func_array(Array, Array)
+#2 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Controller.php(178): yii\base\InlineAction->runWithParams(Array)
+#3 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Module.php(552): yii\base\Controller->runAction('create', Array)
+#4 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/web/Application.php(103): yii\base\Module->runAction('api/carrinho/cr...', Array)
+#5 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Application.php(384): yii\web\Application->handleRequest(Object(yii\web\Request))
+#6 /Applications/MAMP/htdocs/RetroVerse/backend/web/index.php(18): yii\base\Application->run()
+#7 {main}
+2025-01-03 19:20:22 [::1][5][aohhhta1vh3fc6kaofihnqb94v][info][application] $_GET = [
+    'access-token' => 'L_Rx5sONON_35MCbdXDXAXzvSmbEgSg-'
+]
+
+$_POST = []
+
+$_FILES = []
+
+$_COOKIE = [
+    '_csrf-backend' => '8479ef07bbfd4e2e5cf3738b0e5fe220278f4e9cf1a0352e59dd7f565d7bfac2a:2:{i:0;s:13:\"_csrf-backend\";i:1;s:32:\"kxr0vYNSnfm23nV9v2RwILUfO2RxlgQ3\";}'
+    'advanced-backend' => 'e0t0omg0unv1rger8ofdhnvhfv'
+]
+
+$_SESSION = [
+    '__flash' => []
+    '__id' => 5
+    '__authKey' => 'L_Rx5sONON_35MCbdXDXAXzvSmbEgSg-'
+]
+
+$_SERVER = [
+    'REDIRECT_STATUS' => '200'
+    'CONTENT_TYPE' => 'application/json'
+    'HTTP_USER_AGENT' => 'PostmanRuntime/7.43.0'
+    'HTTP_ACCEPT' => '*/*'
+    'HTTP_POSTMAN_TOKEN' => '27b4e3d3-7197-4926-8d22-37ebccc68726'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, br'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'CONTENT_LENGTH' => '39'
+    'HTTP_COOKIE' => '_csrf-backend=8479ef07bbfd4e2e5cf3738b0e5fe220278f4e9cf1a0352e59dd7f565d7bfac2a%3A2%3A%7Bi%3A0%3Bs%3A13%3A%22_csrf-backend%22%3Bi%3A1%3Bs%3A32%3A%22kxr0vYNSnfm23nV9v2RwILUfO2RxlgQ3%22%3B%7D; advanced-backend=e0t0omg0unv1rger8ofdhnvhfv'
+    'PATH' => '/usr/bin:/bin:/usr/sbin:/sbin'
+    'SERVER_SIGNATURE' => ''
+    'SERVER_SOFTWARE' => 'Apache/2.4.54 (Unix) OpenSSL/1.0.2u PHP/8.1.13 mod_wsgi/3.5 Python/2.7.18 mod_fastcgi/mod_fastcgi-SNAP-0910052141 mod_perl/2.0.11 Perl/v5.30.1'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => '/Applications/MAMP/htdocs'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/Applications/MAMP/htdocs'
+    'SERVER_ADMIN' => 'you@example.com'
+    'SCRIPT_FILENAME' => '/Applications/MAMP/htdocs/RetroVerse/backend/web/index.php'
+    'REMOTE_PORT' => '59268'
+    'REDIRECT_URL' => '/RetroVerse/backend/web/api/carrinhos'
+    'REDIRECT_QUERY_STRING' => 'access-token=L_Rx5sONON_35MCbdXDXAXzvSmbEgSg-'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => 'access-token=L_Rx5sONON_35MCbdXDXAXzvSmbEgSg-'
+    'REQUEST_URI' => '/RetroVerse/backend/web/api/carrinhos?access-token=L_Rx5sONON_35MCbdXDXAXzvSmbEgSg-'
+    'SCRIPT_NAME' => '/RetroVerse/backend/web/index.php'
+    'PHP_SELF' => '/RetroVerse/backend/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1735932022.5173
+    'REQUEST_TIME' => 1735932022
+]
+2025-01-03 19:20:24 [::1][5][q9pfk0cdrek1a5uo55jjcs6sr8][error][yii\web\HttpException:403] yii\web\ForbiddenHttpException: This item is already in the cart for this user. in /Applications/MAMP/htdocs/RetroVerse/backend/modules/api/controllers/CarrinhoController.php:140
+Stack trace:
+#0 [internal function]: backend\modules\api\controllers\CarrinhoController->actionCreate()
+#1 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/InlineAction.php(57): call_user_func_array(Array, Array)
+#2 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Controller.php(178): yii\base\InlineAction->runWithParams(Array)
+#3 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Module.php(552): yii\base\Controller->runAction('create', Array)
+#4 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/web/Application.php(103): yii\base\Module->runAction('api/carrinho/cr...', Array)
+#5 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Application.php(384): yii\web\Application->handleRequest(Object(yii\web\Request))
+#6 /Applications/MAMP/htdocs/RetroVerse/backend/web/index.php(18): yii\base\Application->run()
+#7 {main}
+2025-01-03 19:20:24 [::1][5][q9pfk0cdrek1a5uo55jjcs6sr8][info][application] $_GET = [
+    'access-token' => 'L_Rx5sONON_35MCbdXDXAXzvSmbEgSg-'
+]
+
+$_POST = []
+
+$_FILES = []
+
+$_COOKIE = [
+    '_csrf-backend' => 'aa484bd4d5a9859a7c8df65b7ed13e4b376c10513128bafa7dab0dc7be4b0ba4a:2:{i:0;s:13:\"_csrf-backend\";i:1;s:32:\"Fsx3W9exgZCzPfDvDHhXhIBQVxHyq2b2\";}'
+    'advanced-backend' => 'aohhhta1vh3fc6kaofihnqb94v'
+]
+
+$_SESSION = [
+    '__flash' => []
+    '__id' => 5
+    '__authKey' => 'L_Rx5sONON_35MCbdXDXAXzvSmbEgSg-'
+]
+
+$_SERVER = [
+    'REDIRECT_STATUS' => '200'
+    'CONTENT_TYPE' => 'application/json'
+    'HTTP_USER_AGENT' => 'PostmanRuntime/7.43.0'
+    'HTTP_ACCEPT' => '*/*'
+    'HTTP_POSTMAN_TOKEN' => '1db4394e-f62d-4ceb-bc60-8b3d4a9f3b35'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, br'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'CONTENT_LENGTH' => '39'
+    'HTTP_COOKIE' => '_csrf-backend=aa484bd4d5a9859a7c8df65b7ed13e4b376c10513128bafa7dab0dc7be4b0ba4a%3A2%3A%7Bi%3A0%3Bs%3A13%3A%22_csrf-backend%22%3Bi%3A1%3Bs%3A32%3A%22Fsx3W9exgZCzPfDvDHhXhIBQVxHyq2b2%22%3B%7D; advanced-backend=aohhhta1vh3fc6kaofihnqb94v'
+    'PATH' => '/usr/bin:/bin:/usr/sbin:/sbin'
+    'SERVER_SIGNATURE' => ''
+    'SERVER_SOFTWARE' => 'Apache/2.4.54 (Unix) OpenSSL/1.0.2u PHP/8.1.13 mod_wsgi/3.5 Python/2.7.18 mod_fastcgi/mod_fastcgi-SNAP-0910052141 mod_perl/2.0.11 Perl/v5.30.1'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => '/Applications/MAMP/htdocs'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/Applications/MAMP/htdocs'
+    'SERVER_ADMIN' => 'you@example.com'
+    'SCRIPT_FILENAME' => '/Applications/MAMP/htdocs/RetroVerse/backend/web/index.php'
+    'REMOTE_PORT' => '59268'
+    'REDIRECT_URL' => '/RetroVerse/backend/web/api/carrinhos'
+    'REDIRECT_QUERY_STRING' => 'access-token=L_Rx5sONON_35MCbdXDXAXzvSmbEgSg-'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => 'access-token=L_Rx5sONON_35MCbdXDXAXzvSmbEgSg-'
+    'REQUEST_URI' => '/RetroVerse/backend/web/api/carrinhos?access-token=L_Rx5sONON_35MCbdXDXAXzvSmbEgSg-'
+    'SCRIPT_NAME' => '/RetroVerse/backend/web/index.php'
+    'PHP_SELF' => '/RetroVerse/backend/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1735932024.2838
+    'REQUEST_TIME' => 1735932024
+]
+2025-01-03 19:20:35 [::1][5][hlskmv9g63d7flkbgief4gacn3][error][yii\web\HttpException:403] yii\web\ForbiddenHttpException: This item is already in the cart for this user. in /Applications/MAMP/htdocs/RetroVerse/backend/modules/api/controllers/CarrinhoController.php:140
+Stack trace:
+#0 [internal function]: backend\modules\api\controllers\CarrinhoController->actionCreate()
+#1 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/InlineAction.php(57): call_user_func_array(Array, Array)
+#2 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Controller.php(178): yii\base\InlineAction->runWithParams(Array)
+#3 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Module.php(552): yii\base\Controller->runAction('create', Array)
+#4 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/web/Application.php(103): yii\base\Module->runAction('api/carrinho/cr...', Array)
+#5 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Application.php(384): yii\web\Application->handleRequest(Object(yii\web\Request))
+#6 /Applications/MAMP/htdocs/RetroVerse/backend/web/index.php(18): yii\base\Application->run()
+#7 {main}
+2025-01-03 19:20:35 [::1][5][hlskmv9g63d7flkbgief4gacn3][info][application] $_GET = [
+    'access-token' => 'L_Rx5sONON_35MCbdXDXAXzvSmbEgSg-'
+]
+
+$_POST = []
+
+$_FILES = []
+
+$_COOKIE = [
+    '_csrf-backend' => 'a4071b922080da4b6ba6d3459de65c735a4b67f954932255702b2e187c9a5707a:2:{i:0;s:13:\"_csrf-backend\";i:1;s:32:\"HgiqBE_l4OKqOp-6wQMiw95BDzjl3jgZ\";}'
+    'advanced-backend' => '363vvcnee9ueh3pfl4a05arnuu'
+]
+
+$_SESSION = [
+    '__flash' => []
+    '__id' => 5
+    '__authKey' => 'L_Rx5sONON_35MCbdXDXAXzvSmbEgSg-'
+]
+
+$_SERVER = [
+    'REDIRECT_STATUS' => '200'
+    'CONTENT_TYPE' => 'application/json'
+    'HTTP_USER_AGENT' => 'PostmanRuntime/7.43.0'
+    'HTTP_ACCEPT' => '*/*'
+    'HTTP_POSTMAN_TOKEN' => 'ad1c1861-d141-47ca-872f-9258a170bb57'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, br'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'CONTENT_LENGTH' => '39'
+    'HTTP_COOKIE' => '_csrf-backend=a4071b922080da4b6ba6d3459de65c735a4b67f954932255702b2e187c9a5707a%3A2%3A%7Bi%3A0%3Bs%3A13%3A%22_csrf-backend%22%3Bi%3A1%3Bs%3A32%3A%22HgiqBE_l4OKqOp-6wQMiw95BDzjl3jgZ%22%3B%7D; advanced-backend=363vvcnee9ueh3pfl4a05arnuu'
+    'PATH' => '/usr/bin:/bin:/usr/sbin:/sbin'
+    'SERVER_SIGNATURE' => ''
+    'SERVER_SOFTWARE' => 'Apache/2.4.54 (Unix) OpenSSL/1.0.2u PHP/8.1.13 mod_wsgi/3.5 Python/2.7.18 mod_fastcgi/mod_fastcgi-SNAP-0910052141 mod_perl/2.0.11 Perl/v5.30.1'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => '/Applications/MAMP/htdocs'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/Applications/MAMP/htdocs'
+    'SERVER_ADMIN' => 'you@example.com'
+    'SCRIPT_FILENAME' => '/Applications/MAMP/htdocs/RetroVerse/backend/web/index.php'
+    'REMOTE_PORT' => '59274'
+    'REDIRECT_URL' => '/RetroVerse/backend/web/api/carrinhos'
+    'REDIRECT_QUERY_STRING' => 'access-token=L_Rx5sONON_35MCbdXDXAXzvSmbEgSg-'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => 'access-token=L_Rx5sONON_35MCbdXDXAXzvSmbEgSg-'
+    'REQUEST_URI' => '/RetroVerse/backend/web/api/carrinhos?access-token=L_Rx5sONON_35MCbdXDXAXzvSmbEgSg-'
+    'SCRIPT_NAME' => '/RetroVerse/backend/web/index.php'
+    'PHP_SELF' => '/RetroVerse/backend/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1735932035.7436
+    'REQUEST_TIME' => 1735932035
+]
+2025-01-03 19:20:37 [::1][5][qlulj8qa452tn8n13sipgv97md][error][yii\web\HttpException:403] yii\web\ForbiddenHttpException: This item is already in the cart for this user. in /Applications/MAMP/htdocs/RetroVerse/backend/modules/api/controllers/CarrinhoController.php:140
+Stack trace:
+#0 [internal function]: backend\modules\api\controllers\CarrinhoController->actionCreate()
+#1 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/InlineAction.php(57): call_user_func_array(Array, Array)
+#2 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Controller.php(178): yii\base\InlineAction->runWithParams(Array)
+#3 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Module.php(552): yii\base\Controller->runAction('create', Array)
+#4 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/web/Application.php(103): yii\base\Module->runAction('api/carrinho/cr...', Array)
+#5 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Application.php(384): yii\web\Application->handleRequest(Object(yii\web\Request))
+#6 /Applications/MAMP/htdocs/RetroVerse/backend/web/index.php(18): yii\base\Application->run()
+#7 {main}
+2025-01-03 19:20:36 [::1][5][qlulj8qa452tn8n13sipgv97md][info][application] $_GET = [
+    'access-token' => 'L_Rx5sONON_35MCbdXDXAXzvSmbEgSg-'
+]
+
+$_POST = []
+
+$_FILES = []
+
+$_COOKIE = [
+    '_csrf-backend' => 'eb8d845f7ab74366af72b8f289b900d5f374f7ad4069c186c92c7bf302d7c6d7a:2:{i:0;s:13:\"_csrf-backend\";i:1;s:32:\"HBM3auyLZnoWqLzbu96KWT--XPmTF1dI\";}'
+    'advanced-backend' => 'hlskmv9g63d7flkbgief4gacn3'
+]
+
+$_SESSION = [
+    '__flash' => []
+    '__id' => 5
+    '__authKey' => 'L_Rx5sONON_35MCbdXDXAXzvSmbEgSg-'
+]
+
+$_SERVER = [
+    'REDIRECT_STATUS' => '200'
+    'CONTENT_TYPE' => 'application/json'
+    'HTTP_USER_AGENT' => 'PostmanRuntime/7.43.0'
+    'HTTP_ACCEPT' => '*/*'
+    'HTTP_POSTMAN_TOKEN' => '4a59706f-99c5-464b-ab09-b1550e578ac4'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, br'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'CONTENT_LENGTH' => '39'
+    'HTTP_COOKIE' => '_csrf-backend=eb8d845f7ab74366af72b8f289b900d5f374f7ad4069c186c92c7bf302d7c6d7a%3A2%3A%7Bi%3A0%3Bs%3A13%3A%22_csrf-backend%22%3Bi%3A1%3Bs%3A32%3A%22HBM3auyLZnoWqLzbu96KWT--XPmTF1dI%22%3B%7D; advanced-backend=hlskmv9g63d7flkbgief4gacn3'
+    'PATH' => '/usr/bin:/bin:/usr/sbin:/sbin'
+    'SERVER_SIGNATURE' => ''
+    'SERVER_SOFTWARE' => 'Apache/2.4.54 (Unix) OpenSSL/1.0.2u PHP/8.1.13 mod_wsgi/3.5 Python/2.7.18 mod_fastcgi/mod_fastcgi-SNAP-0910052141 mod_perl/2.0.11 Perl/v5.30.1'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => '/Applications/MAMP/htdocs'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/Applications/MAMP/htdocs'
+    'SERVER_ADMIN' => 'you@example.com'
+    'SCRIPT_FILENAME' => '/Applications/MAMP/htdocs/RetroVerse/backend/web/index.php'
+    'REMOTE_PORT' => '59274'
+    'REDIRECT_URL' => '/RetroVerse/backend/web/api/carrinhos'
+    'REDIRECT_QUERY_STRING' => 'access-token=L_Rx5sONON_35MCbdXDXAXzvSmbEgSg-'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => 'access-token=L_Rx5sONON_35MCbdXDXAXzvSmbEgSg-'
+    'REQUEST_URI' => '/RetroVerse/backend/web/api/carrinhos?access-token=L_Rx5sONON_35MCbdXDXAXzvSmbEgSg-'
+    'SCRIPT_NAME' => '/RetroVerse/backend/web/index.php'
+    'PHP_SELF' => '/RetroVerse/backend/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1735932036.9271
+    'REQUEST_TIME' => 1735932036
+]
+2025-01-03 19:35:52 [::1][5][cbl9p5sjtepr1pjk9odoipj9j3][error][yii\web\HttpException:403] yii\web\ForbiddenHttpException: This item is already in the cart for this user. in /Applications/MAMP/htdocs/RetroVerse/backend/modules/api/controllers/CarrinhoController.php:140
+Stack trace:
+#0 [internal function]: backend\modules\api\controllers\CarrinhoController->actionCreate()
+#1 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/InlineAction.php(57): call_user_func_array(Array, Array)
+#2 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Controller.php(178): yii\base\InlineAction->runWithParams(Array)
+#3 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Module.php(552): yii\base\Controller->runAction('create', Array)
+#4 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/web/Application.php(103): yii\base\Module->runAction('api/carrinho/cr...', Array)
+#5 /Applications/MAMP/htdocs/RetroVerse/vendor/yiisoft/yii2/base/Application.php(384): yii\web\Application->handleRequest(Object(yii\web\Request))
+#6 /Applications/MAMP/htdocs/RetroVerse/backend/web/index.php(18): yii\base\Application->run()
+#7 {main}
+2025-01-03 19:35:52 [::1][5][cbl9p5sjtepr1pjk9odoipj9j3][info][application] $_GET = [
+    'access-token' => 'L_Rx5sONON_35MCbdXDXAXzvSmbEgSg-'
+]
+
+$_POST = []
+
+$_FILES = []
+
+$_COOKIE = [
+    '_csrf-backend' => '42253373dda8aa365e3732867503586bae3f722a2a802f1a86f27f32cf5b16c1a:2:{i:0;s:13:\"_csrf-backend\";i:1;s:32:\"J26nPD7ujossPqCUOI7X4GMR5LYmqucm\";}'
+    'advanced-backend' => 'qlulj8qa452tn8n13sipgv97md'
+]
+
+$_SESSION = [
+    '__flash' => []
+    '__id' => 5
+    '__authKey' => 'L_Rx5sONON_35MCbdXDXAXzvSmbEgSg-'
+]
+
+$_SERVER = [
+    'REDIRECT_STATUS' => '200'
+    'CONTENT_TYPE' => 'application/json'
+    'HTTP_USER_AGENT' => 'PostmanRuntime/7.43.0'
+    'HTTP_ACCEPT' => '*/*'
+    'HTTP_POSTMAN_TOKEN' => '1c513521-ab93-4c3b-ae82-0311aadad175'
+    'HTTP_HOST' => 'localhost'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, br'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'CONTENT_LENGTH' => '39'
+    'HTTP_COOKIE' => '_csrf-backend=42253373dda8aa365e3732867503586bae3f722a2a802f1a86f27f32cf5b16c1a%3A2%3A%7Bi%3A0%3Bs%3A13%3A%22_csrf-backend%22%3Bi%3A1%3Bs%3A32%3A%22J26nPD7ujossPqCUOI7X4GMR5LYmqucm%22%3B%7D; advanced-backend=qlulj8qa452tn8n13sipgv97md'
+    'PATH' => '/usr/bin:/bin:/usr/sbin:/sbin'
+    'SERVER_SIGNATURE' => ''
+    'SERVER_SOFTWARE' => 'Apache/2.4.54 (Unix) OpenSSL/1.0.2u PHP/8.1.13 mod_wsgi/3.5 Python/2.7.18 mod_fastcgi/mod_fastcgi-SNAP-0910052141 mod_perl/2.0.11 Perl/v5.30.1'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => '/Applications/MAMP/htdocs'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => '/Applications/MAMP/htdocs'
+    'SERVER_ADMIN' => 'you@example.com'
+    'SCRIPT_FILENAME' => '/Applications/MAMP/htdocs/RetroVerse/backend/web/index.php'
+    'REMOTE_PORT' => '59335'
+    'REDIRECT_URL' => '/RetroVerse/backend/web/api/carrinhos'
+    'REDIRECT_QUERY_STRING' => 'access-token=L_Rx5sONON_35MCbdXDXAXzvSmbEgSg-'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => 'access-token=L_Rx5sONON_35MCbdXDXAXzvSmbEgSg-'
+    'REQUEST_URI' => '/RetroVerse/backend/web/api/carrinhos?access-token=L_Rx5sONON_35MCbdXDXAXzvSmbEgSg-'
+    'SCRIPT_NAME' => '/RetroVerse/backend/web/index.php'
+    'PHP_SELF' => '/RetroVerse/backend/web/index.php'
+    'REQUEST_TIME_FLOAT' => 1735932952.6259
+    'REQUEST_TIME' => 1735932952
+]
