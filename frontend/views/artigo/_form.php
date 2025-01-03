@@ -110,6 +110,7 @@ use yii\widgets\ActiveForm;
             <div class="input-details mt-4">
                 <?= $form->field($model, 'precoanuncio')->textInput([
                     'autofocus' => true,
+                    'type' => 'number',
                     'placeholder' => '€ 0.00'
                 ])->label('PRICE'); ?>
             </div>
