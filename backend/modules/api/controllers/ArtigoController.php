@@ -47,7 +47,6 @@ class ArtigoController extends ActiveController
         throw new \yii\web\ForbiddenHttpException('No authentication');
     }
 
-
     public function checkAccess($action, $model = null, $params = [])
     {
         if ($this->user) {

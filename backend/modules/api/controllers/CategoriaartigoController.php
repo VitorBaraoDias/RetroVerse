@@ -23,8 +23,6 @@ class CategoriaartigoController extends ActiveController
         return $behaviors;
     }
 
-
-
     public function BeforeAction ($action)
     {
         if(!parent::beforeAction($action)) {
@@ -35,7 +33,7 @@ class CategoriaartigoController extends ActiveController
 
             Yii::$app->response->statusCode = 405;
             Yii::$app->response->data = [
-                'message' => 'METHOD NOT ALLOWED. ',
+                'message' => 'METHOD NOT ALLOWED!',
             ];
             return false;
         }

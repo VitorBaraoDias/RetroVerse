@@ -94,7 +94,6 @@ return [
                     'class' => 'yii\rest\UrlRule',
                     'controller' => 'api/carrinho',
                     'extraPatterns' => [
-                        'GET user/{id}' => 'user',
                         'POST' => 'createcarrinho'
                     ],
                 ],
@@ -121,13 +120,25 @@ return [
                     'class' => 'yii\rest\UrlRule',
                     'controller' => 'api/favorito',
                     'extraPatterns' => [
-                        'GET user/{id}' => 'user'
-
+                        'GET user/{id}' => 'user',
+                        'POST' => 'createfavorito',
+                        'DELETE {id}' => 'deletefavorito'
                     ],
                 ],
                 [
                     'class' => 'yii\rest\UrlRule',
                     'controller' => 'api/perfil',
+                    'extraPatterns' => [
+                        'PUT {id}/editar' => 'editarperfil',
+                    ],
+                ],
+                [
+                    'class' => 'yii\rest\UrlRule',
+                    'controller' => 'api/avaliacao',
+                    'extraPatterns' => [
+                        'GET user/{id}'  => 'avaliacoesuser',
+                        'POST' => 'criaravaliacao'
+                    ],
                 ],
             ],
         ],

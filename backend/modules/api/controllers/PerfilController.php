@@ -6,6 +6,8 @@ use common\models\Perfil;
 use Yii;
 use yii\filters\auth\QueryParamAuth;
 use yii\rest\ActiveController;
+use backend\modules\api\components\CustomAuth;
+use yii\web\ForbiddenHttpException;
 
 /**
  * Default controller for the `api` module
@@ -13,19 +15,20 @@ use yii\rest\ActiveController;
 class PerfilController extends ActiveController
 {
     public $modelClass = 'common\models\Perfil';
+    public $user = null;
 
 
     public function behaviors()
     {
         $behaviors = parent::behaviors();
         $behaviors['authenticator'] = [
-            'class' => QueryParamAuth::className(),
-            //'only' => ['favorito'], // Aplicar autenticação apenas ao método 'favorito'
+            'class' => CustomAuth::className(),
+            'auth' => [$this, 'authCustom'],
         ];
         return $behaviors;
     }
 
-    public function BeforeAction($action)
+    public function beforeAction($action)
     {
         if (!parent::beforeAction($action)) {
             return false;
@@ -41,56 +44,68 @@ class PerfilController extends ActiveController
         return true;
     }
 
-    public function actionUser($id)
+    public function authCustom($token)
     {
-        $favoritos = Favorito::find()
-            ->with([
-                'artigo',               // Carrega a relação com o artigo
-                'artigo.idcomissao0',   // Carrega a comissão associada ao artigo
-                'artigo.idestado0',     // Carrega o estado do artigo
-                'artigo.idmarca0',      // Carrega a marca do artigo
-                'artigo.idcategoria0',  // Carrega a categoria do artigo
-                'artigo.idtamanho0',    // Carrega o tamanho do artigo
-                'artigo.idperfil0',     // Carrega o perfil associado ao artigo
-            ])
-            ->where(['idperfil' => $id]) // Filtra pelo ID do perfil
-            ->all();
 
-        // Verifica se encontrou algum favorito
-        if (!$favoritos) {
-            Yii::$app->response->statusCode = 404;
-            return [
-                'success' => false,
-                'message' => 'No favourites found for this user',
-            ];
+        $user_ = Yii::$app->user->identity->findIdentityByAccessToken($token);
+
+        if ($user_) {
+            $this->user = $user_;
+            return $user_;
         }
 
-        // Formata os favoritos com detalhes dos artigos
-        $favoritosFormatted = [];
-        foreach ($favoritos as $favorito) {
-            $artigo = $favorito->artigo;
-            $favoritosFormatted[] = [
-                'id' => $favorito->id,
-                'idartigo' => $favorito->idartigo,
-                'artigo' => $artigo ? [
-                    'nome' => $artigo->nome,
-                    'descricao' => $artigo->descricao,
-                    'precoanuncio' => $artigo->precoanuncio,
-                    'comissao' => $artigo->idcomissao0->comissao,
-                    'estado' => $artigo->idestado0->descricao,
-                    'marca' => $artigo->idmarca0->nome,
-                    'categoria' => $artigo->idcategoria0->nome,
-                    'tamanho' => $artigo->idtamanho0->tamanho,
-                    'perfil' => "@" . $artigo->idperfil0->username,
-                    'tipoartigo' => $artigo->tipoartigo,
-                ] : null,
-            ];
-        }
 
-        return [
-            'success' => true,
-            'favoritos' => $favoritosFormatted,
-        ];
+        throw new \yii\web\ForbiddenHttpException('No authentication');
     }
+
+    public function checkAccess($action, $model = null, $params = [])
+    {
+        if ($this->user) {
+            //proibir get de todos os perfis existentes exceto ao admin
+            if ($action === 'index' && $this->user->id != 1) {
+                throw new ForbiddenHttpException('You don´t have permission to do this action!');
+            }
+
+            if ($action === 'update' && $model->id !== $this->user->id) {
+                throw new ForbiddenHttpException('You do not have permission to do this action!');
+            }
+
+        } else {
+            throw new ForbiddenHttpException('User not authenticated.');
+        }
+    }
+
+    public function actionEditarperfil($id)
+    {
+        $perfil = Perfil::findOne($id);
+
+        $this->checkAccess('update', $perfil);
+
+        if (!$perfil) {
+            throw new NotFoundHttpException('Profile not found.');
+        }
+
+        // Define o cenário para atualização de perfil
+        $perfil->setScenario('updateProfile');
+
+        // Carrega os dados recebidos na requisição
+        $perfil->load(Yii::$app->getRequest()->getBodyParams(), '');
+
+        // Salva o modelo e verifica se houve erros
+        if ($perfil->save()) {
+            return [
+                'success' => true,
+                'message' => 'Profile updated successfully!',
+            ];
+        } else {
+            return $this->asJson(['errors' => $perfil->errors]);
+        }
+    }
+
+
+
+
+
+
 
 }
