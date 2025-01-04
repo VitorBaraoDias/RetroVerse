@@ -2,6 +2,7 @@
 
 namespace backend\modules\api\controllers;
 
+use common\models\Favorito;
 use common\models\Perfil;
 use Yii;
 use yii\filters\auth\QueryParamAuth;
@@ -85,10 +86,9 @@ class PerfilController extends ActiveController
             throw new NotFoundHttpException('Profile not found.');
         }
 
-        // Define o cenário para atualização de perfil
+
         $perfil->setScenario('updateProfile');
 
-        // Carrega os dados recebidos na requisição
         $perfil->load(Yii::$app->getRequest()->getBodyParams(), '');
 
         // Salva o modelo e verifica se houve erros
@@ -101,11 +101,4 @@ class PerfilController extends ActiveController
             return $this->asJson(['errors' => $perfil->errors]);
         }
     }
-
-
-
-
-
-
-
 }

@@ -2,6 +2,7 @@
 
 namespace backend\modules\api\controllers;
 
+use backend\modules\api\components\CustomAuth;
 use common\models\Carrinho;
 use common\models\Estadoencomenda;
 use common\models\Linhavenda;
@@ -9,6 +10,7 @@ use common\models\Venda;
 use Yii;
 use yii\filters\auth\QueryParamAuth;
 use yii\rest\ActiveController;
+use yii\web\ForbiddenHttpException;
 
 /**
  * Default controller for the `api` module
@@ -17,8 +19,9 @@ class VendaController extends ActiveController
 {
     //modelo a criar artigo
     public $modelClass = 'common\models\Venda';
+    public $user = null;
 
-    public function BeforeAction($action)
+    public function beforeAction($action)
     {
         if (!parent::beforeAction($action)) {
             return false;
@@ -38,17 +41,47 @@ class VendaController extends ActiveController
     {
         $behaviors = parent::behaviors();
         $behaviors['authenticator'] = [
-            'class' => QueryParamAuth::className(),
+            'class' => CustomAuth::className(),
+            'auth' => [$this, 'authCustom'],
         ];
         return $behaviors;
     }
+    public function authCustom($token)
+    {
+        $user_ = Yii::$app->user->identity->findIdentityByAccessToken($token);
+        if ($user_) {
+            $this->user = $user_;
+            return $user_;
+        }
+        throw new \yii\web\ForbiddenHttpException('No authentication');
+    }
+    public function checkAccess($action, $model = null, $params = [])
+    {
+        //proibir get de todas as vendas existentes exceto ao admin
+        if ($action === 'index' && $this->user->id != 1) {
+            throw new ForbiddenHttpException('You don´t have permission to do this action!');
+        }
 
+        if ($this->user) {
+            if ($action === 'update' || $action === 'create' || $action === 'view') {
+                if ($model) {
+                    if ($params['id'] != $this->user->id) {
+                        throw new ForbiddenHttpException('You don´t have permission to view this item!');
+                    }
+                }
+            }
+        } else {
+            throw new ForbiddenHttpException('User not authenticated.');
+        }
+    }
     public function actionDetalhesvenda($id)
     {
         $venda = Venda::find()
             ->where(['id' => $id])
             ->with('linhavendas.idartigo0')
             ->one();
+
+        $this->checkAccess('view', $venda, ['id' => $venda->idcomprador]);
 
         if (!$venda) {
             return [
@@ -99,8 +132,6 @@ class VendaController extends ActiveController
         ];
     }
 
-
-
     public function actionComprar()
     {
         $modelClass = new Venda();
@@ -109,8 +140,9 @@ class VendaController extends ActiveController
         $userId = $request['iduser'];
         $carrinho = Carrinho::findOne(['iduser' => $userId]);
 
-        $transaction = Yii::$app->db->beginTransaction();
+        $this->checkAccess('create', $carrinho, ['id' => $userId]);
 
+        $transaction = Yii::$app->db->beginTransaction();
         if (!$carrinho->ifExistsCart()) {
             throw new \yii\web\ForbiddenHttpException('CART NOT FOUND');
         }
@@ -192,8 +224,10 @@ class VendaController extends ActiveController
     {
         $vendas = Venda::find()
             ->where(['idcomprador' => $id])
-            ->with('linhavendas.idartigo0')  // Inclui as informações do artigo relacionado
+            ->with('linhavendas.idartigo0')  //
             ->all();
+
+        $this->checkAccess('view', $vendas, ['id' => $id]);
 
         if (empty($vendas)) {
             return [
@@ -254,6 +288,8 @@ class VendaController extends ActiveController
             ->where(['idvendedor' => $id])
             ->with(['idvenda0', 'idartigo0.idmarca0', 'idartigo0.idtamanho0', 'idartigo0.idcategoria0']) // Inclui as relações necessárias
             ->all();
+
+        $this->checkAccess('view', $linhasVenda, ['id' => $id]);
 
         // Verifica se encontrou alguma linha de venda
         if (empty($linhasVenda)) {

@@ -101,11 +101,10 @@ return [
                     'class' => 'yii\rest\UrlRule',
                     'controller' => 'api/venda',
                     'extraPatterns' => [
-
-                        'POST comprar' => 'comprar',
+                        'POST efetuarcompra' => 'comprar',
                         'GET detalhes/{id}' => 'detalhesvenda',
-                        'GET compras/{id}' => 'historicocompras',
-                        'GET {id}' => 'historicovendas',
+                        'GET compras/{id}' => 'historicocompras', //historico de compras do user
+                        'GET historico/{id}' => 'historicovendas',  //historico de vendas do user x
                     ],
                 ],
                 [
