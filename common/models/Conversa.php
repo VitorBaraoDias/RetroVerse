@@ -75,14 +75,8 @@ class Conversa extends \yii\db\ActiveRecord
      */
     public function getMensagem()
     {
-        if ($this->tipo === 'TEXTO') {
             return $this->hasOne(Mensagemtexto::class, ['id' => 'idmensagem']);
-        } elseif ($this->tipo === 'PROPOSTA') {
-            return $this->hasOne(Mensagemproposta::class, ['id' => 'idmensagem']);
-        } elseif ($this->tipo === 'FOTO') {
-            return $this->hasOne(Mensagemfoto::class, ['id' => 'idmensagem']);
-        }
-        return null; // Caso o tipo não seja reconhecido
+
     }
 
 

@@ -99,6 +99,11 @@ class Listachats extends \yii\db\ActiveRecord
         return $this->hasOne(\common\models\Perfil::class, ['id' => 'iddestinatario']);
     }
 
+    public function getDestinatario0()
+    {
+        return $this->hasOne(User::class, ['id' => 'iddestinatario']);
+    }
+
     /**
      * Gets query for [[Idremetente0]].
      *
@@ -108,6 +113,12 @@ class Listachats extends \yii\db\ActiveRecord
     {
         return $this->hasOne(\common\models\Perfil::class, ['id' => 'idremetente']);
     }
+
+    public function getRemetente()
+    {
+        return $this->hasOne(User::class, ['id' => 'idremetente']);
+    }
+
 
     /**
      * Gets query for [[Idtipomensagem0]].
