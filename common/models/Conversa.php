@@ -100,7 +100,6 @@ class Conversa extends \yii\db\ActiveRecord
             $myObj = new \stdClass();
             $myObj->iduser = $this->iduser;
             $myObj->idchat = $this->idchat;
-var_dump();
             // Verifica o tipo de mensagem e obtém os dados correspondentes
             if ($this->tipo === 'TEXTO' && $this->mensagem) {
                 $myObj->tipo = 'TEXTO';
