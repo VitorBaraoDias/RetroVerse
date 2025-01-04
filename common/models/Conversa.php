@@ -75,14 +75,7 @@ class Conversa extends \yii\db\ActiveRecord
      */
     public function getMensagem()
     {
-        if ($this->tipo === 'TEXTO') {
-            return $this->hasOne(Mensagemtexto::class, ['id' => 'idmensagem']);
-        } elseif ($this->tipo === 'PROPOSTA') {
-            return $this->hasOne(Mensagemproposta::class, ['id' => 'idmensagem']);
-        } elseif ($this->tipo === 'FOTO') {
-            return $this->hasOne(Mensagemfoto::class, ['id' => 'idmensagem']);
-        }
-        return null; // Caso o tipo não seja reconhecido
+        return $this->hasOne(Mensagemtexto::class, ['id' => 'idmensagem']);
     }
 
 
@@ -107,7 +100,7 @@ class Conversa extends \yii\db\ActiveRecord
             $myObj = new \stdClass();
             $myObj->iduser = $this->iduser;
             $myObj->idchat = $this->idchat;
-
+var_dump();
             // Verifica o tipo de mensagem e obtém os dados correspondentes
             if ($this->tipo === 'TEXTO' && $this->mensagem) {
                 $myObj->tipo = 'TEXTO';
@@ -121,15 +114,10 @@ class Conversa extends \yii\db\ActiveRecord
                 $myObj->idartigo = $this->mensagemproposta->idartigo;
                 $myObj->artigoPreco = $this->mensagemproposta->artigo->precoanuncio;
             } elseif ($this->tipo === 'FOTO' && $this->mensagemfoto) {
-                $myObj->tipo = 'FOTO';
-                $myObj->url = $this->mensagemfoto->url;
-                $myObj->legenda = $this->mensagemfoto->legenda;
             } else {
                 Yii::error("Tipo de mensagem não reconhecido ou dados ausentes. Tipo: {$this->tipo}", __METHOD__);
                 return;
             }
-
-            // Publica no MQTT
             $myJSON = json_encode($myObj);
             $topic = "chat/{$this->idchat}";
 
@@ -142,7 +130,7 @@ class Conversa extends \yii\db\ActiveRecord
         $port = 1883;
         $username = Yii::$app->user->identity->username; // set your username
         $password = ""; // set your password
-        $client_id = Yii::$app->user->identity ? Yii::$app->user->identity->id : 'guest'; // unique!
+        $client_id = Yii::$app->user->identity ? Yii::$app->user->identity->id : 'guest';
         $mqtt = new \Bluerhinos\phpMQTT($server, $port, $client_id);
         if ($mqtt->connect(true, NULL, $username, $password))
         {

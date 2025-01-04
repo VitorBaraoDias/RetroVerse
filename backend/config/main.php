@@ -64,18 +64,14 @@ return [
                 ['class' => 'yii\rest\UrlRule',
                     'controller' => 'api/artigo',
                     'extraPatterns' => [
-                    'GET {id}' => 'artigodetalhes',
-                    'GET {tipoartigo}/{tamanho}/{marca}/{estado}' => 'artigofiltro',
-                    'GET {tipoartigo}/{tamanho}/{marca}' => 'artigofiltro',
-                    'GET {tipoartigo}/{tamanho}' => 'artigofiltro',
-                    'GET {tipoartigo}' => 'artigofiltro',
-                    'GET ' => 'artigofiltro',
-                ], 'tokens' => [
-                        '{id}' => '<id:\\d+>',
-                        '{tipoartigo}' => '<tipoartigo:\\w+>',
-                        '{tamanho}' => '<tamanho:\\w+>',
-                        '{marca}' => '<marca:\\w+>',
-                        '{estado}' => '<estado:\\w+>',
+                        'GET {id}' => 'artigodetalhes',
+                        'GET user/{userid}' => 'userartigos',
+                        'GET filtro' => 'filtro',
+                        'PUT {id}/editar' => 'editarartigo',
+                        'POST' => 'criarartigo',
+                    ], 'tokens' => [
+                    '{id}' => '<id:\\d+>',
+                    '{userid}' => '<userid:\\d+>',
                     ],
                 ],
                 [
@@ -99,17 +95,17 @@ return [
                     'controller' => 'api/carrinho',
                     'extraPatterns' => [
                         'GET user/{id}' => 'user',
-                        'POST' => 'create'
+                        'POST' => 'createcarrinho'
                     ],
                 ],
                 [
                     'class' => 'yii\rest\UrlRule',
                     'controller' => 'api/venda',
                     'extraPatterns' => [
-                        'POST comprar' => 'comprar',
+                        'POST efetuarcompra' => 'comprar',
                         'GET detalhes/{id}' => 'detalhesvenda',
-                        'GET compras/{id}' => 'historicocompras',
-                        'GET {id}' => 'historicovendas',
+                        'GET compras/{id}' => 'historicocompras', //historico de compras do user
+                        'GET historico/{id}' => 'historicovendas',  //historico de vendas do user x
                     ],
                 ],
                 [
@@ -127,6 +123,10 @@ return [
                         'GET user/{id}' => 'user'
 
                     ],
+                ],
+                [
+                    'class' => 'yii\rest\UrlRule',
+                    'controller' => 'api/perfil',
                 ],
             ],
         ],
