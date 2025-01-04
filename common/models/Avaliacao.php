@@ -62,7 +62,7 @@ class Avaliacao extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getDistinatarrio()
+    public function getDestinatario()
     {
         return $this->hasOne(Perfil::class, ['id' => 'iddestinatario']);
     }

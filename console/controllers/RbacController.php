@@ -150,6 +150,9 @@ class RbacController extends Controller
         $verDenuncias->description = 'Eliminar condicao';
         $auth->add($verDenuncias);
 
+        $verTodosFavoritos = $auth->createPermission('verTodosFavoritos');
+        $verTodosFavoritos->description = 'Ver Todos os Favoritos';
+        $auth->add($verTodosFavoritos);
 
 
         //MODERATOR PERMISSIONS
@@ -371,6 +374,7 @@ class RbacController extends Controller
         $auth->addChild($admin, $criarMarcas);
         $auth->addChild($admin, $alterarMarcas);
         $auth->addChild($admin, $eliminarMarcas);
+        $auth->addChild($admin, $verTodosFavoritos);
 
 
         // ASSOCIAR AS ROLES A UTILIZADORES (ID)

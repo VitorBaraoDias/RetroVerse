@@ -32,7 +32,7 @@ class EstadoController extends ActiveController
 
             Yii::$app->response->statusCode = 405;
             Yii::$app->response->data = [
-                'message' => 'METHOD NOT ALLOWED.',
+                'message' => 'METHOD NOT ALLOWED!',
             ];
             return false;
         }

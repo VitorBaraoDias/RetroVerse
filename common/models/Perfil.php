@@ -42,11 +42,18 @@ class Perfil extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['saldo', 'saldopendente'], 'integer'], // Validação para os campos saldo e saldopendente
+            [['saldo', 'saldopendente'], 'integer'],
             [['descricao', 'caminhofotoperfil', 'morada'], 'string', 'max' => 150],
             [['id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['id' => 'id']],
             [['banido'], 'boolean'],
         ];
+    }
+
+    public function scenarios()
+    {
+        $scenarios = parent::scenarios();
+        $scenarios['updateProfile'] = ['descricao', 'caminhofotoperfil', 'morada'];
+        return $scenarios;
     }
 
     /**
@@ -59,8 +66,8 @@ class Perfil extends \yii\db\ActiveRecord
             'descricao' => 'Descricao',
             'caminhofotoperfil' => 'Caminho Foto Perfil',
             'morada' => 'Morada',
-            'saldo' => 'Saldo', // Rótulo para saldo
-            'saldopendente' => 'Saldo Pendente', // Rótulo para saldopendente
+            'saldo' => 'Saldo',
+            'saldopendente' => 'Saldo Pendente',
             'banido' => 'Ban'
         ];
     }
@@ -73,8 +80,8 @@ class Perfil extends \yii\db\ActiveRecord
     public function hasActivePremiumPlano()
     {
         return $this->getClientesplano()
-            ->where(['>', 'expira', date('Y-m-d H:i:s')]) // Plano ainda ativo
-            ->exists(); // Verifica se existe pelo menos um registro
+            ->where(['>', 'expira', date('Y-m-d H:i:s')])
+            ->exists();
     }
 
     /**

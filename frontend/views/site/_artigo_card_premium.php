@@ -7,12 +7,11 @@ use yii\widgets\ListView;
 
     <div class="card">
         <div class="image-container">
-            <!-- Verifica se o artigo premium tem foto -->
+
             <?php
-            $artigo = $model->artigo; // Acessa o artigo relacionado
+            $artigo = $model->artigo;
             $firstPhoto = $artigo->fotosartigos[0] ?? null;
 
-            // Caminho para a imagem no frontend
             $imagePath = Yii::getAlias('@web/uploads/img-artigos/') . ($firstPhoto->caminhofoto ?? '');
 
             if ($firstPhoto && file_exists(Yii::getAlias('@frontend/web/uploads/img-artigos/') . $firstPhoto->caminhofoto)) {
@@ -44,24 +43,22 @@ use yii\widgets\ListView;
             </p>
 
             <div class="d-flex align-items-center justify-content-between">
-                <!-- Verifica se o usuário é premium -->
+                <!-- verifica se o user é premium -->
                 <?php if ($isPremiumActive): ?>
-                    <!-- Exibe o preço real e botão de "Comprar Agora" -->
                     <span class="" style="font-weight: bolder; color: black;"><?= Html::encode($artigo->precoanuncio) ?>€</span>
                     <?= Html::a('VIEW', ['artigo/view', 'id' => $model->id], [
                         'class' => 'outline-retroverse-btn',
                         'style' => 'font-size: x-small; gap: 10px',
                     ]) ?>
                 <?php else: ?>
-                    <!-- Exibe "???" no preço e botão de "Unlock With Premium" -->
                     <span class="" style="font-weight: bolder; color: black;">???</span>
                     <?= Html::a(
                         '<span>UNLOCK WITH PREMIUM</span> <img height="20px" src="' . Yii::getAlias('@web/img/lock.svg') . '" alt="Lock Icon">',
-                        ['premium/index'],
+                        ['plano/index'],
                         [
                             'class' => 'outline-retroverse-btn d-flex justify-content-between align-items-center',
                             'style' => 'font-size: x-small; gap: 10px',
-                            'encode' => false, // Permitir HTML no conteúdo
+                            'encode' => false,
                         ]
                     ) ?>
 

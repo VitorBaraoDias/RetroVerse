@@ -7,6 +7,7 @@ use common\models\Linhascarrinho;
 use Yii;
 use yii\filters\auth\QueryParamAuth;
 use yii\rest\ActiveController;
+use backend\modules\api\components\CustomAuth;
 
 
 /**
@@ -15,30 +16,71 @@ use yii\rest\ActiveController;
 class CarrinhoController extends ActiveController
 {
     public $modelClass = 'common\models\Carrinho';
+    public $user = null;
 
-
-    public function actions()
-    {
-        $actions = parent::actions();
-
-        unset($actions['create']);
-
-        return $actions;
-    }
 
     public function behaviors()
     {
         $behaviors = parent::behaviors();
         $behaviors['authenticator'] = [
-            'class' => QueryParamAuth::className(),
+            'class' => CustomAuth::className(),
+            'auth' => [$this, 'authCustom'],
         ];
         return $behaviors;
     }
+    public function beforeAction($action)
+    {
 
+        if (!parent::beforeAction($action)) {
+            return false;
+        }
+
+        if (Yii::$app->request->method !== 'POST' && Yii::$app->request->method !== 'GET') {
+
+            Yii::$app->response->statusCode = 405;
+            Yii::$app->response->data = [
+                'success' => false,
+                'message' => 'METHOD NOT ALLOWED.',
+            ];
+            return false;
+        }
+
+        return true;
+    }
+
+    public function authCustom($token)
+    {
+
+        $user_ = Yii::$app->user->identity->findIdentityByAccessToken($token);
+
+        if ($user_) {
+            $this->user = $user_;
+            return $user_;
+        }
+
+        throw new \yii\web\ForbiddenHttpException('No authentication');
+    }
+
+
+    public function checkAccess($action, $model = null, $params = [])
+    {
+        if ($this->user) {
+            if ($action === 'create' || $action === 'view') {
+                // O usuário só pode criar um carrinho para ele mesmo
+                if ($model && $model->iduser != $this->user->id) {
+                    throw new \yii\web\ForbiddenHttpException('You don´t have permission to do this action!');
+                }
+            }
+        } else {
+            throw new \yii\web\ForbiddenHttpException('User not authenticated.');
+        }
+    }
     public function actionUser($id)
     {
         // Busca o carrinho do usuário pelo ID
         $carrinho = Carrinho::find()->where(['iduser' => $id])->one();
+
+        $this->checkAccess('view', $carrinho);
 
         if (!$carrinho) {
             Yii::$app->response->statusCode = 404;
@@ -106,31 +148,14 @@ class CarrinhoController extends ActiveController
             'carrinho' => $linhasCarrinhoFormatted,
         ];
     }
-    public function beforeAction($action)
-    {
 
-        if (!parent::beforeAction($action)) {
-            return false;
-        }
-
-        if (Yii::$app->request->method !== 'POST' && Yii::$app->request->method !== 'GET') {
-
-            Yii::$app->response->statusCode = 405;
-            Yii::$app->response->data = [
-                'success' => false,
-                'message' => 'METHOD NOT ALLOWED.',
-            ];
-            return false;
-        }
-
-        return true;
-    }
-
-    public function actionCreate()
+    public function actionCreatecarrinho()
     {
         $request = Yii::$app->request->post();
-
         $carrinho = Carrinho::findOne(['iduser' => $request['iduser']]) ?? new Carrinho(['iduser' => $request['iduser']]);
+
+        $this->checkAccess('create', $carrinho);
+
 
         if ($carrinho->isNewRecord && !$carrinho->save()) {
             throw new \yii\web\ForbiddenHttpException('Failed to create a cart');
@@ -144,10 +169,8 @@ class CarrinhoController extends ActiveController
         }
         return [
             'status' => 'success',
-            'message' => 'Cart created!',
+            'message' => 'Item added to cart!',
         ];
     }
-
-
 
 }
