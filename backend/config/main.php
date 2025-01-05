@@ -139,6 +139,21 @@ return [
                         'POST' => 'criaravaliacao'
                     ],
                 ],
+                [
+                    'class' => 'yii\rest\UrlRule',
+                    'controller' => 'api/chat',
+                    'extraPatterns' => [
+                        'GET conversas/{idchat}' => 'conversas',
+                        'GET listachats/{iduser}' => 'listachats',
+                        'POST' => 'create'
+
+                    ],
+                    'tokens' => [
+                        '{idchat}' => '<idchat:\\d+>',
+                        '{iduser}' => '<iduser:\\d+>',
+
+                    ],
+                ],
             ],
         ],
     ],
