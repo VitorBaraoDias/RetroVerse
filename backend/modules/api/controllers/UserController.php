@@ -73,26 +73,13 @@ class UserController extends ActiveController
             $perfil->banido = 0;
             if (!$perfil->save(false)) {
                 $transaction->rollBack();
-                return [
-                    'status' => 'error',
-                    'message' => 'Erro ao criar o perfil'
-                ];
+                throw new \yii\web\ForbiddenHttpException('Invalid');
             }
             $transaction->commit();
-            return $user->save();
-
+            return ['auth_key' => $user->auth_key];
         } catch (\Exception $e) {
             $transaction->rollBack();
-            Yii::error($e->getMessage(), __METHOD__);
-
-            // Log da mensagem de erro
-
-            // Retornar a resposta de erro com detalhes
-            return [
-                'status' => 'error',
-                'message' => 'Erro ao criar o perfil',
-                'errorDetails' => $e->getMessage(), // Aqui você retorna a mensagem de erro completa
-            ];
+            throw new \yii\web\ForbiddenHttpException('Invalid');
         }
     }
 }

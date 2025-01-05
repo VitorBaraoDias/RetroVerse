@@ -6,6 +6,7 @@ use common\models\Categoriaartigo;
 use common\models\Estado;
 use common\models\Marca;
 use common\models\Tamanho;
+use common\models\User;
 use yii\filters\auth\QueryParamAuth;
 use yii\rest\Controller;
 use yii\rest\ActiveController;
@@ -35,8 +36,7 @@ class ArtigoController extends ActiveController
 
     public function authCustom($token)
     {
-
-        $user_ = Yii::$app->user->identity->findIdentityByAccessToken($token);
+        $user_ = \common\models\User::findIdentityByAccessToken($token);
 
         if ($user_) {
             $this->user = $user_;
