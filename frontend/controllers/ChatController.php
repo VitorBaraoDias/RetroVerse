@@ -117,11 +117,13 @@ class ChatController extends Controller
         $chatAtual = Listachats::find()
             ->where([
                 'idremetente' => $idVisitante,
-                'iddestinatario' => $idVendedor
+                'iddestinatario' => $idVendedor,
+                'idartigo' => $artigo->id
             ])
             ->orWhere([
                 'idremetente' => $idVendedor,
-                'iddestinatario' => $idVisitante
+                'iddestinatario' => $idVisitante,
+                'idartigo' => $artigo->id
             ])
             ->one();
 

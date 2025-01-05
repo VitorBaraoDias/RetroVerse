@@ -40,22 +40,29 @@ use yii\widgets\ListView;
                 <p class="card-title text-black" style="font-weight: bold; color: black">
                     SIZE:<span class="text-secondary" style="font-weight: lighter"><?= Html::encode($model->idtamanho0->tamanho) ?></span>
                 </p>
-                <div class="d-flex align-items-center justify-content-between">
+
+                <!-- Alinha o preço e os botões -->
+                <div class="d-flex justify-content-between align-items-center">
+                    <!-- Preço do artigo (fica à esquerda) -->
                     <div class="d-flex flex-column">
-                        <!-- Preço do artigo -->
-                        <span style="font-weight: normal; font-size: small"><?= Html::encode($model->precoanuncio) ?>€</span>
-                        <span style="font-weight: bolder; font-size: small">
-                                <?= Html::encode($model->precoanuncio) ?>€
-                                <span style="font-weight: bold">(inc.)
-                                    <img src="<?= Yii::getAlias('@web/images/check_icon.svg') ?>" height="10">
-                                </span>
-                            </span>
+            <span style="font-weight: bolder; font-size: small">
+                <?= Html::encode($model->precoanuncio) ?>€
+            </span>
                     </div>
 
-                    <?= Html::a('EDIT NOW', ['artigo/update', 'id' => $model->id], [
-                        'class' => 'retroverse-btn',
-                        'style' => 'font-size: x-small; gap: 10px',
-                    ]) ?>
+                    <!-- Botões (Edit e Disable ficam à direita) -->
+                    <div class="d-flex gap-2">
+                        <?= Html::a('EDIT NOW', ['artigo/update', 'id' => $model->id], [
+                            'class' => 'retroverse-btn',
+                            'style' => 'font-size: x-small; padding: 5px 10px;',
+                        ]) ?>
+
+                        <?= Html::a('DISABLE NOW', ['artigo/disable', 'id' => $model->id], [
+                            'class' => 'btn-disable',  /* Aplique a classe btn-disable aqui */
+                            'style' => 'font-size: x-small; padding: 5px 10px;',
+                        ]) ?>
+                    </div>
                 </div>
             </div>
+
         </div>

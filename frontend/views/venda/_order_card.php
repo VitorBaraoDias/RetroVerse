@@ -15,7 +15,7 @@ $statusColor = $model->estadoEncomenda && $model->estadoEncomenda->isFinalState(
 <div class="history-order-box border p-3 rounded shadow-sm">
     <!-- Total no canto superior direito -->
     <div class="history-order-total text-end">
-        <span>TOTAL:</span> <?= Yii::$app->formatter->asCurrency($model->total) ?>
+        <span>TOTAL:</span> €<?= $model->total ?>
     </div>
 
     <!-- Informações do Pedido -->

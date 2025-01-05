@@ -48,7 +48,6 @@ class PlanoController extends Controller
             throw new NotFoundHttpException('Nenhum plano ativo encontrado.');
         }
 
-
         $userId = Yii::$app->user->id; //para ir buscar o perfil do utilizador logado
         $perfil = Perfil::findOne(['id' => $userId]);
 
@@ -58,29 +57,32 @@ class PlanoController extends Controller
         // Define a variável pageName com base na verificação
         $pageName = $isPremium ? '_collection_premium' : '_aderir_plano';
 
-
-        //Ir buscar os artigos premium
+        // Ir buscar os artigos premium
         $searchModel = new SearchArtigo();
 
         $queryParams = Yii::$app->request->queryParams;
 
+        // Se o tipo não for passado, definimos como 'premium'
         if (!isset($queryParams['SearchArtigo']['tipo'])) {
             $searchModel->tipo = 'premium';
         }
+
+        // Se o status de ativo não for passado, definimos como 1 (ativo)
         if (!isset($queryParams['SearchArtigo']['ativo'])) {
             $searchModel->ativo = 1;
         }
 
         $dataProvider = $searchModel->search($queryParams);
 
+        // Renderiza a view
         return $this->render('index', [
             'plano' => $planoAtivo,
             'pageName' => $pageName,
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
-
         ]);
     }
+
 
 
     /**

@@ -1,18 +1,37 @@
 <?php
 use yii\helpers\Html;
-use yii\widgets\ListView;
+use common\models\Favorito;
+
+$userId = Yii::$app->user->id;
+$artigoId = $model->id;
+
+$isFavorito = Favorito::isFavorito($userId, $artigoId);
 ?>
-<!-- Card para cada artigo -->
+
 <div class="card">
     <div class="image-container bg-secondary position-relative">
+
+
         <div class="rounded-circle container-like d-flex justify-content-center align-items-center">
-            <img class="icon-like" src="<?= Yii::getAlias('@web/images/vector_like.svg') ?>">
+            <?php if ($isFavorito): ?>
+                <!-- Artigo está nos favoritos -->
+                <a href="<?= \yii\helpers\Url::to(['favorito/delete', 'id' => $artigoId]) ?>">
+                    <img class="icon-like"
+                         src="<?= Yii::getAlias('@web/img/vector_liked.svg') ?>"
+                         alt="Remover dos Favoritos">
+                </a>
+            <?php else: ?>
+                <!-- Artigo não está nos favoritos -->
+                <a href="<?= \yii\helpers\Url::to(['favorito/create', 'id' => $artigoId]) ?>">
+                    <img class="icon-like"
+                         src="<?= Yii::getAlias('@web/img/vector_like.svg') ?>"
+                         alt="Adicionar aos Favoritos">
+                </a>
+            <?php endif; ?>
         </div>
-        <!-- Imagem do artigo -->
 
         <?php
         $firstPhoto = $model->fotosartigos[0] ?? null;
-        // Caminho para a imagem no frontend
         $imagePath = Yii::getAlias('@web/uploads/img-artigos/') . ($firstPhoto->caminhofoto ?? '');
 
         if ($firstPhoto && file_exists(Yii::getAlias('@frontend/web/uploads/img-artigos/') . $firstPhoto->caminhofoto)) {
@@ -43,12 +62,8 @@ use yii\widgets\ListView;
         <div class="d-flex align-items-center justify-content-between">
             <div class="d-flex flex-column">
                 <!-- Preço do artigo -->
-                <span style="font-weight: normal; font-size: small"><?= Html::encode($model->precoanuncio) ?>€</span>
                 <span style="font-weight: bolder; font-size: small">
                                 <?= Html::encode($model->precoanuncio) ?>€
-                                <span style="font-weight: bold">(inc.)
-                                    <img src="<?= Yii::getAlias('@web/images/check_icon.svg') ?>" height="10">
-                                </span>
                             </span>
             </div>
 

@@ -91,6 +91,23 @@
 	transition: all 0.3s ease;  /* Transição suave para hover */
 }
 
+/* Estilo do botão de Disable */
+.btn-disable {
+	background: #FF4C4C; /* Cor de fundo vermelha */
+	color: white;
+	padding: 10px 25px;
+	text-align: center;
+	font-size: 16px;
+	cursor: pointer;
+	opacity: 0;  /* Inicialmente invisível */
+	transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.card:hover .btn-disable {
+	opacity: 1;
+	transform: translateY(0); /* Move o botão para sua posição original */
+}
+
 .card-product{
 	transition: all 0.3s ease;
 }
@@ -98,6 +115,11 @@
 	transform: scale(1.05); /* Aumenta o tamanho do card em 1.2 vezes */
 
 }
+.card-product:hover .btn-disable {
+	opacity: 1;
+	transform: translateY(0); /* Move o botão para sua posição original */
+}
+
 .card-product:hover .retroverse-btn {
 	opacity: 1;
 	transform: translateY(0); /* Move o botão para sua posição original */
@@ -2206,6 +2228,8 @@ input[type="range"]::-moz-range-thumb {
 
 .shop__sidebar__brand ul {
 	height: auto;
+
+
 }
 
 .shop__sidebar__price ul {

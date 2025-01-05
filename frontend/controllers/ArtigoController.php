@@ -7,6 +7,7 @@ use yii\web\UploadedFile;
 use common\models\Comissao;
 use Yii;
 use common\models\Artigospremium;
+use common\models\Perfil;
 use common\models\Artigo;
 use frontend\models\SearchArtigo;
 use yii\data\ActiveDataProvider;
@@ -64,13 +65,18 @@ class ArtigoController extends Controller
         // Executa a pesquisa com os filtros
         $dataProvider = $searchModel->search($queryParams);
 
+        $userId = Yii::$app->user->id;
+        $perfil = Perfil::findOne(['id' => $userId]);
 
+        //verificar se o user tem premium
+        $isPremium = $perfil ? $perfil->hasActivePremiumPlano() : false;
 
 
         // Renderiza a view com os dados
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'isPremium' => $isPremium,
         ]);
     }
 
@@ -151,24 +157,44 @@ class ArtigoController extends Controller
         $model = new Artigo();
         $uploadForm = new UploadMultipleForm();
 
-        if ($this->request->isPost) {
-            $model->idperfil = Yii::$app->user->id;
-            $model->tipoartigo = 'MARKETPLACE';
-            $model->ativo = 1;
-            $model->idcomissao = Comissao::getIdActiveComissao();
+        // Inicia uma transação
+        $transaction = Yii::$app->db->beginTransaction();
 
-            if ($model->load($this->request->post()) && $model->save()) {
-                // Configurar os diretórios de upload para artigos
-                $uploadForm->backendUploadDir = Yii::getAlias('@imageurl/img-artigos/');
-                $uploadForm->frontendUploadDir = Yii::getAlias('@frontend/web/uploads/img-artigos/');
-                $uploadForm->imageFiles = UploadedFile::getInstances($uploadForm, 'imageFiles');
+        try {
+            if ($this->request->isPost) {
+                $model->idperfil = Yii::$app->user->id;
+                $model->tipoartigo = 'MARKETPLACE';
+                $model->ativo = 1;
+                $model->idcomissao = Comissao::getIdActiveComissao();
 
-                if ($uploadForm->upload($model->id)) {
-                    return $this->redirect(['profile/index', 'id' => $model->idperfil]);
+
+                if ($model->load($this->request->post()) && $model->save()) {
+
+                    $uploadForm->backendUploadDir = Yii::getAlias('@imageurl/img-artigos/');
+                    $uploadForm->frontendUploadDir = Yii::getAlias('@frontend/web/uploads/img-artigos/');
+                    $uploadForm->imageFiles = UploadedFile::getInstances($uploadForm, 'imageFiles');
+
+
+                    if ($uploadForm->upload($model->id)) {
+
+                        $transaction->commit();
+                        return $this->redirect(['perfil/index', 'id' => $model->idperfil]);
+                    } else {
+
+                        Yii::$app->session->setFlash('error', 'O artigo foi salvo, mas as imagens não puderam ser carregadas.');
+
+                        $transaction->rollBack();
+                    }
                 } else {
-                    Yii::$app->session->setFlash('error', 'O artigo foi salvo, mas as imagens não puderam ser carregadas.');
+
+                    Yii::$app->session->setFlash('error', 'Falha ao salvar o artigo.');
+                    $transaction->rollBack();
                 }
             }
+        } catch (\Exception $e) {
+            Yii::error("Erro durante a criação do artigo: " . $e->getMessage(), __METHOD__);
+            $transaction->rollBack();
+            Yii::$app->session->setFlash('error', 'Ocorreu um erro inesperado. Por favor, tente novamente.');
         }
 
         return $this->render('create', [
@@ -177,14 +203,19 @@ class ArtigoController extends Controller
         ]);
     }
 
-    public function actionDisable($id){
+
+    public function actionDisable($id)
+    {
         $model = $this->findModel($id);
         $model->ativo = 0;
 
-        Yii::$app->session->setFlash('info', 'The article has been disabled');
+        if ($model->save()) {
+            Yii::$app->session->setFlash('info', 'The item has been disabled');
+        } else {
+            Yii::$app->session->setFlash('error', 'Failed to disable the item');
+        }
 
         return $this->redirect(['perfil/index', 'id' => $model->idperfil]);
-
     }
     /**
      * Updates an existing Artigo model.
@@ -198,36 +229,36 @@ class ArtigoController extends Controller
         $model = $this->findModel($id);
         $uploadForm = new UploadMultipleForm();
 
-        // Se for um POST request e o modelo for carregado e salvo corretamente
+
         if ($this->request->isPost && $model->load($this->request->post())) {
 
-            // Salvar o modelo (Artigo)
+
             if ($model->save()) {
-                // Configuração de diretórios de upload
+
                 $uploadForm->backendUploadDir = Yii::getAlias('@imageurl/img-artigos/');
                 $uploadForm->frontendUploadDir = Yii::getAlias('@frontend/web/uploads/img-artigos/');
 
-                // Obter as imagens enviadas
+
                 $uploadForm->imageFiles = UploadedFile::getInstances($uploadForm, 'imageFiles');
 
-                // Verificar se há imagens para fazer upload
+
                 if (!empty($uploadForm->imageFiles)) {
-                    // Salvar as imagens no servidor e associá-las ao artigo
+
                     if ($uploadForm->upload($model->id)) {
-                        // Se o upload for bem-sucedido, redireciona para a página de visualização
+
                         return $this->redirect(['view', 'id' => $model->id]);
                     } else {
-                        // Caso haja falha no upload
+
                         Yii::$app->session->setFlash('error', 'As imagens não puderam ser carregadas.');
                     }
                 } else {
-                    // Caso não haja arquivos para enviar
+
                     return $this->redirect(['view', 'id' => $model->id]);
                 }
             }
         }
 
-        // Caso o método GET ou POST falhe, renderize o formulário de atualização
+
         return $this->render('update', [
             'model' => $model,
             'uploadForm' => $uploadForm,

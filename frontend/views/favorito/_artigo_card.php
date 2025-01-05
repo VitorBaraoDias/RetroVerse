@@ -11,6 +11,7 @@ use yii\widgets\ListView;
         <div class="card">
             <div class="image-container bg-secondary position-relative">
 
+                <div class="container-info-type-item"><?= $model->artigo->tipoartigo ?></div>
                 <!-- Botão de favoritos -->
                 <div class="rounded-circle container-like d-flex justify-content-center align-items-center">
                     <?php if (in_array($model->idartigo, $favoritos)): ?>
@@ -63,14 +64,26 @@ use yii\widgets\ListView;
                 </p>
                 <div class="d-flex align-items-center justify-content-between">
                     <div class="d-flex flex-column">
-                        <!-- Preço do artigo -->
-                        <span style="font-weight: normal; font-size: small"><?= Html::encode($model->artigo->precoanuncio) ?>€</span>
-                        <span style="font-weight: bolder; font-size: small">
-                                <?= Html::encode($model->artigo->precoanuncio) ?>€
-                                <span style="font-weight: bold">(inc.)
-                                    <img src="<?= Yii::getAlias('@web/images/check_icon.svg') ?>" height="10">
-                                </span>
-                            </span>
+                        <?php if ($model->artigo->tipoartigo === 'LOJA'): ?>
+                            <!-- Apenas um span quando o tipo é LOJA -->
+                            <span style="font-weight: bold; font-size: small">
+                        <?= Html::encode($model->artigo->precoanuncio) ?>€
+                    </span>
+                        <?php else: ?>
+                            <span style="font-weight: normal; font-size: small">
+                         <?= Html::encode($model->artigo->getPriceWithProposalIfExist()) ?>€
+                    </span>
+                            <span style="font-weight: bolder; font-size: small">
+                        <?php
+                        echo $isPremium
+                            ? Yii::$app->formatter->asCurrency($model->artigo->getPriceWithProposalIfExist(), 'EUR')
+                            : '€' . $model->artigo->getPriceWithComissionFormated();
+                        ?>
+                    <span style="font-weight: bold">(inc.)
+                    <img src="<?= Yii::getAlias('@web/images/check_icon.svg') ?>" height="10">
+            </span>
+        </span>
+                        <?php endif; ?>
                     </div>
 
                     <?= Html::a('VIEW', ['artigo/view', 'id' => $model->artigo->id], [

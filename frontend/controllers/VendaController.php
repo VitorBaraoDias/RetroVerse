@@ -148,7 +148,7 @@ class VendaController extends Controller
                         // Atualiza o saldo pendente do vendedor
                         $vendedorPerfil = $linhaVenda->idvendedor0; // Obtém o perfil do vendedor
                         if ($vendedorPerfil) {
-                            $vendedorPerfil->saldopendente += $linha->artigo->precoanuncio; // Adiciona o valor da linha ao saldo pendente
+                            $vendedorPerfil->saldopendente += $linha->artigo->getPriceFromSoldAcceptedProposal($linhaVenda->idvenda0->idcomprador); // Adiciona o valor da linha ao saldo pendente
                             if (!$vendedorPerfil->save(false)) {
                                 throw new \Exception('Erro ao atualizar saldo pendente: ' . json_encode($vendedorPerfil->errors));
                             }

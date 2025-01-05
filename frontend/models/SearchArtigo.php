@@ -12,7 +12,7 @@ use yii\data\ActiveDataProvider;
  */
 class SearchArtigo extends Artigo
 {
-    public $tipo; // Campo para filtro (premium ou normal)
+    public $tipo;
     public $preco_min;
     public $preco_max;
 
@@ -27,6 +27,7 @@ class SearchArtigo extends Artigo
             [['precoanuncio'], 'number'],
             [['preco_min', 'preco_max'], 'number'],
             [['tipoartigo'], 'safe'],
+            [['tipo'], 'string'],
         ];
     }
 
@@ -50,7 +51,7 @@ class SearchArtigo extends Artigo
     {
         $query = Artigo::find();
 
-        // Junta com a tabela Artigospremium para verificar os artigos premium
+        // Junta com a tabela ArtigosPremium para verificar os artigos premium
         $query->joinWith('artigospremium', false);
 
         $dataProvider = new ActiveDataProvider([
@@ -60,9 +61,11 @@ class SearchArtigo extends Artigo
         $this->load($params);
 
         if (!$this->validate()) {
+            Yii::debug("Validação falhou: " . json_encode($this->errors), __METHOD__);
             return $dataProvider;
         }
 
+        // Exclui artigos do próprio perfil do usuário logado
         $query->andWhere(['!=', 'idperfil', Yii::$app->user->id]);
 
         // Filtros existentes para os campos do artigo
@@ -92,7 +95,10 @@ class SearchArtigo extends Artigo
             $query->andWhere(['artigospremium.id' => null]); // Artigos normais (sem correspondência na tabela premium)
         }
 
+
+
         return $dataProvider;
     }
+
 
 }

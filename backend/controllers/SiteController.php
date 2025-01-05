@@ -94,11 +94,11 @@ class SiteController extends Controller
         $salesCount = Linhavenda::find()
             ->joinWith('idartigo0')
             ->where(['artigos.tipoartigo' => $type])
-            ->andWhere(['artigos.ativo' => 1])
             ->count();
 
         return $salesCount ?: 0;
     }
+
     /**
      * Login action.
      *

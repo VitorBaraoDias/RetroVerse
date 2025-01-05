@@ -1,16 +1,16 @@
-<?php
-?>
 <div class="artigo-view container-lg">
 </div>
 <?php
-
 use common\models\Favorito;
 use yii\helpers\Html;
+use common\models\Perfil;
 
 $userId = Yii::$app->user->id;
 $artigoId = $model->id;
+$perfil = Perfil::findOne(['id' => $userId]);
 
 $isFavorito = Favorito::isFavorito($userId, $artigoId);
+$isPremium = $perfil ? $perfil->hasActivePremiumPlano() : false;
 
 ?>
 <div class="artigo-view container-lg">
@@ -83,17 +83,37 @@ $isFavorito = Favorito::isFavorito($userId, $artigoId);
                 <div class="col-md-12 row">
                     <h1 class="font-weight-bold text-uppercase pl-0" style="font-size: 48px"><strong><?= $model->nome ?></strong></h1>
                     <hr>
-                    <div class="d-flex mt-2 align-items-end pl-0">
-                        <h2 style="font-weight: bold"><?= $model->getPrecoComComissaoFormatado() ?>€</h2>
-                        <span style="font-weight: ; padding-bottom:3px">(inc.)
-                           <img src="/RetroVerse/frontend/web/images/check_icon.svg" height="15">
-                        </span>
-                        <h4 style="font-weight: bolder; color: #0000FF; margin-left: 10px"><?= $model->precoanuncio ?>
-                            €</h4>
+                    <div class="d-flex flex-column mt-2 align-items-start pl-0">
+                        <!-- Linha com os dois preços lado a lado -->
+                        <div class="d-flex align-items-center">
+                            <h2 style="font-weight: bold; margin-right: 10px;">
+                                <?php
+                                echo $isPremium
+                                    ? Yii::$app->formatter->asCurrency($model->getPriceWithProposalIfExist(), 'EUR')
+                                    : '€' . $model->getPriceWithComissionFormated();
+                                ?>
+                            </h2>
+                            <h4 style="font-weight: bolder; color: #0000FF;">
+                                <?php echo Yii::$app->formatter->asCurrency($model->getPriceWithProposalIfExist(), 'EUR') ?> €
+                            </h4>
+                        </div>
+
+
+                        <!-- Mensagem abaixo -->
+                        <?php if ($isPremium): ?>
+                            <div style="margin-bottom: 5px; color:#0000FF;">
+                                <img class="pr-2" src="<?= Yii::getAlias('@web') ?>/img/premium-user-verified.svg" alt="">
+                                <span>WITHOUT TAXES (PREMIUM)</span>
+                            </div>
+                        <?php else: ?>
+                            <span style="margin-bottom: 5px;">WITH TAXES</span>
+                        <?php endif; ?>
                     </div>
+
+
                     <div class="d-flex pl-0">
                         <h2 style="font-size: 20px; font-weight: bolder">BRAND:</h2>
-                        <p style="font-size: 20px;; margin: 0;"><?= $model->descricao ?></p>
+                        <p style="font-size: 20px;; margin: 0;"><?= $model->idmarca0->nome ?></p>
                     </div>
                     <div class="d-flex pl-0">
                         <h2 style="font-size: 20px; font-weight: bold"><strong>CATEGORY:</strong></h2>

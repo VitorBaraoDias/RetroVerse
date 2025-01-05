@@ -120,9 +120,9 @@ class VendaController extends ActiveController
             'idvenda' => $venda->id,
             'total' => $venda->total,
             'datavenda' => $venda->datavenda,
-            'idestadoencomenda' => $venda->idestadoencomenda,
-            'idmetodoexpedicao' => $venda->idmetodoexpedicao,
-            'idtipopagamento' => $venda->idtipopagamento,
+            'idestadoencomenda' => $venda->estadoEncomenda->descricao,
+            'idmetodoexpedicao' => $venda->metodoExpedicao->nome,
+            'idtipopagamento' => $venda->tipoPagamento->descricao,
             'linhas_venda' => $linhasVenda,
         ];
 

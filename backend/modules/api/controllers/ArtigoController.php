@@ -2,6 +2,8 @@
 
 namespace backend\modules\api\controllers;
 use common\models\Artigo;
+use common\models\ArtigosPremium;
+use common\models\User;
 use common\models\Categoriaartigo;
 use common\models\Estado;
 use common\models\Marca;
@@ -35,15 +37,11 @@ class ArtigoController extends ActiveController
 
     public function authCustom($token)
     {
-
-        $user_ = Yii::$app->user->identity->findIdentityByAccessToken($token);
-
-        if ($user_) {
-            $this->user = $user_;
+        $user_ = \common\models\User::findIdentityByAccessToken($token);
+        if($user_) {
+            $this->user=$user_;
             return $user_;
         }
-
-
         throw new \yii\web\ForbiddenHttpException('No authentication');
     }
 
@@ -82,25 +80,31 @@ class ArtigoController extends ActiveController
     public function actionFiltro()
     {
         $query = Artigo::find()
-            ->joinWith(['idestado0', 'idmarca0', 'idtamanho0', 'idcategoria0', 'idperfil0', 'fotosartigos']);
+            ->joinWith(['idestado0', 'idmarca0', 'idtamanho0', 'idcategoria0', 'idperfil0', 'fotosartigos'])
+            ->where(['artigos.ativo' => 1]);
 
         $params = Yii::$app->request->queryParams;
 
         if (isset($params['tipoartigo'])) {
             $query->andWhere(['tipoartigo' => $params['tipoartigo']]);
         }
+
         if (isset($params['tamanho'])) {
             $query->andWhere(['Tamanhos.tamanho' => $params['tamanho']]);
         }
+
         if (isset($params['estado'])) {
             $query->andWhere(['Estados.descricao' => $params['estado']]);
         }
+
         if (isset($params['marca'])) {
             $query->andWhere(['Marcas.nome' => $params['marca']]);
         }
+
         if (isset($params['categoria'])) {
             $query->andWhere(['Categorias.nome' => $params['categoria']]);
         }
+
 
         if (isset($params['sort'])) {
             $query->orderBy($params['sort']);
@@ -109,11 +113,23 @@ class ArtigoController extends ActiveController
         $artigos = $query->all();
         $result = [];
 
+
         foreach ($artigos as $artigo) {
             $fotos = [];
             foreach ($artigo->fotosartigos as $foto) {
                 $fotos[] = $foto->caminhofoto;
             }
+
+
+            $isPremium = (bool)\common\models\Artigospremium::find()
+                ->where(['id' => $artigo->id])
+                ->exists();
+
+
+            $isLiked = (bool)\common\models\Favorito::find()
+                ->where(['idartigo' => $artigo->id, 'idperfil' => $this->user->id])
+                ->exists();
+
 
             $result[] = [
                 'id' => $artigo->id,
@@ -121,19 +137,29 @@ class ArtigoController extends ActiveController
                 'nome' => $artigo->nome,
                 'descricao' => $artigo->descricao,
                 'precoanuncio' => $artigo->precoanuncio,
-                'comissao' => $artigo->idcomissao0->comissao,
-                'estado' => $artigo->idestado0->descricao,
-                'marca' => $artigo->idmarca0->nome,
-                'categoria' => $artigo->idcategoria0->nome,
-                'tamanho' => $artigo->idtamanho0->tamanho,
+                'comissao' => $artigo->idcomissao0 ? $artigo->idcomissao0->comissao : null,
+                'estado' => $artigo->idestado0 ? $artigo->idestado0->descricao : null,
+                'marca' => $artigo->idmarca0 ? $artigo->idmarca0->nome : null,
+                'categoria' => $artigo->idcategoria0 ? $artigo->idcategoria0->nome : null,
+                'tamanho' => $artigo->idtamanho0 ? $artigo->idtamanho0->tamanho : null,
                 'tipoartigo' => $artigo->tipoartigo,
                 'ativo' => $artigo->ativo ? 'Sim' : 'Não',
                 'fotos' => $fotos,
+                'perfil' => $artigo->idperfil0 ? [
+                    'id' => $artigo->idperfil0->id,
+                    'descricao' => $artigo->idperfil0->descricao,
+                    'caminhofotoperfil' => $artigo->idperfil0->caminhofotoperfil,
+                    'morada' => $artigo->idperfil0->morada,
+                ] : null,
+                'premium' => $isPremium,
+                'isLiked' => $isLiked
             ];
         }
 
+
         return $result;
     }
+
 
 
     public function actionArtigodetalhes($id)
@@ -141,6 +167,7 @@ class ArtigoController extends ActiveController
         $artigo = Artigo::find()
             ->with(['idestado0', 'idmarca0', 'idtamanho0', 'idcategoria0', 'idperfil0', 'fotosartigos'])
             ->where(['id' => $id])
+            ->andWhere(['ativo' => 1])
             ->one();
 
         if (!$artigo) {
@@ -151,6 +178,15 @@ class ArtigoController extends ActiveController
         foreach ($artigo->fotosartigos as $foto) {
             $fotos[] = $foto->caminhofoto;
         }
+
+        //verioficar se o item é premium
+        $isPremium = (bool)\common\models\Artigospremium::find()
+            ->where(['id' => $artigo->id])
+            ->exists();
+
+        $isLiked = (bool)\common\models\Favorito::find()
+            ->where(['idartigo' => $artigo->id, 'idperfil' => $this->user->id])
+            ->exists();
 
         return [
             'id' => $artigo->id,
@@ -172,24 +208,23 @@ class ArtigoController extends ActiveController
                 'caminhofotoperfil' => $artigo->idperfil0->caminhofotoperfil,
                 'morada' => $artigo->idperfil0->morada,
             ] : null,
+            'premium' => $isPremium,
+            'isLiked' => $isLiked
         ];
     }
 
 
     public function actionUserartigos($userid)
     {
-        // Buscar todos os artigos associados ao perfil com todas as relações necessárias
         $artigos = Artigo::find()
             ->with(['idestado0', 'idmarca0', 'idtamanho0', 'idcategoria0', 'idperfil0', 'fotosartigos'])
             ->where(['idperfil' => $userid])
             ->all();
 
-        // Se não houver artigos, lançar uma exceção
         if (!$artigos) {
             throw new \yii\web\NotFoundHttpException("Nenhum artigo encontrado para o perfil.");
         }
 
-        // Formatar os resultados
         $resultado = [];
         foreach ($artigos as $artigo) {
             $fotos = [];
@@ -222,8 +257,6 @@ class ArtigoController extends ActiveController
     {
         $model = new Artigo();
 
-        $this->checkAccess('create', $model);
-
         $request = Yii::$app->request->post();
         if ($model->load($request, '')) {
             $model->datacriacao = date('Y-m-d H:i:s');
@@ -239,6 +272,8 @@ class ArtigoController extends ActiveController
             $model->idtamanho = $request['idtamanho'] ?? null;
             $model->tipoartigo = $request['tipoartigo'] ?? 'LOJA';
             $model->ativo = $request['ativo'] ?? 1;
+
+            $this->checkAccess('create', $model);
 
             if ($model->validate()) {
 
