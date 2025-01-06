@@ -155,33 +155,28 @@ class DenunciaController extends Controller
 
     public function actionBanUser($id)
     {
-        // Encontrar a denúncia com o id fornecido
         $model = $this->findModel($id);
 
-        // Verificar se a denúncia está resolvida
         if ($model->estado != 1) {
-            // Alterar o estado da denúncia para resolvido
             $model->estado = 1;
             $model->save();
         }
 
-        // Buscar o usuário denunciado
+
         $user = User::findOne($model->iddenunciado);
 
         if ($user) {
-            // Verificar se o perfil do usuário existe
+
             if ($user->perfil) {
-                // Marcar o usuário como banido no perfil
                 $user->perfil->banido = 1;
 
-                // Desativar todos os artigos do usuário
+
                 $artigos = Artigo::find()->where(['idperfil' => $user->id])->all();
                 foreach ($artigos as $artigo) {
-                    $artigo->ativo = 0;  // Desativar o artigo
-                    $artigo->save();  // Salvar as mudanças
+                    $artigo->ativo = 0;
+                    $artigo->save();
                 }
 
-                // Salvar as alterações no perfil do usuário
                 if ($user->perfil->save()) {
                     Yii::$app->session->setFlash('success', 'User has been banned and all articles have been deactivated.');
                 } else {
