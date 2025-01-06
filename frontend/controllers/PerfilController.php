@@ -42,7 +42,6 @@ class PerfilController extends Controller
     {
         $perfil = Perfil::findOne(['id' => $id]);
 
-
         return $this->render('index', [
             'model' => $perfil,
         ]);
@@ -78,7 +77,7 @@ class PerfilController extends Controller
         $perfil = Perfil::findOne($id);
         if (!$perfil) {
             Yii::$app->session->setFlash('info', 'Erro: Perfil não encontrado.');
-            return $this->redirect(['perfil/index']);
+            return $this->redirect(['perfil/index', 'id' => $id]);
         }
 
         $uploadForm = new UploadSingleForm();
@@ -86,34 +85,25 @@ class PerfilController extends Controller
         if (Yii::$app->request->isPost) {
             $perfil->load(Yii::$app->request->post());
 
-
             $uploadForm->backendUploadDir = Yii::getAlias('@imageurl/img-profile/');
             $uploadForm->frontendUploadDir = Yii::getAlias('@frontend/web/uploads/img-profile/');
 
-
             $uploadForm->imageFile = UploadedFile::getInstance($uploadForm, 'imageFile');
 
-
             if ($uploadForm->imageFile) {
-
                 if ($perfil->validate() && $uploadForm->validate() && $uploadForm->upload()) {
-
                     $oldProfileImg = $perfil->caminhofotoperfil;
-
 
                     $perfil->caminhofotoperfil = $uploadForm->imagePaths[0];
 
                     if ($perfil->save()) {
-
                         $uploadForm->deleteImageIfExist($oldProfileImg);
 
                         Yii::$app->session->setFlash('success', 'Perfil atualizado com sucesso.');
-                        return $this->redirect(['perfil/index']);
+                        return $this->redirect(['perfil/index', 'id' => $perfil->id]);
                     } else {
-
                         $uploadForm->deleteImageIfExist($uploadForm->imagePaths[0]);
                         Yii::$app->session->setFlash('error', 'Erro ao salvar perfil.');
-
                     }
                 } else {
                     Yii::$app->session->setFlash('error', 'Erro ao fazer upload da imagem.');
@@ -122,7 +112,7 @@ class PerfilController extends Controller
                 // Se não houver arquivo, validar e salvar apenas os outros campos
                 if ($perfil->validate() && $perfil->save()) {
                     Yii::$app->session->setFlash('success', 'Perfil atualizado com sucesso.');
-                    return $this->redirect(['perfil/index']);
+                    return $this->redirect(['perfil/index', 'id' => $perfil->id]);
                 } else {
                     Yii::$app->session->setFlash('error', 'Erro ao salvar perfil.');
                 }
@@ -135,7 +125,6 @@ class PerfilController extends Controller
         ]);
     }
 
-
     /**
      * Deletes an existing Perfil model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
@@ -146,8 +135,7 @@ class PerfilController extends Controller
     public function actionDelete($id)
     {
         $this->findModel($id)->delete();
-
-        return $this->redirect(['index']);
+        return $this->redirect(['perfil/index', 'id' => $id]);
     }
 
     /**
