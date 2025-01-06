@@ -1,15 +1,37 @@
 <?php
 use yii\helpers\Html;
 use yii\widgets\ListView;
+use common\models\Favorito;
+
+$userId = Yii::$app->user->id;
+$artigoId = $model->id;
+
+$isFavorito = Favorito::isFavorito($userId, $artigoId);
 ?>
     <!-- Card para cada artigo -->
         <div class="card">
             <div class="image-container bg-secondary position-relative">
                 <div class="container-info-type-item"><?= $model->tipoartigo ?></div>
 
+                <!-- Botão de favoritos -->
                 <div class="rounded-circle container-like d-flex justify-content-center align-items-center">
-                    <img class="icon-like" src="<?= Yii::getAlias('@web/images/vector_like.svg') ?>">
+                    <?php if ($isFavorito): ?>
+                        <!-- Artigo está nos favoritos -->
+                        <a href="<?= \yii\helpers\Url::to(['favorito/delete', 'id' => $artigoId]) ?>">
+                            <img class="icon-like"
+                                 src="<?= Yii::getAlias('@web/img/vector_liked.svg') ?>"
+                                 alt="Remover dos Favoritos">
+                        </a>
+                    <?php else: ?>
+                        <!-- Artigo não está nos favoritos -->
+                        <a href="<?= \yii\helpers\Url::to(['favorito/create', 'id' => $artigoId]) ?>">
+                            <img class="icon-like"
+                                 src="<?= Yii::getAlias('@web/img/vector_like.svg') ?>"
+                                 alt="Adicionar aos Favoritos">
+                        </a>
+                    <?php endif; ?>
                 </div>
+
                 <!-- Imagem do artigo -->
 
                 <?php
@@ -57,10 +79,17 @@ use yii\widgets\ListView;
                             </span>
                     </div>
 
-                    <?= Html::a('BUY NOW', ['artigo/view', 'id' => $model->id], [
-                        'class' => 'retroverse-btn',
-                        'style' => 'font-size: x-small; gap: 10px',
-                    ]) ?>
+                    <?= Html::a(
+                        'VIEW',
+                        [
+                            $model->tipoartigo === 'MARKETPLACE' ? 'artigo/view-marketplace' : 'artigo/view', // Condição para a URL
+                            'id' => $model->id
+                        ],
+                        [
+                            'class' => 'retroverse-btn',
+                            'style' => 'font-size: x-small; gap: 10px',
+                        ]
+                    ) ?>
                 </div>
             </div>
         </div>

@@ -83,9 +83,11 @@ $favoritosCount = Favorito::getFavoritosCount(Yii::$app->user->id);
                                     </div>
                                 </a>
                                 <?php if ($isPremiumActive) { ?>
-                                <a href="<?= Yii::$app->urlManager->createUrl(['perfil/index']) ?>"><img src="<?= Yii::getAlias('@web') ?>/img/myaccount-premium.svg" alt=""></a>
+                                <a href="<?= Yii::$app->urlManager->createUrl(['perfil/index', 'id' => Yii::$app->user->id]) ?>"><img src="<?= Yii::getAlias('@web') ?>/img/myaccount-premium.svg" alt=""></a>
                                 <?php } else { ?>
-                                    <a href="<?= Yii::$app->urlManager->createUrl(['perfil/index']) ?>"><img src="<?= Yii::getAlias('@web') ?>/img/myaccount.svg" alt=""></a>
+                                    <a href="<?= Yii::$app->urlManager->createUrl(['perfil/index', 'id' => Yii::$app->user->id]) ?>">
+                                        <img src="<?= Yii::getAlias('@web') ?>/img/myaccount.svg" alt="My Account">
+                                    </a>
                                 <?php } ?>
                                 <a href="<?= Yii::$app->urlManager->createUrl(['site/logout']) ?>"><img src="<?= Yii::getAlias('@web') ?>/img/logout.svg" alt=""></a>
                             <?php } ?>

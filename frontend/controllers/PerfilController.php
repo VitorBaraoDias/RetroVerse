@@ -38,9 +38,9 @@ class PerfilController extends Controller
      *
      * @return string
      */
-    public function actionIndex()
+    public function actionIndex($id)
     {
-        $perfil = Perfil::findOne(['id' => Yii::$app->user->id]);
+        $perfil = Perfil::findOne(['id' => $id]);
 
 
         return $this->render('index', [

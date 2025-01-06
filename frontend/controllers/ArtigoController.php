@@ -96,17 +96,17 @@ class ArtigoController extends Controller
         // DataProvider para artigos normais relacionados
         $relatedDataProviderNormal = new ActiveDataProvider([
             'query' => Artigo::find()
-                ->where(['ativo' => 1]) // Apenas artigos ativos
-                ->andWhere(['not in', 'id', $id]) // Excluir o próprio artigo
-                ->andWhere(['not in', 'id', Artigospremium::find()->select('id')]) // Excluir artigos premium
+                ->where(['ativo' => 1])
+                ->andWhere(['not in', 'id', $id])
+                ->andWhere(['not in', 'id', Artigospremium::find()->select('id')])
                 ->andWhere([
                     'or',
-                    ['idcategoria' => $model->idcategoria], // Mesma categoria
-                    ['idmarca' => $model->idmarca],         // Mesma marca
-                    ['idtamanho' => $model->idtamanho]      // Mesmo tamanho
+                    ['idcategoria' => $model->idcategoria],
+                    ['idmarca' => $model->idmarca],
+                    ['idtamanho' => $model->idtamanho]
                 ])
-                ->limit(4), // Limitar a 4 artigos
-            'pagination' => false, // Sem paginação
+                ->limit(4),
+            'pagination' => false,
         ]);
 
         // DataProvider para artigos premium relacionados
@@ -117,12 +117,12 @@ class ArtigoController extends Controller
                 ->andWhere(['id' => Artigospremium::find()->select('id')])
                 ->andWhere([
                     'or',
-                    ['idcategoria' => $model->idcategoria], // Mesma categoria
-                    ['idmarca' => $model->idmarca],         // Mesma marca
-                    ['idtamanho' => $model->idtamanho]      // Mesmo tamanho
+                    ['idcategoria' => $model->idcategoria],
+                    ['idmarca' => $model->idmarca],
+                    ['idtamanho' => $model->idtamanho]
                 ])
-                ->limit(4), // Limitar a 4 artigos
-            'pagination' => false, // Sem paginação
+                ->limit(4),
+            'pagination' => false,
         ]);
 
         // verifica se o artigo é premium
@@ -142,8 +142,31 @@ class ArtigoController extends Controller
     {
         $model = $this->findModel($id);
 
+        $relatedDataProvider = new ActiveDataProvider([
+            'query' => Artigo::find()
+                ->where(['ativo' => 1])
+                ->andWhere(['tipoartigo' => "MARKETPLACE"])
+                ->andWhere(['not in', 'id', $id])
+                ->andWhere(['not in', 'id', Artigospremium::find()->select('id')])
+                ->andWhere([
+                    'or',
+                    ['idcategoria' => $model->idcategoria],
+                    ['idmarca' => $model->idmarca],
+                    ['idtamanho' => $model->idtamanho]
+                ])
+                ->limit(4),
+            'pagination' => false,
+        ]);
+
+        $userId = Yii::$app->user->id;
+        $perfil = Perfil::findOne(['id' => $userId]);
+        $isPremium = $perfil ? $perfil->hasActivePremiumPlano() : false;
+
+
         return $this->render('view_marketplace', [
             'model' => $model,
+            'isPremium' => $isPremium,
+            'relatedDataProvider' => $relatedDataProvider,
         ]);
     }
 
@@ -241,19 +264,23 @@ class ArtigoController extends Controller
 
                 $uploadForm->imageFiles = UploadedFile::getInstances($uploadForm, 'imageFiles');
 
-
                 if (!empty($uploadForm->imageFiles)) {
-
                     if ($uploadForm->upload($model->id)) {
-
-                        return $this->redirect(['view', 'id' => $model->id]);
+                        if ($model->tipoartigo === "LOJA") {
+                            return $this->redirect(['view', 'id' => $model->id]);
+                        } else {
+                            return $this->redirect(['view-marketplace', 'id' => $model->id]);
+                        }
                     } else {
 
                         Yii::$app->session->setFlash('error', 'As imagens não puderam ser carregadas.');
                     }
                 } else {
-
-                    return $this->redirect(['view', 'id' => $model->id]);
+                    if ($model->tipoartigo === "LOJA") {
+                        return $this->redirect(['view', 'id' => $model->id]);
+                    } else {
+                        return $this->redirect(['view-marketplace', 'id' => $model->id]);
+                    }
                 }
             }
         }

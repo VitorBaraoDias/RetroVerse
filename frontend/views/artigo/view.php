@@ -75,7 +75,24 @@ $isFavorito = Favorito::isFavorito($userId, $artigoId);
                 <p>(All items have been checked before selling)</p>
             </span>
             <div class="d-flex align-items-center justify-content-between mt-2 gap-5">
-                <?= Html::a('ADD TO CART', ['carrinho/create', 'id' => $model->id], [    'class' => 'retroverse-btn active',    'id' => 'retroverse-btn-active',    'style' => 'font-size: x-small; gap: 10px',]) ?>
+
+                <?php
+                if ($model->idperfil === $userId) {
+                    // Botão para atualizar artigo
+                    echo Html::a('EDIT ITEM', ['artigo/update', 'id' => $model->id], [
+                        'class' => 'retroverse-btn active',
+                        'id' => 'retroverse-btn-active',
+                        'style' => 'font-size: x-small; gap: 10px',
+                    ]);
+                } else {
+                    // Botão para adicionar ao carrinho
+                    echo Html::a('ADD TO CART', ['carrinho/create', 'id' => $model->id], [
+                        'class' => 'retroverse-btn active',
+                        'id' => 'retroverse-btn-active',
+                        'style' => 'font-size: x-small; gap: 10px',
+                    ]);
+                }
+                ?>
                 <?php if ($isFavorito): ?>
                     <!-- Artigo está nos favoritos -->
                     <a href="<?= \yii\helpers\Url::to(['favorito/delete', 'id' => $artigoId]) ?>">
