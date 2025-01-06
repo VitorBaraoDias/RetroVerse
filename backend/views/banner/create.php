@@ -6,8 +6,7 @@ use yii\helpers\Html;
 /** @var common\models\Banner $model */
 
 $this->title = 'Create Banner';
-$this->params['breadcrumbs'][] = ['label' => 'Banners', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
+
 ?>
 <div class="banner-create">
 

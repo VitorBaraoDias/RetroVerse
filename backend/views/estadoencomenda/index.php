@@ -11,7 +11,6 @@ use yii\helpers\Url;
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
 $this->title = 'Estadoencomendas';
-$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="estadoencomenda-index">
 

@@ -6,8 +6,7 @@ use yii\helpers\Html;
 /** @var \common\models\Linhavenda $model */
 
 $this->title = 'Create Linhavenda';
-$this->params['breadcrumbs'][] = ['label' => 'Linhavendas', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
+
 ?>
 <div class="linhavenda-create">
 

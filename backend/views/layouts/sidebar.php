@@ -1,3 +1,14 @@
+<?php
+
+use common\models\Perfil;
+
+if (!Yii::$app->user->isGuest) {
+    $userId = Yii::$app->user->id;
+    $perfil = Perfil::findOne(['id' => $userId]);
+}
+
+?>
+
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="<?= yii\helpers\Url::to(['site/index']); ?>" class="brand-link">
@@ -9,25 +20,16 @@
         <!-- Sidebar user panel (optional) -->
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
             <div class="image">
-                <img src="<?=$assetDir?>/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
+                <?php if (!empty($perfil->caminhofotoperfil)): ?>
+                    <img src="../../../common/uploads/img-profile/<?= $perfil->caminhofotoperfil ?>" class="img-circle elevation-2" alt="User Image">
+                <?php else: ?>
+                    <img src="<?=$assetDir?>/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
+                <?php endif; ?>
             </div>
             <div class="info">
                 <a href="#" class="d-block"><?= Yii::$app->user->identity->username ?></a>
             </div>
         </div>
-
-        <!-- SidebarSearch Form -->
-        <!-- href be escaped -->
-        <!-- <div class="form-inline">
-            <div class="input-group" data-widget="sidebar-search">
-                <input class="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search">
-                <div class="input-group-append">
-                    <button class="btn btn-sidebar">
-                        <i class="fas fa-search fa-fw"></i>
-                    </button>
-                </div>
-            </div>
-        </div> -->
 
         <!-- Sidebar Menu -->
         <nav class="mt-2">
@@ -70,10 +72,6 @@
 
                         ]
                     ],
-                    ['label' => 'Yii2 Tool', 'header' => true],
-                    ['label' => 'Gii',  'icon' => 'file-code', 'url' => ['/gii'], 'target' => '_blank'],
-                    ['label' => 'Debug', 'icon' => 'bug', 'url' => ['/debug'], 'target' => '_blank'],
-
                 ],
             ]);
             ?>

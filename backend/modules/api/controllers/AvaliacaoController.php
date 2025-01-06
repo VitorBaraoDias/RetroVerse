@@ -29,14 +29,11 @@ class AvaliacaoController extends ActiveController
 
     public function authCustom($token)
     {
-
-        $user_ = Yii::$app->user->findIdentityByAccessToken($token);
-
-        if ($user_) {
-            $this->user = $user_;
+        $user_ = \common\models\User::findIdentityByAccessToken($token);
+        if($user_) {
+            $this->user=$user_;
             return $user_;
         }
-
         throw new \yii\web\ForbiddenHttpException('No authentication');
     }
 
@@ -94,7 +91,7 @@ class AvaliacaoController extends ActiveController
             ->all();
 
         if (empty($avaliacoes)) {
-            throw new NotFoundHttpException('Nenhuma avaliação encontrada para este usuário.');
+            throw new NotFoundHttpException('No rating found for this user.');
         }
 
         $resultados = [];
@@ -136,7 +133,7 @@ class AvaliacaoController extends ActiveController
         if ($existingAvaliacao) {
             return $this->asJson([
                 'success' => false,
-                'message' => 'You have already evaluated this purchase!'
+                'message' => 'You have already rated this purchase!'
             ]);
         }
 

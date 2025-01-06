@@ -6,8 +6,6 @@ use yii\helpers\Html;
 /** @var common\models\Denuncia $model */
 
 $this->title = 'Create Denuncia';
-$this->params['breadcrumbs'][] = ['label' => 'Denuncias', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="denuncia-create">
 

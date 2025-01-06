@@ -7,9 +7,7 @@ use yii\widgets\DetailView;
 /** @var \common\models\Fotosartigo $model */
 
 $this->title = $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Fotosartigos', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
-\yii\web\YiiAsset::register($this);
+
 ?>
 <div class="fotosartigo-view">
 

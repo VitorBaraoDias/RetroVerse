@@ -6,8 +6,7 @@ use yii\helpers\Html;
 /** @var \common\models\Fotosartigo $model */
 
 $this->title = 'Create Fotosartigo';
-$this->params['breadcrumbs'][] = ['label' => 'Fotosartigos', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
+
 ?>
 <div class="fotosartigo-create">
 

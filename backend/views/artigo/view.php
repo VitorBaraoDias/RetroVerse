@@ -9,8 +9,6 @@ use yii\widgets\DetailView;
 /** @var \common\models\Artigo $model */
 
 $this->title = "Item: ".$model->nome;
-$this->params['breadcrumbs'][] = ['label' => 'Items', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 
 ?>

@@ -6,9 +6,7 @@ use yii\helpers\Html;
 /** @var \common\models\Metodosexpedicao $model */
 
 $this->title = 'Update Shipping Method: ' . $model->nome;
-$this->params['breadcrumbs'][] = ['label' => 'Shipping Method', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = 'Update';
+
 ?>
 <div class="metodosexpedicao-update">
 

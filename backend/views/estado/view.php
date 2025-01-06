@@ -7,9 +7,7 @@ use yii\widgets\DetailView;
 /** @var \common\models\Estado $model */
 
 $this->title = $model->descricao;
-$this->params['breadcrumbs'][] = ['label' => 'Conditions', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
-\yii\web\YiiAsset::register($this);
+
 ?>
 <div class="estado-view">
 

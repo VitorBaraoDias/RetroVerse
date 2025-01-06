@@ -6,9 +6,7 @@ use yii\helpers\Html;
 /** @var \common\models\Estadoencomenda $model */
 
 $this->title = 'Update Estadoencomenda: ' . $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Estadoencomendas', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = 'Update';
+
 ?>
 <div class="estadoencomenda-update">
 

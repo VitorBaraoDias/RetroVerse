@@ -7,9 +7,7 @@ use yii\widgets\DetailView;
 /** @var \common\models\Plano $model */
 
 $this->title = $model->descricao;
-$this->params['breadcrumbs'][] = ['label' => 'Plans', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
-\yii\web\YiiAsset::register($this);
+
 ?>
 <div class="plano-view">
 

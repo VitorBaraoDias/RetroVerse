@@ -11,7 +11,6 @@ use yii\helpers\Url;
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
 $this->title = 'Plans';
-$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="plano-index">
 

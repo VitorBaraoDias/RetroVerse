@@ -11,7 +11,7 @@ use yii\helpers\Url;
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
 $this->title = 'FAQs';
-$this->params['breadcrumbs'][] = $this->title;
+
 ?>
 <div class="faqs-index">
 

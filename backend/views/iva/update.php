@@ -6,9 +6,7 @@ use yii\helpers\Html;
 /** @var \common\models\Iva $model */
 
 $this->title = 'Update Iva: ' . $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Ivas', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = 'Update';
+
 ?>
 <div class="iva-update">
 

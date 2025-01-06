@@ -6,8 +6,7 @@ use yii\helpers\Html;
 /** @var \common\models\Marca $model */
 
 $this->title = 'Create Brand';
-$this->params['breadcrumbs'][] = ['label' => 'Brands', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
+
 ?>
 <div class="marca-create">
 

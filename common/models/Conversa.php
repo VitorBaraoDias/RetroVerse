@@ -37,7 +37,7 @@ class Conversa extends \yii\db\ActiveRecord
             [['iduser', 'idchat', 'idmensagem'], 'integer'],
             [['tipo'], 'string', 'max' => 150],
             [['idchat'], 'exist', 'skipOnError' => true, 'targetClass' => Listachats::class, 'targetAttribute' => ['idchat' => 'id']],
-            [['iduser'], 'exist', 'skipOnError' => true, 'targetClass' => Perfil::class, 'targetAttribute' => ['iduser' => 'id']],
+            [['iduser'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['iduser' => 'id']],
         ];
     }
 
@@ -48,6 +48,7 @@ class Conversa extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
+            'iduser' => 'Iduser',
             'idchat' => 'Idchat',
             'idmensagem' => 'Idmensagem',
             'tipo' => 'Tipo',
@@ -64,34 +65,29 @@ class Conversa extends \yii\db\ActiveRecord
     {
         return self::find()->where(['idchat' => $idchat])->all();
     }
+
     public function getChat()
     {
         return $this->hasOne(Listachats::class, ['id' => 'idchat']);
     }
-    /**
-     * Gets query for [[Idmensagem0]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
+
+    public function getUser()
+    {
+        return $this->hasOne(User::class, ['id' => 'iduser']);
+    }
+
     public function getMensagem()
     {
             return $this->hasOne(Mensagemtexto::class, ['id' => 'idmensagem']);
     }
 
 
-    /**
-     * Gets query for [[Idmensagem1]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getMensagemfoto()
-    {
-        return $this->hasOne(Mensagemfoto::class, ['id' => 'idmensagem']);
-    }
     public function getMensagemproposta()
     {
         return $this->hasOne(Mensagemproposta::class, ['id' => 'idmensagem']);
     }
+
+
     public function afterSave($insert, $changedAttributes)
     {
         parent::afterSave($insert, $changedAttributes);
@@ -100,9 +96,7 @@ class Conversa extends \yii\db\ActiveRecord
             $myObj = new \stdClass();
             $myObj->iduser = $this->iduser;
             $myObj->idchat = $this->idchat;
-
-
-            // Verifica o tipo de mensagem e obtém os dados correspondentes
+            
 
             if ($this->tipo === 'TEXTO' && $this->mensagem) {
                 $myObj->tipo = 'TEXTO';
@@ -130,8 +124,8 @@ class Conversa extends \yii\db\ActiveRecord
     {
         $server = "127.0.0.1";
         $port = 1883;
-        $username = Yii::$app->user->identity->username;
-        $password = ""; // set your password
+        $username = $this->user->username;
+        $password = "";
         $client_id = Yii::$app->user->identity ? Yii::$app->user->identity->id : 'guest';
         $mqtt = new \Bluerhinos\phpMQTT($server, $port, $client_id);
         if ($mqtt->connect(true, NULL, $username, $password))

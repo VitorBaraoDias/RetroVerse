@@ -7,9 +7,7 @@ use yii\widgets\DetailView;
 /** @var \common\models\Linhavenda $model */
 
 $this->title = $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Linhavendas', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
-\yii\web\YiiAsset::register($this);
+
 ?>
 <div class="linhavenda-view">
 

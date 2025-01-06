@@ -6,9 +6,6 @@ use yii\helpers\Html;
 /** @var common\models\Denuncia $model */
 
 $this->title = 'Update Denuncia: ' . $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Denuncias', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = 'Update';
 ?>
 <div class="denuncia-update">
 

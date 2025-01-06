@@ -3,6 +3,7 @@ namespace backend\modules\api\controllers;
 use Yii;
 use yii\filters\auth\QueryParamAuth;
 use yii\rest\ActiveController;
+use common\models\Marca;
 
 class MarcaController extends ActiveController
 {
@@ -34,6 +35,18 @@ class MarcaController extends ActiveController
         }
 
         return true;
+    }
+
+    public function actionMarcasativas()
+    {
+        $marcas = Marca::find()
+            ->where(['ativo' => 1])
+            ->all();
+
+        return [
+            'status' => 'success',
+            'data' => $marcas,
+        ];
     }
 
 }

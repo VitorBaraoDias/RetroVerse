@@ -6,8 +6,6 @@ use yii\helpers\Html;
 /** @var \common\models\Estado $model */
 
 $this->title = 'Create Condition';
-$this->params['breadcrumbs'][] = ['label' => 'Conditions', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="estado-create">
 

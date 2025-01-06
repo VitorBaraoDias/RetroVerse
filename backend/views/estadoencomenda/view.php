@@ -7,9 +7,7 @@ use yii\widgets\DetailView;
 /** @var \common\models\Estadoencomenda $model */
 
 $this->title = $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Estadoencomendas', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
-\yii\web\YiiAsset::register($this);
+
 ?>
 <div class="estadoencomenda-view">
 

@@ -7,8 +7,6 @@ use yii\widgets\DetailView;
 /** @var common\models\Banner $model */
 
 $this->title = $model->titulo;
-$this->params['breadcrumbs'][] = ['label' => 'Banners', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
 <div class="banner-view">

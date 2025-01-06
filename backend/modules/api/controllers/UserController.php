@@ -41,7 +41,6 @@ class UserController extends ActiveController
         $email = $request['email'] ?? null;
         $password = $request['password'] ?? null;
 
-        // Verificar se os campos obrigatórios foram preenchidos
         if (!$username || !$email || !$password) {
             return [
                 'status' => 'error',
@@ -75,7 +74,7 @@ class UserController extends ActiveController
                 $transaction->rollBack();
                 return [
                     'status' => 'error',
-                    'message' => 'Erro ao criar o perfil'
+                    'message' => 'Error creating profile'
                 ];
             }
             $transaction->commit();
@@ -85,13 +84,11 @@ class UserController extends ActiveController
             $transaction->rollBack();
             Yii::error($e->getMessage(), __METHOD__);
 
-            // Log da mensagem de erro
 
-            // Retornar a resposta de erro com detalhes
             return [
                 'status' => 'error',
-                'message' => 'Erro ao criar o perfil',
-                'errorDetails' => $e->getMessage(), // Aqui você retorna a mensagem de erro completa
+                'message' => 'Error creating profile',
+                'errorDetails' => $e->getMessage(),
             ];
         }
     }

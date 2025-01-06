@@ -5,6 +5,7 @@ namespace backend\controllers;
 use common\models\Linhavenda;
 use common\models\LoginForm;
 use common\models\User;
+use common\models\Denuncia;
 use Yii;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
@@ -75,8 +76,11 @@ class SiteController extends Controller
         $lojaSales = Linhavenda::getVendasMensaisPorTipoArtigo('LOJA');
         $marcasData = Linhavenda::getMarcasMaisVendidas();
 
+
+
         $lojaSalesCount = $this->getSalesData("LOJA");
         $marketplaceSalesCount = $this->getSalesData("MARKETPLACE");
+        $denunciasPendentes = $this->getDenunciasPendentes();
 
         return $this->render('index', [
             'marketplaceSales' => json_encode($marketplaceSales),
@@ -86,8 +90,10 @@ class SiteController extends Controller
             'quantidadeVendas' => json_encode($marcasData['quantidade_vendas']),
             'lojaSalesCount' => $lojaSalesCount,
             'marketplaceSalesCount' => $marketplaceSalesCount,
+            'denunciasPendentes' => $denunciasPendentes,
         ]);
     }
+
     private function getSalesData($type)
     {
 
@@ -97,6 +103,16 @@ class SiteController extends Controller
             ->count();
 
         return $salesCount ?: 0;
+    }
+
+    private function getDenunciasPendentes()
+    {
+
+        $denunciasCount = Denuncia::find()
+            ->where(['estado' => 0])
+            ->count();
+
+        return $denunciasCount ?: 0;
     }
 
     /**

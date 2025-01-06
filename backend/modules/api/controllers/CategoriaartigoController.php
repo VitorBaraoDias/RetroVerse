@@ -5,6 +5,7 @@ namespace backend\modules\api\controllers;
 use Yii;
 use yii\filters\auth\QueryParamAuth;
 use yii\rest\ActiveController;
+use common\models\Categoriaartigo;
 
 /**
  * Default controller for the `api` module
@@ -23,7 +24,7 @@ class CategoriaartigoController extends ActiveController
         return $behaviors;
     }
 
-    public function BeforeAction ($action)
+    public function beforeAction ($action)
     {
         if(!parent::beforeAction($action)) {
             return false;
@@ -39,6 +40,18 @@ class CategoriaartigoController extends ActiveController
         }
 
         return true;
-
     }
+
+    public function actionCategoriasativas()
+    {
+        $categorias = Categoriaartigo::find()
+            ->where(['ativo' => 1])
+            ->all();
+
+        return [
+            'status' => 'success',
+            'data' => $categorias,
+        ];
+    }
+
 }

@@ -6,9 +6,6 @@ use yii\helpers\Html;
 /** @var \common\models\comissao $model */
 
 $this->title = 'Update Comission: ' . $model->comissao;
-$this->params['breadcrumbs'][] = ['label' => 'Comission', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = 'Update';
 ?>
 <div class="comissao-update">
 

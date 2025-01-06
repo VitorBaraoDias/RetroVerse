@@ -6,8 +6,7 @@ use yii\helpers\Html;
 /** @var \common\models\Iva $model */
 
 $this->title = 'Create Iva';
-$this->params['breadcrumbs'][] = ['label' => 'Ivas', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
+
 ?>
 <div class="iva-create">
 
