@@ -6,8 +6,6 @@ use yii\helpers\Html;
 /** @var \common\models\Artigospremium $model */
 
 $this->title = 'Atrbuir como artigo premium';
-//$this->params['breadcrumbs'][] = ['label' => 'Artigospremium', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="artigospremium-create">
 

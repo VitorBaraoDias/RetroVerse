@@ -6,8 +6,6 @@ use yii\helpers\Html;
 /** @var \common\models\Estadoencomenda $model */
 
 $this->title = 'Create Estadoencomenda';
-$this->params['breadcrumbs'][] = ['label' => 'Estadoencomendas', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="estadoencomenda-create">
 

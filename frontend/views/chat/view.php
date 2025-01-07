@@ -13,7 +13,7 @@ $perfil = $chatAtual->getDestinatarioOuRemetente();
 
 $dataProviderChata = new ActiveDataProvider([
     'query' => Conversa::find()->where(['idchat' => $chatAtual->id]),
-    'pagination' => false,  // Desabilita a paginação.
+    'pagination' => false,
 
 ]);
 
@@ -43,7 +43,6 @@ $dataProviderChata = new ActiveDataProvider([
                 'options' => ['class' => 'list-view'],
                 'layout' => '<div class="row">{items}</div>',
                 'itemOptions' => ['class' => 'col-12'],
-// Layout com itens e paginação
             ]); ?>
         </div>
         <div class="col-md-8 p-0 d-flex flex-column">
@@ -58,7 +57,7 @@ $dataProviderChata = new ActiveDataProvider([
                     <div class="col-md-8  pt-3">
                         <?= $this->render('../conversa/create', [
                             'model' => $modelConversa,
-                            'idchat' => $chatAtual->id, // Passa o id do chat atual
+                            'idchat' => $chatAtual->id,
                             'modelTexto' => $modelTexto,
                         ]) ?></div>
                     <div class="col-md-4 pt-3">
@@ -71,7 +70,7 @@ $dataProviderChata = new ActiveDataProvider([
                     <div class="col-md-12  pt-3">
                         <?= $this->render('../conversa/create', [
                             'model' => $modelConversa,
-                            'idchat' => $chatAtual->id, // Passa o id do chat atual
+                            'idchat' => $chatAtual->id,
                             'modelTexto' => $modelTexto,
                         ]) ?></div>
                 <?php endif; ?>
@@ -84,25 +83,25 @@ $dataProviderChata = new ActiveDataProvider([
 <script>
     const chatContainer = document.getElementById("chat");
     scrollToBottom();
-    // Função para manter o scroll na parte inferior do chat
 
-    // Configurações de conexão
+
+
     const options = {
-        hostname: "127.0.0.1", // Endereço do broker
-        port: 9001, // Porta do WebSocket
+        hostname: "127.0.0.1",
+        port: 9001,
         clientId: "client_" + Math.random().toString(16).substr(2, 8),
-        username: "<?= Yii::$app->user->identity->username ?>", // Nome de usuário
-        password: "password" // Senha (se necessário)
+        username: "<?= Yii::$app->user->identity->username ?>",
+        password: "password"
     };
 
-    // Criar uma nova instância do cliente MQTT
+
     const client = mqtt.connect(`ws://${options.hostname}:${options.port}`, {
         clientId: options.clientId,
         username: options.username,
         password: options.password
     });
 
-    // Quando o cliente se conectar ao broker
+
     client.on("connect", function () {
         console.log("Conectado ao broker MQTT via WebSocket");
 
@@ -117,7 +116,7 @@ $dataProviderChata = new ActiveDataProvider([
         });
     });
 
-    // Quando uma nova mensagem chegar
+
     client.on("message", function (topic, message) {
         console.log("Mensagem recebida: " + message.toString());
 
@@ -129,13 +128,13 @@ $dataProviderChata = new ActiveDataProvider([
         }
     });
 
-    // Caso haja erro na conexão
+
     client.on("error", function (err) {
         console.error("Erro de conexão: " + err);
     });
 
     function renderMessage(data) {
-        const isOutgoing = data.idUser === <?= Yii::$app->user->identity->id ?>; // Substitua `currentUserId` pelo ID do usuário logado
+        const isOutgoing = data.idUser === <?= Yii::$app->user->identity->id ?>;
 
         if (data.tipo === "TEXTO") {
             renderTextMessage(data, isOutgoing);
@@ -161,16 +160,16 @@ $dataProviderChata = new ActiveDataProvider([
         chatCard.appendChild(details);
         chatContainer.appendChild(chatCard);
     }
-    // Função para criar um card de mensagem de texto
+
     function renderPropostaMessage(data, isOutgoing) {
-        // Verifique se o estado é 0 (nova proposta) e adicione um novo card
+
         if (data.estado === 0) {
             const chatCard = document.createElement("div");
             chatCard.classList.add("chat", isOutgoing ? "outgoing" : "incoming");
 
             const details = document.createElement("div");
             details.classList.add("details");
-            details.setAttribute("data-index", data.idProposta); // Adiciona o ID da proposta para referência
+            details.setAttribute("data-index", data.idProposta);
 
             const propostaContainer = document.createElement("div");
             propostaContainer.classList.add(
@@ -182,7 +181,7 @@ $dataProviderChata = new ActiveDataProvider([
                 isOutgoing ? "cardProposta" : "propostaEsq"
             );
 
-            // Preço da proposta
+
             const priceRow = document.createElement("div");
             priceRow.classList.add("d-flex", "gap-2");
 
@@ -210,13 +209,12 @@ $dataProviderChata = new ActiveDataProvider([
             priceRow.appendChild(artigoPriceContainer);
             propostaContainer.appendChild(priceRow);
 
-            // Estado da proposta
+
             const propostaStatus = document.createElement("span");
             if (!isOutgoing) {
                 const buttonContainer = document.createElement("div");
                 buttonContainer.classList.add("d-flex", "gap-2");
 
-                // Botão de rejeitar
                 const rejectButton = document.createElement("a");
                 rejectButton.classList.add(
                     "btn",
@@ -229,14 +227,11 @@ $dataProviderChata = new ActiveDataProvider([
                     "text-white"
                 );
                 rejectButton.textContent = "x";
-                rejectButton.setAttribute(
-                    "href",
-                    `/RetroVerse/frontend/web/mensagemproposta/update?id=${data.idProposta}&state=1`
-                );
+                rejectButton.href = `<?= \yii\helpers\Url::to(['mensagemproposta/update']) ?>?id=${data.idProposta}&state=1`;
                 rejectButton.setAttribute("id", "retroverse-btn-active");
                 buttonContainer.appendChild(rejectButton);
 
-                // Botão de aceitar
+
                 const acceptButton = document.createElement("a");
                 acceptButton.classList.add(
                     "btn",
@@ -249,10 +244,7 @@ $dataProviderChata = new ActiveDataProvider([
                     "text-white"
                 );
                 acceptButton.textContent = "accept";
-                acceptButton.setAttribute(
-                    "href",
-                    `/RetroVerse/frontend/web/mensagemproposta/update?id=${data.idProposta}&state=2`
-                );
+                acceptButton.href = `<?= \yii\helpers\Url::to(['mensagemproposta/update']) ?>?id=${data.idProposta}&state=2`;
                 acceptButton.setAttribute("id", "retroverse-btn-active");
                 buttonContainer.appendChild(acceptButton);
 
@@ -262,12 +254,11 @@ $dataProviderChata = new ActiveDataProvider([
             chatCard.appendChild(details);
             chatContainer.appendChild(chatCard);
         }
-        // Caso o estado da proposta seja 1 ou 2 (alterar o status)
         else {
             const detailsDiv = document.querySelector(`.cardProposta[data-index="${data.idProposta}"]`);
 
             if (detailsDiv) {
-                const propostaStatus = detailsDiv.querySelector(".status"); // Localizando o status
+                const propostaStatus = detailsDiv.querySelector(".status");
                 if (data.estado === "1") {
                     propostaStatus.classList.add("text-danger");
                     propostaStatus.textContent = "Recusado";
@@ -276,7 +267,6 @@ $dataProviderChata = new ActiveDataProvider([
                     propostaStatus.classList.add("text-success");
                     propostaStatus.textContent = "Accept";
 
-                    // Se for uma proposta de saída, criar o botão de adicionar ao carrinho
                         const addToCartButton = document.createElement("a");
                         addToCartButton.classList.add(
                             "btn",

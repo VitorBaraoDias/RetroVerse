@@ -92,45 +92,45 @@ class Linhavenda extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
+
     public function getIdvendedor0()
     {
         return $this->hasOne(Perfil::class, ['id' => 'idvendedor']);
     }
+
     public function getAvaliacao()
     {
         return $this->hasOne(Avaliacao::class, ['idlinhavenda' => 'id']);
     }
-    public static function getVendasMensaisPorTipoArtigo($tipoArtigo)
-    {
-        // Consulta SQL para contar as vendas por mês
+
+    public static function getVendasMensaisPorTipoArtigo($tipoArtigo) {
+
         $salesData = Yii::$app->db->createCommand('
-    SELECT YEAR(a.datacriacao) AS ano, MONTH(a.datacriacao) AS mes, COUNT(*) AS quantidade_vendas
-    FROM linhavendas l
-    INNER JOIN artigos a ON l.idartigo = a.id
-    WHERE a.tipoartigo = :tipoArtigo
-    GROUP BY ano, mes
-    ORDER BY ano, mes
-')
-            ->bindValue(':tipoArtigo', $tipoArtigo)  // Vincula o parâmetro :tipoArtigo
-            ->queryAll();  // Executa a consulta e retorna os resultados
+            SELECT YEAR(a.datacriacao) AS ano, MONTH(a.datacriacao) AS mes, COUNT(*) AS quantidade_vendas
+            FROM linhavendas l
+            INNER JOIN artigos a ON l.idartigo = a.id
+            WHERE a.tipoartigo = :tipoArtigo
+            GROUP BY ano, mes
+            ORDER BY ano, mes
+        ')
+            ->bindValue(':tipoArtigo', $tipoArtigo)
+            ->queryAll();
+
+        $salesArray = array_fill(1, 12, 0);
 
 
-        // Inicializando o array de vendas mensais (1 a 12)
-        $salesArray = array_fill(1, 12, 0);  // Preencher com 0 para todos os meses
-
-        // Preencher o array com os dados retornados
         foreach ($salesData as $sale) {
             $month = $sale['mes'];
             $salesArray[$month] = $sale['quantidade_vendas'];
         }
 
-        // Retornar as vendas mensais (de 1 a 12)
 
         return array_values($salesArray);
     }
+
     public static function getMarcasMaisVendidas()
     {
-        // Consulta SQL para contar as vendas por marca (artigo)
+
         $salesData = Yii::$app->db->createCommand('
         SELECT a.idmarca, m.nome AS marca, COUNT(*) AS quantidade_vendas
         FROM linhavendas lv
@@ -139,18 +139,18 @@ class Linhavenda extends \yii\db\ActiveRecord
         GROUP BY a.idmarca
         ORDER BY quantidade_vendas DESC
     ')
-            ->queryAll();  // Executa a consulta e retorna os resultados
+            ->queryAll();
 
-        // Extrair os dados em arrays separados para as marcas e as quantidades de vendas
+
         $marcas = [];
         $quantidadeVendas = [];
 
         foreach ($salesData as $sale) {
-            $marcas[] = $sale['marca'];  // Nome da marca
-            $quantidadeVendas[] = $sale['quantidade_vendas'];  // Quantidade de vendas
+            $marcas[] = $sale['marca'];
+            $quantidadeVendas[] = $sale['quantidade_vendas'];
         }
 
-        // Retornar os dados como arrays
+
         return [
             'marcas' => $marcas,
             'quantidade_vendas' => $quantidadeVendas,
@@ -173,7 +173,7 @@ class Linhavenda extends \yii\db\ActiveRecord
     {
         $server = "127.0.0.1";
         $port = 1883;
-        $username = Yii::$app->user->identity->username;
+        $username = $this->idartigo0->idperfil0->user->username;
         $password = "";
         $client_id = Yii::$app->user->identity ? Yii::$app->user->identity->id : 'guest';
         $mqtt = new \Bluerhinos\phpMQTT($server, $port, $client_id);

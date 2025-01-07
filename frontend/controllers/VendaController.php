@@ -82,14 +82,14 @@ class VendaController extends Controller
     {
         $model = $this->findModel($id);
 
-        // Criação do dataProvider para listar as linhas de venda associadas à venda atual
+
         $dataProvider = new ActiveDataProvider([
-            'query' => $model->getLinhavendas(),  // Método que traz as Linhavendas associadas à venda
+            'query' => $model->getLinhavendas(),
         ]);
 
         return $this->render('view', [
             'model' => $model,
-            'dataProvider' => $dataProvider,  // Passa o dataProvider para a view
+            'dataProvider' => $dataProvider,
         ]);
     }
 
@@ -97,14 +97,14 @@ class VendaController extends Controller
     {
         $model = $this->findModel($id);
 
-        // Criação do dataProvider para listar as linhas de venda associadas à venda atual
+
         $dataProvider = new ActiveDataProvider([
-            'query' => $model->getLinhavendas(),  // Método que traz as Linhavendas associadas à venda
+            'query' => $model->getLinhavendas(),
         ]);
 
         return $this->render('viewinvoice', [
             'model' => $model,
-            'dataProvider' => $dataProvider,  // Passa o dataProvider para a view
+            'dataProvider' => $dataProvider,
         ]);
     }
 
@@ -129,7 +129,7 @@ class VendaController extends Controller
             if ($carrinho->ifExistsCart() && $this->request->isPost) {
                 $model->idcomprador = $userId;
                 $model->total = $carrinho->getTotalVenda();
-                $model->idestadoencomenda = Estadoencomenda::getIdByStatusCode1(); //vai buscar o id do do status 1
+                $model->idestadoencomenda = Estadoencomenda::getIdByStatusCode1();
 
 
                 if ($model->load($this->request->post()) && $model->save()) {
@@ -145,8 +145,8 @@ class VendaController extends Controller
                             throw new \Exception('Erro ao salvar linha de venda: ' . json_encode($linhaVenda->errors));
                         }
 
-                        // Atualiza o saldo pendente do vendedor
-                        $vendedorPerfil = $linhaVenda->idvendedor0; // Obtém o perfil do vendedor
+
+                        $vendedorPerfil = $linhaVenda->idvendedor0;
                         if ($vendedorPerfil) {
                             $vendedorPerfil->saldopendente += $linha->artigo->getPriceFromSoldAcceptedProposal($linhaVenda->idvenda0->idcomprador); // Adiciona o valor da linha ao saldo pendente
                             if (!$vendedorPerfil->save(false)) {
@@ -155,14 +155,13 @@ class VendaController extends Controller
                         }
                     }
 
-                    // Limpa as linhas do carrinho após salvar as vendas
+
                     foreach ($linhasCarrinho as $linha) {
                         if (!$linha->delete()) {
                             throw new \Exception('Erro ao eliminar linha do carrinho: ' . json_encode($linha->errors));
                         }
                     }
 
-                    //
                     $linhaVenda->idartigo0->ativo = 0;
                     $linhaVenda->idartigo0->save();
                     $transaction->commit();

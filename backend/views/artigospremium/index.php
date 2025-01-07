@@ -8,7 +8,6 @@ use yii\widgets\ListView;
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
 $this->title = 'Artigospremium';
-$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="artigospremium-index">
 

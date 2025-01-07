@@ -7,9 +7,7 @@ use yii\widgets\DetailView;
 /** @var \common\models\Faqs $model */
 
 $this->title = $model->questao;
-$this->params['breadcrumbs'][] = ['label' => 'FAQS', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
-\yii\web\YiiAsset::register($this);
+
 ?>
 <div class="faqs-view">
 

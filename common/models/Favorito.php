@@ -96,7 +96,7 @@ class Favorito extends \yii\db\ActiveRecord
     {
         $server = "127.0.0.1";
         $port = 1883;
-        $username = Yii::$app->user->identity->username;
+        $username = $this->perfil->user->username;
         $password = "";
         $client_id = Yii::$app->user->identity ? Yii::$app->user->identity->id : 'guest';
         $mqtt = new \Bluerhinos\phpMQTT($server, $port, $client_id);

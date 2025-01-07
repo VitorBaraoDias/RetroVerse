@@ -6,9 +6,7 @@ use yii\helpers\Html;
 /** @var \common\models\Plano $model */
 
 $this->title = 'Update Plan: ' . $model->descricao;
-$this->params['breadcrumbs'][] = ['label' => 'Plans', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = 'Update';
+
 ?>
 <div class="plano-update">
 

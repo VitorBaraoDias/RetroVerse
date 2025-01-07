@@ -11,7 +11,6 @@ use yii\rest\ActiveController;
  */
 class TamanhoController extends ActiveController
 {
-    //modelo a criar artigo
     public $modelClass = 'common\models\Tamanho';
 
     public function behaviors()
@@ -19,7 +18,6 @@ class TamanhoController extends ActiveController
         $behaviors = parent::behaviors();
         $behaviors['authenticator'] = [
             'class' => QueryParamAuth::className(),
-             'only'=> ['index'], //Apenas para o GET
         ];
         return $behaviors;
     }

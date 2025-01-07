@@ -6,8 +6,7 @@ use yii\helpers\Html;
 /** @var \common\models\Tamanho $model */
 
 $this->title = 'Create Size';
-$this->params['breadcrumbs'][] = ['label' => 'Sizes', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
+
 ?>
 <div class="tamanho-create">
 

@@ -77,6 +77,9 @@ return [
                 [
                     'class' => 'yii\rest\UrlRule',
                     'controller' => 'api/marca',
+                    'extraPatterns' => [
+                        'GET' => 'marcasativas'
+                    ],
                 ],
                 [
                     'class' => 'yii\rest\UrlRule',
@@ -103,7 +106,7 @@ return [
                     'extraPatterns' => [
                         'POST efetuarcompra' => 'comprar',
                         'GET detalhes/{id}' => 'detalhesvenda',
-                        'GET compras/{id}' => 'historicocompras', //historico de compras do user
+                        'GET compras/{id}' => 'historicocompras', //historico de compras do user x
                         'GET historico/{id}' => 'historicovendas',  //historico de vendas do user x
                     ],
                 ],
@@ -114,6 +117,9 @@ return [
                 [
                     'class' => 'yii\rest\UrlRule',
                     'controller' => 'api/categoriaartigo',
+                    'extraPatterns' => [
+                        'GET' => 'categoriasativas'
+                    ],
                 ],
                 [
                     'class' => 'yii\rest\UrlRule',

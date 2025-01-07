@@ -47,15 +47,11 @@ class PerfilController extends ActiveController
 
     public function authCustom($token)
     {
-
-        $user_ = Yii::$app->user->identity->findIdentityByAccessToken($token);
-
-        if ($user_) {
-            $this->user = $user_;
+        $user_ = \common\models\User::findIdentityByAccessToken($token);
+        if($user_) {
+            $this->user=$user_;
             return $user_;
         }
-
-
         throw new \yii\web\ForbiddenHttpException('No authentication');
     }
 
@@ -91,7 +87,6 @@ class PerfilController extends ActiveController
 
         $perfil->load(Yii::$app->getRequest()->getBodyParams(), '');
 
-        // Salva o modelo e verifica se houve erros
         if ($perfil->save()) {
             return [
                 'success' => true,

@@ -34,17 +34,14 @@ class ChatController  extends ActiveController
         ];
         return $behaviors;
     }
+
     public function authCustom($token)
     {
-
-        $user_ = Yii::$app->user->identity->findIdentityByAccessToken($token);
-
-        if ($user_) {
-            $this->user = $user_;
+        $user_ = \common\models\User::findIdentityByAccessToken($token);
+        if($user_) {
+            $this->user=$user_;
             return $user_;
         }
-
-
         throw new \yii\web\ForbiddenHttpException('No authentication');
     }
 
@@ -86,7 +83,6 @@ class ChatController  extends ActiveController
                         'idchat' => $mensagem->idchat,
                         'tipo' => $mensagem->tipo,
                         'descricao' => $mensagem->mensagem->descricao,
-
                     ]
                 ];
             }
@@ -111,7 +107,6 @@ class ChatController  extends ActiveController
 
     public function actionListachats($iduser)
     {
-        // Procura os chats onde o user é o remetente ou o destinatário
         $this->checkAccess('listachats', $this->modelClass ,['iduser' => $iduser]);
 
         $chats = Listachats::find()
@@ -135,15 +130,13 @@ class ChatController  extends ActiveController
 
         $request = Yii::$app->request->post();
 
-        //criar o chat
         $idartigo = $request['idartigo'] ?? null;
         $idremetente = $request['idremetente'] ?? null;
 
         if (!$idartigo || !$idremetente) {
-            throw new \yii\web\BadRequestHttpException('Parâmetros idartigo e idremetente são obrigatórios.');
+            throw new \yii\web\BadRequestHttpException('Parameters idartigo and idremente are mandatory.');
         }
         $chat = $this->verifyIfChatExistsAndReturn($idartigo, $idremetente); //cria o cbat
-        //criar a mensagem
 
         $tipo = $request['tipo'] ?? null;
 
@@ -158,7 +151,7 @@ class ChatController  extends ActiveController
                 'message' => 'Sent propose successfully'
             ];
         } else {
-            throw new \yii\web\BadRequestHttpException('Tipo de mensagem inválido.');
+            throw new \yii\web\BadRequestHttpException('Invalid message type.');
         }
 
     }
@@ -167,7 +160,7 @@ class ChatController  extends ActiveController
         $artigo = Artigo::findOne($idartigo);
 
         if (!$artigo) {
-            throw new \yii\web\NotFoundHttpException('Artigo não encontrado.');
+            throw new \yii\web\NotFoundHttpException('Item not found.');
         }
 
         $chatAtual = Listachats::find()

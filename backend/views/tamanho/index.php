@@ -11,7 +11,7 @@ use yii\helpers\Url;
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
 $this->title = 'Sizes';
-$this->params['breadcrumbs'][] = $this->title;
+
 ?>
 <div class="tamanho-index">
 

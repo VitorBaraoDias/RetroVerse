@@ -7,9 +7,7 @@ use yii\widgets\DetailView;
 /** @var \common\models\Metodosexpedicao $model */
 
 $this->title = $model->nome;
-$this->params['breadcrumbs'][] = ['label' => 'Shipping Methods', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
-\yii\web\YiiAsset::register($this);
+
 ?>
 <div class="metodosexpedicao-view">
 

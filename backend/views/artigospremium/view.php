@@ -7,8 +7,6 @@ use yii\widgets\DetailView;
 /** @var \common\models\Artigospremium $model */
 
 $this->title = "Artigo Premium - " . $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Artigospremium', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
 <div class="artigospremium-view">

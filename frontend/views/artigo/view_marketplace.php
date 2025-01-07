@@ -1,17 +1,16 @@
 <div class="artigo-view container-lg">
 </div>
 <?php
+
 use common\models\Favorito;
 use yii\helpers\Html;
+use yii\widgets\ListView;
 use common\models\Perfil;
 
 $userId = Yii::$app->user->id;
 $artigoId = $model->id;
-$perfil = Perfil::findOne(['id' => $userId]);
 
 $isFavorito = Favorito::isFavorito($userId, $artigoId);
-$isPremium = $perfil ? $perfil->hasActivePremiumPlano() : false;
-
 ?>
 <div class="artigo-view container-lg">
 
@@ -22,25 +21,42 @@ $isPremium = $perfil ? $perfil->hasActivePremiumPlano() : false;
             <div class="d-flex mt-2 align-items-center justify-content-between gap-2 mb-2">
                 <div class="d-flex gap-2 align-items-center">
                     <?php if (!empty($model->idperfil0->caminhofotoperfil)): ?>
-                        <img class=" rounded-circle" style="object-fit: cover; width: 60px"
+                        <img class="rounded-circle" style="object-fit: cover; width: 60px; height: 60px;"
                              src="<?= Yii::getAlias('@web') ?>/uploads/img-profile/<?= $model->idperfil0->caminhofotoperfil ?>"
-                             alt="Foto de Perfil" height="60">
+                             alt="Foto de Perfil">
                     <?php else: ?>
-                        <img class="" src="<?= Yii::getAlias('@web') ?>/img/icon-profile.svg" alt="Ícone de Perfil"
-                             height="70">
+                        <img src="<?= Yii::getAlias('@web') ?>/img/icon-profile.svg" alt="Ícone de Perfil"
+                             style="width: 60px; height: 60px;">
                     <?php endif; ?>
-                    <h2 class="text-uppercase"><strong> <?= $model->idperfil0->user->username ?> </strong></h2>
-                    <div class="d-flex">
-                        <span><?= $model->idperfil0->getAvgRates() ?></span>
-                        <img src="<?= Yii::getAlias('@web/img/star.svg') ?>" alt="Star Icon" style="height: 20px; margin-left: 10px;">
-                        <span>(<?= $model->idperfil0->getCountRates() ?>)</span>
+                    <div>
+                        <div class="d-flex align-items-center">
+                            <h2 class="text-uppercase" style="font-size: 18px;">
+                                <strong><?= $model->idperfil0->user->username ?></strong></h2>
+                            <?php if ($model->idperfil0->hasActivePremiumPlano()): ?>
+                                <img src="<?= Yii::getAlias('@web') ?>/img/premium-user-verified.svg"
+                                     alt="Verified Premium Badge" style="width: 15px; height: 15px; margin-left: 5px;">
+                            <?php endif; ?>
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <span><?= $model->idperfil0->getAvgRates() ?></span>
+                            <img src="<?= Yii::getAlias('@web/img/star.svg') ?>" alt="Star Icon"
+                                 style="height: 20px; margin-left: 10px;">
+                            <span>(<?= $model->idperfil0->getCountRates() ?>)</span>
+                        </div>
                     </div>
+                    <?php if ($model->idperfil !== $userId): ?>
+                        <a href="<?= Yii::$app->urlManager->createUrl(['perfil/index', 'id' => $model->idperfil]) ?>"
+                           id="retroverse-btn-active" class="btn retroverse-btn active w-auto py-2"
+                           style="font-size: 14px !important; font-weight: bold; margin-left: 20px;">VIEW PROFILE</a>
+                    <?php endif; ?>
                 </div>
-
-                <?= Html::a('REPORT AD', ['denuncia/create', 'id' => $model->id],
-                    ['class' => 'btn btn-danger w-auto py-2', 'id' => 'retroverse-btn-active',
-                        'style' => 'font-size: 14px !important; font-weight: bold']) ?>
+                <?php if ($model->idperfil !== $userId): ?>
+                    <a href="<?= Yii::$app->urlManager->createUrl(['denuncia/create', 'id' => $model->id]) ?>"
+                       class="btn btn-danger w-auto py-2"
+                       style="font-size: 14px !important; font-weight: bold;">REPORT AD</a>
+                <?php endif; ?>
             </div>
+
             <?php if (!empty($model->fotosartigos)): ?>
                 <div id="articleCarousel" class="carousel slide" data-bs-ride="carousel">
                     <!-- Indicadores -->
@@ -81,7 +97,8 @@ $isPremium = $perfil ? $perfil->hasActivePremiumPlano() : false;
         <div class="col-md-6 d-flex flex-column align-self-lg-center">
             <div class="row">
                 <div class="col-md-12 row">
-                    <h1 class="font-weight-bold text-uppercase pl-0" style="font-size: 48px"><strong><?= $model->nome ?></strong></h1>
+                    <h1 class="font-weight-bold text-uppercase pl-0" style="font-size: 48px">
+                        <strong><?= $model->nome ?></strong></h1>
                     <hr>
                     <div class="d-flex flex-column mt-2 align-items-start pl-0">
                         <!-- Linha com os dois preços lado a lado -->
@@ -94,7 +111,8 @@ $isPremium = $perfil ? $perfil->hasActivePremiumPlano() : false;
                                 ?>
                             </h2>
                             <h4 style="font-weight: bolder; color: #0000FF;">
-                                <?php echo Yii::$app->formatter->asCurrency($model->getPriceWithProposalIfExist(), 'EUR') ?> €
+                                <?php echo Yii::$app->formatter->asCurrency($model->getPriceWithProposalIfExist(), 'EUR') ?>
+                                €
                             </h4>
                         </div>
 
@@ -102,7 +120,8 @@ $isPremium = $perfil ? $perfil->hasActivePremiumPlano() : false;
                         <!-- Mensagem abaixo -->
                         <?php if ($isPremium): ?>
                             <div style="margin-bottom: 5px; color:#0000FF;">
-                                <img class="pr-2" src="<?= Yii::getAlias('@web') ?>/img/premium-user-verified.svg" alt="">
+                                <img class="pr-2" src="<?= Yii::getAlias('@web') ?>/img/premium-user-verified.svg"
+                                     alt="">
                                 <span>WITHOUT TAXES (PREMIUM)</span>
                             </div>
                         <?php else: ?>
@@ -133,32 +152,56 @@ $isPremium = $perfil ? $perfil->hasActivePremiumPlano() : false;
                     </span>
 
                     <div class="mt-4 row d-flex flex-column justify-content-center p-0 m-0">
-                        <?= Html::a('ADD TO CART', ['carrinho/create', 'id' => $model->id],
-                            [
+                        <?php
+                        if ($model->idperfil === $userId) {
+                            // Botão para atualizar artigo
+                            echo Html::a('EDIT ITEM', ['artigo/update', 'id' => $model->id], [
                                 'class' => 'retroverse-btn active col-md-9',
                                 'id' => 'retroverse-btn-active',
-                                'style' => 'font-size: x-small; font-weight: bold',
-                            ]) ?>
+                                'style' => 'font-size: x-small; gap: 10px',
+                            ]);
+                        } else {
+                            // Botão para adicionar ao carrinho
+                            echo Html::a('ADD TO CART', ['carrinho/create', 'id' => $model->id], [
+                                'class' => 'retroverse-btn active col-md-9',
+                                'id' => 'retroverse-btn-active',
+                                'style' => 'font-size: x-small; gap: 10px',
+                            ]);
+                        }
+                        ?>
 
-                        <?php if ($isFavorito): ?>
-                            <!-- Artigo está nos favoritos -->
-                            <a class="w-auto" href="<?= \yii\helpers\Url::to(['favorito/delete', 'id' => $artigoId]) ?>">
-                                <img height="40"
-                                     src="<?= Yii::getAlias('@web/img/vector_liked.svg') ?>"
-                                     alt="Remover dos Favoritos">
-                            </a>
-                        <?php else: ?>
-                            <!-- Artigo não está nos favoritos -->
-                            <a class="w-auto" href="<?= \yii\helpers\Url::to(['favorito/create', 'id' => $artigoId]) ?>">
-                                <img height="40"
-                                     src="<?= Yii::getAlias('@web/img/vector_like.svg') ?>"
-                                     alt="Adicionar aos Favoritos">
-                            </a>
-                        <?php endif; ?>
+
+                        <?php
+                        if ($model->idperfil !== $userId) {
+                            if ($isFavorito): ?>
+                                <!-- Artigo está nos favoritos -->
+                                <a class="w-auto"
+                                   href="<?= \yii\helpers\Url::to(['favorito/delete', 'id' => $artigoId]) ?>">
+                                    <img height="40"
+                                         src="<?= Yii::getAlias('@web/img/vector_liked.svg') ?>"
+                                         alt="Remover dos Favoritos">
+                                </a>
+                            <?php else: ?>
+                                <!-- Artigo não está nos favoritos -->
+                                <a class="w-auto"
+                                   href="<?= \yii\helpers\Url::to(['favorito/create', 'id' => $artigoId]) ?>">
+                                    <img height="40"
+                                         src="<?= Yii::getAlias('@web/img/vector_like.svg') ?>"
+                                         alt="Adicionar aos Favoritos">
+                                </a>
+                            <?php endif;
+                        } ?>
                     </div>
-                    <?= Html::a('SEND MESSAGE TO SELLER', ['chat/create', 'id' => $model->id],
-                        [    'class' => 'btn history-button  w-100 col-md-9 mb-2 text-white rounded-0 ',    'id' => 'retroverse-btn-active',
-                            'style' => 'font-size: x-small; background: #121619; font-weight: bold',]) ?>
+
+                    <?php
+
+                    if ($model->idperfil !== $userId) {
+                        echo Html::a('SEND MESSAGE TO SELLER', ['chat/create', 'id' => $model->id],
+                            ['class' => 'btn history-button  w-100 col-md-9 mb-2 text-white rounded-0 ', 'id' => 'retroverse-btn-active',
+                                'style' => 'font-size: x-small; background: #121619; font-weight: bold',]);
+                    }
+                    ?>
+
                     <hr>
                     <div class="bg-light outline p-2 mb-4" style="max-height: 200px">
                         <?= $model->descricao ?>
@@ -174,7 +217,19 @@ $isPremium = $perfil ? $perfil->hasActivePremiumPlano() : false;
             </div>
         </div>
     </div>
-    <h2 class="mt-4"><strong>OTHER MEMBER ITEMS</strong></h2>
+    <h2 class="mt-4"><strong>OTHER MEMBER ITEMS</strong>
+        <?= ListView::widget([
+            'dataProvider' => $relatedDataProvider,
+            'itemView' => '_related_items_card',
+            'layout' => '<div class="row">{items}</div>{pager}',
+            'options' => ['class' => 'list-view'],
+            'itemOptions' => ['class' => 'col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 card-product'],
+
+            'pager' => [
+                'class' => \yii\bootstrap5\LinkPager::class,
+                'options' => ['class' => 'pagination justify-content-center'],
+            ],
+        ]) ?></h2>
     <hr>
 </div>
 

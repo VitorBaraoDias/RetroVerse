@@ -50,14 +50,11 @@ class CarrinhoController extends ActiveController
 
     public function authCustom($token)
     {
-
-        $user_ = Yii::$app->user->identity->findIdentityByAccessToken($token);
-
-        if ($user_) {
-            $this->user = $user_;
+        $user_ = \common\models\User::findIdentityByAccessToken($token);
+        if($user_) {
+            $this->user=$user_;
             return $user_;
         }
-
         throw new \yii\web\ForbiddenHttpException('No authentication');
     }
 
@@ -66,7 +63,6 @@ class CarrinhoController extends ActiveController
     {
         if ($this->user) {
             if ($action === 'create' || $action === 'view') {
-                // O usuário só pode criar um carrinho para ele mesmo
                 if ($model && $model->iduser != $this->user->id) {
                     throw new \yii\web\ForbiddenHttpException('You don´t have permission to do this action!');
                 }
@@ -77,7 +73,6 @@ class CarrinhoController extends ActiveController
     }
     public function actionUser($id)
     {
-        // Busca o carrinho do usuário pelo ID
         $carrinho = Carrinho::find()->where(['iduser' => $id])->one();
 
         $this->checkAccess('view', $carrinho);
@@ -90,21 +85,20 @@ class CarrinhoController extends ActiveController
             ];
         }
 
-        // Agora utiliza o ID do carrinho encontrado para consultar as linhas associadas
         $linhasCarrinho = Linhascarrinho::find()
             ->with([
-                'artigo',        // Carrega a relação com o artigo
-                'artigo.idcomissao0', // Carrega a comissão associada ao artigo
-                'artigo.idestado0', // Carrega o estado do artigo
-                'artigo.idmarca0', // Carrega a marca do artigo
-                'artigo.idcategoria0', // Carrega a categoria do artigo
-                'artigo.idtamanho0', // Carrega o tamanho do artigo
-                'artigo.idperfil0', // Carrega o perfil associado ao artigo
+                'artigo',
+                'artigo.idcomissao0',
+                'artigo.idestado0',
+                'artigo.idmarca0',
+                'artigo.idcategoria0',
+                'artigo.idtamanho0',
+                'artigo.idperfil0',
             ])
-            ->where(['idcarrinho' => $carrinho->id]) // Usando $carrinho->id
+            ->where(['idcarrinho' => $carrinho->id])
             ->all();
 
-        // Verifica se as linhas foram encontradas
+
         if (!$linhasCarrinho) {
             return [
                 'success' => true,

@@ -9,7 +9,6 @@ use yii\widgets\ListView;
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
     $this->title = 'Users';
-$this->params['breadcrumbs'][] = $this->title;
 
 
 ?>

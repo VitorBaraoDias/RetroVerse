@@ -7,9 +7,7 @@ use yii\widgets\DetailView;
 /** @var \common\models\Tamanho $model */
 
 $this->title = $model->tamanho;
-$this->params['breadcrumbs'][] = ['label' => 'Sizes', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
-\yii\web\YiiAsset::register($this);
+
 ?>
 <div class="tamanho-view">
 

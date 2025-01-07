@@ -144,7 +144,6 @@ class ArtigoController extends ActiveController
                 'categoria' => $artigo->idcategoria0 ? $artigo->idcategoria0->nome : null,
                 'tamanho' => $artigo->idtamanho0 ? $artigo->idtamanho0->tamanho : null,
                 'tipoartigo' => $artigo->tipoartigo,
-                'ativo' => $artigo->ativo ? 'Sim' : 'Não',
                 'fotos' => $fotos,
                 'perfil' => $artigo->idperfil0 ? [
                     'id' => $artigo->idperfil0->id,
@@ -180,7 +179,6 @@ class ArtigoController extends ActiveController
             $fotos[] = $foto->caminhofoto;
         }
 
-        //verioficar se o item é premium
         $isPremium = (bool)\common\models\Artigospremium::find()
             ->where(['id' => $artigo->id])
             ->exists();
@@ -201,7 +199,7 @@ class ArtigoController extends ActiveController
             'categoria' => $artigo->idcategoria0 ? $artigo->idcategoria0->nome : null,
             'tamanho' => $artigo->idtamanho0 ? $artigo->idtamanho0->tamanho : null,
             'tipoartigo' => $artigo->tipoartigo,
-            'ativo' => $artigo->ativo ? 'Sim' : 'Não',
+            'ativo' => $artigo->ativo ? true : false,
             'fotos' => $fotos,
             'perfil' => $artigo->idperfil0 ? [
                 'id' => $artigo->idperfil0->id,
@@ -220,10 +218,11 @@ class ArtigoController extends ActiveController
         $artigos = Artigo::find()
             ->with(['idestado0', 'idmarca0', 'idtamanho0', 'idcategoria0', 'idperfil0', 'fotosartigos'])
             ->where(['idperfil' => $userid])
+            ->andWhere(['artigos.ativo' => 1])
             ->all();
 
         if (!$artigos) {
-            throw new \yii\web\NotFoundHttpException("Nenhum artigo encontrado para o perfil.");
+            throw new \yii\web\NotFoundHttpException("No item found for this profile.");
         }
 
         $resultado = [];
@@ -245,7 +244,6 @@ class ArtigoController extends ActiveController
                 'categoria' => $artigo->idcategoria0 ? $artigo->idcategoria0->nome : null,
                 'tamanho' => $artigo->idtamanho0 ? $artigo->idtamanho0->tamanho : null,
                 'tipoartigo' => $artigo->tipoartigo,
-                'ativo' => $artigo->ativo ? 'Sim' : 'Não',
                 'fotos' => $fotos,
             ];
         }
@@ -287,23 +285,23 @@ class ArtigoController extends ActiveController
 
                         return [
                             'status' => 'success',
-                            'message' => 'Artigo criado com sucesso!',
+                            'message' => 'Item saved with success!',
                             'artigo' => $model,
                         ];
                     } else {
-                        throw new \Exception('Erro ao salvar o artigo.');
+                        throw new \Exception('Error saving this item.');
                     }
                 } catch (\Exception $e) {
                     $transaction->rollBack();
                     return [
                         'status' => 'error',
-                        'message' => 'Erro ao criar o artigo: ' . $e->getMessage(),
+                        'message' => 'Error creating this item: ' . $e->getMessage(),
                     ];
                 }
             } else {
                 return [
                     'status' => 'error',
-                    'message' => 'Erro de validação.',
+                    'message' => 'Validation errors.',
                     'errors' => $model->errors,
                 ];
             }
@@ -311,7 +309,7 @@ class ArtigoController extends ActiveController
 
         return [
             'status' => 'error',
-            'message' => 'Dados não foram enviados corretamente.',
+            'message' => 'Data not sent correctly.',
         ];
     }
 
@@ -323,7 +321,7 @@ class ArtigoController extends ActiveController
         $model = Artigo::findOne($id);
 
         if (!$model) {
-            throw new \yii\web\NotFoundHttpException('Artigo não encontrado.');
+            throw new \yii\web\NotFoundHttpException('Item not found.');
         }
 
         $this->checkAccess('update', $model);
@@ -336,20 +334,20 @@ class ArtigoController extends ActiveController
                 if ($model->save()) {
                     return [
                         'status' => 'success',
-                        'message' => 'Artigo atualizado com sucesso!',
+                        'message' => 'Item created with success!',
                     ];
                 } else {
 
                     return [
                         'status' => 'error',
-                        'message' => 'Erro ao salvar o artigo.',
+                        'message' => 'Error saving this item.',
                         'errors' => $model->errors,
                     ];
                 }
             } else {
                 return [
                     'status' => 'error',
-                    'message' => 'Erro de validação.',
+                    'message' => 'Validation errors.',
                     'errors' => $model->errors,
 
                 ];
@@ -357,91 +355,8 @@ class ArtigoController extends ActiveController
         }
         return [
             'status' => 'error',
-            'message' => 'Dados não foram enviados corretamente.',
+            'message' => 'Data not sent correctly.',
         ];
     }
 
-
-
-    //FUNCAO DE CRIACAO DE UM ARTIGO (MAS COM PARAMETROS EM STRING)
-//    public function actionCriarartigo()
-//    {
-//        $model = new Artigo();
-//        $request = Yii::$app->request->post();
-//        $userId = $request['iduser'] ?? null;
-//
-//
-//        $transaction = Yii::$app->db->beginTransaction();
-//
-//        try {
-//            if (Yii::$app->request->isPost) {
-//                $model->load($request, '');
-//
-//                $model->datacriacao = date('Y-m-d H:i:s');
-//                $model->nome = $request['nome'] ?? null;
-//                $model->descricao = $request['descricao'] ?? null;
-//                $model->precoanuncio = $request['precoanuncio'] ?? null;
-//                $model->idcomissao = $request['idcomissao'] ?? null;
-//                $model->idcomissao = $request['idcomissao'] ?? null;
-//
-//                if (!empty($request['estado'])) {
-//                    $estado = Estado::find()->where(['descricao' => $request['estado']])->one();
-//                    if ($estado) {
-//                        $model->idestado = $estado->id;
-//                    } else {
-//                        throw new \Exception("State not found " . $request['estado']);
-//                    }
-//                }
-//
-//                if (!empty($request['nomemarca'])) {
-//                    $marca = Marca::find()->where(['nome' => $request['nomemarca']])->one();
-//                    if ($marca) {
-//                        $model->idmarca = $marca->id;
-//                    } else {
-//                        throw new \Exception("Brand not found " . $request['nomemarca']);
-//                    }
-//                }
-//
-//                if (!empty($request['categoria'])) {
-//                    $categoria = Categoriaartigo::find()->where(['nome' => $request['categoria']])->one();
-//                    if ($categoria) {
-//                        $model->idcategoria = $categoria->id;
-//                    } else {
-//                        throw new \Exception("Category not found " . $request['categoria']);
-//                    }
-//                }
-//
-//                if (!empty($request['tamanho'])) {
-//                    $tamanho = Tamanho::find()->where(['tamanho' => $request['tamanho']])->one();
-//                    if ($tamanho) {
-//                        $model->idtamanho = $tamanho->id;
-//                    } else {
-//                        throw new \Exception("Size not found " . $request['tamanho']);
-//                    }
-//                }
-//
-//                $model->idperfil = $userId; // ID do perfil
-//                $model->tipoartigo = $request['tipoartigo'] ?? null;
-//                $model->ativo = 1;
-//
-//                if (!$model->save()) {
-//                    throw new \Exception('Error: This item could not be saved ');
-//                }
-//
-//                $transaction->commit();
-//
-//                return [
-//                    'status' => 'success',
-//                    'message' => 'Item added with success',
-//                    'artigo' => $model,
-//                ];
-//            }
-//        } catch (\Exception $e) {
-//            $transaction->rollBack();
-//            return [
-//                'status' => 'error',
-//                'message' => 'Error creating this item: ' . $e->getMessage(),
-//            ];
-//        }
-//    }
 }

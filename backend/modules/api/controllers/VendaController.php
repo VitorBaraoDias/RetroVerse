@@ -17,7 +17,7 @@ use yii\web\ForbiddenHttpException;
  */
 class VendaController extends ActiveController
 {
-    //modelo a criar artigo
+
     public $modelClass = 'common\models\Venda';
     public $user = null;
 
@@ -46,15 +46,17 @@ class VendaController extends ActiveController
         ];
         return $behaviors;
     }
+
     public function authCustom($token)
     {
-        $user_ = Yii::$app->user->identity->findIdentityByAccessToken($token);
-        if ($user_) {
-            $this->user = $user_;
+        $user_ = \common\models\User::findIdentityByAccessToken($token);
+        if($user_) {
+            $this->user=$user_;
             return $user_;
         }
         throw new \yii\web\ForbiddenHttpException('No authentication');
     }
+
     public function checkAccess($action, $model = null, $params = [])
     {
         //proibir get de todas as vendas existentes exceto ao admin
@@ -147,7 +149,7 @@ class VendaController extends ActiveController
             throw new \yii\web\ForbiddenHttpException('CART NOT FOUND');
         }
 
-        try {
+
             if ($carrinho->ifExistsCart() && Yii::$app->request->isPost)
             {
                 $modelClass->idcomprador = $userId;
@@ -161,15 +163,10 @@ class VendaController extends ActiveController
                 $modelClass->pais = $request['pais'] ?? null;
                 $modelClass->cidade = $request['cidade'] ?? null;
 
-
-                  // Tenta salvar o modelo Venda
                     if (!$modelClass->save()) {
-                        // Loga os erros de validação
                         throw new \Exception('ERROR: Could not save this purchase. ' . json_encode($modelClass->errors));
                     }
 
-
-                    // Processa as linhas do carrinho
                     $linhasCarrinho = $carrinho->getLinhascarrinhos()->all();
 
                     foreach ($linhasCarrinho as $linha) {
@@ -183,17 +180,15 @@ class VendaController extends ActiveController
                             throw new \Exception('ERROR: Could not save this purchase' . json_encode($linhaVenda->errors));
                         }
 
-                        // Atualiza o saldo pendente do vendedor
                         $vendedorPerfil = $linhaVenda->idvendedor0;
                         if ($vendedorPerfil) {
-                            $vendedorPerfil->saldopendente += $linha->artigo->precoanuncio;
+                            $vendedorPerfil->saldopendente += $linha->artigo->getPriceFromSoldAcceptedProposal($linhaVenda->idvenda0->idcomprador);
                             if (!$vendedorPerfil->save(false)) {
                                 throw new \Exception('ERROR: Could not save pending balance: ' . json_encode($vendedorPerfil->errors));
                             }
                         }
                     }
 
-                    // Limpar as linhas do carrinho
                     foreach ($linhasCarrinho as $linha) {
                         if (!$linha->delete()) {
                             throw new \Exception('ERROR: Could not save this purchase' . json_encode($linha->errors));
@@ -203,6 +198,7 @@ class VendaController extends ActiveController
                     // Desativar artigo após a venda
                     $linhaVenda->idartigo0->ativo = 0;
                     $linhaVenda->idartigo0->save();
+
                     $transaction->commit();
 
                     return [
@@ -211,12 +207,6 @@ class VendaController extends ActiveController
                     ];
 
             }
-
-
-        } catch (\Exception $e) {
-            $transaction->rollBack();
-            throw new \Exception('ERROR: Could not complete this purchase.' . json_encode($modelClass->errors));
-        }
 
     }
 
@@ -240,8 +230,7 @@ class VendaController extends ActiveController
         foreach ($vendas as $venda) {
             $linhasVenda = [];
             foreach ($venda->linhavendas as $linha) {
-                // Acessa o artigo relacionado usando o método getIdartigo0()
-                $artigo = $linha->idartigo0; // Acessa o artigo relacionado à linha de venda
+                $artigo = $linha->idartigo0; //
 
                 $fotos = [];
                 foreach ($artigo->fotosartigos as $foto) {
@@ -272,7 +261,7 @@ class VendaController extends ActiveController
                 'estadoencomenda' => $venda->estadoEncomenda->descricao,
                 'idmetodoexpedicao' => $venda->metodoExpedicao->nome,
                 'idtipopagamento' => $venda->tipoPagamento->descricao,
-                'linhas_venda' => $linhasVenda,  // Inclui as linhas de venda associadas
+                'linhas_venda' => $linhasVenda,
             ];
         }
         return [
@@ -283,15 +272,13 @@ class VendaController extends ActiveController
 
     public function actionHistoricovendas($id)
     {
-        // Procurar as compras realizadas pelo user especificado
         $linhasVenda = Linhavenda::find()
             ->where(['idvendedor' => $id])
-            ->with(['idvenda0', 'idartigo0.idmarca0', 'idartigo0.idtamanho0', 'idartigo0.idcategoria0']) // Inclui as relações necessárias
+            ->with(['idvenda0', 'idartigo0.idmarca0', 'idartigo0.idtamanho0', 'idartigo0.idcategoria0'])
             ->all();
 
         $this->checkAccess('view', $linhasVenda, ['id' => $id]);
 
-        // Verifica se encontrou alguma linha de venda
         if (empty($linhasVenda)) {
             return [
                 'status' => 'error',
@@ -301,8 +288,8 @@ class VendaController extends ActiveController
 
         $historico = [];
         foreach ($linhasVenda as $linha) {
-            $artigo = $linha->idartigo0; // Acessa o artigo relacionado à linha de venda
-            $venda = $linha->idvenda0;  // Acessa a venda relacionada à linha de venda
+            $artigo = $linha->idartigo0;
+            $venda = $linha->idvenda0;
             $fotos = [];
             foreach ($artigo->fotosartigos as $foto) {
                 $fotos[] = $foto->caminhofoto;
@@ -311,7 +298,7 @@ class VendaController extends ActiveController
                 'linhavenda' => [
                     'idvenda' => $linha->idvenda,
                     'idlinhavenda' => $linha->id,
-                    'datavenda' => $venda ? $venda->datavenda : null, // Data da venda
+                    'datavenda' => $venda ? $venda->datavenda : null,
                     'idestadoencomenda' => $linha->idestadoencomenda,
                     'artigo' =>[
                         'idartigo' => $linha->idartigo,

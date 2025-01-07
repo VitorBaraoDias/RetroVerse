@@ -11,7 +11,7 @@ use yii\widgets\ListView;
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
 $this->title = 'Banners';
-$this->params['breadcrumbs'][] = $this->title;
+
 ?>
 <div class="banner-index">
 

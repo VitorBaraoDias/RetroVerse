@@ -30,15 +30,11 @@ class FavoritoController extends ActiveController
 
     public function authCustom($token)
     {
-
-        $user_ = Yii::$app->user->identity->findIdentityByAccessToken($token);
-
-        if ($user_) {
-            $this->user = $user_;
+        $user_ = \common\models\User::findIdentityByAccessToken($token);
+        if($user_) {
+            $this->user=$user_;
             return $user_;
         }
-
-
         throw new \yii\web\ForbiddenHttpException('No authentication');
     }
 
@@ -108,7 +104,15 @@ class FavoritoController extends ActiveController
             ];
         }
 
-        // Check if the user is trying to favorite their own article
+
+        $favorito = new Favorito();
+        $favorito->idperfil = $idperfil;
+        $favorito->idartigo = $idartigo;
+
+
+        $this->checkAccess('create', $favorito);
+
+
         if ($artigo->idperfil == $idperfil) {
             Yii::$app->response->statusCode = 403;
             return [
@@ -117,7 +121,6 @@ class FavoritoController extends ActiveController
             ];
         }
 
-        // Check if the article is already in the user's favorites
         $existingFavorito = Favorito::find()
             ->where(['idperfil' => $idperfil, 'idartigo' => $idartigo])
             ->one();
@@ -130,13 +133,6 @@ class FavoritoController extends ActiveController
             ];
         }
 
-        // Create a new Favorito entry
-        $favorito = new Favorito();
-        $favorito->idperfil = $idperfil;
-        $favorito->idartigo = $idartigo;
-
-        // Use checkAccess to ensure the user is authorized to perform the action
-        $this->checkAccess('create', $favorito);
 
         if ($favorito->save()) {
             Yii::$app->response->statusCode = 201;
@@ -190,20 +186,20 @@ class FavoritoController extends ActiveController
     {
         $favoritos = Favorito::find()
             ->with([
-                'artigo',               // Carrega a relação com o artigo
-                'artigo.idcomissao0',   // Carrega a comissão associada ao artigo
-                'artigo.idestado0',     // Carrega o estado do artigo
-                'artigo.idmarca0',      // Carrega a marca do artigo
-                'artigo.idcategoria0',  // Carrega a categoria do artigo
-                'artigo.idtamanho0',    // Carrega o tamanho do artigo
-                'artigo.idperfil0',     // Carrega o perfil associado ao artigo
+                'artigo',
+                'artigo.idcomissao0',
+                'artigo.idestado0',
+                'artigo.idmarca0',
+                'artigo.idcategoria0',
+                'artigo.idtamanho0',
+                'artigo.idperfil0',
             ])
-            ->where(['idperfil' => $id]) // Filtra pelo ID do perfil
+            ->where(['idperfil' => $id])
             ->all();
 
         $this->checkAccess('view', $favoritos, ['id' => $id]);
 
-        // Verifica se encontrou algum favorito
+
         if (!$favoritos) {
             Yii::$app->response->statusCode = 404;
             return [
@@ -212,7 +208,7 @@ class FavoritoController extends ActiveController
             ];
         }
 
-        // Formata os favoritos com detalhes dos artigos
+
         $favoritosFormatted = [];
         foreach ($favoritos as $favorito) {
 

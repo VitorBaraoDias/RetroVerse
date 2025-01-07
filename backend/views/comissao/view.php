@@ -7,9 +7,6 @@ use yii\widgets\DetailView;
 /** @var \common\models\comissao $model */
 
 $this->title = $model->comissao;
-$this->params['breadcrumbs'][] = ['label' => 'Comissaos', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
-\yii\web\YiiAsset::register($this);
 ?>
 <div class="comissao-view">
 

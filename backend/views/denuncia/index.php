@@ -8,7 +8,6 @@ use yii\widgets\ListView;
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
 $this->title = 'Item Reports';
-$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="denuncia-index">
 
