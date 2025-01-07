@@ -34,9 +34,8 @@ class UserController extends Controller
                         ],
                     ],
                     'denyCallback' => function ($rule, $action) {
-                        throw new \Exception('Você não está autorizado a acessar esta página');
-                    }
-
+                        throw new \yii\web\ForbiddenHttpException('You do not have permission to access this page.');
+                    },
                 ],
                 'verbs' => [
                     'class' => VerbFilter::class,
@@ -199,17 +198,6 @@ class UserController extends Controller
         }
     }
 
-
-
-
-
-    /**
-     * Finds the User model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param int $id
-     * @return User the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
-     */
     protected function findModel($id)
     {
         if (($model = User::findOne(['id' => $id])) !== null) {
@@ -218,4 +206,6 @@ class UserController extends Controller
 
         throw new NotFoundHttpException('The requested page does not exist.');
     }
+
+
 }

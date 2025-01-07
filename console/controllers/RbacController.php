@@ -16,6 +16,56 @@ class RbacController extends Controller
         $auth = Yii::$app->authManager;
         $auth->removeAll();
 
+        //SIDEBAR BO
+        $verAbaStoreBackend = $auth->createPermission('verAbaStoreBackend');
+        $verAbaStoreBackend->description = 'Ver Aba Store Backend';
+        $auth->add($verAbaStoreBackend);
+
+        $verAbaGeneralBackend = $auth->createPermission('verAbaGeneralBackend');
+        $verAbaGeneralBackend->description = 'Ver Aba General Backend';
+        $auth->add($verAbaGeneralBackend);
+        //SIDEBAR BO
+
+
+        //SITE CONTROLLER BO
+        $verDashboardCompletaBackend = $auth->createPermission('verDashboardCompletaBackend');
+        $verDashboardCompletaBackend->description = 'Ver Dashboard Backend';
+        $auth->add($verDashboardCompletaBackend);
+
+        $getInformacoesVendasBackend = $auth->createPermission('getInformacoesVendasBackend');
+        $getInformacoesVendasBackend->description = 'Get Informacoes das Vendas Marketplace/Loja Backend';
+        $auth->add($getInformacoesVendasBackend);
+
+        $getInformacoesDenunciasBackend = $auth->createPermission('getInformacoesDenunciasBackend');
+        $getInformacoesDenunciasBackend->description = 'Get Informacoes das Denuncias Backend';
+        $auth->add($getInformacoesDenunciasBackend);
+        //SITE CONTROLLER BO
+
+        //ARTIGOS PREMIUM BO
+        $criarArtigoPremiumBackend = $auth->createPermission('criarArtigoPremiumBackend');
+        $criarArtigoPremiumBackend->description = 'Criar Artigo Premium Backend';
+        $auth->add($criarArtigoPremiumBackend);
+
+        $eliminarArtigoPremiumBackend = $auth->createPermission('eliminarArtigoPremiumBackend');
+        $eliminarArtigoPremiumBackend->description = 'Eliminar Artigo Premium Backend';
+        $auth->add($eliminarArtigoPremiumBackend);
+        //ARTIGOS PREMIUM BO
+
+
+        //LINHAVENDA BO
+        $verEncomendasLojaBackend = $auth->createPermission('verEncomendasLojaBackend');
+        $verEncomendasLojaBackend->description = 'Ver Encomendas Loja Backend';
+        $auth->add($verEncomendasLojaBackend);
+
+        $confirmarEnvioEncomendasLojaBackend = $auth->createPermission('confirmarEnvioEncomendasLojaBackend');
+        $confirmarEnvioEncomendasLojaBackend->description = 'Confirmar Envio Encomendas Loja Backend';
+        $auth->add($confirmarEnvioEncomendasLojaBackend);
+
+        $gerarReportEncomendasLojaBackend = $auth->createPermission('gerarReportEncomendasLojaBackend');
+        $gerarReportEncomendasLojaBackend->description = 'Gerar Report Encomendas Loja Backend';
+        $auth->add($gerarReportEncomendasLojaBackend);
+        //LINHAVENDA BO
+
 
         $criarArtigosLoja = $auth->createPermission('criarArtigosLoja');
         $criarArtigosLoja->description = 'Criar artigos loja';
@@ -65,25 +115,6 @@ class RbacController extends Controller
         $alterarInformacoesMembro = $auth->createPermission('alterarInformacoesMembro');
         $alterarInformacoesMembro->description = 'Alterar informacoes membro';
         $auth->add($alterarInformacoesMembro);
-
-
-        $alterarEstadoEncomendaLoja = $auth->createPermission('alterarEstadoEncomendaLoja');
-        $alterarEstadoEncomendaLoja->description = 'Alterar estado encomenda loja';
-        $auth->add($alterarEstadoEncomendaLoja);
-
-
-        $editarEstadoEncomendaLoja = $auth->createPermission('editarEstadoEncomendaLoja');
-        $editarEstadoEncomendaLoja->description = 'Editar estado encomenda loja';
-        $auth->add($editarEstadoEncomendaLoja);
-
-        $verEncomendasLoja = $auth->createPermission('verListaEncomendasLoja');
-        $verEncomendasLoja->description = 'Ver lista de encomendas da Loja';
-        $auth->add($verEncomendasLoja);
-
-
-        $verDetalhesEncomendaLoja = $auth->createPermission('verDetalhesEncomendaLoja');
-        $verDetalhesEncomendaLoja->description = 'Ver Detalhes Encomenda Loja';
-        $auth->add($verDetalhesEncomendaLoja);
 
 
         $criarPlanoPremium = $auth->createPermission('criarPlanoPremium');
@@ -146,31 +177,28 @@ class RbacController extends Controller
         $eliminarCondicao->description = 'Eliminar condicao';
         $auth->add($eliminarCondicao);
 
-        $verDenuncias = $auth->createPermission('verDenuncias');
-        $verDenuncias->description = 'Eliminar condicao';
-        $auth->add($verDenuncias);
-
         $verTodosFavoritos = $auth->createPermission('verTodosFavoritos');
         $verTodosFavoritos->description = 'Ver Todos os Favoritos';
         $auth->add($verTodosFavoritos);
 
 
-        //MODERATOR PERMISSIONS
-        // moderator permission #1
-        $desativarMembro = $auth->createPermission('desativarMembro');
-        $desativarMembro->description = 'Desativar membro';
-        $auth->add($desativarMembro);
+        //DENUNCIA CONTROLLER BO
+        $verDenunciaBackend = $auth->createPermission('verDenunciaBackend');
+        $verDenunciaBackend->description = 'Ver Denuncia Backend';
+        $auth->add($verDenunciaBackend);
 
-        // moderator permission #2
-        $promoverMembro = $auth->createPermission('promoverMembro');
-        $promoverMembro->description = 'Promover membro';
-        $auth->add($promoverMembro);
+        $verDetalhesDenunciaBackend = $auth->createPermission('verDetalhesDenunciaBackend');
+        $verDetalhesDenunciaBackend->description = 'Ver Detalhes Denuncia Backend';
+        $auth->add($verDetalhesDenunciaBackend);
 
-        // moderator permission #3
-        $desativarArtigoMembro = $auth->createPermission('desativarArtigoMembro');
-        $desativarArtigoMembro->description = 'Desativar artigo membro';
-        $auth->add($desativarArtigoMembro);
+        $banirMembroBackend = $auth->createPermission('banirMembroBackend');
+        $banirMembroBackend->description = 'Banir membro Backend';
+        $auth->add($banirMembroBackend);
 
+        $marcarDenunciaResolvidaBackend = $auth->createPermission('marcarDenunciaResolvidaBackend');
+        $marcarDenunciaResolvidaBackend->description = 'Marcar Denuncia Resolvida Backend';
+        $auth->add($marcarDenunciaResolvidaBackend);
+        //DENUNCIA CONTROLLER BO
 
 
         //MEMBER PERMISSIONS
@@ -350,14 +378,47 @@ class RbacController extends Controller
         $auth->addChild($membro, $verListaChats);
         $auth->addChild($membro, $verChat);
 
+
         //ASSOCIAR PERMISSÕES AO MODERADOR
         $auth->addChild($moderador, $membro);
-        $auth->addChild($moderador, $desativarMembro);
-        $auth->addChild($moderador, $promoverMembro);
-        $auth->addChild($moderador, $desativarArtigoMembro);
+
+        //SITE CONTROLLER BO
+        $auth->addChild($moderador, $getInformacoesDenunciasBackend);
+        //SITE CONTROLLER BO
+
+        //DENUNCIA CONTROLLER BO
+        $auth->addChild($moderador, $verDenunciaBackend);
+        $auth->addChild($moderador, $verDetalhesDenunciaBackend);
+        $auth->addChild($moderador, $banirMembroBackend);
+        $auth->addChild($moderador, $marcarDenunciaResolvidaBackend);
+        //DENUNCIA CONTROLLER BO
+
 
         //ASSOCIAR PERMISSÕES AO ADMIN
         $auth->addChild($admin, $moderador);
+
+        //SITE CONTROLLER BO
+        $auth->addChild($admin, $verDashboardCompletaBackend);
+        $auth->addChild($admin, $getInformacoesVendasBackend);
+        $auth->addChild($admin, $getInformacoesDenunciasBackend);
+        //SITE CONTROLLER BO
+
+        //ARTIGOS PREMIUM BO
+        $auth->addChild($admin, $criarArtigoPremiumBackend);
+        $auth->addChild($admin, $eliminarArtigoPremiumBackend);
+        //ARTIGOS PREMIUM BO
+
+        //LINHAVENDA BO
+        $auth->addChild($admin, $verEncomendasLojaBackend);
+        $auth->addChild($admin, $confirmarEnvioEncomendasLojaBackend);
+        $auth->addChild($admin, $gerarReportEncomendasLojaBackend);
+        //LINHAVENDA BO
+
+        //SIDEBAR BO
+        $auth->addChild($admin, $verAbaStoreBackend);
+        $auth->addChild($admin, $verAbaGeneralBackend);
+        //SIDEBAR BO
+
         $auth->addChild($admin, $criarArtigosLoja);
         $auth->addChild($admin, $alterarArtigosLoja);
         $auth->addChild($admin, $eliminarArtigosLoja);
@@ -367,8 +428,6 @@ class RbacController extends Controller
         $auth->addChild($admin, $alterarFaqLoja);
         $auth->addChild($admin, $eliminarFaqLoja);
         $auth->addChild($admin, $alterarInformacoesMembro);
-        $auth->addChild($admin, $alterarEstadoEncomendaLoja);
-        $auth->addChild($admin, $verDetalhesEncomendaLoja);
         $auth->addChild($admin, $criarPlanoPremium);
         $auth->addChild($admin, $desativarPlanoPremium);
         $auth->addChild($admin, $criarMarcas);

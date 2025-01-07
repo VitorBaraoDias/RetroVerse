@@ -6,6 +6,7 @@ $this->registerJsFile('https://cdn.jsdelivr.net/npm/chart.js', ['position' => \y
 <div class="container-fluid">
     <div class="row">
         <!-- ./col -->
+<?php if (Yii::$app->user->can('verDashboardCompletaBackend')) { ?>
         <div class="col-lg-3 col-6">
             <!-- small box -->
             <div class="small-box bg-success">
@@ -47,6 +48,7 @@ $this->registerJsFile('https://cdn.jsdelivr.net/npm/chart.js', ['position' => \y
                 <a href="<?= Yii::$app->urlManager->createUrl(['user/index']) ?>" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
             </div>
         </div>
+        <?php } ?>
         <!-- ./col -->
         <div class="col-lg-3 col-6">
             <!-- small box -->
@@ -62,6 +64,7 @@ $this->registerJsFile('https://cdn.jsdelivr.net/npm/chart.js', ['position' => \y
                 <a href="<?= Yii::$app->urlManager->createUrl(['denuncia/index']) ?>" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
             </div>
         </div>
+        <?php if (Yii::$app->user->can('verDashboardCompletaBackend')) { ?>
         <!-- Gráfico de Barras -->
         <div class="col-md-8">
             <div class="box">
@@ -182,6 +185,7 @@ $this->registerJsFile('https://cdn.jsdelivr.net/npm/chart.js', ['position' => \y
                 </div>
             </div>
         </div>
+        <?php } ?>
         <!-- ./col -->
     </div>
 </div>
