@@ -4,6 +4,7 @@ namespace backend\controllers;
 
 use backend\models\FaqsSearch;
 use common\models\Faqs;
+use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -27,6 +28,19 @@ class FaqsController extends Controller
                         'delete' => ['POST'],
                     ],
                 ],
+                'access' => [
+                    'class' => AccessControl::class,
+                    'rules' => [
+                        [
+                            'actions' => ['index', 'view', 'create', 'update', 'delete'],
+                            'allow' => true,
+                            'roles' => ['admin'],
+                        ],
+                    ],
+                    'denyCallback' => function ($rule, $action) {
+                        throw new \yii\web\ForbiddenHttpException('You do not have permission to access this resource.');
+                    }
+                ],
             ]
         );
     }
@@ -38,13 +52,19 @@ class FaqsController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new FaqsSearch();
+        if (\Yii::$app->user->can('verFaqsBackend')) {
+
+            $searchModel = new FaqsSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
+
+        } else {
+            throw new \yii\web\ForbiddenHttpException('You do not have permission to access this resource.');
+        }
     }
 
     /**
@@ -55,9 +75,15 @@ class FaqsController extends Controller
      */
     public function actionView($id)
     {
-        return $this->render('view', [
+        if (\Yii::$app->user->can('verDetalhesFaqsBackend')) {
+
+            return $this->render('view', [
             'model' => $this->findModel($id),
         ]);
+
+        } else {
+            throw new \yii\web\ForbiddenHttpException('You do not have permission to access this resource.');
+        }
     }
 
     /**
@@ -67,7 +93,9 @@ class FaqsController extends Controller
      */
     public function actionCreate()
     {
-        $model = new Faqs();
+        if (\Yii::$app->user->can('criarFaqsBackend')) {
+
+            $model = new Faqs();
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
@@ -80,6 +108,10 @@ class FaqsController extends Controller
         return $this->render('create', [
             'model' => $model,
         ]);
+
+        } else {
+            throw new \yii\web\ForbiddenHttpException('You do not have permission to access this resource.');
+        }
     }
 
     /**
@@ -91,7 +123,9 @@ class FaqsController extends Controller
      */
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
+        if (\Yii::$app->user->can('alterarFaqsBackend')) {
+
+            $model = $this->findModel($id);
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -100,6 +134,10 @@ class FaqsController extends Controller
         return $this->render('update', [
             'model' => $model,
         ]);
+
+        } else {
+            throw new \yii\web\ForbiddenHttpException('You do not have permission to access this resource.');
+        }
     }
 
     /**
@@ -111,9 +149,15 @@ class FaqsController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        if (\Yii::$app->user->can('eliminarFaqsBackend')) {
+
+            $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
+
+        } else {
+            throw new \yii\web\ForbiddenHttpException('You do not have permission to access this resource.');
+        }
     }
 
     /**

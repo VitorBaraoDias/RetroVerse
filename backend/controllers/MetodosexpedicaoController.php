@@ -22,25 +22,24 @@ class MetodosexpedicaoController extends Controller
         return array_merge(
             parent::behaviors(),
             [
-                'access' => [
-                    'class' => AccessControl::class,
-                    'rules' => [
-                        [
-                            'actions' => ['index','create','view','update','delete', 'demote','promote'],
-                            'allow' => true,
-                            'roles' => ['admin'],
-                        ],
-                    ],
-                    'denyCallback' => function ($rule, $action) {
-                        throw new \Exception('Você não está autorizado a acessar esta página');
-                    }
-
-                ],
                 'verbs' => [
                     'class' => VerbFilter::class,
                     'actions' => [
                         'logout' => ['post'],
                     ],
+                ],
+                'access' => [
+                    'class' => AccessControl::class,
+                    'rules' => [
+                        [
+                            'actions' => ['index', 'view', 'create', 'update', 'delete'],
+                            'allow' => true,
+                            'roles' => ['admin'],
+                        ],
+                    ],
+                    'denyCallback' => function ($rule, $action) {
+                        throw new \yii\web\ForbiddenHttpException('You do not have permission to access this resource.');
+                    }
                 ],
             ]
         );
@@ -54,13 +53,18 @@ class MetodosexpedicaoController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new SearchMetodosexpedicao();
-        $dataProvider = $searchModel->search($this->request->queryParams);
+        if (\Yii::$app->user->can('verMetodosExpedicaoBackend')) {
+            $searchModel = new SearchMetodosexpedicao();
+            $dataProvider = $searchModel->search($this->request->queryParams);
 
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
+            return $this->render('index', [
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
+            ]);
+
+        } else {
+            throw new \yii\web\ForbiddenHttpException('You do not have permission to access this resource.');
+        }
     }
 
     /**
@@ -71,9 +75,14 @@ class MetodosexpedicaoController extends Controller
      */
     public function actionView($id)
     {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
+        if (\Yii::$app->user->can('verDetalhesMetodosExpedicaoBackend')) {
+
+            return $this->render('view', [
+                'model' => $this->findModel($id),
+            ]);
+        } else {
+            throw new \yii\web\ForbiddenHttpException('You do not have permission to access this resource.');
+        }
     }
 
     /**
@@ -83,19 +92,23 @@ class MetodosexpedicaoController extends Controller
      */
     public function actionCreate()
     {
-        $model = new Metodosexpedicao();
+        if (\Yii::$app->user->can('criarMetodosExpedicaoBackend')) {
+            $model = new Metodosexpedicao();
 
-        if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
+            if ($this->request->isPost) {
+                if ($model->load($this->request->post()) && $model->save()) {
+                    return $this->redirect(['view', 'id' => $model->id]);
+                }
+            } else {
+                $model->loadDefaultValues();
             }
-        } else {
-            $model->loadDefaultValues();
-        }
 
-        return $this->render('create', [
-            'model' => $model,
-        ]);
+            return $this->render('create', [
+                'model' => $model,
+            ]);
+        } else {
+            throw new \yii\web\ForbiddenHttpException('You do not have permission to access this resource.');
+        }
     }
 
     /**
@@ -107,15 +120,20 @@ class MetodosexpedicaoController extends Controller
      */
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
+        if (\Yii::$app->user->can('alterarMetodosExpedicaoBackend')) {
 
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            $model = $this->findModel($id);
+
+            if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
+
+            return $this->render('update', [
+                'model' => $model,
+            ]);
+        } else {
+            throw new \yii\web\ForbiddenHttpException('You do not have permission to access this resource.');
         }
-
-        return $this->render('update', [
-            'model' => $model,
-        ]);
     }
 
     /**
@@ -127,9 +145,15 @@ class MetodosexpedicaoController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        if (\Yii::$app->user->can('eliminarMetodosExpedicaoBackend')) {
 
-        return $this->redirect(['index']);
+            $this->findModel($id)->delete();
+
+            return $this->redirect(['index']);
+
+        } else {
+            throw new \yii\web\ForbiddenHttpException('You do not have permission to access this resource.');
+        }
     }
 
     /**
@@ -141,6 +165,7 @@ class MetodosexpedicaoController extends Controller
      */
     protected function findModel($id)
     {
+
         if (($model = Metodosexpedicao::findOne(['id' => $id])) !== null) {
             return $model;
         }

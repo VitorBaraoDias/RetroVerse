@@ -54,7 +54,6 @@ class SiteController extends Controller
                     if (!Yii::$app->user->isGuest) {
                         return Yii::$app->response->redirect(['site/index']);
                     }
-                    // Exibe mensagem de erro padrão
                     throw new \yii\web\ForbiddenHttpException('Você não tem permissão para realizar esta ação.');
                 },
             ],

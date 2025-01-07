@@ -94,7 +94,7 @@ class Favorito extends \yii\db\ActiveRecord
 
     public function FazPublishNoMosquitto($canal,$msg)
     {
-        $server = "127.0.0.1";
+        $server = "172.22.21.221";
         $port = 1883;
         $username = $this->perfil->user->username;
         $password = "";

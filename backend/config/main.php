@@ -97,6 +97,7 @@ return [
                     'class' => 'yii\rest\UrlRule',
                     'controller' => 'api/carrinho',
                     'extraPatterns' => [
+                        'GET {id}' => 'user',
                         'POST' => 'createcarrinho'
                     ],
                 ],

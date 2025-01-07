@@ -4,6 +4,7 @@ namespace backend\controllers;
 
 use common\models\Estado;
 use yii\data\ActiveDataProvider;
+use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -27,6 +28,19 @@ class EstadoController extends Controller
                         'delete' => ['POST'],
                     ],
                 ],
+                'access' => [
+                    'class' => AccessControl::class,
+                    'rules' => [
+                        [
+                            'actions' => ['index', 'view', 'create', 'update', 'delete'],
+                            'allow' => true,
+                            'roles' => ['admin'],
+                        ],
+                    ],
+                    'denyCallback' => function ($rule, $action) {
+                        throw new \Exception('You are not allowed to access this page');
+                    }
+                ],
             ]
         );
     }
@@ -38,7 +52,9 @@ class EstadoController extends Controller
      */
     public function actionIndex()
     {
-        $dataProvider = new ActiveDataProvider([
+        if (\Yii::$app->user->can('verEstadosBackend')) {
+
+            $dataProvider = new ActiveDataProvider([
             'query' => Estado::find(),
             /*
             'pagination' => [
@@ -55,6 +71,9 @@ class EstadoController extends Controller
         return $this->render('index', [
             'dataProvider' => $dataProvider,
         ]);
+        } else {
+            throw new \yii\web\ForbiddenHttpException('You do not have permission to access this resource.');
+        }
     }
 
     /**
@@ -65,9 +84,15 @@ class EstadoController extends Controller
      */
     public function actionView($id)
     {
+        if (\Yii::$app->user->can('verDetalhesEstadosBackend')) {
+
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);
+
+        } else {
+            throw new \yii\web\ForbiddenHttpException('You do not have permission to access this resource.');
+        }
     }
 
     /**
@@ -77,7 +102,9 @@ class EstadoController extends Controller
      */
     public function actionCreate()
     {
-        $model = new Estado();
+        if (\Yii::$app->user->can('criarEstadosBackend')) {
+
+            $model = new Estado();
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
@@ -90,6 +117,9 @@ class EstadoController extends Controller
         return $this->render('create', [
             'model' => $model,
         ]);
+        } else {
+            throw new \yii\web\ForbiddenHttpException('You do not have permission to access this resource.');
+        }
     }
 
     /**
@@ -101,7 +131,9 @@ class EstadoController extends Controller
      */
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
+        if (\Yii::$app->user->can('alterarEstadosBackend')) {
+
+            $model = $this->findModel($id);
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -110,6 +142,10 @@ class EstadoController extends Controller
         return $this->render('update', [
             'model' => $model,
         ]);
+
+        } else {
+            throw new \yii\web\ForbiddenHttpException('You do not have permission to access this resource.');
+        }
     }
 
     /**
@@ -121,9 +157,15 @@ class EstadoController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        if (\Yii::$app->user->can('eliminarEstadosBackend')) {
+
+            $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
+
+        } else {
+            throw new \yii\web\ForbiddenHttpException('You do not have permission to access this resource.');
+        }
     }
 
     /**

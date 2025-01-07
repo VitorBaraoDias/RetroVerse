@@ -4,6 +4,8 @@ namespace backend\controllers;
 
 use backend\models\MarcaSearch;
 use common\models\Marca;
+use Yii;
+use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -22,14 +24,28 @@ class MarcaController extends Controller
             parent::behaviors(),
             [
                 'verbs' => [
-                    'class' => VerbFilter::className(),
+                    'class' => VerbFilter::class,
                     'actions' => [
                         'delete' => ['POST'],
                     ],
                 ],
+                'access' => [
+                    'class' => AccessControl::class,
+                    'rules' => [
+                        [
+                            'actions' => ['index', 'view', 'create', 'update', 'delete'],
+                            'allow' => true,
+                            'roles' => ['admin'],
+                        ],
+                    ],
+                    'denyCallback' => function ($rule, $action) {
+                        throw new \yii\web\ForbiddenHttpException('You do not have permission to access this resource.');
+                    }
+                ],
             ]
         );
     }
+
 
     /**
      * Lists all Marca models.
@@ -38,14 +54,19 @@ class MarcaController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new MarcaSearch();
-        $dataProvider = $searchModel->search($this->request->queryParams);
+        if (\Yii::$app->user->can('verMarcasBackend')) {
+            $searchModel = new MarcaSearch();
+            $dataProvider = $searchModel->search($this->request->queryParams);
 
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
+            return $this->render('index', [
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
+            ]);
+        } else {
+            throw new \yii\web\ForbiddenHttpException('You do not have permission to access this resource.');
+        }
     }
+
 
     /**
      * Displays a single Marca model.
@@ -55,9 +76,14 @@ class MarcaController extends Controller
      */
     public function actionView($id)
     {
-        return $this->render('view', [
+        if (\Yii::$app->user->can('verDetalhesMarcasBackend')) {
+
+            return $this->render('view', [
             'model' => $this->findModel($id),
         ]);
+        } else {
+            throw new \yii\web\ForbiddenHttpException('You do not have permission to access this resource.');
+        }
     }
 
     /**
@@ -67,7 +93,9 @@ class MarcaController extends Controller
      */
     public function actionCreate()
     {
-        $model = new Marca();
+        if (\Yii::$app->user->can('criarMarcasBackend')) {
+
+            $model = new Marca();
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
@@ -80,6 +108,10 @@ class MarcaController extends Controller
         return $this->render('create', [
             'model' => $model,
         ]);
+
+        } else {
+            throw new \yii\web\ForbiddenHttpException('You do not have permission to access this resource.');
+        }
     }
 
     /**
@@ -91,7 +123,9 @@ class MarcaController extends Controller
      */
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
+        if (\Yii::$app->user->can('alterarMarcasBackend')) {
+
+            $model = $this->findModel($id);
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -100,6 +134,10 @@ class MarcaController extends Controller
         return $this->render('update', [
             'model' => $model,
         ]);
+
+        } else {
+            throw new \yii\web\ForbiddenHttpException('You do not have permission to access this resource.');
+        }
     }
 
     /**
@@ -111,9 +149,14 @@ class MarcaController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        if (\Yii::$app->user->can('eliminarMarcaBackend')) {
+
+            $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
+        } else {
+            throw new \yii\web\ForbiddenHttpException('You do not have permission to access this resource.');
+        }
     }
 
     /**
