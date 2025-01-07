@@ -205,8 +205,8 @@ class Venda extends \yii\db\ActiveRecord
                 foreach ($this->linhavendas as $linha) {
                     $perfil = $linha->idvendedor0;
                     if ($perfil) {
-                        $perfil->saldo += $linha->idartigo0->precoanuncio;
-                        $perfil->saldopendente -= $linha->idartigo0->precoanuncio;
+                        $perfil->saldo += $linha->idartigo0->getPriceFromSoldAcceptedProposal($linha->idvenda0->idcomprador);
+                        $perfil->saldopendente -= $linha->idartigo0->getPriceFromSoldAcceptedProposal($linha->idvenda0->idcomprador);
                         $perfil->save(false);
                     }
                 }
@@ -218,7 +218,7 @@ class Venda extends \yii\db\ActiveRecord
         }
     }
 
-    public function getOrderSubtotal()
+    public function getOrderSubtotal($isPremium)
     {
         $userId = $this->idcomprador;
         $linhasVenda = $this->getLinhavendas()->all();
@@ -228,13 +228,15 @@ class Venda extends \yii\db\ActiveRecord
             $artigo = $linha->idartigo0;
 
             // Soma apenas o preço do anúncio, sem comissões
-            $subtotalVenda += $artigo->precoanuncio;
+           if($isPremium) {
+               $subtotalVenda += $artigo->getPriceWithProposalIfExist();
+           } else {
+               $subtotalVenda += $artigo->getPriceWithComissionFormated();
+            }
         }
 
         return $subtotalVenda;
     }
-
-
 
 
 }

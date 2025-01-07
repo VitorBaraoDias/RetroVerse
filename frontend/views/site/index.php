@@ -5,7 +5,7 @@ use yii\helpers\Url;
 use yii\widgets\ListView;
 use yii\data\ActiveDataProvider;
 ?>
-
+<script src="https://cdn.jsdelivr.net/npm/mqtt@4.2.7/dist/mqtt.min.js"></script>
 <!-- Banners Begin-->
 <section class="hero">
     <div class="hero__slider owl-carousel owl-loaded owl-drag">
@@ -118,5 +118,48 @@ use yii\data\ActiveDataProvider;
 <!-- Product Section Begin -->
     <!-- Product Section End -->
 
+<script>
+    // Obter o ID do utilizador a partir do backend
+    var userId = <?= json_encode(Yii::$app->user->id) ?>;
 
+    // Conectar ao broker MQTT
+    const client = new Paho.MQTT.Client('broker_url', Number(port), 'clientId');
+
+    // Definir callbacks
+    client.onConnectionLost = onConnectionLost;
+    client.onMessageArrived = onMessageArrived;
+
+    // Conectar
+    client.connect({ onSuccess: onConnect });
+
+    // Função chamada quando a conexão é bem-sucedida
+    function onConnect() {
+        console.log('Conectado ao broker MQTT');
+        // Inscrever-se no tópico desejado
+        client.subscribe('notificacoes/favoritos/${userId}');
+    }
+
+    // Função chamada quando a conexão é perdida
+    function onConnectionLost(responseObject) {
+        if (responseObject.errorCode !== 0) {
+            console.log('Conexão perdida: ' + responseObject.errorMessage);
+        }
+    }
+
+    // Função chamada quando uma mensagem chega
+    function onMessageArrived(message) {
+        console.log('Mensagem recebida: ' + message.payloadString);
+        // Exibir notificação ao usuário
+        exibirNotificacao(message.payloadString);
+    }
+
+    // Função para exibir notificação
+    function exibirNotificacao(mensagem) {
+        // Implementar lógica para exibir notificação no frontend
+        alert(mensagem); // Exemplo simples
+    }
+
+
+
+</script>
 </html>

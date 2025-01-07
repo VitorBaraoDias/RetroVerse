@@ -10,7 +10,7 @@ $this->registerJsFile('https://cdn.jsdelivr.net/npm/chart.js', ['position' => \y
             <!-- small box -->
             <div class="small-box bg-info">
                 <div class="inner">
-                    <h3></h3>
+                    <h3><?= $lojaSalesCount ?></h3>
 
                     <p>New Orders</p>
                 </div>

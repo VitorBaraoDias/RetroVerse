@@ -1,7 +1,9 @@
 <?php
+
 namespace backend\modules\api\components;
 use yii\filters\auth\AuthMethod;
 use Yii;
+
 class CustomAuth extends AuthMethod
 {
     public $auth; //para chamar função do controlador

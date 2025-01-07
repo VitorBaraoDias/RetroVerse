@@ -2,13 +2,19 @@
 
 use yii\helpers\Html;
 use yii\widgets\ListView;
+use common\models\Perfil;
 
 /* @var $this yii\web\View */
 /* @var $model \common\models\Venda */
 /* @var $dataProvider yii\data\ActiveDataProvider */
-
-
 $this->title = 'ORDER #' . $model->codigo;
+
+
+$userId = Yii::$app->user->id;
+$perfil = Perfil::findOne(['id' => $userId]);
+
+//verificar se ele tem premium
+$isPremium = $perfil ? $perfil->hasActivePremiumPlano() : false;
 ?>
 <div class="venda-view">
     <div class="mt-6 mx-5">
@@ -50,7 +56,7 @@ $this->title = 'ORDER #' . $model->codigo;
             <div class="col-12 col-md-8">
                 <div class="card p-3 mb-2">
                     <h3 class="card-title"><strong>TOTAL: <?= Yii::$app->formatter->asCurrency($model->total, 'EUR') ?></strong</h3>
-                    <p><strong>SUBTOTAL:</strong> 999€</p>
+                    <p><strong>SUBTOTAL:</strong> <td>€<?= Html::encode($model->getOrderSubtotal($isPremium) ?? 'Valor desconhecido') ?></td></p>
                     <p><strong>DISCOUNT:</strong> 0€ (0%)</p>
                     <p><strong>SHIPPING:</strong> 0€ (0%)</p>
                     <hr>

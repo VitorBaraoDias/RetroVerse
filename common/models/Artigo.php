@@ -226,25 +226,30 @@ class Artigo extends \yii\db\ActiveRecord
         return $this->hasMany(Linhavenda::class, ['idartigo' => 'id']);
     }
 
+    public function getMensagempropostas()
+    {
+        return $this->hasMany(Mensagemproposta::class, ['idartigo' => 'id']);
+    }
+
+    //calcula o preço com base na última proposta aceita pelo user (se existir) ou no preço original com comissão.
     public function getPriceWithCommissionOrProposal()
     {
-        $lastAcceptedProposal = $this->getLastAcceptedProposalByUser();
+        $lastAcceptedProposal = $this->getPriceWithMyLastAcceptedProposal();
         $commission = $this->idcomissao0 ? $this->idcomissao0->comissao : 0;
 
-        // Se existir uma proposta aceita, calcula o preço com base na proposta e a comissão
         if ($lastAcceptedProposal) {
             $proposalPriceWithCommission = $lastAcceptedProposal->preco * (1 + ($commission / 100));
             return round($proposalPriceWithCommission, 2);
         }
 
-        // Caso contrário, calcula o preço original com a comissão
         $originalPriceWithCommission = $this->precoanuncio * (1 + ($commission / 100));
         return round($originalPriceWithCommission, 2);
     }
+
+    //retorna o preço da última proposta aceita (se existir) ou o preço original
     public function getPriceWithProposalIfExist()
-    //obtem preco com ou sem proposta
     {
-        $lastAcceptedProposal = $this->getLastAcceptedProposalByUser();
+        $lastAcceptedProposal = $this->getPriceWithMyLastAcceptedProposal();
         if ($lastAcceptedProposal) {
             return round( $lastAcceptedProposal->preco, 2);
         }
@@ -252,36 +257,47 @@ class Artigo extends \yii\db\ActiveRecord
         return round($this->precoanuncio, 2);
     }
 
-    public function getPrecoComComissaoFormatado()
+    //formata o preço com a comissão
+    public function getPriceWithComissionFormated()
     {
-        // Chama o método de preço com comissão e formata para o padrão Euro
-        return '€ ' . number_format($this->getPriceWithCommissionOrProposal(), 2, ',', '.');
+        return number_format($this->getPriceWithCommissionOrProposal(), 2);
     }
 
-    //verifica se é vendedor
     public function isVendedor()
     {
         return $this->idperfil === Yii::$app->user->id;
     }
-    public function getMensagempropostas()
+
+    //retorna a última proposta aceita pelo user autenticado.
+    public function getPriceWithMyLastAcceptedProposal()
     {
-        return $this->hasMany(Mensagemproposta::class, ['idartigo' => 'id']);
-    }
-    public function getLastAcceptedProposalByUser()
-    {
-        // Check if the user is logged in
+
         if (Yii::$app->user->isGuest) {
             return null;
         }
 
-        // Get the logged-in user's ID
         $userId = Yii::$app->user->id;
 
         return $this->getMensagempropostas()
-            ->where(['iduser' => $userId, 'estado' => 2]) // status 2 = Accepted
-            ->orderBy(['id' => SORT_DESC]) // Sort by ID, newest first
-            ->one(); // Return the most recent proposal
+            ->where(['iduser' => $userId, 'estado' => 2])
+            ->orderBy(['id' => SORT_DESC])
+            ->one();
     }
 
-    //criar uma funcao que verifique que se o user logado possui alguma proposta = status 2 aceite deste artigo, tendo em conta que o vendedor pode aceitar varias propostas do mesmo user, ele fica com a ultima proposta aceite
+
+    //retorna o preço da última proposta aceita e vendida a um comprador específico
+    public function getPriceFromSoldAcceptedProposal($idcomprador)
+    {
+        $lastPriceFromSoldAcceptedProposal = $this->getMensagempropostas()
+            ->where(['iduser' => $idcomprador, 'estado' => 2])
+            ->orderBy(['id' => SORT_DESC])
+            ->one();
+
+        if ($lastPriceFromSoldAcceptedProposal) {
+            return round( $lastPriceFromSoldAcceptedProposal->preco, 2);
+        }
+
+        return round($this->precoanuncio, 2);
+    }
+
 }

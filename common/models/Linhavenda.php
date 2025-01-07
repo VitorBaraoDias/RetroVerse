@@ -158,4 +158,31 @@ class Linhavenda extends \yii\db\ActiveRecord
     }
 
 
+    public function afterSave($insert, $changedAttributes)
+    {
+        parent::afterSave($insert, $changedAttributes);
+
+        if ($insert) {
+            $myJSON = "Your item {$this->idartigo0->nome} from {$this->idartigo0->idmarca0->nome} was sold for {$this->idartigo0->getPriceWithProposalIfExist()}€ to @{$this->idvenda0->comprador->user->username}!";
+            $topic = "notificacoes/vendas/{$this->idvendedor}";
+            $this->FazPublishNoMosquitto($topic, $myJSON);
+        }
+    }
+
+    public function FazPublishNoMosquitto($canal,$msg)
+    {
+        $server = "127.0.0.1";
+        $port = 1883;
+        $username = Yii::$app->user->identity->username;
+        $password = "";
+        $client_id = Yii::$app->user->identity ? Yii::$app->user->identity->id : 'guest';
+        $mqtt = new \Bluerhinos\phpMQTT($server, $port, $client_id);
+        if ($mqtt->connect(true, NULL, $username, $password))
+        {
+            $mqtt->publish($canal, $msg, 0);
+            $mqtt->close();
+        }
+        else { file_put_contents("debug.output","Time out!"); }
+    }
+
 }

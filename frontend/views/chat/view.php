@@ -290,8 +290,8 @@ $dataProviderChata = new ActiveDataProvider([
                         );
                     addToCartButton.setAttribute("id", "retroverse-btn-active");
                         addToCartButton.textContent = "ADD";
-                        addToCartButton.href = `/RetroVerse/frontend/web/carrinho/create?id=${data.idArtigo}`;
-                        detailsDiv.appendChild(addToCartButton);
+                    addToCartButton.href = "<?= \yii\helpers\Url::to(['carrinho/create', 'id' => $chatAtual->idartigo]) ?>";
+                    detailsDiv.appendChild(addToCartButton);
                 }
             }
         }

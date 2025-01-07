@@ -100,7 +100,10 @@ class Conversa extends \yii\db\ActiveRecord
             $myObj = new \stdClass();
             $myObj->iduser = $this->iduser;
             $myObj->idchat = $this->idchat;
+
+
             // Verifica o tipo de mensagem e obtém os dados correspondentes
+
             if ($this->tipo === 'TEXTO' && $this->mensagem) {
                 $myObj->tipo = 'TEXTO';
                 $myObj->descricao = $this->mensagem->descricao;
@@ -127,7 +130,7 @@ class Conversa extends \yii\db\ActiveRecord
     {
         $server = "127.0.0.1";
         $port = 1883;
-        $username = Yii::$app->user->identity->username; // set your username
+        $username = Yii::$app->user->identity->username;
         $password = ""; // set your password
         $client_id = Yii::$app->user->identity ? Yii::$app->user->identity->id : 'guest';
         $mqtt = new \Bluerhinos\phpMQTT($server, $port, $client_id);

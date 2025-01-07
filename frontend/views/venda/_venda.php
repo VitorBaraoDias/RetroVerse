@@ -1,6 +1,7 @@
 <?php
 
 use common\models\Estadoencomenda;
+use common\models\Perfil;
 use yii\helpers\Html;
 
 /* @var $model \common\models\Linhavenda */
@@ -9,6 +10,12 @@ $precoBase = $model->idartigo0->precoanuncio;
 $porcentagemIVA = Yii::$app->params['iva'] ?? 20;
 $valorIVA = $precoBase * ($porcentagemIVA / 100);
 $precoComIVA = $precoBase + $valorIVA;
+
+$userId = Yii::$app->user->id;
+$perfil = Perfil::findOne(['id' => $userId]);
+
+//verificar se ele tem premium
+$isPremium = $perfil ? $perfil->hasActivePremiumPlano() : false;
 ?>
 
 <div class="position-relative d-flex align-items-center gap-4" style="padding-bottom: 20px;"> <!-- Adicionado padding-bottom para evitar sobreposição do botão -->
@@ -46,10 +53,19 @@ $precoComIVA = $precoBase + $valorIVA;
                 </div>
                 <div class="d-flex flex-column align-items-start">
                     <h2 style="font-size: 24px">
-                        <strong><?= Yii::$app->formatter->asCurrency($model->idartigo0->getPriceWithCommissionOrProposal(), 'EUR') ?></strong>
+                        <strong><?php
+
+                            echo $isPremium
+                                ? Yii::$app->formatter->asCurrency($model->idartigo0->getPriceWithProposalIfExist(), 'EUR')
+                                : $model->idartigo0->getPriceWithComissionFormated();
+                            ?></strong>
                     </h2>
                     <h3 style="font-size: 18px">
-                        <?= Yii::$app->formatter->asCurrency($model->idartigo0->getPriceWithProposalIfExist(), 'EUR') ?>
+                        <?php if ($model->idartigo0->tipoartigo === 'MARKETPLACE'): ?>
+                            <h2 style="font-size: 20px">
+                                <?= $model->idartigo0->getPriceWithProposalIfExist() . " EUR" ?>
+                            </h2>
+                        <?php endif; ?>
                     </h3>
                 </div>
             </div>

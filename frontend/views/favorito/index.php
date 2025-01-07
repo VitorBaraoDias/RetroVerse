@@ -2,6 +2,15 @@
 
 
 use yii\widgets\ListView;
+use common\models\Perfil;
+
+
+
+$userId = Yii::$app->user->id;
+$perfil = Perfil::findOne(['id' => $userId]);
+
+//verificar se ele tem premium
+$isPremium = $perfil ? $perfil->hasActivePremiumPlano() : false;
 
 
 /** @var yii\web\View $this */
@@ -29,6 +38,7 @@ $this->title = 'Favourites';
             ],
             'viewParams' => [
                 'favoritos' => $favoritos, // Passa a variável 'favoritos' para a view parcial
+                'isPremium' => $isPremium,
             ],
         ]) ?>
 

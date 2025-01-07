@@ -17,45 +17,112 @@ class RbacController extends Controller
         $auth->removeAll();
 
 
-        $criarArtigosLoja = $auth->createPermission('criarArtigosLoja');
-        $criarArtigosLoja->description = 'Criar artigos loja';
-        $auth->add($criarArtigosLoja);
+        ///ARTIGO CONTROLLER BO
+        $criarArtigosLojaBackEnd = $auth->createPermission('criarArtigosLojaBackend');
+        $criarArtigosLojaBackEnd->description = 'Criar artigos loja Backend';
+        $auth->add($criarArtigosLojaBackEnd);
 
+        $verDetalhesArtigosLojaBackEnd = $auth->createPermission('verDetalhesArtigosLojaBackend');
+        $verDetalhesArtigosLojaBackEnd->description = 'Ver detalhes artigos loja Backend';
+        $auth->add($verDetalhesArtigosLojaBackEnd);
 
-        $alterarArtigosLoja = $auth->createPermission('alterarArtigosLoja');
-        $alterarArtigosLoja->description = 'Alterar artigos loja';
-        $auth->add($alterarArtigosLoja);
+        $verArtigosLojaBackEnd = $auth->createPermission('verArtigosLojaBackend');
+        $verArtigosLojaBackEnd->description = 'Ver artigos loja Backend';
+        $auth->add($verArtigosLojaBackEnd);
 
+        $alterarArtigosLojaBackEnd = $auth->createPermission('alterarArtigosLojaBackend');
+        $alterarArtigosLojaBackEnd->description = 'Alterar artigos loja Backend';
+        $auth->add($alterarArtigosLojaBackEnd);
 
-        $eliminarArtigosLoja = $auth->createPermission('eliminarArtigosLoja');
-        $eliminarArtigosLoja->description = 'Eliminar artigos loja';
-        $auth->add($eliminarArtigosLoja);
+        $eliminarArtigosLojaBackEnd = $auth->createPermission('eliminarArtigosLojaBackend');
+        $eliminarArtigosLojaBackEnd->description = 'Eliminar artigos loja Backend';
+        $auth->add($eliminarArtigosLojaBackEnd);
+        ///ARTIGO CONTROLLER BO
 
+        //IvaController BO
+        $criarIvaLojaBackEnd = $auth->createPermission('criarIvaLojaBackend');
+        $criarIvaLojaBackEnd->description = 'Criar iva loja Backend';
+        $auth->add($criarIvaLojaBackEnd);
 
-        $criarBannerLoja = $auth->createPermission('criarBannerLoja');
+        $verDetalhesAIvaLojaBackEnd = $auth->createPermission('verDetalhesIvaLojaBackend');
+        $verDetalhesAIvaLojaBackEnd->description = 'Ver detalhes iva loja Backend';
+        $auth->add($verDetalhesAIvaLojaBackEnd);
+
+        $verIvaLojaBackEnd = $auth->createPermission('verIvaLojaBackend');
+        $verIvaLojaBackEnd->description = 'Ver iva loja Backend';
+        $auth->add($verIvaLojaBackEnd);
+
+        $alterarIvaLojaBackEnd = $auth->createPermission('alterarIvaLojaBackend');
+        $alterarIvaLojaBackEnd->description = 'Alterar Iva loja Backend';
+        $auth->add($alterarIvaLojaBackEnd);
+
+        $eliminarIvaLojaBackEnd = $auth->createPermission('eliminarIvaLojaBackend');
+        $eliminarIvaLojaBackEnd->description = 'Eliminar iva loja Backend';
+        $auth->add($eliminarIvaLojaBackEnd);
+        //IvaController BO
+
+        //ComissaoController BO
+        $criarComissaoLojaBackEnd = $auth->createPermission('criarComissaoLojaBackend');
+        $criarComissaoLojaBackEnd->description = 'Criar Comissao BackEnd';
+        $auth->add($criarComissaoLojaBackEnd);
+
+        $verDetalhesComissaoLojaBackEnd = $auth->createPermission('verDetalhesComissaoLojaBackend');
+        $verDetalhesComissaoLojaBackEnd->description = 'Ver detalhes Comissao  BackEnd';
+        $auth->add($verDetalhesComissaoLojaBackEnd);
+
+        $verComissaoLojaBackEnd = $auth->createPermission('verComissaoLojaBackend');
+        $verComissaoLojaBackEnd->description = 'Ver Comissao BackEnd';
+        $auth->add($verComissaoLojaBackEnd);
+
+        $alterarComissaoLojaBackEnd = $auth->createPermission('alterarComissaoLojaBackend');
+        $alterarComissaoLojaBackEnd->description = 'Alterar Comissao BackEnd';
+        $auth->add($alterarComissaoLojaBackEnd);
+
+        $eliminarComissaoLojaBackEnd = $auth->createPermission('eliminarComissaoLojaBackend');
+        $eliminarComissaoLojaBackEnd->description = 'Eliminar Comissao BackEnd';
+        $auth->add($eliminarComissaoLojaBackEnd);
+        //ComissaoCotrollar BO
+
+        //BannerCotrollar BO
+        $criarBannerLoja = $auth->createPermission('criarBannerLojaBackend');
         $criarBannerLoja->description = 'Criar banner loja';
         $auth->add($criarBannerLoja);
 
+        $verDetalhesBannerLojaBackEnd = $auth->createPermission('verDetalhesBannerLojaBackend');
+        $verDetalhesBannerLojaBackEnd->description = 'Ver detalhes Banner  BackEnd';
+        $auth->add($verDetalhesBannerLojaBackEnd);
 
-        $alterarBannerLoja = $auth->createPermission('alterarBannerLoja');
+        $verBannerLojaBackEnd = $auth->createPermission('verBannerLojaBackend');
+        $verBannerLojaBackEnd->description = 'Ver Banner BackEnd';
+        $auth->add($verBannerLojaBackEnd);
+
+        $alterarBannerLoja = $auth->createPermission('alterarBannerLojaBackend');
         $alterarBannerLoja->description = 'Alterar banner loja';
         $auth->add($alterarBannerLoja);
 
-
-        $eliminarBannerLoja = $auth->createPermission('eliminarBannerLoja');
+        $eliminarBannerLoja = $auth->createPermission('eliminarBannerLojaBackend');
         $eliminarBannerLoja->description = 'Eliminar banner loja';
         $auth->add($eliminarBannerLoja);
+        //BannerCotrollar BO
+
+        //FotoartigoCotrollar BO
+        $criarFotoArtigoLojaBackend = $auth->createPermission('criarfotoArtigoLojaBackend');
+        $criarFotoArtigoLojaBackend->description = 'Criar foto artigo loja backend';
+        $auth->add($criarFotoArtigoLojaBackend);
+
+        $eliminarFotoArtigoLojaBackend = $auth->createPermission('eliminarfotoArtigoLojaBackend');
+        $eliminarFotoArtigoLojaBackend->description = 'Eliminar foto artigo loja backend';
+        $auth->add($eliminarFotoArtigoLojaBackend);
+        //BannerCotrollar BO
 
 
         $criarFaqLoja = $auth->createPermission('criarFaqLoja');
         $criarFaqLoja->description = 'Criar FAQ loja';
         $auth->add($criarFaqLoja);
 
-
         $alterarFaqLoja = $auth->createPermission('alterarFaqLoja');
         $alterarFaqLoja->description = 'Alterar FAQ loja';
         $auth->add($alterarFaqLoja);
-
 
         $eliminarFaqLoja = $auth->createPermission('eliminarFaqLoja');
         $eliminarFaqLoja->description = 'Eliminar FAQ loja';
@@ -85,15 +152,28 @@ class RbacController extends Controller
         $verDetalhesEncomendaLoja->description = 'Ver Detalhes Encomenda Loja';
         $auth->add($verDetalhesEncomendaLoja);
 
+        //PlanoController BO
 
-        $criarPlanoPremium = $auth->createPermission('criarPlanoPremium');
-        $criarPlanoPremium->description = 'Criar Plano Premium';
-        $auth->add($criarPlanoPremium);
+        $verPlanosPremiumBackend = $auth->createPermission('verPlanosPremiumBackend');
+        $verPlanosPremiumBackend->description = 'Ver Planos Premium';
+        $auth->add($verPlanosPremiumBackend);
 
+        $verDetalhePlanoPremiumBackend = $auth->createPermission('verDetalhePlanoPremiumBackend');
+        $verDetalhePlanoPremiumBackend->description = 'Ver detalhe Plano Premium';
+        $auth->add($verDetalhePlanoPremiumBackend);
 
-        $desativarPlanoPremium = $auth->createPermission('desativarPlanoPremium');
-        $desativarPlanoPremium->description = 'Desativar Plano Premium';
-        $auth->add($desativarPlanoPremium);
+        $criarPlanoPremiumBackend = $auth->createPermission('criarPlanoPremiumBackend');
+        $criarPlanoPremiumBackend->description = 'Criar Plano Premium';
+        $auth->add($criarPlanoPremiumBackend);
+
+        $alterarPlanoPremiumBackend = $auth->createPermission('alterarPlanoPremiumBackend');
+        $alterarPlanoPremiumBackend->description = 'Alterar Plano Premium';
+        $auth->add($alterarPlanoPremiumBackend);
+
+        $eliminarPlanoPremiumBackend = $auth->createPermission('eliminarPlanoPremiumBackend');
+        $eliminarPlanoPremiumBackend->description = 'Eliminar Plano Premium';
+        $auth->add($eliminarPlanoPremiumBackend);
+        //PlanoController BO
 
 
         $criarMarcas = $auth->createPermission('criarMarcas');
@@ -110,29 +190,51 @@ class RbacController extends Controller
         $eliminarMarcas->description = 'Eliminar marcas';
         $auth->add($eliminarMarcas);
 
-        $criarCategorias = $auth->createPermission('criarCategorias');
-        $criarCategorias->description = 'Criar categorias';
-        $auth->add($criarCategorias);
+        //CategoriaArtigoController BO
 
-        $alterarCategorias = $auth->createPermission('alterarCategorias');
-        $alterarCategorias->description = 'Alterar categorias';
-        $auth->add($alterarCategorias);
+        $verCategoriasBackend = $auth->createPermission('verCategoriaBackend');
+        $verCategoriasBackend->description = 'Ver Categorias';
+        $auth->add($verCategoriasBackend);
 
-        $eliminarCategorias = $auth->createPermission('eliminarCategorias');
-        $eliminarCategorias->description = 'Eliminar categorias';
-        $auth->add($eliminarCategorias);
+        $verDetalhesCategoriasBackend = $auth->createPermission('verDetalhesCategoriaBackend');
+        $verDetalhesCategoriasBackend->description = 'Ver detalhes categoria';
+        $auth->add($verDetalhesCategoriasBackend);
 
-        $criarTamanhos = $auth->createPermission('criarTamanho');
-        $criarTamanhos->description = 'Criar tamanhos';
-        $auth->add($criarTamanhos);
+        $criarCategoriasBackend = $auth->createPermission('criarCategoriasBackend');
+        $criarCategoriasBackend->description = 'Criar categorias';
+        $auth->add($criarCategoriasBackend);
 
-        $alterarTamanhos = $auth->createPermission('alterarTamanhos');
-        $alterarTamanhos->description = 'Alterar tamanhos';
-        $auth->add($alterarTamanhos);
+        $alterarCategoriasBackend = $auth->createPermission('alterarCategoriasBackend');
+        $alterarCategoriasBackend->description = 'Alterar categorias';
+        $auth->add($alterarCategoriasBackend);
 
-        $eliminarTamanhos = $auth->createPermission('eliminarTamanhos');
-        $eliminarTamanhos->description = 'Eliminar tamanhos';
-        $auth->add($eliminarTamanhos);
+        $eliminarCategoriasBackend = $auth->createPermission('eliminarCategoriasBackend');
+        $eliminarCategoriasBackend->description = 'Eliminar categorias';
+        $auth->add($eliminarCategoriasBackend);
+        //CategoriaArtigoController BO
+
+
+        //TamanhoControllerBO
+        $verTamanhosBackend = $auth->createPermission('verTamanhoBackend');
+        $verTamanhosBackend->description = 'Ver tamanhos';
+        $auth->add($verTamanhosBackend);
+
+        $verDetalhesTamanhosBackend = $auth->createPermission('verDetalhesTamanhoBackend');
+        $verDetalhesTamanhosBackend->description = 'Ver detalhe tamanho';
+        $auth->add($verDetalhesTamanhosBackend);
+
+        $criarTamanhosBackend = $auth->createPermission('criarTamanhoBackend');
+        $criarTamanhosBackend->description = 'Criar tamanhos';
+        $auth->add($criarTamanhosBackend);
+
+        $alterarTamanhosBackend = $auth->createPermission('alterarTamanhosBackend');
+        $alterarTamanhosBackend->description = 'Alterar tamanhos';
+        $auth->add($alterarTamanhosBackend);
+
+        $eliminarTamanhosBackend = $auth->createPermission('eliminarTamanhosBackend');
+        $eliminarTamanhosBackend->description = 'Eliminar tamanhos';
+        $auth->add($eliminarTamanhosBackend);
+        //TamanhoControllerBO
 
         $criarCondicao = $auth->createPermission('criarCondicao');
         $criarCondicao->description = 'Criar condicao';
@@ -154,7 +256,6 @@ class RbacController extends Controller
         $verTodosFavoritos->description = 'Ver Todos os Favoritos';
         $auth->add($verTodosFavoritos);
 
-
         //MODERATOR PERMISSIONS
         // moderator permission #1
         $desativarMembro = $auth->createPermission('desativarMembro');
@@ -172,22 +273,31 @@ class RbacController extends Controller
         $auth->add($desativarArtigoMembro);
 
 
+        //ArtigoController FO
+        $verProdutosCollectionFrontend = $auth->createPermission('verProdutosCollectionFrontend');
+        $verProdutosCollectionFrontend->description = 'Ver coleção de produtos';
+        $auth->add($verProdutosCollectionFrontend);
 
-        //MEMBER PERMISSIONS
-        // member permission #1
-        $criarArtigoMarketplace = $auth->createPermission('criarArtigoMarketplace');
-        $criarArtigoMarketplace->description = 'Criar Artigo Marketplace';
-        $auth->add($criarArtigoMarketplace);
+        $verDetalheProdutoFrontend = $auth->createPermission('verDetalheProdutoFrontend');
+        $verDetalheProdutoFrontend->description = 'Ver detalhes do produto';
+        $auth->add($verDetalheProdutoFrontend);
+
+        $criarArtigoMarketplaceFrontend = $auth->createPermission('criarArtigoMarketplaceFrontend');
+        $criarArtigoMarketplaceFrontend->description = 'Criar Artigo Marketplace';
+        $auth->add($criarArtigoMarketplaceFrontend);
 
         // member permission #2
-        $alterarArtigoMarketplace = $auth->createPermission('alterarArtigoMarketplace');
-        $alterarArtigoMarketplace->description = 'Alterar Artigo Marketplace';
-        $auth->add($alterarArtigoMarketplace);
+        $alterarArtigoMarketplaceFrontend = $auth->createPermission('alterarArtigoMarketplaceFrontend');
+        $alterarArtigoMarketplaceFrontend->description = 'Alterar Artigo Marketplace';
+        $auth->add($alterarArtigoMarketplaceFrontend);
 
         // member permission #3
-        $eliminarArtigoMarketplace = $auth->createPermission('eliminarArtigoMarketplace');
-        $eliminarArtigoMarketplace->description = 'Eliminar Artigo Marketplace';
-        $auth->add($eliminarArtigoMarketplace);
+        $eliminarArtigoMarketplaceFrontend = $auth->createPermission('eliminarArtigoMarketplaceFrontend');
+        $eliminarArtigoMarketplaceFrontend->description = 'Eliminar Artigo Marketplace';
+        $auth->add($eliminarArtigoMarketplaceFrontend);
+
+        //ArtigoController FO
+
 
         // member permission #4
         $adicionarArtigoCarrinho = $auth->createPermission('adicionarArtigoCarrinho');
@@ -221,20 +331,6 @@ class RbacController extends Controller
 
 
         //VIEW PERMISSIONS
-        // member permission
-        $verProdutosLoja = $auth->createPermission('verProdutosLoja');
-        $verProdutosLoja->description = 'Ver Produtos Loja';
-        $auth->add($verProdutosLoja);
-
-        // member permission
-        $verProdutosLojaPremium = $auth->createPermission('verProdutosLojaPremium');
-        $verProdutosLojaPremium->description = 'Ver Produtos Loja Premium';
-        $auth->add($verProdutosLojaPremium);
-
-        // member permission
-        $verProdutosMarketplace = $auth->createPermission('verProdutosMarketplace');
-        $verProdutosMarketplace->description = 'Ver Produtos Marketplace';
-        $auth->add($verProdutosMarketplace);
 
         // member permission
         $verMeuPrefil = $auth->createPermission('verMeuPrefil');
@@ -245,16 +341,6 @@ class RbacController extends Controller
         $verPerfilMembro = $auth->createPermission('verPerfilMembro');
         $verPerfilMembro->description = 'Ver Perfil Membro';
         $auth->add($verPerfilMembro);
-
-        // member permission
-        $verDetalhesArtigoLoja = $auth->createPermission('verDetalhesArtigoLoja');
-        $verDetalhesArtigoLoja->description = 'Ver Detalhes Artigo Loja';
-        $auth->add($verDetalhesArtigoLoja);
-
-        // member permission
-        $verDetalhesArtigoMarketplace = $auth->createPermission('verDetalhesArtigoMarketplace');
-        $verDetalhesArtigoMarketplace->description = 'Ver Detalhes Artigo Marketplace';
-        $auth->add($verDetalhesArtigoMarketplace);
 
         // member permission
         $verArtigosCarrinho = $auth->createPermission('verArtigosCarrinho');
@@ -358,22 +444,76 @@ class RbacController extends Controller
 
         //ASSOCIAR PERMISSÕES AO ADMIN
         $auth->addChild($admin, $moderador);
-        $auth->addChild($admin, $criarArtigosLoja);
-        $auth->addChild($admin, $alterarArtigosLoja);
-        $auth->addChild($admin, $eliminarArtigosLoja);
+        //ArtigoController Bo
+        $auth->addChild($admin, $criarArtigosLojaBackEnd);
+        $auth->addChild($admin, $verArtigosLojaBackEnd);
+        $auth->addChild($admin, $verDetalhesArtigosLojaBackEnd);
+        $auth->addChild($admin, $alterarArtigosLojaBackEnd);
+        $auth->addChild($admin, $eliminarArtigosLojaBackEnd);
+        //ArtigoController BO
+
+        //BannerController BO
+
         $auth->addChild($admin, $criarBannerLoja);
+        $auth->addChild($admin, $verBannerLojaBackEnd);
+        $auth->addChild($admin, $verDetalhesBannerLojaBackEnd);
         $auth->addChild($admin, $alterarBannerLoja);
+        $auth->addChild($admin, $eliminarBannerLoja);
+        //BannerController BO
+
         $auth->addChild($admin, $criarFaqLoja);
         $auth->addChild($admin, $alterarFaqLoja);
         $auth->addChild($admin, $eliminarFaqLoja);
         $auth->addChild($admin, $alterarInformacoesMembro);
         $auth->addChild($admin, $alterarEstadoEncomendaLoja);
         $auth->addChild($admin, $verDetalhesEncomendaLoja);
-        $auth->addChild($admin, $criarPlanoPremium);
-        $auth->addChild($admin, $desativarPlanoPremium);
+        //PlanoController Bo
+        $auth->addChild($admin, $verPlanosPremiumBackend);
+        $auth->addChild($admin, $verDetalhePlanoPremiumBackend);
+        $auth->addChild($admin, $criarPlanoPremiumBackend);
+        $auth->addChild($admin, $alterarPlanoPremiumBackend);
+        $auth->addChild($admin, $eliminarPlanoPremiumBackend);
+        //PlanoController Bo
         $auth->addChild($admin, $criarMarcas);
         $auth->addChild($admin, $alterarMarcas);
         $auth->addChild($admin, $eliminarMarcas);
+        //TamanhoController BO
+        $auth->addChild($admin, $verTamanhosBackend);
+        $auth->addChild($admin, $verDetalhesTamanhosBackend);
+        $auth->addChild($admin, $criarTamanhosBackend);
+        $auth->addChild($admin, $alterarTamanhosBackend);
+        $auth->addChild($admin, $eliminarTamanhosBackend);
+        //TamanhoController BO
+
+        //CategoriaController BO
+        $auth->addChild($admin, $verCategoriasBackend);
+        $auth->addChild($admin, $verDetalhesCategoriasBackend);
+        $auth->addChild($admin, $criarCategoriasBackend);
+        $auth->addChild($admin, $alterarCategoriasBackend);
+        $auth->addChild($admin, $eliminarCategoriasBackend);
+        //CategoriaController BO
+
+        //ComissaoController BO
+        $auth->addChild($admin, $verComissaoLojaBackEnd);
+        $auth->addChild($admin, $verDetalhesComissaoLojaBackEnd);
+        $auth->addChild($admin, $criarComissaoLojaBackEnd);
+        $auth->addChild($admin, $alterarComissaoLojaBackEnd);
+        $auth->addChild($admin, $eliminarComissaoLojaBackEnd);
+        //CategoriaController BO
+
+        //IvaController BO
+        $auth->addChild($admin, $verIvaLojaBackEnd);
+        $auth->addChild($admin, $verDetalhesAIvaLojaBackEnd);
+        $auth->addChild($admin, $criarIvaLojaBackEnd);
+        $auth->addChild($admin, $alterarIvaLojaBackEnd);
+        $auth->addChild($admin, $eliminarIvaLojaBackEnd);
+        //IvaController BO
+
+        //FotoArtigoLojaController BO
+        $auth->addChild($admin, $criarFotoArtigoLojaBackend);
+        $auth->addChild($admin, $eliminarFotoArtigoLojaBackend);
+        //IvaController BO
+
         $auth->addChild($admin, $verTodosFavoritos);
 
 

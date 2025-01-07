@@ -58,14 +58,9 @@ use yii\widgets\ActiveForm;
             <div class="">
 
                 <?= $form->field($model, 'cidade')->textInput([
-                    'list' => 'city-list', // Associa o datalist para cidades
                     'id' => 'city-input',  // ID do campo de entrada da cidade
                     'placeholder' => 'Enter your city', // Placeholder para orientação
                 ]) ?>
-
-                <datalist id="city-list">
-                    <!-- Este será preenchido dinamicamente -->
-                </datalist>
         </div>
         </div>
         <div class="col-12">

@@ -66,14 +66,26 @@ $isFavorito = Favorito::isFavorito($userId, $artigoId);
         </p>
         <div class="d-flex align-items-center justify-content-between">
             <div class="d-flex flex-column">
-                <!-- Preço do artigo -->
-                <span style="font-weight: normal; font-size: small"><?= Html::encode($model->precoanuncio) ?>€</span>
-                <span style="font-weight: bolder; font-size: small">
-                                <?= Html::encode($model->precoanuncio) ?>€
-                                <span style="font-weight: bold">(inc.)
-                                    <img src="<?= Yii::getAlias('@web/images/check_icon.svg') ?>" height="10">
-                                </span>
-                            </span>
+                <?php if ($model->tipoartigo === 'LOJA'): ?>
+                    <!-- Apenas um span quando o tipo é LOJA -->
+                    <span style="font-weight: bold; font-size: small">
+                        <?= Html::encode($model->precoanuncio) ?>€
+                    </span>
+                <?php else: ?>
+                    <span style="font-weight: normal; font-size: small">
+                         <?= Html::encode($model->getPriceWithProposalIfExist()) ?>€
+                    </span>
+                    <span style="font-weight: bolder; font-size: small">
+                        <?php
+                        echo $isPremium
+                            ? Yii::$app->formatter->asCurrency($model->getPriceWithProposalIfExist(), 'EUR')
+                            : '€' . $model->getPriceWithComissionFormated();
+                        ?>
+                    <span style="font-weight: bold">(inc.)
+                    <img src="<?= Yii::getAlias('@web/images/check_icon.svg') ?>" height="10">
+            </span>
+        </span>
+                <?php endif; ?>
             </div>
 
             <?= Html::a(

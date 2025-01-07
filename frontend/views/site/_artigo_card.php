@@ -66,11 +66,9 @@ $isFavorito = Favorito::isFavorito($userId, $artigoId);
                 <div class="d-flex align-items-center justify-content-between">
                     <div class="d-flex flex-column">
                         <!-- Preço do artigo -->
-                        <span style="font-weight: normal; font-size: small"><?= Html::encode($model->precoanuncio) ?>€</span>
                         <span style="font-weight: bolder; font-size: small">
                                 <?= Html::encode($model->precoanuncio) ?>€
-                                <span style="font-weight: bold">(inc.)
-                                    <img src="<?= Yii::getAlias('@web/images/check_icon.svg') ?>" height="10">
+                                <span style="font-weight: bold">
                                 </span>
                             </span>
                     </div>

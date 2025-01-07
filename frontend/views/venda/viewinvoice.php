@@ -2,10 +2,17 @@
 
 use yii\helpers\Html;
 use yii\widgets\ListView;
+use common\models\Perfil;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Venda */
 /* @var $dataProvider yii\data\ActiveDataProvider */
+
+$userId = Yii::$app->user->id;
+$perfil = Perfil::findOne(['id' => $userId]);
+
+//verificar se ele tem premium
+$isPremium = $perfil ? $perfil->hasActivePremiumPlano() : false;
 ?>
 
 <!-- Content Wrapper. Contains page content -->
@@ -78,6 +85,9 @@ use yii\widgets\ListView;
                 <?= ListView::widget([
                     'dataProvider' => $dataProvider,  // Passa o dataProvider com as Linhasvendas
                     'itemView' => '_invoice_items',
+                    'viewParams' => [
+                        'isPremium' => $isPremium,
+                    ],
                     'layout' => '<div class="row mt-4 gap-4">{items}</div>{pager}',
                     'options' => ['class' => 'list-view '],
                     'pager' => [
@@ -96,7 +106,7 @@ use yii\widgets\ListView;
                             <table class="table">
                                 <tr>
                                     <th style="width:50%">Subtotal:</th>
-                                    <td>€<?= Html::encode($model->getOrderSubtotal() ?? 'Valor desconhecido') ?></td>
+                                    <td>€<?= Html::encode($model->getOrderSubtotal($isPremium) ?? 'Valor desconhecido') ?></td>
                                 </tr>
                                 <tr>
                                     <th>Total:</th>

@@ -120,6 +120,9 @@ use yii\widgets\ListView;
             <?= ListView::widget([
                 'dataProvider' => $dataProvider,
                 'itemView' => '_artigo_card',
+                'viewParams' => [
+                    'isPremium' => $isPremium,
+                ],
                 'layout' => '<div class="row">{items}</div>{pager}',
                 'options' => ['class' => 'list-view'],
                 'itemOptions' => ['class' => 'col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 card-product mt-4'],

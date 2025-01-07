@@ -1,6 +1,7 @@
 <?php
 
 namespace common\models;
+use Yii;
 
 /**
  * This is the model class for table "favoritos".
@@ -80,4 +81,30 @@ class Favorito extends \yii\db\ActiveRecord
             ->exists();
     }
 
+    public function afterSave($insert, $changedAttributes)
+    {
+        parent::afterSave($insert, $changedAttributes);
+
+        if ($insert) {
+                $myJSON = "Your item {$this->artigo->nome} from {$this->artigo->idmarca0->nome} was added to favorites of @{$this->perfil->user->username}";
+                $topic = "notificacoes/favoritos/{$this->artigo->idperfil}";
+                $this->FazPublishNoMosquitto($topic, $myJSON);
+        }
+    }
+
+    public function FazPublishNoMosquitto($canal,$msg)
+    {
+        $server = "127.0.0.1";
+        $port = 1883;
+        $username = Yii::$app->user->identity->username;
+        $password = "";
+        $client_id = Yii::$app->user->identity ? Yii::$app->user->identity->id : 'guest';
+        $mqtt = new \Bluerhinos\phpMQTT($server, $port, $client_id);
+        if ($mqtt->connect(true, NULL, $username, $password))
+        {
+            $mqtt->publish($canal, $msg, 0);
+            $mqtt->close();
+        }
+        else { file_put_contents("debug.output","Time out!"); }
+    }
 }

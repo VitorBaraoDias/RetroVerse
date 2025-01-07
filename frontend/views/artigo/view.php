@@ -59,7 +59,7 @@ $isFavorito = Favorito::isFavorito($userId, $artigoId);
             </div>
             <div class="d-flex">
                 <h2 style="font-size: 20px; font-weight: bolder">BRAND:</h2>
-                <p style="font-size: 20px;; margin: 0;"><?= $model->descricao ?></p>
+                <p style="font-size: 20px;; margin: 0;"><?= $model->idmarca0->nome ?></p>
             </div>
             <div class="d-flex">
                 <h2 style="font-size: 20px; font-weight: bolder">SIZE:</h2>

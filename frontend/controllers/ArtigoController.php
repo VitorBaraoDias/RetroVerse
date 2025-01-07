@@ -3,10 +3,12 @@
 namespace frontend\controllers;
 
 use backend\models\UploadMultipleForm;
+use yii\filters\AccessControl;
 use yii\web\UploadedFile;
 use common\models\Comissao;
 use Yii;
 use common\models\Artigospremium;
+use common\models\Perfil;
 use common\models\Artigo;
 use frontend\models\SearchArtigo;
 use yii\data\ActiveDataProvider;
@@ -20,23 +22,31 @@ use yii\web\NotFoundHttpException;
  */
 class ArtigoController extends Controller
 {
-
     /**
      * @inheritDoc
      */
     public function behaviors()
     {
-        return array_merge(
-            parent::behaviors(),
-            [
-                'verbs' => [
-                    'class' => VerbFilter::className(),
-                    'actions' => [
-                        'delete' => ['POST'],
+        return [
+            'access' => [
+                'class' => AccessControl::class,
+                'rules' => [
+                    [
+                        'actions' => ['index', 'view-marketplace', 'view'],
+                        'allow' => true,
+                        'roles' => ['?'],
+                    ],
+                    [
+                        'actions' => ['index', 'view-marketplace', 'view'],
+                        'allow' => true,
+                        'roles' => ['@'],
                     ],
                 ],
-            ]
-        );
+                'denyCallback' => function ($rule, $action) {
+                    throw new \yii\web\ForbiddenHttpException('You do not have permission to access this page.');
+                },
+            ],
+        ];
     }
 
     /**
@@ -51,7 +61,7 @@ class ArtigoController extends Controller
 
         // Obtém os parâmetros da requisição
         $queryParams = Yii::$app->request->queryParams;
-        $queryParams['SearchArtigo']['exclude_user_id'] = Yii::$app->user->id;
+        $queryParams['SearchArtigo']['exclude_user_id'] = Yii::$app->user->id ?? null   ;
 
         // Define os valores padrão caso não estejam nos parâmetros
         if (!isset($queryParams['SearchArtigo']['tipo'])) {
@@ -64,19 +74,20 @@ class ArtigoController extends Controller
         // Executa a pesquisa com os filtros
         $dataProvider = $searchModel->search($queryParams);
 
+        $userId = Yii::$app->user->id;
+        $perfil = Perfil::findOne(['id' => $userId]);
 
+        //verificar se o user tem premium
+        $isPremium = $perfil ? $perfil->hasActivePremiumPlano() : false;
 
 
         // Renderiza a view com os dados
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'isPremium' => $isPremium,
         ]);
     }
-
-
-
-
     /**
      * Displays a single Artigo model.
      * @param int $id ID
@@ -90,17 +101,17 @@ class ArtigoController extends Controller
         // DataProvider para artigos normais relacionados
         $relatedDataProviderNormal = new ActiveDataProvider([
             'query' => Artigo::find()
-                ->where(['ativo' => 1]) // Apenas artigos ativos
-                ->andWhere(['not in', 'id', $id]) // Excluir o próprio artigo
+                ->where(['ativo' => 1])
+                ->andWhere(['not in', 'id', $id])
                 ->andWhere(['not in', 'id', Artigospremium::find()->select('id')]) // Excluir artigos premium
                 ->andWhere([
                     'or',
-                    ['idcategoria' => $model->idcategoria], // Mesma categoria
-                    ['idmarca' => $model->idmarca],         // Mesma marca
-                    ['idtamanho' => $model->idtamanho]      // Mesmo tamanho
+                    ['idcategoria' => $model->idcategoria],
+                    ['idmarca' => $model->idmarca],
+                    ['idtamanho' => $model->idtamanho]
                 ])
                 ->limit(4), // Limitar a 4 artigos
-            'pagination' => false, // Sem paginação
+            'pagination' => false,
         ]);
 
         // DataProvider para artigos premium relacionados
@@ -140,7 +151,6 @@ class ArtigoController extends Controller
             'model' => $model,
         ]);
     }
-
     /**
      * Creates a new Artigo model.
      * If creation is successful, the browser will be redirected to the 'view' page.
@@ -151,24 +161,44 @@ class ArtigoController extends Controller
         $model = new Artigo();
         $uploadForm = new UploadMultipleForm();
 
-        if ($this->request->isPost) {
-            $model->idperfil = Yii::$app->user->id;
-            $model->tipoartigo = 'MARKETPLACE';
-            $model->ativo = 1;
-            $model->idcomissao = Comissao::getIdActiveComissao();
+        // Inicia uma transação
+        $transaction = Yii::$app->db->beginTransaction();
 
-            if ($model->load($this->request->post()) && $model->save()) {
-                // Configurar os diretórios de upload para artigos
-                $uploadForm->backendUploadDir = Yii::getAlias('@imageurl/img-artigos/');
-                $uploadForm->frontendUploadDir = Yii::getAlias('@frontend/web/uploads/img-artigos/');
-                $uploadForm->imageFiles = UploadedFile::getInstances($uploadForm, 'imageFiles');
+        try {
+            if ($this->request->isPost) {
+                $model->idperfil = Yii::$app->user->id;
+                $model->tipoartigo = 'MARKETPLACE';
+                $model->ativo = 1;
+                $model->idcomissao = Comissao::getIdActiveComissao();
 
-                if ($uploadForm->upload($model->id)) {
-                    return $this->redirect(['profile/index', 'id' => $model->idperfil]);
+
+                if ($model->load($this->request->post()) && $model->save()) {
+
+                    $uploadForm->backendUploadDir = Yii::getAlias('@imageurl/img-artigos/');
+                    $uploadForm->frontendUploadDir = Yii::getAlias('@frontend/web/uploads/img-artigos/');
+                    $uploadForm->imageFiles = UploadedFile::getInstances($uploadForm, 'imageFiles');
+
+
+                    if ($uploadForm->upload($model->id)) {
+
+                        $transaction->commit();
+                        return $this->redirect(['perfil/index', 'id' => $model->idperfil]);
+                    } else {
+
+                        Yii::$app->session->setFlash('error', 'O artigo foi salvo, mas as imagens não puderam ser carregadas.');
+
+                        $transaction->rollBack();
+                    }
                 } else {
-                    Yii::$app->session->setFlash('error', 'O artigo foi salvo, mas as imagens não puderam ser carregadas.');
+
+                    Yii::$app->session->setFlash('error', 'Falha ao salvar o artigo.');
+                    $transaction->rollBack();
                 }
             }
+        } catch (\Exception $e) {
+            Yii::error("Erro durante a criação do artigo: " . $e->getMessage(), __METHOD__);
+            $transaction->rollBack();
+            Yii::$app->session->setFlash('error', 'Ocorreu um erro inesperado. Por favor, tente novamente.');
         }
 
         return $this->render('create', [
@@ -177,14 +207,19 @@ class ArtigoController extends Controller
         ]);
     }
 
-    public function actionDisable($id){
+
+    public function actionDisable($id)
+    {
         $model = $this->findModel($id);
         $model->ativo = 0;
 
-        Yii::$app->session->setFlash('info', 'The article has been disabled');
+        if ($model->save()) {
+            Yii::$app->session->setFlash('info', 'The item has been disabled');
+        } else {
+            Yii::$app->session->setFlash('error', 'Failed to disable the item');
+        }
 
         return $this->redirect(['perfil/index', 'id' => $model->idperfil]);
-
     }
     /**
      * Updates an existing Artigo model.
@@ -198,42 +233,41 @@ class ArtigoController extends Controller
         $model = $this->findModel($id);
         $uploadForm = new UploadMultipleForm();
 
-        // Se for um POST request e o modelo for carregado e salvo corretamente
+
         if ($this->request->isPost && $model->load($this->request->post())) {
 
-            // Salvar o modelo (Artigo)
+
             if ($model->save()) {
-                // Configuração de diretórios de upload
+
                 $uploadForm->backendUploadDir = Yii::getAlias('@imageurl/img-artigos/');
                 $uploadForm->frontendUploadDir = Yii::getAlias('@frontend/web/uploads/img-artigos/');
 
-                // Obter as imagens enviadas
+
                 $uploadForm->imageFiles = UploadedFile::getInstances($uploadForm, 'imageFiles');
 
-                // Verificar se há imagens para fazer upload
+
                 if (!empty($uploadForm->imageFiles)) {
-                    // Salvar as imagens no servidor e associá-las ao artigo
+
                     if ($uploadForm->upload($model->id)) {
-                        // Se o upload for bem-sucedido, redireciona para a página de visualização
+
                         return $this->redirect(['view', 'id' => $model->id]);
                     } else {
-                        // Caso haja falha no upload
+
                         Yii::$app->session->setFlash('error', 'As imagens não puderam ser carregadas.');
                     }
                 } else {
-                    // Caso não haja arquivos para enviar
+
                     return $this->redirect(['view', 'id' => $model->id]);
                 }
             }
         }
 
-        // Caso o método GET ou POST falhe, renderize o formulário de atualização
+
         return $this->render('update', [
             'model' => $model,
             'uploadForm' => $uploadForm,
         ]);
     }
-
 
     /**
      * Deletes an existing Artigo model.

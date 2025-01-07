@@ -50,18 +50,12 @@ $statusColor = $model->idestadoencomenda0->isFinalState() ? 'green' : 'grey';
             STATUS: <span style="font-weight: bold; color: <?= $statusColor ?>"><?= Html::encode($model->idestadoencomenda0->descricao) ?></span>
         </p>
 
+        <p class="card-title text-black" style="font-weight: bold; color: black">
+            SALE PRICE: <span><?= Html::encode($model->idartigo0->getPriceFromSoldAcceptedProposal($model->idvenda0->idcomprador)) ?>€</span>
+        </p>
+
 
         <div class="d-flex align-items-center justify-content-between">
-            <div class="d-flex flex-column">
-                <!-- Preço do artigo -->
-                <span style="font-weight: normal; font-size: small"><?= Html::encode($model->idartigo0->precoanuncio) ?>€</span>
-                <span style="font-weight: bolder; font-size: small">
-                                <?= Html::encode($model->idartigo0->precoanuncio) ?>€
-                                <span style="font-weight: bold">(inc.)
-                                    <img src="<?= Yii::getAlias('@web/images/check_icon.svg') ?>" height="10">
-                                </span>
-                            </span>
-            </div>
 
             <?php if ($model->idestadoencomenda0->isFirstState()): ?>
                 <?= Html::a(

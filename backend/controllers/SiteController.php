@@ -38,6 +38,7 @@ class SiteController extends Controller
                 ],
                 'denyCallback' => function ($rule, $action) {
                     return Yii::$app->response->redirect(['site/login']);
+
                 }
 
             ],
@@ -94,11 +95,11 @@ class SiteController extends Controller
         $salesCount = Linhavenda::find()
             ->joinWith('idartigo0')
             ->where(['artigos.tipoartigo' => $type])
-            ->andWhere(['artigos.ativo' => 1])
             ->count();
 
         return $salesCount ?: 0;
     }
+
     /**
      * Login action.
      *
@@ -107,25 +108,36 @@ class SiteController extends Controller
     public function actionLogin()
     {
         if (!Yii::$app->user->isGuest) {
-            $user_roles = Yii::$app->authManager->getRolesByUser(Yii::$app->user->id);
-            if (!isset($user_roles['admin'])) {
-                Yii::$app->user->logout();
-
-                return $this->render('login');
-            }
             return $this->goHome();
-
         }
         $this->layout = 'blank';
         $model = new LoginForm();
-        if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->goBack();
+
+        if ($model->load(Yii::$app->request->post())) {
+            if ($model->validate()) {
+                $user = \common\models\User::findByUsername($model->username);
+                if ($user) {
+                    $user_roles = Yii::$app->authManager->getRolesByUser($user->id);
+                    if (!isset($user_roles['admin'])) {
+                        return $this->redirect(['site/login']);
+                    }
+                    if ($model->login()) {
+                        return $this->goBack();
+                    }
+                } else {
+                    Yii::$app->session->setFlash('error', 'Usuário não encontrado.');
+                }
+            }
         }
+        Yii::$app->session->setFlash('error', 'Você não tem permissão para acessar esta área.');
         $model->password = '';
+        // Renderiza a página de login
         return $this->render('login', [
             'model' => $model,
         ]);
     }
+
+
     /**
      * Logout action.
      *
@@ -135,5 +147,13 @@ class SiteController extends Controller
     {
         Yii::$app->user->logout();
         return $this->goHome();
+    }
+
+    public function actionError()
+    {
+        $exception = Yii::$app->errorHandler->exception;
+        if ($exception !== null) {
+            return $this->render('error', ['exception' => $exception]);
+        }
     }
 }

@@ -36,12 +36,6 @@ class CategoriaartigoController extends Controller
                     }
 
                 ],
-                'verbs' => [
-                    'class' => VerbFilter::class,
-                    'actions' => [
-                        'logout' => ['post'],
-                    ],
-                ],
             ]
         );
     }
@@ -53,13 +47,18 @@ class CategoriaartigoController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new SearchCategoriaartigo();
-        $dataProvider = $searchModel->search($this->request->queryParams);
+        if (\Yii::$app->user->can('verCategoriaBackend')) {
 
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
+            $searchModel = new SearchCategoriaartigo();
+            $dataProvider = $searchModel->search($this->request->queryParams);
+
+            return $this->render('index', [
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
+            ]);
+        }
+        return die('nao tem permissao amigo');
+
     }
 
     /**
@@ -70,9 +69,14 @@ class CategoriaartigoController extends Controller
      */
     public function actionView($id)
     {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
+        if (\Yii::$app->user->can('verDetalhesCategoriaBackend')) {
+
+            return $this->render('view', [
+                'model' => $this->findModel($id),
+            ]);
+        }
+        return die('nao tem permissao amigo');
+
     }
 
     /**
@@ -82,22 +86,26 @@ class CategoriaartigoController extends Controller
      */
     public function actionCreate()
     {
-        $model = new Categoriaartigo();
 
-        if ($this->request->isPost) {
+        if (\Yii::$app->user->can('criarCategoriasBackend')) {
 
-            $model->ativo = true;
+            $model = new Categoriaartigo();
+            if ($this->request->isPost) {
 
-            if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
+                $model->ativo = true;
+
+                if ($model->load($this->request->post()) && $model->save()) {
+                    return $this->redirect(['view', 'id' => $model->id]);
+                }
+            } else {
+                $model->loadDefaultValues();
             }
-        } else {
-            $model->loadDefaultValues();
+            return $this->render('create', [
+                'model' => $model,
+            ]);
         }
+        return die('nao tem permissao amigo');
 
-        return $this->render('create', [
-            'model' => $model,
-        ]);
     }
 
     /**
@@ -109,15 +117,20 @@ class CategoriaartigoController extends Controller
      */
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
+        if (\Yii::$app->user->can('alterarCategoriasBackend')) {
 
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            $model = $this->findModel($id);
+
+            if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
+
+            return $this->render('update', [
+                'model' => $model,
+            ]);
         }
+        return die('nao tem permissao amigo');
 
-        return $this->render('update', [
-            'model' => $model,
-        ]);
     }
 
     /**
@@ -129,9 +142,14 @@ class CategoriaartigoController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        if (\Yii::$app->user->can('eliminarCategoriasBackend')) {
 
-        return $this->redirect(['index']);
+            $this->findModel($id)->delete();
+
+            return $this->redirect(['index']);
+        }
+        return die('nao tem permissao amigo');
+
     }
 
     /**

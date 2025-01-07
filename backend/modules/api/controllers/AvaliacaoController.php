@@ -30,13 +30,12 @@ class AvaliacaoController extends ActiveController
     public function authCustom($token)
     {
 
-        $user_ = Yii::$app->user->identity->findIdentityByAccessToken($token);
+        $user_ = Yii::$app->user->findIdentityByAccessToken($token);
 
         if ($user_) {
             $this->user = $user_;
             return $user_;
         }
-
 
         throw new \yii\web\ForbiddenHttpException('No authentication');
     }
