@@ -7,6 +7,7 @@ use backend\models\UploadForm;
 use backend\models\UploadMultipleForm;
 use common\models\Artigo;
 use Yii;
+use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -21,18 +22,23 @@ class ArtigoController extends Controller
      */
     public function behaviors()
     {
-        return array_merge(
-            parent::behaviors(),
-            [
-                'verbs' => [
-                    'class' => VerbFilter::className(),
-                    'actions' => [
-                        'delete' => ['POST'],
+        return [
+            'access' => [
+                'class' => AccessControl::class,
+                'rules' => [
+                    [
+                        'actions' => ['index', 'view', 'create', 'update', 'delete', 'promotepremium'],
+                        'allow' => true,
+                        'roles' => ['admin'],
                     ],
                 ],
-            ]
-        );
+                'denyCallback' => function ($rule, $action) {
+            throw new \yii\web\ForbiddenHttpException('You do not have permission to access this page.');
+            },
+            ],
+        ];
     }
+
 
     /**
      * Lists all Artigo models.
@@ -41,30 +47,22 @@ class ArtigoController extends Controller
      */
     public function actionIndex()
     {
-        // Cria uma nova instância do SearchModel
-        $searchModel = new SearchArtigo();
-
-        // Define o filtro padrão para 'ativo' caso não esteja nos parâmetros
-        if (!isset(Yii::$app->request->queryParams['SearchArtigo']['ativo'])) {
-            $searchModel->ativo = 1;
+        if (\Yii::$app->user->can('verArtigosLojaBackend')) {
+            $searchModel = new SearchArtigo();
+            if (!isset(Yii::$app->request->queryParams['SearchArtigo']['ativo'])) {
+                $searchModel->ativo = 1;
+            }
+            $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+            $dataProvider->pagination = [
+                'pageSize' => 6,
+            ];
+            return $this->render('index', [
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
+            ]);
         }
-
-        // Gera o DataProvider com os parâmetros da requisição
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
-        // Configura o tamanho da página
-        $dataProvider->pagination = [
-            'pageSize' => 6,
-        ];
-
-        // Renderiza a view com os parâmetros necessários
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
+        return die('nao tem permissao amigo');
     }
-
-
     /**
      * Displays a single Artigo model.
      * @param int $id ID
@@ -74,12 +72,16 @@ class ArtigoController extends Controller
     public function actionView($id)
 
     {
-        $uploadForm = new UploadMultipleForm();
+        if (\Yii::$app->user->can('verDetalhesArtigosLojaBackend')) {
 
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-            'uploadForm' => $uploadForm,
-        ]);
+            $uploadForm = new UploadMultipleForm();
+            return $this->render('view', [
+                'model' => $this->findModel($id),
+                'uploadForm' => $uploadForm,
+            ]);
+        }
+        return die('nao tem permissao amigo');
+
     }
 
     /**
@@ -89,25 +91,28 @@ class ArtigoController extends Controller
      */
     public function actionCreate()
     {
-        $model = new Artigo();
+        if (\Yii::$app->user->can('criarArtigosLojaBackend')) {
 
-        if ($this->request->isPost) {
-            $model->idperfil = Yii::$app->user->id;
-            $model->tipoartigo = 'LOJA';
-            //buscar a comissao ativa
-            //validar as fotos
+            $model = new Artigo();
+            if ($this->request->isPost) {
+                $model->idperfil = Yii::$app->user->id;
+                $model->tipoartigo = 'LOJA';
+                //buscar a comissao ativa
+                //validar as fotos
 
-            if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['artigo/view', 'id' => $model->id]);
+                if ($model->load($this->request->post()) && $model->save()) {
+                    return $this->redirect(['artigo/view', 'id' => $model->id]);
+                }
+
+            } else {
+                $model->loadDefaultValues();
             }
 
-        } else {
-            $model->loadDefaultValues();
+            return $this->render('create', [
+                'model' => $model,
+            ]);
         }
 
-        return $this->render('create', [
-            'model' => $model,
-        ]);
     }
 
     /**
@@ -119,28 +124,35 @@ class ArtigoController extends Controller
      */
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
+        if (\Yii::$app->user->can('alterarArtigosLojaBackend')) {
 
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            $model = $this->findModel($id);
+
+            if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
+
+            return $this->render('update', [
+                'model' => $model,
+            ]);
         }
-
-        return $this->render('update', [
-            'model' => $model,
-        ]);
+        return die('nao tem permissao');
     }
 
     public function actionPromotepremium($id)
     {
-        $model = $this->findModel($id);
+        if (\Yii::$app->user->can('alterarArtigosLojaBackend')) {
 
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            $model = $this->findModel($id);
+
+            if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
+
+            return $this->render('promotepremium', [
+                'model' => $model,
+            ]);
         }
-
-        return $this->render('promotepremium', [
-            'model' => $model,
-        ]);
     }
 
     /**
@@ -151,14 +163,17 @@ class ArtigoController extends Controller
      * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionDelete($id)
-    {
-        $model = $this->findModel($id);
+    {   if (\Yii::$app->user->can('eliminarArtigosLojaBackend')) {
 
-        $model->ativo = 0;
-        $model->save();
+            $model = $this->findModel($id);
 
-        // Redirecionar para a página que fez a solicitação, ou para 'index' se não houver referrer
-        return $this->redirect(Yii::$app->request->referrer ?: ['index']);
+            $model->ativo = 0;
+            $model->save();
+
+            // Redirecionar para a página que fez a solicitação, ou para 'index' se não houver referrer
+            return $this->redirect(Yii::$app->request->referrer ?: ['index']);
+        }
+        return die('ola');
     }
 
 

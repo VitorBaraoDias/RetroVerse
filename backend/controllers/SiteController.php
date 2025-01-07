@@ -149,6 +149,7 @@ class SiteController extends Controller
         }
         $this->layout = 'blank';
         $model = new LoginForm();
+
         if ($model->load(Yii::$app->request->post())) {
             if ($model->validate()) {
                 $user = \common\models\User::findByUsername($model->username);
@@ -167,14 +168,12 @@ class SiteController extends Controller
         }
         Yii::$app->session->setFlash('error', 'Você não tem permissão para acessar esta área.');
         $model->password = '';
-        return $this->render('login', ['model' => $model,]);
+
+        return $this->render('login', [
+            'model' => $model,
+        ]);
     }
 
-    /**
-     * Logout action.
-     *
-     * @return Response
-     */
 
     public function actionLogout()
     {
@@ -182,4 +181,12 @@ class SiteController extends Controller
         return $this->goHome();
     }
 
+
+    public function actionError()
+    {
+        $exception = Yii::$app->errorHandler->exception;
+        if ($exception !== null) {
+            return $this->render('error', ['exception' => $exception]);
+        }
+    }
 }

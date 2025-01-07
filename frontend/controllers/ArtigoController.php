@@ -3,6 +3,7 @@
 namespace frontend\controllers;
 
 use backend\models\UploadMultipleForm;
+use yii\filters\AccessControl;
 use yii\web\UploadedFile;
 use common\models\Comissao;
 use Yii;
@@ -21,23 +22,31 @@ use yii\web\NotFoundHttpException;
  */
 class ArtigoController extends Controller
 {
-
     /**
      * @inheritDoc
      */
     public function behaviors()
     {
-        return array_merge(
-            parent::behaviors(),
-            [
-                'verbs' => [
-                    'class' => VerbFilter::className(),
-                    'actions' => [
-                        'delete' => ['POST'],
+        return [
+            'access' => [
+                'class' => AccessControl::class,
+                'rules' => [
+                    [
+                        'actions' => ['index', 'view-marketplace', 'view'],
+                        'allow' => true,
+                        'roles' => ['?'],
+                    ],
+                    [
+                        'actions' => ['index', 'view-marketplace', 'view'],
+                        'allow' => true,
+                        'roles' => ['@'],
                     ],
                 ],
-            ]
-        );
+                'denyCallback' => function ($rule, $action) {
+                    throw new \yii\web\ForbiddenHttpException('You do not have permission to access this page.');
+                },
+            ],
+        ];
     }
 
     /**
@@ -52,7 +61,7 @@ class ArtigoController extends Controller
 
         // Obtém os parâmetros da requisição
         $queryParams = Yii::$app->request->queryParams;
-        $queryParams['SearchArtigo']['exclude_user_id'] = Yii::$app->user->id;
+        $queryParams['SearchArtigo']['exclude_user_id'] = Yii::$app->user->id ?? null   ;
 
         // Define os valores padrão caso não estejam nos parâmetros
         if (!isset($queryParams['SearchArtigo']['tipo'])) {
@@ -79,10 +88,6 @@ class ArtigoController extends Controller
             'isPremium' => $isPremium,
         ]);
     }
-
-
-
-
     /**
      * Displays a single Artigo model.
      * @param int $id ID
@@ -169,7 +174,6 @@ class ArtigoController extends Controller
             'relatedDataProvider' => $relatedDataProvider,
         ]);
     }
-
     /**
      * Creates a new Artigo model.
      * If creation is successful, the browser will be redirected to the 'view' page.
@@ -291,7 +295,6 @@ class ArtigoController extends Controller
             'uploadForm' => $uploadForm,
         ]);
     }
-
 
     /**
      * Deletes an existing Artigo model.

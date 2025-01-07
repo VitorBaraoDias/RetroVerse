@@ -19,32 +19,22 @@ class IvaController extends Controller
      */
     public function behaviors()
     {
-        return array_merge(
-            parent::behaviors(),
-            [
-                'access' => [
-                    'class' => AccessControl::class,
-                    'rules' => [
-                        [
-                            'actions' => ['index','create','view','update','delete', 'demote','promote'],
-                            'allow' => true,
-                            'roles' => ['admin'],
-                        ],
-                    ],
-                    'denyCallback' => function ($rule, $action) {
-                        throw new \Exception('Você não está autorizado a acessar esta página');
-                    }
-
-                ],
-                'verbs' => [
-                    'class' => VerbFilter::class,
-                    'actions' => [
-                        'logout' => ['post'],
+        return [
+            'access' => [
+                'class' => AccessControl::class,
+                'rules' => [
+                    [
+                        'actions' => ['index', 'view', 'create', 'update', 'delete'],
+                        'allow' => true,
+                        'roles' => ['admin'],
                     ],
                 ],
-            ]
-        );
+                'denyCallback' => function ($rule, $action) {
+                    throw new \yii\web\ForbiddenHttpException('You do not have permission to access this page.');
+                },
 
+            ],
+        ];
     }
 
     /**
@@ -54,13 +44,17 @@ class IvaController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new SearchIva();
-        $dataProvider = $searchModel->search($this->request->queryParams);
+        if (\Yii::$app->user->can('verIvaLojaBackend')) {
 
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
+            $searchModel = new SearchIva();
+            $dataProvider = $searchModel->search($this->request->queryParams);
+
+            return $this->render('index', [
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
+            ]);
+        }
+        return die('ola');
     }
 
     /**
@@ -71,9 +65,13 @@ class IvaController extends Controller
      */
     public function actionView($id)
     {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
+        if (\Yii::$app->user->can('verDetalhesIvaLojaBackend')) {
+
+            return $this->render('view', [
+                'model' => $this->findModel($id),
+            ]);
+        }
+        return die('ola');
     }
 
     /**
@@ -83,19 +81,21 @@ class IvaController extends Controller
      */
     public function actionCreate()
     {
-        $model = new Iva();
-
-        if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->validate() && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
+        if (\Yii::$app->user->can('criarIvaLojaBackend')) {
+            $model = new Iva();
+            if ($this->request->isPost) {
+                if ($model->load($this->request->post()) && $model->validate() && $model->save()) {
+                    return $this->redirect(['view', 'id' => $model->id]);
+                }
+            } else {
+                $model->loadDefaultValues();
             }
-        } else {
-            $model->loadDefaultValues();
-        }
 
-        return $this->render('create', [
-            'model' => $model,
-        ]);
+            return $this->render('create', [
+                'model' => $model,
+            ]);
+        }
+        return die('ola');
     }
 
     /**
@@ -107,15 +107,20 @@ class IvaController extends Controller
      */
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
+        if (\Yii::$app->user->can('alterarIvaLojaBackend')) {
 
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+
+            $model = $this->findModel($id);
+
+            if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
+
+            return $this->render('update', [
+                'model' => $model,
+            ]);
         }
-
-        return $this->render('update', [
-            'model' => $model,
-        ]);
+        return die('ola');
     }
 
     /**
@@ -127,9 +132,12 @@ class IvaController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        if (\Yii::$app->user->can('eliminarIvaLojaBackend')) {
+            $this->findModel($id)->delete();
+            return $this->redirect(['index']);
 
-        return $this->redirect(['index']);
+        }
+        return die('ola');
     }
 
     /**
