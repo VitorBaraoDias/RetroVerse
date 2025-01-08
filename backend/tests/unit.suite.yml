@@ -1,8 +1,13 @@
+suite_namespace: backend\tests\unit
 actor: UnitTester
 modules:
   enabled:
+    - Yii2:
+        part: [orm, email, fixtures]
+    - Asserts
     - Db:
-        dsn: 'mysql:host=127.0.0.1;dbname=retroverse'
+        dsn: 'mysql:host=127.0.0.1;dbname=retroverse;unix_socket=/Applications/MAMP/tmp/mysql/mysql.sock'
         user: 'root'
         password: 'root'
-    - Asserts
+        cleanup: true
+

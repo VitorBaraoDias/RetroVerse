@@ -77,7 +77,7 @@ use yii\widgets\ListView;
                     </div>
 
                     <?= Html::a('VIEW', ['artigo/view', 'id' => $model->artigo->id], [
-                        'class' => 'retroverse-btn',
+                        'class' => 'retroverse-btn view-item-button',
                         'style' => 'font-size: x-small; gap: 10px',
                     ]) ?>
 

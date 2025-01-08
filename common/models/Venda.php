@@ -226,12 +226,15 @@ class Venda extends \yii\db\ActiveRecord
 
         foreach ($linhasVenda as $linha) {
             $artigo = $linha->idartigo0;
-
-            // Soma apenas o preço do anúncio, sem comissões
-           if($isPremium) {
-               $subtotalVenda += $artigo->getPriceWithProposalIfExist();
-           } else {
-               $subtotalVenda += $artigo->getPriceWithComissionFormated();
+            if ($artigo->tipoartigo === 'MARKETPLACE' && $artigo->idcomissao0) {
+                if ($isPremium) {
+                    $subtotalVenda += $artigo->getPriceWithProposalIfExist();
+                } else {
+                    $subtotalVenda += $artigo->getPriceWithComissionFormated();
+                }
+            } else {
+                // Sem comissão, apenas soma o preço normal
+                $subtotalVenda += $artigo->precoanuncio;
             }
         }
 

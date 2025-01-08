@@ -29,7 +29,7 @@ $favoritosCount = Favorito::getFavoritosCount(Yii::$app->user->id);
                             </li>
                             <li>
                                 <a href="<?= Yii::$app->urlManager->createUrl(['artigo/index']) ?>"
-
+                                   id="collection-link"
                                    class="<?= (Yii::$app->controller->id === 'collection' && Yii::$app->controller->action->id === 'index') ? 'active' : '' ?>">
                                     COLLECTION
                                 </a>
@@ -70,13 +70,13 @@ $favoritosCount = Favorito::getFavoritosCount(Yii::$app->user->id);
                                 <a href="<?= Yii::$app->urlManager->createUrl(['chat/index']) ?> " style="position: relative">
                                     <img src="<?= Yii::getAlias('@web') ?>/img/vector-chat.svg" alt="">
                                 </a>
-                                <a href="<?= Yii::$app->urlManager->createUrl(['favorito/index']) ?> " style="position: relative">
+                                <a  class="user-favorites-items" href="<?= Yii::$app->urlManager->createUrl(['favorito/index']) ?> " style="position: relative">
                                     <img src="<?= Yii::getAlias('@web') ?>/img/favourites.svg" alt="">
                                     <div id="info-cart">
                                         <?= $favoritosCount ? $favoritosCount : 0 ?>
                                     </div>
                                 </a>
-                                <a href="<?= Yii::$app->urlManager->createUrl(['carrinho/index']) ?>" style="position: relative">
+                                <a class="user-cart-items" href="<?= Yii::$app->urlManager->createUrl(['carrinho/index']) ?>" style="position: relative">
                                     <img src="<?= Yii::getAlias('@web') ?>/img/cart.svg" alt="">
                                     <div id="info-cart">
                                         <?= $carrinho ? $carrinho->getLinhascarrinhos()->count() : 0 ?>

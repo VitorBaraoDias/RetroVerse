@@ -15,13 +15,13 @@ $isFavorito = Favorito::isFavorito($userId, $artigoId);
 
         <div class="rounded-circle container-like d-flex justify-content-center align-items-center">
             <?php if ($isFavorito): ?>
-                <a href="<?= \yii\helpers\Url::to(['favorito/delete', 'id' => $artigoId]) ?>">
+                <a class="favorite-button" href="<?= \yii\helpers\Url::to(['favorito/delete', 'id' => $artigoId]) ?>">
                     <img class="icon-like"
                          src="<?= Yii::getAlias('@web/img/vector_liked.svg') ?>"
                          alt="Remover dos Favoritos">
                 </a>
             <?php else: ?>
-                <a href="<?= \yii\helpers\Url::to(['favorito/create', 'id' => $artigoId]) ?>">
+                <a class="favorite-button" href="<?= \yii\helpers\Url::to(['favorito/create', 'id' => $artigoId]) ?>">
                     <img class="icon-like"
                          src="<?= Yii::getAlias('@web/img/vector_like.svg') ?>"
                          alt="Adicionar aos Favoritos">
@@ -86,7 +86,7 @@ $isFavorito = Favorito::isFavorito($userId, $artigoId);
                     'id' => $model->id
                 ],
                 [
-                    'class' => 'retroverse-btn',
+                    'class' => 'retroverse-btn view-item-button',
                     'style' => 'font-size: x-small; gap: 10px',
                 ]
             ) ?>

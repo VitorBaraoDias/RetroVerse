@@ -1,15 +1,13 @@
 suite_namespace: common\tests\unit
 actor: UnitTester
-bootstrap: false
 modules:
     enabled:
         - Yii2:
             part: [orm, email, fixtures]
         - Asserts
         - Db:
-            dsn: 'mysql:host=localhost;dbname=retroverse'
-            user: 'root'
-            password: 'root'
-            cleanup: true
-    #    - \Helper\Unit
+              dsn: 'mysql:host=127.0.0.1;dbname=retroverse;unix_socket=/Applications/MAMP/tmp/mysql/mysql.sock'
+              user: 'root'
+              password: 'root'
+              cleanup: true
 

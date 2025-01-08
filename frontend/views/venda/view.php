@@ -53,7 +53,9 @@ $isPremium = $perfil ? $perfil->hasActivePremiumPlano() : false;
             <div class="col-12 col-md-8">
                 <div class="card p-3 mb-2">
                     <h3 class="card-title"><strong>TOTAL: <?= Yii::$app->formatter->asCurrency($model->total, 'EUR') ?></strong</h3>
-                    <p><strong>SUBTOTAL:</strong> <td>€<?= Html::encode($model->getOrderSubtotal($isPremium) ?? 'Valor desconhecido') ?></td></p>
+                    <p><strong>SUBTOTAL:</strong> <td>€
+                            <?= Html::encode($model->getOrderSubtotal($isPremium) ?? 'Valor desconhecido') ?>
+                        </td></p>
                     <p><strong>DISCOUNT:</strong> 0€ (0%)</p>
                     <p><strong>SHIPPING:</strong> 0€ (0%)</p>
                     <hr>

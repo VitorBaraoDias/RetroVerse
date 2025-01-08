@@ -26,7 +26,7 @@ use yii\widgets\ListView;
         <div>
             <p class="mb-4 text-center" style="font-size:12px; font-weight: bold">Total price and other fees calculated at checkout</p>
             <?= Html::a('CHECKOUT', ['venda/create'], [
-                'class' => 'retroverse-btn active',
+                'class' => 'retroverse-btn active button-checkout',
                 'id' => 'retroverse-btn-active',
                 'style' => 'font-size: x-small; padding: 21px 95px;',
             ]) ?>

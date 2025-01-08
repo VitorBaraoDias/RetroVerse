@@ -79,20 +79,20 @@ $isFavorito = Favorito::isFavorito($userId, $artigoId);
                     ]);
                 } else {
                     echo Html::a('ADD TO CART', ['carrinho/create', 'id' => $model->id], [
-                        'class' => 'retroverse-btn active',
+                        'class' => 'retroverse-btn active add-to-cart-button',
                         'id' => 'retroverse-btn-active',
                         'style' => 'font-size: x-small; gap: 10px',
                     ]);
                 }
                 ?>
                 <?php if ($isFavorito): ?>
-                    <a href="<?= \yii\helpers\Url::to(['favorito/delete', 'id' => $artigoId]) ?>">
+                    <a class="favourite-button" href="<?= \yii\helpers\Url::to(['favorito/delete', 'id' => $artigoId]) ?>">
                         <img height="40"
                              src="<?= Yii::getAlias('@web/img/vector_liked.svg') ?>"
                              alt="Remove from favorites">
                     </a>
                 <?php else: ?>
-                    <a href="<?= \yii\helpers\Url::to(['favorito/create', 'id' => $artigoId]) ?>">
+                    <a class="favourite-button" href="<?= \yii\helpers\Url::to(['favorito/create', 'id' => $artigoId]) ?>">
                         <img height="40"
                              src="<?= Yii::getAlias('@web/img/vector_like.svg') ?>"
                              alt="Add to favorites">

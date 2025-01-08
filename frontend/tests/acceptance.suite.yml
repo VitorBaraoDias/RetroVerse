@@ -1,0 +1,17 @@
+actor: AcceptanceTester
+modules:
+  enabled:
+    - Db:
+        dsn: 'mysql:host=127.0.0.1;dbname=retroverse'
+        user: 'root'
+        password: 'root'
+        cleanup: true
+    - WebDriver:
+        url: http://localhost/retroverse-new/RetroVerse/frontend/web/site/
+        browser: firefox
+        window_size: maximize
+    - Yii2:
+        part: [orm, fixtures]
+        cleanup: true
+        entryScript: index-test.php
+
