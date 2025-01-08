@@ -16,7 +16,7 @@
     <p>
         Retroverse is an online store and marketplace platform for buying and selling vintage clothing and accessories.
         We act as a store and also provide a space where sellers can list their products and buyers can purchase them.
-        ll products offered inside the Marketplace are owned and managed by individual sellers, with Retroverse acting only as
+        All products offered as Marketplace products are owned and managed by individual sellers, with Retroverse acting only as
         an intermediary facilitating transactions between buyers and sellers.
     </p>
 
@@ -32,7 +32,7 @@
         All items are sold "as-is." As vintage items, they may show signs of wear or use.
         Sellers are responsible for providing accurate descriptions and images to reflect the condition of the items.
         Buyers are responsible for reviewing all product information before completing a purchase. If you have questions about an item, contact the seller directly.
-        Returns and exchanges are not accepted, except in cases of undisclosed defects or significant discrepancies in item descriptions.
+        Returns and exchanges are not accepted.
     </p>
 
 

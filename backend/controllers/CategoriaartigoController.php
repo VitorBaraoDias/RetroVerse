@@ -32,7 +32,7 @@ class CategoriaartigoController extends Controller
                         ],
                     ],
                     'denyCallback' => function ($rule, $action) {
-                        throw new \Exception('Você não está autorizado a acessar esta página');
+                        throw new \Exception('You do not have permission to access this resource.');
                     }
 
                 ],
@@ -56,8 +56,9 @@ class CategoriaartigoController extends Controller
                 'searchModel' => $searchModel,
                 'dataProvider' => $dataProvider,
             ]);
+        } else {
+            throw new \yii\web\ForbiddenHttpException('You do not have permission to access this resource.');
         }
-        return die('nao tem permissao amigo');
 
     }
 
@@ -74,8 +75,9 @@ class CategoriaartigoController extends Controller
             return $this->render('view', [
                 'model' => $this->findModel($id),
             ]);
+        } else {
+            throw new \yii\web\ForbiddenHttpException('You do not have permission to access this resource.');
         }
-        return die('nao tem permissao amigo');
 
     }
 
@@ -103,8 +105,9 @@ class CategoriaartigoController extends Controller
             return $this->render('create', [
                 'model' => $model,
             ]);
+        } else {
+            throw new \yii\web\ForbiddenHttpException('You do not have permission to access this resource.');
         }
-        return die('nao tem permissao amigo');
 
     }
 
@@ -128,8 +131,9 @@ class CategoriaartigoController extends Controller
             return $this->render('update', [
                 'model' => $model,
             ]);
+        } else {
+            throw new \yii\web\ForbiddenHttpException('You do not have permission to access this resource.');
         }
-        return die('nao tem permissao amigo');
 
     }
 
@@ -147,8 +151,9 @@ class CategoriaartigoController extends Controller
             $this->findModel($id)->delete();
 
             return $this->redirect(['index']);
+        } else {
+            throw new \yii\web\ForbiddenHttpException('You do not have permission to access this resource.');
         }
-        return die('nao tem permissao amigo');
 
     }
 

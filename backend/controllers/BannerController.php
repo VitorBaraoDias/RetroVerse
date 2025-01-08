@@ -56,9 +56,9 @@ class BannerController extends Controller
                 'searchModel' => $searchModel,
                 'dataProvider' => $dataProvider,
             ]);
-        }
-        return die('ola');
-    }
+        } else {
+            throw new \yii\web\ForbiddenHttpException('You do not have permission to access this resource.');
+        }    }
 
     /**
      * Displays a single Banner model.
@@ -109,8 +109,9 @@ class BannerController extends Controller
                 'model' => $model,
                 'uploadModel' => $uploadModel,
             ]);
+        } else {
+            throw new \yii\web\ForbiddenHttpException('You do not have permission to access this resource.');
         }
-        return die('ola');
     }
 
     /**
@@ -159,8 +160,9 @@ class BannerController extends Controller
                 'model' => $model,
                 'uploadModel' => $uploadModel,
             ]);
+        } else {
+            throw new \yii\web\ForbiddenHttpException('You do not have permission to access this resource.');
         }
-        return die('ola');
     }
 
 
@@ -178,7 +180,9 @@ class BannerController extends Controller
             $this->findModel($id)->delete();
             return $this->redirect(['index']);
         }
-        die('ola');
+        else {
+            throw new \yii\web\ForbiddenHttpException('You do not have permission to access this resource.');
+        }
     }
 
     /**

@@ -53,8 +53,9 @@ class IvaController extends Controller
                 'searchModel' => $searchModel,
                 'dataProvider' => $dataProvider,
             ]);
+        } else {
+            throw new \yii\web\ForbiddenHttpException('You do not have permission to access this resource.');
         }
-        return die('ola');
     }
 
     /**
@@ -70,8 +71,9 @@ class IvaController extends Controller
             return $this->render('view', [
                 'model' => $this->findModel($id),
             ]);
+        } else {
+            throw new \yii\web\ForbiddenHttpException('You do not have permission to access this resource.');
         }
-        return die('ola');
     }
 
     /**
@@ -94,8 +96,9 @@ class IvaController extends Controller
             return $this->render('create', [
                 'model' => $model,
             ]);
+        } else {
+            throw new \yii\web\ForbiddenHttpException('You do not have permission to access this resource.');
         }
-        return die('ola');
     }
 
     /**
@@ -119,8 +122,9 @@ class IvaController extends Controller
             return $this->render('update', [
                 'model' => $model,
             ]);
+        } else {
+            throw new \yii\web\ForbiddenHttpException('You do not have permission to access this resource.');
         }
-        return die('ola');
     }
 
     /**
@@ -136,8 +140,9 @@ class IvaController extends Controller
             $this->findModel($id)->delete();
             return $this->redirect(['index']);
 
+        } else {
+            throw new \yii\web\ForbiddenHttpException('You do not have permission to access this resource.');
         }
-        return die('ola');
     }
 
     /**

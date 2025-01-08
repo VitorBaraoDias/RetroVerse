@@ -45,7 +45,8 @@ class ArtigospremiumController extends Controller
                         'delete' => ['POST'],
                     ],
                 ],
-            ]
+                    ]
+                ]
         );
     }
 
@@ -62,14 +63,14 @@ class ArtigospremiumController extends Controller
         $artigo = Artigo::findOne($id);
         if (!$artigo) {
 
-            Yii::$app->session->setFlash('error', 'Artigo não encontrado.');
+            Yii::$app->session->setFlash('error', 'Item not found.');
             return $this->redirect(['artigo/index']);
         }
 
 
         $planoAtivo = Plano::find()->where(['ativo' => 1])->one();
         if (!$planoAtivo) {
-            Yii::$app->session->setFlash('error', 'Nenhum plano ativo encontrado para associação.');
+            Yii::$app->session->setFlash('error', 'No plan found.');
             return $this->redirect(['artigo/index']);
         }
 
@@ -79,9 +80,9 @@ class ArtigospremiumController extends Controller
         $model->idPlano = $planoAtivo->id;
 
         if ($model->save()) {
-            Yii::$app->session->setFlash('success', 'Plano associado ao artigo com sucesso.');
+            Yii::$app->session->setFlash('success', 'Plan added with success.');
         } else {
-            Yii::$app->session->setFlash('error', 'Erro ao associar o plano ao artigo.');
+            Yii::$app->session->setFlash('error', 'Error. Could not complete this process.');
         }
 
         return $this->redirect(['artigo/index']);

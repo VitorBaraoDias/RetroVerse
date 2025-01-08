@@ -6,6 +6,7 @@ use common\models\Artigo;
 use common\models\Denuncia;
 use Yii;
 use yii\data\ActiveDataProvider;
+use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -28,6 +29,19 @@ class DenunciaController extends Controller
                     'actions' => [
                         'delete' => ['POST'],
                     ],
+                ],
+                'access' => [
+                    'class' => AccessControl::class,
+                    'rules' => [
+                        [
+                            'actions' => ['create'],
+                            'allow' => true,
+                            'roles' => ['@'],
+                        ],
+                    ],
+                    'denyCallback' => function ($rule, $action) {
+                        return Yii::$app->response->redirect(['site/login']);
+                    },
                 ],
             ]
         );
@@ -81,7 +95,7 @@ class DenunciaController extends Controller
     {
         $model = new Denuncia();
         $artigo = Artigo::findOne($id);
-        $userId = Yii::$app->user->id; // ID do usuário logado
+        $userId = Yii::$app->user->id;
 
         $jaDenunciado = Denuncia::find()
             ->where(['iddenunciante' => $userId, 'idartigo' => $artigo->id])
@@ -93,7 +107,7 @@ class DenunciaController extends Controller
         }
 
         if ($this->request->isPost) {
-            $model->iddenunciante = $userId; // ID do usuário logado
+            $model->iddenunciante = $userId;
             $model->iddenunciado = $artigo->idperfil;
             $model->idartigo = $artigo->id;
             if ($model->load($this->request->post()) && $model->save()) {

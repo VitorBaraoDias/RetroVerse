@@ -402,6 +402,26 @@ class RbacController extends Controller
         $auth->add($eliminarArtigoMarketplaceFrontend);
         //ArtigoController FO
 
+        //ClientesplanoController FO
+        $criarClientesPlanosFrontend = $auth->createPermission('criarClientesPlanosFrontend');
+        $criarClientesPlanosFrontend->description = 'Criar associação planos a clientes';
+        $auth->add($criarClientesPlanosFrontend);
+
+        $eliminarClientesPlanosFrontend = $auth->createPermission('eliminarClientesPlanosFrontend');
+        $eliminarClientesPlanosFrontend->description = 'Eliminar associação planos a clientes';
+        $auth->add($eliminarClientesPlanosFrontend);
+        //ClientesplanoController FO End
+
+        //Perfis FO
+        $verPerfisFrontend = $auth->createPermission('verPerfisFrontend');
+        $verPerfisFrontend->description = 'Ver Perfis Frontend';
+        $auth->add($verPerfisFrontend);
+
+        $alterarPerfilFrontend = $auth->createPermission('alterarPerfilFrontend');
+        $alterarPerfilFrontend->description = 'Editar Perfil Frontend';
+        $auth->add($alterarPerfilFrontend);
+        //Perfis FO
+
 
 
         // member permission #4
@@ -517,12 +537,10 @@ class RbacController extends Controller
         $auth->addChild($membro, $verDetalhesVenda);
         $auth->addChild($membro, $verDetalhesCompra);
         $auth->addChild($membro, $verArtigosFavoritos);
-        $auth->addChild($membro, $verPlanosPremium);
         $auth->addChild($membro, $verFaq);
         $auth->addChild($membro, $verCheckout);
         $auth->addChild($membro, $verListaChats);
         $auth->addChild($membro, $verChat);
-
 
         //ASSOCIAR PERMISSÕES AO MODERADOR
         $auth->addChild($moderador, $membro);
@@ -660,6 +678,18 @@ class RbacController extends Controller
         $auth->addChild($admin, $eliminarFotoArtigoLojaBackend);
         //FotoArtigoLojaController BO
 
+        //ClientesPlanos FO
+        $auth->addChild($membro, $criarClientesPlanosFrontend);
+        $auth->addChild($membro, $eliminarClientesPlanosFrontend);
+        //ClientesPlanos FO
+
+
+        //Perfis FO
+        $auth->addChild($membro, $alterarPerfilFrontend);
+        //Perfis FO
+
+
+
 
         $auth->addChild($admin, $verTodosFavoritos);
 
@@ -667,5 +697,7 @@ class RbacController extends Controller
         // ASSOCIAR AS ROLES A UTILIZADORES (ID)
         $auth->assign($admin, 1);
         $auth->assign($moderador, 2);
+        $auth->assign($membro, 32);
+
     }
 }

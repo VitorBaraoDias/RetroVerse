@@ -37,7 +37,7 @@ class ArtigoController extends Controller
                         'roles' => ['?'],
                     ],
                     [
-                        'actions' => ['index', 'view-marketplace', 'view'],
+                        'actions' => ['index', 'view-marketplace', 'view', 'create'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],

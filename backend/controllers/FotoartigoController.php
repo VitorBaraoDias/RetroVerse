@@ -74,8 +74,9 @@ class FotoartigoController extends Controller
             return $this->render('create', [
                 'model' => $model,
             ]);
+        } else {
+            throw new \yii\web\ForbiddenHttpException('You do not have permission to access this resource.');
         }
-        return die('ola');
     }
 
 
@@ -108,8 +109,9 @@ class FotoartigoController extends Controller
                 $transaction->rollBack();
                 return $this->redirect(['artigo/view', 'id' => $model->idartigo]);
             }
+        } else {
+            throw new \yii\web\ForbiddenHttpException('You do not have permission to access this resource.');
         }
-        return die('ola');
     }
 
     /**
