@@ -35,6 +35,8 @@ class Plano extends \yii\db\ActiveRecord
         return [
             [['precomensal', 'idiva', 'descricao'], 'required'],
             [['precomensal'], 'number'],
+            [['precomensal'], 'compare', 'compareValue' => 0, 'operator' => '>=', 'message' => 'O preço mensal não pode ser negativo'],
+
             [['idiva'], 'integer'],
             [['descricao'], 'string', 'max' => 100],
             [['ativo'], 'boolean'],

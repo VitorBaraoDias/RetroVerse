@@ -46,7 +46,7 @@ class Venda extends \yii\db\ActiveRecord
         return [
             [['idcomprador', 'idmetodoexpedicao', 'idtipopagamento', 'total', 'idestadoencomenda', 'nome', 'codigopostal', 'morada', 'pais', 'cidade'], 'required'],
             [['idcomprador', 'idmetodoexpedicao', 'idtipopagamento', 'idestadoencomenda'], 'integer'],
-            [['total'], 'number'],
+            [['total'], 'number', 'min' => 0, 'message' => 'O total deve ser maior ou igual a zero.'], // Regra adicionada
             [['datavenda'], 'safe'],
             [['nome'], 'string', 'max' => 150],
             [['codigopostal'], 'string', 'max' => 10],
