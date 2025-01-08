@@ -6,7 +6,7 @@ use Yii;
 
 class CustomAuth extends AuthMethod
 {
-    public $auth; //para chamar função do controlador
+    public $auth;
     public function authenticate($user, $request, $response)
     {
         $strToken = Yii::$app->request->getQueryParam('access-token');

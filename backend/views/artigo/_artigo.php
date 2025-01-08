@@ -7,7 +7,6 @@ use yii\helpers\Html;
     <div class="card-body">
         <div class="d-flex align-items-center flex-column">
             <?php
-            // Exibir a primeira foto do artigo, se disponível
             $firstPhoto = $model->fotosartigos[0] ?? null;
             if ($firstPhoto && file_exists('../../common/uploads/img-artigos/' . $firstPhoto->caminhofoto)) {
                 echo Html::img(('../../../common/uploads/img-artigos/'). $firstPhoto->caminhofoto, [
@@ -16,7 +15,6 @@ use yii\helpers\Html;
                     'style' => 'width: 370px; height: 270px; object-fit: cover;',
                 ]);
             } else {
-                // Se não houver imagem, exibir uma div cinza
                 echo Html::tag('div', '', [
                     'class' => 'img-thumbnail',
                     'style' => 'width: 370px; height: 270px; background-color: grey; display: flex; align-items: center; justify-content: center;',
@@ -56,8 +54,6 @@ use yii\helpers\Html;
             'class' => 'btn btn-warning btn-sm w-100 mt-2',
         ]) ?>
 
-
-        <!-- verificar se artigo ja é premium e se pertence ao marketplace -->
         <?php if ($model->artigospremium === null && $model->tipoartigo !== 'MARKETPLACE'): ?>
             <?= Html::a('Promove to Premium Item', ['artigospremium/create', 'id' => $model->id], [
                 'class' => 'btn btn-success btn-sm w-100 mt-2',

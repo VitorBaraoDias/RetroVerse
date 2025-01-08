@@ -2,8 +2,6 @@
 
 use yii\helpers\Html;
 
-/** @var yii\web\View $this */
-/** @var \common\models\Linhavenda $model */
 
 $this->title = 'Create Linhavenda';
 

@@ -3,8 +3,6 @@
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 
-/** @var yii\web\View $this */
-/** @var \common\models\Plano $model */
 
 $this->title = $model->descricao;
 
@@ -34,12 +32,12 @@ $this->title = $model->descricao;
                 'value' => function ($model) {
                     return $model->iva ? $model->iva->percentagem . '%' : null;
                 },
-                'label' => 'IVA (%)', // Rótulo personalizado para a coluna
+                'label' => 'IVA (%)',
             ],
             'descricao',
             [
                 'attribute' => 'ativo',
-                'format' => 'raw', // Exibir HTML se necessário
+                'format' => 'raw',
                 'value' => function($model) {
                     return $model->ativo
                         ? Html::tag('span', 'Active', ['class' => 'badge bg-success'])

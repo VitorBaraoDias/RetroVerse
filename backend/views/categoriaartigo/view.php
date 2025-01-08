@@ -3,8 +3,6 @@
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 
-/** @var yii\web\View $this */
-/** @var \common\models\Categoriaartigo $model */
 
 $this->title = $model->nome;
 ?>
@@ -33,19 +31,19 @@ $this->title = $model->nome;
             [
                 'attribute' => 'ativo',
                 'label' => 'Active Status',
-                'format' => 'raw', // Exibir HTML se necessário
+                'format' => 'raw',
                 'value' => function($model) {
                     return $model->ativo
                         ? Html::tag('span', 'Active', ['class' => 'badge bg-success'])
                         : Html::tag('span', 'Inactive', ['class' => 'badge bg-danger']);
                 },
                 'filter' => [
-                    1 => 'Active',         // Opção para Ativo
-                    0 => 'Inactive',       // Opção para Inativo
+                    1 => 'Active',
+                    0 => 'Inactive',
                 ],
                 'filterInputOptions' => [
-                    'class' => 'form-control', // Estilo do dropdown
-                    'prompt' => 'Select Status' // Texto do prompt no dropdown
+                    'class' => 'form-control',
+                    'prompt' => 'Select Status'
                 ]
             ],
         ],

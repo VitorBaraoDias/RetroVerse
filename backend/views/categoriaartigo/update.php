@@ -2,8 +2,6 @@
 
 use yii\helpers\Html;
 
-/** @var yii\web\View $this */
-/** @var \common\models\Categoriaartigo $model */
 
 $this->title = 'Update Category: ' . $model->nome;
 ?>

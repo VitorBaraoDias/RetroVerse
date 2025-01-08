@@ -2,9 +2,6 @@
 
 use yii\helpers\Html;
 
-/** @var yii\web\View $this */
-/** @var \common\models\Estado $model */
-
 $this->title = 'Create Condition';
 ?>
 <div class="estado-create">

@@ -2,8 +2,6 @@
 
 use yii\helpers\Html;
 
-/** @var yii\web\View $this */
-/** @var \common\models\Estadoencomenda $model */
 
 $this->title = 'Update Estadoencomenda: ' . $model->id;
 

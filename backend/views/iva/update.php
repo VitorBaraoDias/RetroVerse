@@ -2,8 +2,6 @@
 
 use yii\helpers\Html;
 
-/** @var yii\web\View $this */
-/** @var \common\models\Iva $model */
 
 $this->title = 'Update Iva: ' . $model->id;
 

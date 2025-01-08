@@ -11,7 +11,7 @@ use yii\data\ActiveDataProvider;
  */
 class SearchArtigo extends Artigo
 {
-    public $tipo; // campo para filtragem (premium ou normal)
+    public $tipo;
 
     /**
      * {@inheritdoc}
@@ -47,7 +47,6 @@ class SearchArtigo extends Artigo
     {
         $query = Artigo::find();
 
-        // join com artigospremium para verificar os artigos que sao premium
         $query->joinWith('artigospremium', false);
 
 

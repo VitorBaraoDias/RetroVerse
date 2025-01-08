@@ -6,9 +6,6 @@ use yii\grid\GridView;
 use yii\helpers\Html;
 use yii\helpers\Url;
 
-/** @var yii\web\View $this */
-/** @var backend\models\SearchMetodosexpedicao $searchModel */
-/** @var yii\data\ActiveDataProvider $dataProvider */
 
 $this->title = 'Shipping Methods';
 ?>

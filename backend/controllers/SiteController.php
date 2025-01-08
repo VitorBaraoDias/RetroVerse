@@ -165,7 +165,7 @@ class SiteController extends Controller
                 }
             }
         }
-        Yii::$app->session->setFlash('error', 'Você não tem permissão para acessar esta área.');
+        Yii::$app->session->setFlash('error', 'You do not have permission to access this area.');
         $model->password = '';
 
         return $this->render('login',

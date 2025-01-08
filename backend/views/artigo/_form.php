@@ -6,10 +6,6 @@ use yii\helpers\Html;
 
 use yii\widgets\ActiveForm;
 
-/** @var yii\web\View $this */
-/** @var \common\models\Artigo $model */
-/** @var yii\widgets\ActiveForm $form */
-
 
 $defaultComissao = Comissao::find()->where(['comissao' => 0])->one();
 $defaultComissaoId = $defaultComissao ? $defaultComissao->id : null;

@@ -2,8 +2,6 @@
 
 use yii\helpers\Html;
 
-/** @var yii\web\View $this */
-/** @var \common\models\comissao $model */
 
 $this->title = 'Update Comission: ' . $model->comissao;
 ?>

@@ -4,17 +4,12 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\widgets\ListView;
 
-/** @var yii\web\View $this */
-/** @var \common\models\UserSearch $searchModel */
-/** @var yii\data\ActiveDataProvider $dataProvider */
-
     $this->title = 'Users';
 
 
 ?>
 <div class="user-index">
 
-    <!-- Tabela personalizada -->
     <div class="d-flex align-items-center" style="gap:30px;">
         <h1>List <?= Html::encode($this->title) ?></h1>
 

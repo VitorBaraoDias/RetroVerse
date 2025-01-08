@@ -17,10 +17,10 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <!-- Campo oculto para 'idartigo' -->
+
     <?= $form->field($model, 'id')->hiddenInput()->label(false) ?>
 
-    <!-- Dropdown para 'idPlano' -->
+
     <?= $form->field($model, 'idPlano')->dropDownList(
         ArrayHelper::map(\common\models\Plano::find()->all(), 'id', 'descricao'), ['prompt' => 'Selecione um plano'])->label('Plano a Associar:') ?>
 

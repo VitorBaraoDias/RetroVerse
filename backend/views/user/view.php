@@ -3,9 +3,6 @@
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 
-/** @var yii\web\View $this */
-/** @var \common\models\User $model */
-
 $this->title = "User details:" . $model->id;
 ?>
 <div class="user-view">

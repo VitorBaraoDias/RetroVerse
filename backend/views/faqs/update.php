@@ -2,8 +2,6 @@
 
 use yii\helpers\Html;
 
-/** @var yii\web\View $this */
-/** @var \common\models\Faqs $model */
 
 $this->title = 'Update FAQ: ' . $model->questao;
 

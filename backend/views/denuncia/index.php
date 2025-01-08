@@ -3,9 +3,6 @@
 use yii\helpers\Html;
 use yii\widgets\ListView;
 
-/** @var yii\web\View $this */
-/** @var common\models\DenunciaSearch $searchModel */
-/** @var yii\data\ActiveDataProvider $dataProvider */
 
 $this->title = 'Item Reports';
 ?>

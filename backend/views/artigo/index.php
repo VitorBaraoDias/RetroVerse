@@ -7,10 +7,6 @@ use yii\grid\ActionColumn;
 use yii\widgets\ActiveForm;
 use yii\widgets\ListView;
 
-/** @var yii\web\View $this */
-/** @var app\models\SearchArtigo $searchModel */
-/** @var yii\data\ActiveDataProvider $dataProvider */
-
 $this->title = 'Items';
 ?>
 <div class="artigo-index">
@@ -18,12 +14,11 @@ $this->title = 'Items';
 
     <div class="search-form mb-4">
         <?php $form = ActiveForm::begin([
-            'method' => 'get', // Envia os dados como GET
-            'action' => ['index'], // A URL para onde os dados serão enviados
-            'options' => ['class' => 'w-100'], // Garante largura total
+            'method' => 'get',
+            'action' => ['index'],
+            'options' => ['class' => 'w-100'],
         ]); ?>
 
-        <!-- Filtros no topo -->
         <div class="row g-3 mb-3">
             <div class="col-md-4">
                 <?= $form->field($searchModel, 'nome')->textInput([
@@ -39,7 +34,7 @@ $this->title = 'Items';
             </div>
             <div class="col-md-4">
                 <?= $form->field($searchModel, 'tipoartigo')->dropDownList(
-                    ['marketplace' => 'Marketplace', 'loja' => 'Loja'], // Opções do dropdown
+                    ['marketplace' => 'Marketplace', 'loja' => 'Loja'],
                     [
                         'prompt' => 'Select the section',
                     ]
@@ -48,11 +43,10 @@ $this->title = 'Items';
 
         </div>
 
-        <!-- Filtros abaixo -->
         <div class="row g-3 mb-3">
             <div class="col-md-3">
                 <?= $form->field($searchModel, 'tipo')->dropDownList(
-                    ['premium' => 'Artigo Premium', 'normal' => 'Artigo Normal'], // Opções do dropdown
+                    ['premium' => 'Artigo Premium', 'normal' => 'Artigo Normal'],
                     [
                         'prompt' => 'Select the type',
                     ]
@@ -81,7 +75,6 @@ $this->title = 'Items';
             </div>
         </div>
 
-        <!-- Botões -->
         <div class="row g-3">
             <div class="col-md-3">
                 <?= Html::submitButton('Search', [

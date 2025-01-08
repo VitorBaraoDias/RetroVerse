@@ -72,7 +72,6 @@ use yii\helpers\Html;
     </div>
     <div class="card-footer">
         <?php if (!$model->estado): ?>
-            <!-- Botão para eliminar item (se existir) -->
             <?php if ($model->idartigo && $model->idartigo0->ativo): ?>
                 <?= Html::a('Delete Item', ['artigo/delete', 'id' => $model->idartigo], [
                     'class' => 'btn btn-danger btn-sm w-100 mb-2',
@@ -83,7 +82,6 @@ use yii\helpers\Html;
                 ]) ?>
             <?php endif; ?>
 
-            <!-- Botão para banir user -->
             <?php if (!$model->estado): ?>
                 <?= Html::a('Ban User', ['denuncia/banuser', 'id' => $model->id], [
                     'class' => 'btn btn-danger btn-sm w-100 mt-2 mb-2',
@@ -94,7 +92,6 @@ use yii\helpers\Html;
                 <p class="text-muted">This user has already been banned.</p>
             <?php endif; ?>
 
-            <!-- Botão para marcar como resolvida a denuncia -->
             <?= Html::a(
                 'Mark as Resolved',
                 ['denuncia/markasresolved', 'id' => $model->id],

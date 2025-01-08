@@ -110,10 +110,10 @@ class LinhavendaController extends Controller
                 throw new NotFoundHttpException('Item not found.');
             }
 
-            // obter o estado atual da linha de venda
+
             $estadoAtual = $linhaVenda->idestadoencomenda0;
 
-            // encontrar o próximo estado baseado na ordem
+
             $proximoEstado = EstadoEncomenda::find()
                 ->where(['>', 'id', $estadoAtual->id])
                 ->orderBy(['id' => SORT_ASC])
@@ -121,16 +121,16 @@ class LinhavendaController extends Controller
 
             if ($proximoEstado === null) {
                 Yii::$app->session->setFlash('warning', 'This item is already in the final state.');
-                return $this->redirect(['venda/index?VendaSearch%5BtipoVenda%5D=sales']); // Redirecionar sem alterações
+                return $this->redirect(['venda/index?VendaSearch%5BtipoVenda%5D=sales']);
             }
 
-            // atualizar o estado da linha de venda para o próximo estado
+
             $linhaVenda->idestadoencomenda = $proximoEstado->id;
 
             if ($linhaVenda->save()) {
                 Yii::$app->session->setFlash('success', 'Item state updated to the next state successfully.');
 
-                // verificar e atualizar o estado da venda, se necessário
+
                 $linhaVenda->idvenda0->checkAndSetNextState();
             } else {
                 Yii::$app->session->setFlash('error', 'Failed to update item state.');

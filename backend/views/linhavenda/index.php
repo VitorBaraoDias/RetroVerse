@@ -4,9 +4,6 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\widgets\ListView;
 
-/** @var yii\web\View $this */
-/** @var \common\models\LinhavendaSearch $searchModel */
-/** @var yii\data\ActiveDataProvider $dataProvider */
 
 $this->title = 'Store Orders';
 ?>

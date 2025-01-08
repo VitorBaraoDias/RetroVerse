@@ -2,8 +2,6 @@
 
 use yii\helpers\Html;
 
-/** @var yii\web\View $this */
-/** @var \common\models\Metodosexpedicao $model */
 
 $this->title = 'Update Shipping Method: ' . $model->nome;
 
