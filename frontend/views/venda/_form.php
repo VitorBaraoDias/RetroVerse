@@ -43,9 +43,9 @@ use yii\widgets\ActiveForm;
             <div class="">
 
                 <?= $form->field($model, 'pais')->textInput([
-                    'list' => 'country-list', // Associa o datalist
-                    'id' => 'country-input',  // Define o ID do campo de entrada
-                    'placeholder' => 'Enter your country', // Placeholder para orientação
+                    'list' => 'country-list',
+                    'id' => 'country-input',
+                    'placeholder' => 'Enter your country',
                 ]) ?>
                 <datalist id="country-list">
                     <?php foreach (LocationHelper::getCountries() as $code => $country): ?>
@@ -58,8 +58,8 @@ use yii\widgets\ActiveForm;
             <div class="">
 
                 <?= $form->field($model, 'cidade')->textInput([
-                    'id' => 'city-input',  // ID do campo de entrada da cidade
-                    'placeholder' => 'Enter your city', // Placeholder para orientação
+                    'id' => 'city-input',
+                    'placeholder' => 'Enter your city',
                 ]) ?>
         </div>
         </div>
@@ -68,20 +68,20 @@ use yii\widgets\ActiveForm;
                 ArrayHelper::map(\common\models\Metodosexpedicao::find()->all(), 'id', 'nome'),
                 [
                     'prompt' => 'Select shipping method',
-                    'value' => $model->idmetodoexpedicao ?? 1, // Valor padrão
-                    'class' => 'form-control w-100', // Classe para ocupar 100%
+                    'value' => $model->idmetodoexpedicao ?? 1,
+                    'class' => 'form-control w-100',
                 ]
-            )->label('Selecione a comissão', ['class' => 'custom-label-class']) ?>
+            )->label('Select a carrier', ['class' => 'custom-label-class']) ?>
         </div>
         <div class="col-12 mt-2">
             <?= $form->field($model, 'idtipopagamento')->dropDownList(
                 ArrayHelper::map(\common\models\Tipopagamento::find()->all(), 'id', 'descricao'),
                 [
                     'prompt' => 'Select pay method',
-                    'value' => $model->idtipopagamento ?? 1, // Valor padrão
-                    'class' => 'form-control w-100', // Classe para ocupar 100%
+                    'value' => $model->idtipopagamento ?? 1,
+                    'class' => 'form-control w-100',
                 ]
-            )->label('Selecione o método de pagamento', ['class' => 'custom-label-class']) ?>
+            )->label('Select the payment method:', ['class' => 'custom-label-class']) ?>
         </div>
         <div class="col-md-12 card outline mt-4 px-4 py-2">
             <h2><strong>COUPON CODE</strong></h2>

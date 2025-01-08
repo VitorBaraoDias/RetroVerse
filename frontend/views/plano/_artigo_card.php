@@ -14,14 +14,12 @@ $isFavorito = Favorito::isFavorito($userId, $artigoId);
 
         <div class="rounded-circle container-like d-flex justify-content-center align-items-center">
             <?php if ($isFavorito): ?>
-                <!-- Artigo está nos favoritos -->
                 <a href="<?= \yii\helpers\Url::to(['favorito/delete', 'id' => $artigoId]) ?>">
                     <img class="icon-like"
                          src="<?= Yii::getAlias('@web/img/vector_liked.svg') ?>"
                          alt="Remover dos Favoritos">
                 </a>
             <?php else: ?>
-                <!-- Artigo não está nos favoritos -->
                 <a href="<?= \yii\helpers\Url::to(['favorito/create', 'id' => $artigoId]) ?>">
                     <img class="icon-like"
                          src="<?= Yii::getAlias('@web/img/vector_like.svg') ?>"
@@ -51,17 +49,14 @@ $isFavorito = Favorito::isFavorito($userId, $artigoId);
 
     </div>
     <div class="card-body">
-        <!-- Marca do artigo -->
         <p class="card-title text-black" style="font-weight: bold; color: black">
             BRAND:<span class="text-secondary" style="font-weight: lighter"><?= Html::encode($model->idmarca0->nome) ?></span>
         </p>
-        <!-- Tamanho do artigo -->
         <p class="card-title text-black" style="font-weight: bold; color: black">
             SIZE:<span class="text-secondary" style="font-weight: lighter"><?= Html::encode($model->idtamanho0->tamanho) ?></span>
         </p>
         <div class="d-flex align-items-center justify-content-between">
             <div class="d-flex flex-column">
-                <!-- Preço do artigo -->
                 <span style="font-weight: bolder; font-size: small">
                                 <?= Html::encode($model->precoanuncio) ?>€
                             </span>

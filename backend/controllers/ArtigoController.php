@@ -60,8 +60,9 @@ class ArtigoController extends Controller
                 'searchModel' => $searchModel,
                 'dataProvider' => $dataProvider,
             ]);
+        } else {
+            throw new \yii\web\ForbiddenHttpException('You do not have permission to access this resource.');
         }
-        return die('nao tem permissao amigo');
     }
     /**
      * Displays a single Artigo model.
@@ -79,8 +80,9 @@ class ArtigoController extends Controller
                 'model' => $this->findModel($id),
                 'uploadForm' => $uploadForm,
             ]);
+        } else {
+            throw new \yii\web\ForbiddenHttpException('You do not have permission to access this resource.');
         }
-        return die('nao tem permissao amigo');
 
     }
 
@@ -111,6 +113,8 @@ class ArtigoController extends Controller
             return $this->render('create', [
                 'model' => $model,
             ]);
+        } else {
+            throw new \yii\web\ForbiddenHttpException('You do not have permission to access this resource.');
         }
 
     }
@@ -135,8 +139,9 @@ class ArtigoController extends Controller
             return $this->render('update', [
                 'model' => $model,
             ]);
+        } else {
+            throw new \yii\web\ForbiddenHttpException('You do not have permission to access this resource.');
         }
-        return die('nao tem permissao');
     }
 
     public function actionPromotepremium($id)
@@ -152,6 +157,8 @@ class ArtigoController extends Controller
             return $this->render('promotepremium', [
                 'model' => $model,
             ]);
+        } else {
+            throw new \yii\web\ForbiddenHttpException('You do not have permission to access this resource.');
         }
     }
 
@@ -172,8 +179,9 @@ class ArtigoController extends Controller
 
             // Redirecionar para a página que fez a solicitação, ou para 'index' se não houver referrer
             return $this->redirect(Yii::$app->request->referrer ?: ['index']);
-        }
-        return die('ola');
+        } else {
+        throw new \yii\web\ForbiddenHttpException('You do not have permission to access this resource.');
+    }
     }
 
 

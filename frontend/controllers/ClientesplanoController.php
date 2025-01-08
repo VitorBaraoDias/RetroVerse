@@ -5,6 +5,7 @@ use common\models\Clientesplano;
 use common\models\Plano;
 use Yii;
 use yii\data\ActiveDataProvider;
+use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -29,7 +30,21 @@ class ClientesplanoController extends Controller
                         'delete' => ['POST'],
                     ],
                 ],
+                'access' => [
+                    'class' => AccessControl::class,
+                    'rules' => [
+                        [
+                            'actions' => ['index', 'create', 'view', 'delete'],
+                            'allow' => true,
+                            'roles' => ['@'],
+                        ],
+                    ],
+                    'denyCallback' => function ($rule, $action) {
+                        return Yii::$app->response->redirect(['site/login']);
+                    },
+                ],
             ]
+
         );
     }
 
@@ -79,48 +94,45 @@ class ClientesplanoController extends Controller
      */
     public function actionCreate($idplano)
     {
-        // Busca o plano ativo
-        $planoAtivo = Plano::findOne($idplano);
-        if (!$planoAtivo || !$planoAtivo->ativo) {
-            throw new NotFoundHttpException('Plano não encontrado ou inativo.');
-        }
-
-        // Cria uma nova instância do modelo Clientesplano
-        $model = new Clientesplano();
-
-        // Verifica se o membro já possui um plano premium
-        $existingPlan = Clientesplano::find()
-            ->where(['idperfil' => Yii::$app->user->id, 'idplano' => $planoAtivo->id])
-            ->exists();
-
-        if ($existingPlan) {
-            Yii::$app->session->setFlash('error', 'Você já possui um plano premium ativo.');
-            return $this->redirect(['plano/index']); // Redireciona para a página de planos
-        }
-
-        // Preenche os valores de idperfil e idplano automaticamente
-        $model->idperfil = Yii::$app->user->id;  // ID do usuário logado
-        $model->idplano = $planoAtivo->id;
-        $model->setDefaultExpira();  // Método que você já criou para definir o campo 'expira'
-
-        // Verifica se o formulário foi submetido e tenta salvar
-        if ($model->load(Yii::$app->request->post())) {
-            // Exibe os dados carregados do formulário
-            Yii::info('Dados carregados: ' . json_encode($model->attributes), __METHOD__);
-
-            if ($model->save()) {
-                Yii::$app->session->setFlash('success', 'Adesão ao plano criada com sucesso!');
-                return $this->redirect(['view', 'id' => $model->id]);  // Redireciona para a página de visualização
-            } else {
-                // Se salvar falhar, exibe os erros do modelo
-                Yii::info('Erros de validação: ' . json_encode($model->errors), __METHOD__);
+        if (\Yii::$app->user->can('criarClientesPlanosFrontend')) {
+            $planoAtivo = Plano::findOne($idplano);
+            if (!$planoAtivo || !$planoAtivo->ativo) {
+                throw new NotFoundHttpException('Plan not found');
             }
-        }
 
-        return $this->render('create', [
-            'model' => $model,
-            'planoAtivo' => $planoAtivo,
-        ]);
+            $model = new Clientesplano();
+
+            $existingPlan = Clientesplano::find()
+                ->where(['idperfil' => Yii::$app->user->id, 'idplano' => $planoAtivo->id])
+                ->exists();
+
+            if ($existingPlan) {
+                Yii::$app->session->setFlash('error', 'You already have a Premium plan.');
+                return $this->redirect(['plano/index']);
+            }
+
+            $model->idperfil = Yii::$app->user->id;
+            $model->idplano = $planoAtivo->id;
+            $model->setDefaultExpira();
+
+            if ($model->load(Yii::$app->request->post())) {
+                Yii::info('Dados carregados: ' . json_encode($model->attributes), __METHOD__);
+
+                if ($model->save()) {
+                    Yii::$app->session->setFlash('success', 'Plan added with success.');
+                    return $this->redirect(['view', 'id' => $model->id]);
+                } else {
+                    Yii::info('Erros de validação: ' . json_encode($model->errors), __METHOD__);
+                }
+            }
+
+            return $this->render('create', [
+                'model' => $model,
+                'planoAtivo' => $planoAtivo,
+            ]);
+        } else {
+            return Yii::$app->response->redirect(['site/login']);
+        }
     }
 
 
@@ -153,9 +165,15 @@ class ClientesplanoController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        if (\Yii::$app->user->can('eliminarClientesPlanosFrontend')) {
+
+            $this->findModel($id)->delete();
 
         return $this->redirect(['site/index']);
+        } else {
+            return Yii::$app->response->redirect(['site/login']);
+        }
+
     }
 
     /**

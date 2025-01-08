@@ -11,20 +11,16 @@ $isFavorito = Favorito::isFavorito($userId, $artigoId);
 ?>
 <div class="artigo-view container-lg">
 
-    <!-- Linha principal -->
     <div class="row">
-        <!-- Coluna para o carrossel -->
         <div class="col-md-6">
             <?php if (!empty($model->fotosartigos)): ?>
                 <div id="articleCarousel" class="carousel slide" data-bs-ride="carousel">
-                    <!-- Indicadores -->
                     <ol class="carousel-indicators">
                         <?php foreach ($model->fotosartigos as $index => $foto): ?>
                             <li data-bs-target="#articleCarousel" data-bs-slide-to="<?= $index ?>" class="<?= $index === 0 ? 'active' : '' ?>"></li>
                         <?php endforeach; ?>
                     </ol>
 
-                    <!-- Slides do carrossel -->
                     <div class="carousel-inner">
                         <?php foreach ($model->fotosartigos as $index => $foto): ?>
                             <div class="carousel-item <?= $index === 0 ? 'active' : '' ?>">
@@ -35,7 +31,6 @@ $isFavorito = Favorito::isFavorito($userId, $artigoId);
                         <?php endforeach; ?>
                     </div>
 
-                    <!-- Controles -->
                     <a class="carousel-control-prev" href="#articleCarousel" role="button" data-bs-slide="prev">
                         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                         <span class="visually-hidden">Previous</span>
@@ -46,10 +41,9 @@ $isFavorito = Favorito::isFavorito($userId, $artigoId);
                     </a>
                 </div>
             <?php else: ?>
-                <p>Não há fotos disponíveis para este artigo.</p>
+                <p>No images found for this item.</p>
             <?php endif; ?>
         </div>
-        <!-- Coluna de Informações -->
         <div class="col-md-6 d-flex flex-column">
             <h1 class="font-weight-bold" style="font-size: 48px"><strong><?= $model->nome ?></strong></h1>
             <h2 style="font-weight: bold"><?= $model->precoanuncio ?>€</h2>
@@ -78,14 +72,12 @@ $isFavorito = Favorito::isFavorito($userId, $artigoId);
 
                 <?php
                 if ($model->idperfil === $userId) {
-                    // Botão para atualizar artigo
                     echo Html::a('EDIT ITEM', ['artigo/update', 'id' => $model->id], [
                         'class' => 'retroverse-btn active',
                         'id' => 'retroverse-btn-active',
                         'style' => 'font-size: x-small; gap: 10px',
                     ]);
                 } else {
-                    // Botão para adicionar ao carrinho
                     echo Html::a('ADD TO CART', ['carrinho/create', 'id' => $model->id], [
                         'class' => 'retroverse-btn active',
                         'id' => 'retroverse-btn-active',
@@ -94,18 +86,16 @@ $isFavorito = Favorito::isFavorito($userId, $artigoId);
                 }
                 ?>
                 <?php if ($isFavorito): ?>
-                    <!-- Artigo está nos favoritos -->
                     <a href="<?= \yii\helpers\Url::to(['favorito/delete', 'id' => $artigoId]) ?>">
                         <img height="40"
                              src="<?= Yii::getAlias('@web/img/vector_liked.svg') ?>"
-                             alt="Remover dos Favoritos">
+                             alt="Remove from favorites">
                     </a>
                 <?php else: ?>
-                    <!-- Artigo não está nos favoritos -->
                     <a href="<?= \yii\helpers\Url::to(['favorito/create', 'id' => $artigoId]) ?>">
                         <img height="40"
                              src="<?= Yii::getAlias('@web/img/vector_like.svg') ?>"
-                             alt="Adicionar aos Favoritos">
+                             alt="Add to favorites">
                     </a>
                 <?php endif; ?>
             </div>
@@ -118,7 +108,6 @@ $isFavorito = Favorito::isFavorito($userId, $artigoId);
             <h2 class="font-weight-bold" style="font-size: 20px"><strong>SHIPPING METHOD:</strong> CTT</h2>
             <h2 class="font-weight-bold" style="font-size: 20px"><strong>SHIPPING DATE:</strong> 3-5 working days</h2>
             <p>Shipping price calculated in check out</p>
-            <!-- Adicione mais informações conforme necessário -->
         </div>
     </div>
     <hr>

@@ -3,7 +3,6 @@ use yii\helpers\Html;
 use yii\widgets\ListView;
 ?>
 
-<!-- Card para cada artigo premium -->
 
     <div class="card">
         <div class="image-container">
@@ -15,7 +14,6 @@ use yii\widgets\ListView;
             $imagePath = Yii::getAlias('@web/uploads/img-artigos/') . ($firstPhoto->caminhofoto ?? '');
 
             if ($firstPhoto && file_exists(Yii::getAlias('@frontend/web/uploads/img-artigos/') . $firstPhoto->caminhofoto)) {
-                // Renderiza a imagem
                 echo Html::img($imagePath, [
                     'alt' => 'Article Image',
                     'class' => 'w-100',
@@ -32,18 +30,15 @@ use yii\widgets\ListView;
         </div>
 
         <div class="card-body">
-            <!-- Marca do artigo -->
             <p class="card-title text-black" style="font-weight: bold; color: black">
                 BRAND: <span class="text-secondary" style="font-weight: lighter"><?= Html::encode($model->artigo->idmarca0->nome) ?></span>
             </p>
 
-            <!-- Tamanho do artigo -->
             <p class="card-title text-black" style="font-weight: bold; color: black">
                 SIZE: <span class="text-secondary" style="font-weight: lighter"><?= Html::encode($model->artigo->idtamanho0->tamanho) ?></span>
             </p>
 
             <div class="d-flex align-items-center justify-content-between">
-                <!-- verifica se o user é premium -->
                 <?php if ($isPremiumActive): ?>
                     <span class="" style="font-weight: bolder; color: black;"><?= Html::encode($artigo->precoanuncio) ?>€</span>
                     <?= Html::a('VIEW', ['artigo/view', 'id' => $model->id], [

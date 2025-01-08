@@ -24,7 +24,7 @@ $isPremium = $perfil ? $perfil->hasActivePremiumPlano() : false;
 
 
                 <?= ListView::widget([
-                    'dataProvider' => $dataProvider,  // Passa o dataProvider com as Linhasvendas
+                    'dataProvider' => $dataProvider,
                     'itemView' => '_venda',
                     'layout' => '<div class="row mt-4 gap-4">{items}</div>{pager}',
                     'options' => ['class' => 'list-view '],
@@ -36,14 +36,12 @@ $isPremium = $perfil ? $perfil->hasActivePremiumPlano() : false;
                 ]) ?>
 
 
-        <!-- Shipping e Summary -->
         <div class="row mt-4">
-            <!-- Info SHIPPING -->
             <div class="col-12 col-md-4">
                 <div class="card p-3 mb-2">
                     <h3 class="card-title"><strong>SHIPPING</strong></h3>
                     <h5><strong>SHIPPING ADDRESS</strong></h5>
-                    <p><?= Html::encode($model->morada ?? 'Morada desconhecida') ?></p>
+                    <p><?= Html::encode($model->morada ?? 'Unknown household') ?></p>
                     <p><?= Html::encode($model->codigopostal ?? 'Código postal desconhecido') ?>
                         <?= Html::encode($model->cidade ?? 'Cidade desconhecida') ?></p>
                     <p><?= Html::encode($model->pais ?? 'País desconhecido') ?></p>
@@ -52,7 +50,6 @@ $isPremium = $perfil ? $perfil->hasActivePremiumPlano() : false;
                 </div>
             </div>
 
-            <!-- SUMMARY -->
             <div class="col-12 col-md-8">
                 <div class="card p-3 mb-2">
                     <h3 class="card-title"><strong>TOTAL: <?= Yii::$app->formatter->asCurrency($model->total, 'EUR') ?></strong</h3>

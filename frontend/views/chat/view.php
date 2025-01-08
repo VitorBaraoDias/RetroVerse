@@ -103,34 +103,34 @@ $dataProviderChata = new ActiveDataProvider([
 
 
     client.on("connect", function () {
-        console.log("Conectado ao broker MQTT via WebSocket");
+        console.log("Connected to MQTT Broker via WebSocket.");
 
         // Inscrever-se no tópico 'chat/<?= $chatAtual->id ?>'
         const topic = "chat/<?= $chatAtual->id ?>";
         client.subscribe(topic, function (err) {
             if (!err) {
-                console.log("Inscrito no tópico: " + topic);
+                console.log("Topic subscribed: " + topic);
             } else {
-                console.error("Erro ao se inscrever: " + err);
+                console.error("Error subscribing this topic: " + err);
             }
         });
     });
 
 
     client.on("message", function (topic, message) {
-        console.log("Mensagem recebida: " + message.toString());
+        console.log("Message: " + message.toString());
 
         try {
             const data = JSON.parse(message.toString());
             renderMessage(data);
         } catch (e) {
-            console.error("Erro ao processar mensagem recebida:", e);
+            console.error("Error processing message:", e);
         }
     });
 
 
     client.on("error", function (err) {
-        console.error("Erro de conexão: " + err);
+        console.error("Connection Error: " + err);
     });
 
     function renderMessage(data) {
@@ -141,7 +141,7 @@ $dataProviderChata = new ActiveDataProvider([
         } else if (data.tipo === "PROPOSTA") {
             renderPropostaMessage(data, isOutgoing);
         } else {
-            console.error("Tipo de mensagem não reconhecido:", data.tipo);
+            console.error("Unknown message type:", data.tipo);
         }
 
         scrollToBottom();

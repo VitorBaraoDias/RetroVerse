@@ -18,11 +18,9 @@ $isPremium = $perfil ? $perfil->hasActivePremiumPlano() : false;
 
             <?php
             $firstPhoto = $model->artigo->fotosartigos[0] ?? null;
-            // Caminho para a imagem no frontend
             $imagePath = Yii::getAlias('@web/uploads/img-artigos/') . ($firstPhoto->caminhofoto ?? '');
 
             if ($firstPhoto && file_exists(Yii::getAlias('@frontend/web/uploads/img-artigos/') . $firstPhoto->caminhofoto)) {
-                // Renderiza a imagem
                 echo Html::img($imagePath, [
                     'alt' => 'Article Image',
                     'style' => 'width: 250px; height: 250px; object-fit: cover;',

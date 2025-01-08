@@ -5,6 +5,7 @@ namespace frontend\controllers;
 use common\models\Perfil;
 use common\models\UploadSingleForm;
 use Yii;
+use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -28,6 +29,24 @@ class PerfilController extends Controller
                     'actions' => [
                         'delete' => ['POST'],
                     ],
+                ],
+                'access' => [
+                    'class' => AccessControl::class,
+                    'rules' => [
+                        [
+                            'actions' => ['view'],
+                            'allow' => true,
+                            'roles' => ['?'],
+                        ],
+                        [
+                            'actions' => ['index','view','update'],
+                            'allow' => true,
+                            'roles' => ['@'],
+                        ],
+                    ],
+                    'denyCallback' => function ($rule, $action) {
+                        return Yii::$app->response->redirect(['site/login']);
+                    },
                 ],
             ]
         );
@@ -74,9 +93,11 @@ class PerfilController extends Controller
      */
     public function actionUpdate($id)
     {
-        $perfil = Perfil::findOne($id);
+        if (\Yii::$app->user->can('alterarPerfilFrontend')) {
+
+            $perfil = Perfil::findOne($id);
         if (!$perfil) {
-            Yii::$app->session->setFlash('info', 'Erro: Perfil não encontrado.');
+            Yii::$app->session->setFlash('info', 'Error: Profile Not Found.');
             return $this->redirect(['perfil/index', 'id' => $id]);
         }
 
@@ -99,22 +120,22 @@ class PerfilController extends Controller
                     if ($perfil->save()) {
                         $uploadForm->deleteImageIfExist($oldProfileImg);
 
-                        Yii::$app->session->setFlash('success', 'Perfil atualizado com sucesso.');
+                        Yii::$app->session->setFlash('success', 'Profile updated with success.');
                         return $this->redirect(['perfil/index', 'id' => $perfil->id]);
                     } else {
                         $uploadForm->deleteImageIfExist($uploadForm->imagePaths[0]);
-                        Yii::$app->session->setFlash('error', 'Erro ao salvar perfil.');
+                        Yii::$app->session->setFlash('error', 'Error saving this profile.');
                     }
                 } else {
-                    Yii::$app->session->setFlash('error', 'Erro ao fazer upload da imagem.');
+                    Yii::$app->session->setFlash('error', 'Error uploading this image.');
                 }
             } else {
-                // Se não houver arquivo, validar e salvar apenas os outros campos
+                // Se não houver foto, validar e salvar apenas os outros campos
                 if ($perfil->validate() && $perfil->save()) {
-                    Yii::$app->session->setFlash('success', 'Perfil atualizado com sucesso.');
+                    Yii::$app->session->setFlash('success', 'Profile updated with success.');
                     return $this->redirect(['perfil/index', 'id' => $perfil->id]);
                 } else {
-                    Yii::$app->session->setFlash('error', 'Erro ao salvar perfil.');
+                    Yii::$app->session->setFlash('error', 'Error saving profile.');
                 }
             }
         }
@@ -122,7 +143,9 @@ class PerfilController extends Controller
         return $this->render('update', [
             'model' => $perfil,
             'uploadForm' => $uploadForm,
-        ]);
+        ]); } else {
+                return Yii::$app->response->redirect(['site/login']);
+            }
     }
 
     /**

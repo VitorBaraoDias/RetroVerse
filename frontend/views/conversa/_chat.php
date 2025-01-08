@@ -2,10 +2,8 @@
     <div class="chat outgoing" data-index="<?= $model->id ?>">
         <div class="details" id="message-<?= $model->id ?>">
             <?php if ($model->tipo === 'TEXTO' && $model->mensagem): ?>
-                <!-- Exibe a mensagem de texto -->
                 <p><?= htmlspecialchars($model->mensagem->descricao) ?></p>
             <?php elseif ($model->tipo === 'PROPOSTA' && $model->mensagemproposta): ?>
-                <!-- Exibe a mensagem de proposta -->
                 <div class="d-flex flex-column justify-content-center align-items-center cardProposta p-2" data-index="<?= $model->mensagemproposta->id ?>">
                     <div class="d-flex gap-2">
                         <span class="font-weight-bold">
@@ -28,11 +26,11 @@
                             <a class="btn retroverse-btn active w-auto px-3 py-0 rounded-3 text-white" id="retroverse-btn-active" href="<?= \yii\helpers\Url::to(['carrinho/create', 'id' => $model->chat->idartigo]) ?>">ADD</a>
                         </div>
                     <?php else: ?>
-                        <span class="text-muted">Estado desconhecido</span>
+                        <span class="text-muted">Unknown state</span>
                     <?php endif; ?>
                 </div>
             <?php else: ?>
-                <p>Mensagem inválida ou tipo não reconhecido.</p>
+                <p>Invalid message or unknown type.</p>
             <?php endif; ?>
         </div>
     </div>
@@ -40,10 +38,8 @@
     <div class="chat incoming" data-index="<?= $model->id ?>">
         <div class="details" id="message-<?= $model->id ?>">
             <?php if ($model->tipo === 'TEXTO' && $model->mensagem): ?>
-                <!-- Exibe a mensagem de texto -->
                 <p><?= htmlspecialchars($model->mensagem->descricao) ?></p>
             <?php elseif ($model->tipo === 'PROPOSTA' && $model->mensagemproposta): ?>
-                <!-- Exibe a mensagem de proposta -->
                 <div class="d-flex flex-column justify-content-center align-items-center p-2 propostaEsq" data-index="<?= $model->mensagemproposta->id ?>">
                     <div class="d-flex gap-2">
                         <span class="font-weight-bold">
@@ -62,15 +58,15 @@
                             <a class="btn retroverse-btn active w-auto px-3 py-0 rounded-3 text-white" id="retroverse-btn-active" href="<?= \yii\helpers\Url::to(['mensagemproposta/update', 'id' => $model->mensagemproposta->id, 'state' => 2]) ?>">accept</a>
                         </div>
                     <?php elseif ($model->mensagemproposta->estado === 1): ?>
-                        <span class="text-danger status">Recusado</span>
+                        <span class="text-danger status">Refused</span>
                     <?php elseif ($model->mensagemproposta->estado === 2): ?>
-                        <span class="text-success status">accept</span>
+                        <span class="text-success status">Accepted</span>
                     <?php else: ?>
-                        <span class="text-muted status">Estado desconhecido</span>
+                        <span class="text-muted status">Unknown state</span>
                     <?php endif; ?>
                 </div>
             <?php else: ?>
-                <p>Mensagem inválida ou tipo não reconhecido.</p>
+                <p>Invalid message or unknown type.</p>
             <?php endif; ?>
         </div>
     </div>

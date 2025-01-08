@@ -16,8 +16,8 @@ use yii\widgets\ActiveForm;
 
     <div class="input-details m-0" style="display: relative;">
         <?= $form->field($model, 'preco')->textInput([
-            'placeholder' => 'Digite o valor...',  // Defina o texto do placeholder
-            'type' => 'number',                    // Permite apenas números
+            'placeholder' => 'Value...',
+            'type' => 'number',
             'step' => '0.01',
         ])->label(false) ?>
         <?= Html::submitButton('<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-send" viewBox="0 0 16 16">

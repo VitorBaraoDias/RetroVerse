@@ -6,7 +6,6 @@ use yii\widgets\ListView;
 use yii\data\ActiveDataProvider;
 ?>
 <script src="https://cdn.jsdelivr.net/npm/mqtt@4.2.7/dist/mqtt.min.js"></script>
-<!-- Banners Begin-->
 <section class="hero">
     <div class="hero__slider owl-carousel owl-loaded owl-drag">
         <?php foreach ($banners as $banner): ?>
@@ -28,18 +27,17 @@ use yii\data\ActiveDataProvider;
         <?php endforeach; ?>
     </div>
 </section>
-<!-- Banners End-->
 
-    <!-- Banner Section Begin -->
+
 <article class="container" style="margin-top: 45px;">
     <h2 class="text-center fw-bolder mb-4 " style="font-weight: bold;">LATEST DROPS</h2>
         <!-- Card 1 -->
         <?= ListView::widget([
             'dataProvider' => $dataProvider1,
-            'itemView' => '_artigo_card',  // Especifica o arquivo de item que criamos
-            'layout' => '<div class="row">{items}</div>{pager}',  // Layout com items e paginação
-            'options' => ['class' => 'list-view'],  // Classe opcional para estilização adicional
-            'itemOptions' => ['class' => 'col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 card-product'],  // Estilo para cada item
+            'itemView' => '_artigo_card',
+            'layout' => '<div class="row">{items}</div>{pager}',
+            'options' => ['class' => 'list-view'],
+            'itemOptions' => ['class' => 'col-lg-3 col-md-6 col-sm-6 col-md-6 col-sm-6 card-product'],
             'pager' => [
                 'class' => \yii\bootstrap5\LinkPager::class,
                 'options' => ['class' => 'pagination justify-content-center'],
@@ -93,7 +91,6 @@ use yii\data\ActiveDataProvider;
     </div>
 </section>
 
-    <!-- Banner Section End -->
 <article class="mb-4 container" style="margin-top: 45px;">
     <h2 class="text-center fw-bolder mb-4 " style="font-weight: bold;" >LATEST PREMIUM DROPS</h2>
 
@@ -115,50 +112,36 @@ use yii\data\ActiveDataProvider;
 </article>
 
 
-<!-- Product Section Begin -->
-    <!-- Product Section End -->
 
 <script>
-    // Obter o ID do utilizador a partir do backend
     var userId = <?= json_encode(Yii::$app->user->id) ?>;
 
-    // Conectar ao broker MQTT
     const client = new Paho.MQTT.Client('broker_url', Number(port), 'clientId');
 
-    // Definir callbacks
     client.onConnectionLost = onConnectionLost;
     client.onMessageArrived = onMessageArrived;
 
-    // Conectar
     client.connect({ onSuccess: onConnect });
 
-    // Função chamada quando a conexão é bem-sucedida
     function onConnect() {
-        console.log('Conectado ao broker MQTT');
-        // Inscrever-se no tópico desejado
+        console.log('Connected to MQTT Broker');
         client.subscribe('notificacoes/favoritos/${userId}');
     }
 
-    // Função chamada quando a conexão é perdida
     function onConnectionLost(responseObject) {
         if (responseObject.errorCode !== 0) {
-            console.log('Conexão perdida: ' + responseObject.errorMessage);
+            console.log('Lost connection: ' + responseObject.errorMessage);
         }
     }
 
-    // Função chamada quando uma mensagem chega
     function onMessageArrived(message) {
-        console.log('Mensagem recebida: ' + message.payloadString);
-        // Exibir notificação ao usuário
+        console.log('Received message: ' + message.payloadString);
         exibirNotificacao(message.payloadString);
     }
 
-    // Função para exibir notificação
     function exibirNotificacao(mensagem) {
-        // Implementar lógica para exibir notificação no frontend
-        alert(mensagem); // Exemplo simples
+        alert(mensagem);
     }
-
 
 
 </script>

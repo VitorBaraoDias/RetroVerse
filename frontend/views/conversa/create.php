@@ -8,7 +8,7 @@
 
     <?= $this->render('_form', [
         'model' => $model,
-        'idchat' => $idchat, // Passa o id do chat atual
+        'idchat' => $idchat,
         'modelTexto' => $modelTexto,
 
     ]) ?>

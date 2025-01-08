@@ -6,7 +6,6 @@ use yii\bootstrap5\Html;
 ?>
 
 <?= Html::a(
-// Conteúdo interno do link
     '<div>
         ' . (!empty($perfil->caminhofotoperfil) ?
         '<img class="rounded-circle" style="object-fit: cover; width: 60px" 
@@ -31,8 +30,6 @@ use yii\bootstrap5\Html;
         ])
     ) . '
     </div>',
-    // URL do link
     ['chat/view', 'id' => $model->id],
-    // Opções do link
     ['class' => 'w-100 d-flex gap-3 pt-2 p-l-1', 'style' => '; text-decoration: none; color: inherit;']
 ) ?>
