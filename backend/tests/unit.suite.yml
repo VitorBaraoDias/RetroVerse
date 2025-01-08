@@ -9,6 +9,5 @@ modules:
         dsn: 'mysql:host=127.0.0.1;dbname=retroverse;unix_socket=/Applications/MAMP/tmp/mysql/mysql.sock'
         user: 'root'
         password: 'root'
-        cleanup: true
 
 

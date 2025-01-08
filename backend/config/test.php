@@ -11,6 +11,7 @@ return [
         'request' => [
             'cookieValidationKey' => 'test',
         ],
+
         'components' => [
             'db' => [
                 'class' => 'yii\db\Connection',

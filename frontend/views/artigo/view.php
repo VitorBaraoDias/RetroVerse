@@ -71,19 +71,11 @@ $isFavorito = Favorito::isFavorito($userId, $artigoId);
             <div class="d-flex align-items-center justify-content-between mt-2 gap-5">
 
                 <?php
-                if ($model->idperfil === $userId) {
-                    echo Html::a('EDIT ITEM', ['artigo/update', 'id' => $model->id], [
-                        'class' => 'retroverse-btn active',
-                        'id' => 'retroverse-btn-active',
-                        'style' => 'font-size: x-small; gap: 10px',
-                    ]);
-                } else {
                     echo Html::a('ADD TO CART', ['carrinho/create', 'id' => $model->id], [
                         'class' => 'retroverse-btn active add-to-cart-button',
                         'id' => 'retroverse-btn-active',
                         'style' => 'font-size: x-small; gap: 10px',
                     ]);
-                }
                 ?>
                 <?php if ($isFavorito): ?>
                     <a class="favourite-button" href="<?= \yii\helpers\Url::to(['favorito/delete', 'id' => $artigoId]) ?>">

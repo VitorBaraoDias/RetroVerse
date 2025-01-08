@@ -76,10 +76,17 @@ use yii\widgets\ListView;
                         <?php endif; ?>
                     </div>
 
-                    <?= Html::a('VIEW', ['artigo/view', 'id' => $model->artigo->id], [
-                        'class' => 'retroverse-btn view-item-button',
-                        'style' => 'font-size: x-small; gap: 10px',
-                    ]) ?>
+                    <?= Html::a(
+                        'VIEW',
+                        [
+                            $model->artigo->tipoartigo === 'MARKETPLACE' ? 'artigo/view-marketplace' : 'artigo/view',
+                            'id' => $model->artigo->id
+                        ],
+                        [
+                            'class' => 'retroverse-btn view-item-button',
+                            'style' => 'font-size: x-small; gap: 10px',
+                        ]
+                    ) ?>
 
 
 
