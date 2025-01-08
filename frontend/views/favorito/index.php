@@ -24,7 +24,7 @@ $this->title = 'Favourites';
 
 
     <article class="container" style="margin-top: 45px;">
-        <h2 class="text-center fw-bolder mb-4 " style="font-weight: bold;">FAVOURITES</h2>
+        <h2 class="text-center fw-bolder mb-4 " style="font-weight: bold;">FAVORITES</h2>
         <?= ListView::widget([
             'dataProvider' => $dataProvider,
             'itemView' => '_artigo_card',

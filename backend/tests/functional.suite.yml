@@ -1,5 +1,9 @@
-suite_namespace: backend\tests\functional
-actor: FunctionalTester
 modules:
     enabled:
-        - Yii2
+        - Yii2:
+              configFile: 'backend/config/test.php'
+        - Db:
+              dsn: 'mysql:host=127.0.0.1;dbname=retroverse;unix_socket=/Applications/MAMP/tmp/mysql/mysql.sock'
+              user: 'root'
+              password: 'root'
+

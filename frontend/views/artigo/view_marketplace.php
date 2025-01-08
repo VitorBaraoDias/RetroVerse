@@ -164,14 +164,14 @@ $isFavorito = Favorito::isFavorito($userId, $artigoId);
                         <?php
                         if ($model->idperfil !== $userId) {
                             if ($isFavorito): ?>
-                                <a class="w-auto"
+                                <a id="favorite-button" class="w-auto"
                                    href="<?= \yii\helpers\Url::to(['favorito/delete', 'id' => $artigoId]) ?>">
                                     <img height="40"
                                          src="<?= Yii::getAlias('@web/img/vector_liked.svg') ?>"
                                          alt="Remover from favorites">
                                 </a>
                             <?php else: ?>
-                                <a class="w-auto"
+                                <a id="favorite-button" class="w-auto"
                                    href="<?= \yii\helpers\Url::to(['favorito/create', 'id' => $artigoId]) ?>">
                                     <img height="40"
                                          src="<?= Yii::getAlias('@web/img/vector_like.svg') ?>"
