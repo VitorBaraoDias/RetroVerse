@@ -8,8 +8,6 @@ namespace common\models;
  * @property int $id
  * @property int $idPlano
  *
- * @property Artigos $id0
- * @property Planos $idPlano0
  */
 class Artigospremium extends \yii\db\ActiveRecord
 {

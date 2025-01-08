@@ -1,8 +1,7 @@
 <?php
 
 namespace common\models;
-
-use backend\models\Artigos;
+use Symfony\Component\Mime\Encoder\QpContentEncoder;
 
 /**
  * This is the model class for table "marcas".
@@ -10,7 +9,6 @@ use backend\models\Artigos;
  * @property int $id
  * @property string $nome
  *
- * @property Artigos[] $artigos
  */
 class Marca extends \yii\db\ActiveRecord
 {
@@ -28,7 +26,7 @@ class Marca extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['nome'], 'required'],
+            [['nome', 'ativo'], 'required'],
             [['nome'], 'string', 'max' => 150],
             [['ativo'], 'boolean'],
         ];
@@ -53,6 +51,6 @@ class Marca extends \yii\db\ActiveRecord
      */
     public function getArtigos()
     {
-        return $this->hasMany(Artigos::class, ['idmarca' => 'id']);
+            return $this->hasMany(Artigo::class, ['idmarca' => 'id']);
     }
 }

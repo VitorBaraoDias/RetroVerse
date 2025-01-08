@@ -60,10 +60,10 @@ class Carrinho extends \yii\db\ActiveRecord
         $linhasCarrinho = $this->getLinhascarrinhos()->all();
         $totalVenda = 0;
 
-        // Busca o perfil do utilizador usando o userId
+
         $perfil = Perfil::findOne(['id' => $userId]);
 
-        // Verifica se o utilizador tem um plano premium ativo
+
         $isPremium = $perfil && $perfil->hasActivePremiumPlano();
 
 
@@ -72,15 +72,15 @@ class Carrinho extends \yii\db\ActiveRecord
 
             if ($artigo->tipoartigo === 'MARKETPLACE' && $artigo->idcomissao0) {
                 if ($isPremium) {
-                    // Utilizadores Premium não pagam comissão
+
                     $totalVenda += $artigo->getPriceWithProposalIfExist();
                 } else {
-                    // Aplica a comissão ao preço se o utilizador não for Premium
+
                     $precoComComissao = $artigo->getPriceWithCommissionOrProposal();
                     $totalVenda += $precoComComissao;
                 }
             } else {
-                // Sem comissão, apenas soma o preço normal
+
                 $totalVenda += $artigo->precoanuncio;
             }
         }
