@@ -30,15 +30,19 @@ class LoginCest
     /**
      * @param FunctionalTester $I
      */
-    public function loginUser(FunctionalTester $I)
+    public function loginTestValido(FunctionalTester $I)
     {
-        $I->amOnRoute('/site/login');
-        $I->fillField('Username', 'erau');
-        $I->fillField('Password', 'password_0');
-        $I->click('login-button');
+        $I->wantTo('log in as a registered user');
 
-        $I->see('Logout (erau)', 'form button[type=submit]');
-        $I->dontSeeLink('Login');
-        $I->dontSeeLink('Signup');
+        $I->amOnPage(['/site/login']);
+
+        $I->fillField('input[name="LoginForm[username]"]', 'erau');
+
+        $I->fillField('input[name="LoginForm[password]"]', 'password_0');
+
+        $I->click('Sign In');
+
+        $I->see('Logout');
+        $I->seeInCurrentUrl('/admin');
     }
 }

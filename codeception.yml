@@ -7,3 +7,12 @@ paths:
     output: console/runtime/output
 settings:
     colors: true
+    suites:
+        frontend:
+            path: /frontend/tests
+            actor: FrontendTester
+            modules:
+                enabled:
+                    - Yii2:
+                          configFile: /frontend/config/test.php
+                    - Asserts

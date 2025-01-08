@@ -6,7 +6,7 @@ use frontend\tests\FunctionalTester;
 
 class SignupCest
 {
-    protected $formId = '#form-signup';
+    protected $formId = '#login-form';
 
 
     public function _before(FunctionalTester $I)
@@ -14,14 +14,30 @@ class SignupCest
         $I->amOnRoute('site/signup');
     }
 
-    public function signupWithEmptyFields(FunctionalTester $I)
+    protected function formParams($email, $username, $password)
     {
-        $I->see('Signup', 'h1');
-        $I->see('Please fill out the following fields to signup:');
-        $I->submitForm($this->formId, []);
-        $I->seeValidationError('Username cannot be blank.');
-        $I->seeValidationError('Email cannot be blank.');
-        $I->seeValidationError('Password cannot be blank.');
+        return [
+            'SignupForm[email]' => $email,
+            'SignupForm[username]' => $username,
+            'SignupForm[password]' => $password,
+        ];
+    }
+    public function checkInvalidEmail(FunctionalTester $I)
+    {
+        $I->submitForm('#login-form', $this->formParams('invalidemail', 'newuser', 'password123'));
+        $I->seeValidationError('Email is not a valid email address.');
+    }
+
+    public function checkValidSignup(FunctionalTester $I)
+    {
+        $I->submitForm('#login-form', $this->formParams('newuser@example.com', 'newuser', 'password123'));
+        $I->seeCurrentUrlEquals("/index-test.php");
+        $I->see('Thank you for registration. Please check your inbox for verification email.');
+
+        $I->seeElement('a[href="/index-test.php/site/signup"] img[src="/img/myaccount.svg"]');
+
+        $I->dontSeeLink('Signup');
+        $I->dontSeeLink('Login');
 
     }
 
@@ -39,21 +55,4 @@ class SignupCest
         $I->see('Email is not a valid email address.', '.invalid-feedback');
     }
 
-    public function signupSuccessfully(FunctionalTester $I)
-    {
-        $I->submitForm($this->formId, [
-            'SignupForm[username]' => 'tester',
-            'SignupForm[email]' => 'tester.email@example.com',
-            'SignupForm[password]' => 'tester_password',
-        ]);
-
-        $I->seeRecord('common\models\User', [
-            'username' => 'tester',
-            'email' => 'tester.email@example.com',
-            'status' => \common\models\User::STATUS_INACTIVE
-        ]);
-
-        $I->seeEmailIsSent();
-        $I->see('Thank you for registration. Please check your inbox for verification email.');
-    }
 }

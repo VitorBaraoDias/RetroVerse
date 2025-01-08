@@ -7,5 +7,9 @@ return [
             'class' => \yii\web\User::class,
             'identityClass' => 'common\models\User',
         ],
+        'db' => [
+            'dsn' => 'mysql:host=localhost;dbname=retroverse',
+        ]
+
     ],
 ];
