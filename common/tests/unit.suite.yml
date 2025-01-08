@@ -1,10 +1,9 @@
 suite_namespace: common\tests\unit
 actor: UnitTester
-bootstrap: false
 modules:
     enabled:
         - Yii2:
-            part: ORM
+            part: [orm, email, fixtures]
         - Asserts
         - Db:
             dsn: 'mysql:host=127.0.0.1;dbname=retroverse'

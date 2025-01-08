@@ -5,3 +5,8 @@ modules:
         - Yii2:
             part: [orm, email, fixtures]
         - Asserts
+        - Db:
+                dsn: 'mysql:host=127.0.0.1;dbname=retroverse'
+                user: 'root'
+                password: 'root'
+                cleanup: true
