@@ -58,7 +58,7 @@ $isPremium = $perfil ? $perfil->hasActivePremiumPlano() : false;
                         <strong>
                             <?= $isPremium
                                 ? Yii::$app->formatter->asCurrency($model->artigo->getPriceWithProposalIfExist(), 'EUR')
-                                : '€' . $model->artigo->getPrecoComComissaoFormatado();
+                                : '€' . $model->artigo->getPriceWithComissionFormated();
                             ?>
                         </strong>
                     </h1>

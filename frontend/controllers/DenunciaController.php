@@ -21,15 +21,7 @@ class DenunciaController extends Controller
      */
     public function behaviors()
     {
-        return array_merge(
-            parent::behaviors(),
-            [
-                'verbs' => [
-                    'class' => VerbFilter::className(),
-                    'actions' => [
-                        'delete' => ['POST'],
-                    ],
-                ],
+        return [
                 'access' => [
                     'class' => AccessControl::class,
                     'rules' => [
@@ -43,119 +35,47 @@ class DenunciaController extends Controller
                         return Yii::$app->response->redirect(['site/login']);
                     },
                 ],
-            ]
-        );
+            ];
     }
 
-    /**
-     * Lists all Denuncia models.
-     *
-     * @return string
-     */
-    public function actionIndex()
-    {
-        $dataProvider = new ActiveDataProvider([
-            'query' => Denuncia::find(),
-            /*
-            'pagination' => [
-                'pageSize' => 50
-            ],
-            'sort' => [
-                'defaultOrder' => [
-                    'id' => SORT_DESC,
-                ]
-            ],
-            */
-        ]);
 
-        return $this->render('index', [
-            'dataProvider' => $dataProvider,
-        ]);
-    }
-
-    /**
-     * Displays a single Denuncia model.
-     * @param int $id ID
-     * @return string
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    public function actionView($id)
-    {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
-    }
-
-    /**
-     * Creates a new Denuncia model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return string|\yii\web\Response
-     */
     public function actionCreate($id)
     {
-        $model = new Denuncia();
-        $artigo = Artigo::findOne($id);
-        $userId = Yii::$app->user->id;
+        if (\Yii::$app->user->can('CriarDenunciaFrontend')) {
 
-        $jaDenunciado = Denuncia::find()
-            ->where(['iddenunciante' => $userId, 'idartigo' => $artigo->id])
-            ->exists();
+            $model = new Denuncia();
+            $artigo = Artigo::findOne($id);
+            $userId = Yii::$app->user->id;
 
-        if (Denuncia::hasAlreadyReported($userId, $artigo->id)) {
-            Yii::$app->session->setFlash('error', 'You have already reported this article.');
-            return $this->redirect(['artigo/view-marketplace', 'id' => $artigo->id]);
-        }
 
-        if ($this->request->isPost) {
-            $model->iddenunciante = $userId;
-            $model->iddenunciado = $artigo->idperfil;
-            $model->idartigo = $artigo->id;
-            if ($model->load($this->request->post()) && $model->save()) {
-                Yii::$app->session->setFlash('success', 'Report successfully created.');
+            $jaDenunciado = Denuncia::find()
+                ->where(['iddenunciante' => $userId, 'idartigo' => $artigo->id])
+                ->exists();
+
+            if (Denuncia::hasAlreadyReported($userId, $artigo->id)) {
+                Yii::$app->session->setFlash('error', 'You have already reported this article.');
                 return $this->redirect(['artigo/view-marketplace', 'id' => $artigo->id]);
             }
-        } else {
-            $model->loadDefaultValues();
+
+            if ($this->request->isPost) {
+                $model->iddenunciante = $userId;
+                $model->iddenunciado = $artigo->idperfil;
+                $model->idartigo = $artigo->id;
+                if ($model->load($this->request->post()) && $model->save()) {
+                    Yii::$app->session->setFlash('success', 'Report successfully created.');
+                    return $this->redirect(['artigo/view-marketplace', 'id' => $artigo->id]);
+                }
+            } else {
+                $model->loadDefaultValues();
+            }
+            return $this->render('create', [
+                'model' => $model,
+                'artigo' => $artigo,
+            ]);
         }
-
-        return $this->render('create', [
-            'model' => $model,
-            'artigo' => $artigo,
-        ]);
-    }
-
-    /**
-     * Updates an existing Denuncia model.
-     * If update is successful, the browser will be redirected to the 'view' page.
-     * @param int $id ID
-     * @return string|\yii\web\Response
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    public function actionUpdate($id)
-    {
-        $model = $this->findModel($id);
-
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        else {
+            return Yii::$app->response->redirect(['site/login']);
         }
-
-        return $this->render('update', [
-            'model' => $model,
-        ]);
-    }
-
-    /**
-     * Deletes an existing Denuncia model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param int $id ID
-     * @return \yii\web\Response
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    public function actionDelete($id)
-    {
-        $this->findModel($id)->delete();
-
-        return $this->redirect(['index']);
     }
 
     /**

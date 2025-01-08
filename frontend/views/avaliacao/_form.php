@@ -93,7 +93,7 @@ use yii\widgets\ActiveForm;
                         </div>
                         <div class="d-flex flex-column align-items-start">
                             <h2 style="font-size: 24px">
-                                <strong><?= $linhaVenda->idartigo0->getPrecoComComissaoFormatado() ?></strong>
+                                <strong><?= $linhaVenda->idartigo0->getPriceWithComissionFormated() ?></strong>
                             </h2>
                         </div>
                     </div>

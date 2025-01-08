@@ -7,6 +7,7 @@ use common\models\Linhavenda;
 use common\models\Perfil;
 use Yii;
 use yii\data\ActiveDataProvider;
+use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -21,17 +22,26 @@ class AvaliacaoController extends Controller
      */
     public function behaviors()
     {
-        return array_merge(
-            parent::behaviors(),
-            [
-                'verbs' => [
-                    'class' => VerbFilter::className(),
-                    'actions' => [
-                        'delete' => ['POST'],
+        return [
+            'access' => [
+                'class' => AccessControl::class,
+                'rules' => [
+                    [
+                        'actions' => ['index'],
+                        'allow' => true,
+                        'roles' => ['?'],
+                    ],
+                    [
+                        'actions' => ['index', 'create'],
+                        'allow' => true,
+                        'roles' => ['@'],
                     ],
                 ],
-            ]
-        );
+                'denyCallback' => function ($rule, $action) {
+                    return Yii::$app->response->redirect('site/login');
+                }
+            ],
+        ];
     }
 
     /**
@@ -59,82 +69,39 @@ class AvaliacaoController extends Controller
      * @return string
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionView($id)
-    {
-        $perfil = Perfil::findOne($id);
-
-
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
-    }
-
-    /**
-     * Creates a new Avaliacao model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return string|\yii\web\Response
-     */
     public function actionCreate($id)
     {
-        $model = new Avaliacao();
-        $linhaVenda = Linhavenda::findOne(['id' => $id]);
+        if (\Yii::$app->user->can('criarAvaliacaoMarketplaceFrontend')) {
+
+            $model = new Avaliacao();
+            $linhaVenda = Linhavenda::findOne(['id' => $id]);
 
 
-        if($linhaVenda->avaliacao){
-            Yii::$app->session->setFlash('error', 'Já possui avaliação');
-            return $this->redirect(['venda/view', 'id' => $id]);
+            if ($linhaVenda->avaliacao) {
+                Yii::$app->session->setFlash('error', 'Já possui avaliação');
+                return $this->redirect(['venda/view', 'id' => $id]);
 
-        }
-        if ($this->request->isPost) {
-
-            $model->idremetente = Yii::$app->user->id;
-            $model->iddestinatario = $linhaVenda->idvendedor;
-            $model->idlinhavenda = $linhaVenda->id;
-            if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['venda/view', 'id' => $linhaVenda->idvenda]);
             }
-        } else {
-            $model->loadDefaultValues();
+            if ($this->request->isPost) {
+
+                $model->idremetente = Yii::$app->user->id;
+                $model->iddestinatario = $linhaVenda->idvendedor;
+                $model->idlinhavenda = $linhaVenda->id;
+                if ($model->load($this->request->post()) && $model->save()) {
+                    return $this->redirect(['venda/view', 'id' => $linhaVenda->idvenda]);
+                }
+            } else {
+                $model->loadDefaultValues();
+            }
+
+            return $this->render('create', [
+                'model' => $model,
+                'linhaVenda' => $linhaVenda,
+            ]);
         }
-
-        return $this->render('create', [
-            'model' => $model,
-            'linhaVenda' => $linhaVenda,
-        ]);
-    }
-
-    /**
-     * Updates an existing Avaliacao model.
-     * If update is successful, the browser will be redirected to the 'view' page.
-     * @param int $id ID
-     * @return string|\yii\web\Response
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    public function actionUpdate($id)
-    {
-        $model = $this->findModel($id);
-
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        else{
+            return Yii::$app->response->redirect('site/login');
         }
-
-        return $this->render('update', [
-            'model' => $model,
-        ]);
-    }
-
-    /**
-     * Deletes an existing Avaliacao model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param int $id ID
-     * @return \yii\web\Response
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    public function actionDelete($id)
-    {
-        $this->findModel($id)->delete();
-
-        return $this->redirect(['index']);
     }
 
     /**

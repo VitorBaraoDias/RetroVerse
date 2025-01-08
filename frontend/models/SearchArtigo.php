@@ -51,7 +51,6 @@ class SearchArtigo extends Artigo
     {
         $query = Artigo::find();
 
-        // Junta com a tabela ArtigosPremium para verificar os artigos premium
         $query->joinWith('artigospremium', false);
 
         $dataProvider = new ActiveDataProvider([
@@ -61,14 +60,12 @@ class SearchArtigo extends Artigo
         $this->load($params);
 
         if (!$this->validate()) {
-            Yii::debug("Validação falhou: " . json_encode($this->errors), __METHOD__);
+            Yii::debug("Validation failed: " . json_encode($this->errors), __METHOD__);
             return $dataProvider;
         }
 
-        // Exclui artigos do próprio perfil do usuário logado
         $query->andWhere(['!=', 'idperfil', Yii::$app->user->id ?? 0]);
 
-        // Filtros existentes para os campos do artigo
         $query->andFilterWhere([
             'id' => $this->id,
             'idcomissao' => $this->idcomissao,
@@ -82,17 +79,16 @@ class SearchArtigo extends Artigo
         $query->andFilterWhere(['like', 'nome', $this->nome])
             ->andFilterWhere(['like', 'descricao', $this->descricao]);
 
-        // Filtro de preço
+
         if (!is_null($this->preco_min) && !is_null($this->preco_max)) {
             $query->andFilterWhere(['>=', 'precoanuncio', $this->preco_min])
                 ->andFilterWhere(['<=', 'precoanuncio', $this->preco_max]);
         }
 
-        // Filtro para tipo de artigo
         if ($this->tipo === 'premium') {
-            $query->andWhere(['IS NOT', 'artigospremium.id', null]); // Artigos premium
+            $query->andWhere(['IS NOT', 'artigospremium.id', null]);
         } elseif ($this->tipo === 'normal') {
-            $query->andWhere(['artigospremium.id' => null]); // Artigos normais (sem correspondência na tabela premium)
+            $query->andWhere(['artigospremium.id' => null]);
         }
 
 

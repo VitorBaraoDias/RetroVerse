@@ -51,7 +51,6 @@ class SignupForm extends Model
             return null;
         }
 
-        // Inicia a transação
         $transaction = Yii::$app->db->beginTransaction();
         try {
             $user = new User();
@@ -69,8 +68,6 @@ class SignupForm extends Model
             if ($authorRole) {
                 $auth->assign($authorRole, $user->getId());
             }
-
-            //ATRIBUICAO DO PERFIL DA PROBLEMAS
 
             $perfil = new Perfil();
             $perfil->id = $user->getId();
@@ -90,11 +87,6 @@ class SignupForm extends Model
         }
     }
 
-    /**
-     * Sends confirmation email to user
-     * @param User $user user model to with email should be send
-     * @return bool whether the email was sent
-     */
     protected function sendEmail($user)
     {
         return Yii::$app
