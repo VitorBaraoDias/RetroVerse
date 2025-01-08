@@ -7,12 +7,10 @@ $statusColor = $model->idestadoencomenda0->isFinalState() ? 'green' : 'grey';
 
         <div class="image-container bg-secondary position-relative">
         <?php
-        $firstPhoto = $model->idartigo0->fotosartigos[0] ?? null;  // Alterado para usar idartigo0
-        // Caminho para a imagem no frontend
+        $firstPhoto = $model->idartigo0->fotosartigos[0] ?? null;
         $imagePath = Yii::getAlias('@web/uploads/img-artigos/') . ($firstPhoto->caminhofoto ?? '');
 
         if ($firstPhoto && file_exists(Yii::getAlias('@frontend/web/uploads/img-artigos/') . $firstPhoto->caminhofoto)) {
-            // Renderiza a imagem
             echo Html::img($imagePath, [
                 'alt' => 'Article Image',
                 'class' => 'w-100',
@@ -64,7 +62,7 @@ $statusColor = $model->idestadoencomenda0->isFinalState() ? 'green' : 'grey';
                     [
                         'class' => 'history-view-details',
                         'style' => 'font-size: x-small; gap: 10px',
-                        'data-confirm' => 'Are you sure you want to mark this item as sent?', // Mensagem de confirmação opcional
+                        'data-confirm' => 'Are you sure you want to mark this item as sent?',
                     ]
                 ) ?>
             <?php endif; ?>

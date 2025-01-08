@@ -15,7 +15,6 @@
                 'options' => ['class' => 'list-view'],
                 'layout' => '<div class="row m-0">{items}</div>',
                 'itemOptions' => ['class' => 'col-12'],
-// Layout com itens e paginação
             ]); ?>
         </div>
         <div class="col-md-8 p-0 d-flex flex-column">

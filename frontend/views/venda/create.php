@@ -50,23 +50,19 @@ $this->title = 'CHECKOUT';
 <?php
 $script = <<< JS
 $('#country-input').on('input', function() {
-    let selectedCountry = $(this).val(); // Obtém o valor digitado no input do país
+    let selectedCountry = $(this).val(); 
     let countryCode = null;
     alert('ola')
-    // Verifica o código do país correspondente ao valor selecionado
     $('#country-list option').each(function() {
         if ($(this).val() === selectedCountry) {
             countryCode = $(this).data('code');
         }
     });
 
-    // Limpa as cidades anteriores
     $('#city-list').empty();
 
     if (countryCode) {
-        // Faz uma requisição AJAX para obter as cidades
         $.getJSON('/country/get-cities?countryCode=' + countryCode, function(data) {
-            // Adiciona as cidades ao datalist
             $.each(data, function(index, city) {
                 $('#city-list').append('<option value="' + city + '"></option>');
             });

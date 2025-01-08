@@ -8,38 +8,31 @@ $artigoId = $model->id;
 
 $isFavorito = Favorito::isFavorito($userId, $artigoId);
 ?>
-    <!-- Card para cada artigo -->
         <div class="card">
             <div class="image-container bg-secondary position-relative">
                 <div class="container-info-type-item"><?= $model->tipoartigo ?></div>
 
-                <!-- Botão de favoritos -->
                 <div class="rounded-circle container-like d-flex justify-content-center align-items-center">
                     <?php if ($isFavorito): ?>
-                        <!-- Artigo está nos favoritos -->
                         <a href="<?= \yii\helpers\Url::to(['favorito/delete', 'id' => $artigoId]) ?>">
                             <img class="icon-like"
                                  src="<?= Yii::getAlias('@web/img/vector_liked.svg') ?>"
-                                 alt="Remover dos Favoritos">
+                                 alt="Remove from favorites">
                         </a>
                     <?php else: ?>
-                        <!-- Artigo não está nos favoritos -->
                         <a href="<?= \yii\helpers\Url::to(['favorito/create', 'id' => $artigoId]) ?>">
                             <img class="icon-like"
                                  src="<?= Yii::getAlias('@web/img/vector_like.svg') ?>"
-                                 alt="Adicionar aos Favoritos">
+                                 alt="Add to favorites">
                         </a>
                     <?php endif; ?>
                 </div>
 
-                <!-- Imagem do artigo -->
                 <?php
                 $firstPhoto = $model->fotosartigos[0] ?? null;
-                // Caminho para a imagem no frontend
                 $imagePath = Yii::getAlias('@web/uploads/img-artigos/') . ($firstPhoto->caminhofoto ?? '');
 
                 if ($firstPhoto && file_exists(Yii::getAlias('@frontend/web/uploads/img-artigos/') . $firstPhoto->caminhofoto)) {
-                    // Renderiza a imagem
                     echo Html::img($imagePath, [
                         'alt' => 'Article Image',
                         'class' => 'w-100',
@@ -55,17 +48,14 @@ $isFavorito = Favorito::isFavorito($userId, $artigoId);
 
             </div>
             <div class="card-body">
-                <!-- Marca do artigo -->
                 <p class="card-title text-black" style="font-weight: bold; color: black">
                     BRAND:<span class="text-secondary" style="font-weight: lighter"><?= Html::encode($model->idmarca0->nome) ?></span>
                 </p>
-                <!-- Tamanho do artigo -->
                 <p class="card-title text-black" style="font-weight: bold; color: black">
                     SIZE:<span class="text-secondary" style="font-weight: lighter"><?= Html::encode($model->idtamanho0->tamanho) ?></span>
                 </p>
                 <div class="d-flex align-items-center justify-content-between">
                     <div class="d-flex flex-column">
-                        <!-- Preço do artigo -->
                         <span style="font-weight: bolder; font-size: small">
                                 <?= Html::encode($model->precoanuncio) ?>€
                                 <span style="font-weight: bold">
@@ -76,7 +66,7 @@ $isFavorito = Favorito::isFavorito($userId, $artigoId);
                     <?= Html::a(
                         'VIEW',
                         [
-                            $model->tipoartigo === 'MARKETPLACE' ? 'artigo/view-marketplace' : 'artigo/view', // Condição para a URL
+                            $model->tipoartigo === 'MARKETPLACE' ? 'artigo/view-marketplace' : 'artigo/view',
                             'id' => $model->id
                         ],
                         [

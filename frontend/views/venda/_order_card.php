@@ -7,25 +7,21 @@ use yii\helpers\Html;
 
 $model->checkAndSetNextState();
 
-//cores do status da order
 $status = $model->estadoEncomenda->descricao ?? 'N/A';
 $statusColor = $model->estadoEncomenda && $model->estadoEncomenda->isFinalState() ? 'green' : 'grey';
 ?>
 
 <div class="history-order-box border p-3 rounded shadow-sm">
-    <!-- Total no canto superior direito -->
     <div class="history-order-total text-end">
         <span>TOTAL:</span> €<?= $model->total ?>
     </div>
 
-    <!-- Informações do Pedido -->
     <div class="history-order-info">
         <h6>ORDER #<?= $model->codigo ?></h6>
         <h3><?= Html::encode($model->getLinhavendas()->count()) ?> ITEMS</h3>
         <p><span>STATUS: </span><span style="color: <?= $statusColor ?>; font-weight: bold;"><?= Html::encode($status) ?></span></p>
     </div>
 
-    <!-- Botões no canto inferior direito -->
     <div class="history-buttons text-end">
 
         <?= Html::a('VIEW ORDER DETAILS', ['venda/view', 'id' => $model->id], ['class' => 'history-view-details']) ?>

@@ -18,7 +18,7 @@ $perfil = Perfil::findOne(['id' => $userId]);
 $isPremium = $perfil ? $perfil->hasActivePremiumPlano() : false;
 ?>
 
-<div class="position-relative d-flex align-items-center gap-4" style="padding-bottom: 20px;"> <!-- Adicionado padding-bottom para evitar sobreposição do botão -->
+<div class="position-relative d-flex align-items-center gap-4" style="padding-bottom: 20px;">
     <div>
         <?php
         $firstPhoto = $model->idartigo0->fotosartigos[0] ?? null;
@@ -88,11 +88,11 @@ $isPremium = $perfil ? $perfil->hasActivePremiumPlano() : false;
 <?php if ($model->idestadoencomenda0->isFinalState() && $model->idartigo0->tipoartigo !== 'LOJA' && is_null($model->avaliacao)): ?>
     <?= Html::a(
         '<span>RATE</span> <img height="20px" src="' . Yii::getAlias('@web/img/star.svg') . '" alt="Star Icon">',
-        ['avaliacao/create', 'id' => $model->id], // Passa o ID da linhavenda como parâmetro
+        ['avaliacao/create', 'id' => $model->id],
         [
             'class' => 'history-view-details ml-auto mr-',
             'style' => 'font-size: x-small; gap: 10px',
-            'encode' => false, // Permitir HTML no conteúdo
+            'encode' => false,
         ]
     ) ?>
 <?php elseif ($model->idartigo0->tipoartigo === 'MARKETPLACE'): ?>

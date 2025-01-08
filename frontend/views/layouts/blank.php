@@ -26,7 +26,6 @@ $action = Yii::$app->controller->id;
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>RetroVerse | Login</title>
 
-    <!-- Css Styles -->
     <link rel="stylesheet" href="<?= Yii::getAlias('@web') ?>/css/bootstrap.min.css" type="text/css">
     <link rel="stylesheet" href="<?= Yii::getAlias('@web') ?>/css/font-awesome.min.css" type="text/css">
     <link rel="stylesheet" href="<?= Yii::getAlias('@web') ?>/css/elegant-icons.css" type="text/css">
@@ -36,7 +35,6 @@ $action = Yii::$app->controller->id;
     <link rel="stylesheet" href="<?= Yii::getAlias('@web') ?>/css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="<?= Yii::getAlias('@web') ?>/css/style.css" type="text/css">
 
-    <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
 </head>
 
@@ -54,7 +52,6 @@ $action = Yii::$app->controller->id;
 
 </body>
 
-<!-- Js Plugins -->
 <script src="<?= Yii::getAlias('@web') ?>/js/jquery-3.3.1.min.js"></script>
 <script src="<?= Yii::getAlias('@web') ?>/js/bootstrap.min.js"></script>
 <script src="<?= Yii::getAlias('@web') ?>/js/jquery.nice-select.min.js"></script>

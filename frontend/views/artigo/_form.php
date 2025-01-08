@@ -80,7 +80,7 @@ use yii\widgets\ActiveForm;
                 <?= $form->field($model, 'descricao')->textarea([
                     'autofocus' => true,
                     'placeholder' => 'White sweater by Nike'
-                ])->label('DESCRIBE YOUR ARTICLE'); ?>
+                ])->label('DESCRIBE YOUR ITEM'); ?>
             </div>
             <div class="input-details">
                 <?= $form->field($model, 'idcategoria')->dropDownList(

@@ -12,7 +12,6 @@ use yii\widgets\ListView;
     <h2 class="text-left fw-bolder" style="font-weight: bold;">ORDER HISTORY</h2>
 
     <div class="container mt-4">
-        <!-- Filtros de Compras/Vendas -->
         <?php
         $tipoVenda = Yii::$app->request->get('VendaSearch')['tipoVenda'] ?? 'purchases';
         $estadoEncomenda = Yii::$app->request->get('VendaSearch')['estadoEncomenda'] ?? null;
@@ -48,7 +47,6 @@ use yii\widgets\ListView;
     </div>
 
 
-    <!-- Lista de Encomendas -->
     <div class="container mt-4">
         <?= ListView::widget([
             'dataProvider' => $dataProvider,
@@ -68,18 +66,15 @@ use yii\widgets\ListView;
     function setActive(button, group) {
         let selector = '';
 
-        // Define os seletores para cada grupo
         if (group === 'category') {
             selector = '.container:nth-of-type(1) .history-button';
         } else if (group === 'status') {
             selector = '.container:nth-of-type(2) .history-button';
         }
 
-        // Remove a classe 'active' apenas do grupo selecionado
         const buttons = document.querySelectorAll(selector);
         buttons.forEach(btn => btn.classList.remove('active'));
 
-        // Adiciona a classe 'active' ao botão clicado
         button.classList.add('active');
     }
 </script>

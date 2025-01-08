@@ -16,7 +16,7 @@ use yii\widgets\ActiveForm;
                      src="<?= Yii::getAlias('@web') ?>/uploads/img-profile/<?= $artigo->idperfil0->caminhofotoperfil ?>"
                      alt="Foto de Perfil" height="60">
             <?php else: ?>
-                <img class="" src="<?= Yii::getAlias('@web') ?>/img/icon-profile.svg" alt="Ícone de Perfil"
+                <img class="" src="<?= Yii::getAlias('@web') ?>/img/icon-profile.svg" alt="Profile icon"
                      height="70">
             <?php endif; ?>
             <h2 class="text-uppercase"><strong> <?= $artigo->idperfil0->user->username ?> </strong></h2>

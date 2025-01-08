@@ -13,14 +13,11 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <!-- Campos ocultos para idperfil e idplano -->
     <?= $form->field($model, 'idperfil')->hiddenInput()->label(false) ?>
     <?= $form->field($model, 'idplano')->hiddenInput()->label(false) ?>
 
-    <!-- Contêiner Centralizado -->
     <div class="d-flex flex-column align-items-center mt-4">
 
-        <!-- Dropdown de Método de Pagamento -->
         <div class="col-12 col-md-4 mb-3">
             <label class="custom-label-class">Selecione o método de pagamento</label>
             <?= Html::dropDownList(

@@ -15,7 +15,6 @@ $perfil = Perfil::findOne(['id' => $userId]);
 $isPremium = $perfil ? $perfil->hasActivePremiumPlano() : false;
 ?>
 
-<!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
     <section class="content-header">
         <div class="container-fluid">
@@ -29,17 +28,13 @@ $isPremium = $perfil ? $perfil->hasActivePremiumPlano() : false;
         <div class="row">
           <div class="col-12">
             <div class="callout callout-info">
-            <!-- Main content -->
             <div class="invoice p-3 mb-3">
-              <!-- title row -->
               <div class="row">
                 <div class="col-12">
                   <h4>RETROVERSE <small class="float-right">Date: <?= Yii::$app->formatter->asDate($model->datavenda, 'dd/MM/yyyy') ?></small>
                   </h4>
                 </div>
-                <!-- /.col -->
               </div>
-              <!-- info row -->
               <div class="row invoice-info">
                 <div class="col-sm-4 invoice-col">
                   From
@@ -50,7 +45,6 @@ $isPremium = $perfil ? $perfil->hasActivePremiumPlano() : false;
                     Email: info@retroverse.com
                   </address>
                 </div>
-                <!-- /.col -->
                 <div class="col-sm-4 invoice-col">
                   To
                   <address>
@@ -81,9 +75,8 @@ $isPremium = $perfil ? $perfil->hasActivePremiumPlano() : false;
                             </tr>
                             </thead>
                             <tbody>
-              <!-- Table Body -->
                 <?= ListView::widget([
-                    'dataProvider' => $dataProvider,  // Passa o dataProvider com as Linhasvendas
+                    'dataProvider' => $dataProvider,
                     'itemView' => '_invoice_items',
                     'viewParams' => [
                         'isPremium' => $isPremium,
@@ -115,18 +108,13 @@ $isPremium = $perfil ? $perfil->hasActivePremiumPlano() : false;
                             </table>
                         </div>
                     </div>
-                    <!-- /.col -->
                 </div>
-                <!-- /.row -->
-      </div><!-- /.container-fluid -->
+      </div>
     </section>
-    <!-- /.content -->
   </div>
 
-  <!-- /.control-sidebar -->
 </div>
 
-<!-- AdminLTE App -->
 <script src="../../dist/js/adminlte.min.js"></script>
 </body>
 </html>

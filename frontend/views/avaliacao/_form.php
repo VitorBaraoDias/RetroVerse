@@ -11,10 +11,10 @@ use yii\widgets\ActiveForm;
 
 <div class="avaliacao-form row">
 
-    <div class="col-md-6 d-flex align-items-center" style="width: 100%;"> <!-- Coluna do formulário -->
+    <div class="col-md-6 d-flex align-items-center" style="width: 100%;">
         <?php $form = ActiveForm::begin([
             'action' => ['avaliacao/create', 'id' => $linhaVenda->id],
-            'options' => ['style' => 'width: 100%;'], // Define largura total do formulário
+            'options' => ['style' => 'width: 100%;'],
         ]); ?>
         <h2 class="text-center mb-5 text-uppercase"><strong>RATE: <?=$linhaVenda->idvendedor0->user->username?></strong></h2>
 
@@ -32,7 +32,7 @@ use yii\widgets\ActiveForm;
                 [
                     'class' => 'btn retroverse-btn active w-100 mt-3 px-5 py-2 rounded-0',
                     'id' => 'retroverse-btn-active',
-                    'encode' => false, // Permite HTML no conteúdo do botão
+                    'encode' => false,
                 ]
             ) ?>
 
@@ -57,7 +57,7 @@ use yii\widgets\ActiveForm;
                         <span>(<?= $linhaVenda->idvendedor0->getCountRates() ?>)</span>
                     </div>
                 </div>
-            </div><!-- Adicionado padding-bottom para evitar sobreposição do botão -->
+            </div>
             <div class="d-flex gap-4">
                 <div>
                     <?php
