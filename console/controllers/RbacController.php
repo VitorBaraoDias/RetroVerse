@@ -1,4 +1,5 @@
 <?php
+
 namespace console\controllers;
 
 use Yii;
@@ -403,6 +404,68 @@ class RbacController extends Controller
         //ArtigoController FO
 
 
+        //CARRINHOCONTROLLER FO
+        $verCarrinhoFrontend = $auth->createPermission('verCarrinhoFrontend');
+        $verCarrinhoFrontend->description = 'Ver Carrinho Frontend';
+        $auth->add($verCarrinhoFrontend);
+
+        $criarCarrinhoFrontend = $auth->createPermission('criarCarrinhoFrontend');
+        $criarCarrinhoFrontend->description = 'Criar Carrinho Frontend';
+        $auth->add($criarCarrinhoFrontend);
+        //CARRINHOCONTROLLER FO
+
+
+        //CHATCONTROLLER FO
+        $verChatFrontend = $auth->createPermission('verChatFrontend');
+        $verChatFrontend->description = 'Ver Chat Frontend';
+        $auth->add($verChatFrontend);
+
+        $verDetalhesChatFrontend = $auth->createPermission('verDetalhesChatFrontend');
+        $verDetalhesChatFrontend->description = 'Ver Detalhes Chat Frontend';
+        $auth->add($verDetalhesChatFrontend);
+
+        $criarChatFrontend = $auth->createPermission('criarChatFrontend');
+        $criarChatFrontend->description = 'Criar Chat Frontend';
+        $auth->add($criarChatFrontend);
+        //CHATCONTROLLER FO
+
+        //FOTOARTIGOCONTROLLER FO
+        $criarFotoartigoFrontend = $auth->createPermission('criarFotoartigoFrontend');
+        $criarFotoartigoFrontend->description = 'Criar Fotoartigo Frontend';
+        $auth->add($criarFotoartigoFrontend);
+
+        $alterarFotoartigoFrontend = $auth->createPermission('alterarFotoartigoFrontend');
+        $alterarFotoartigoFrontend->description = 'Alterar Fotoartigo Frontend';
+        $auth->add($alterarFotoartigoFrontend);
+
+        $eliminarFotoartigoFrontend = $auth->createPermission('eliminarFotoartigoFrontend');
+        $eliminarFotoartigoFrontend->description = 'Eliminar Fotoartigo Frontend';
+        $auth->add($eliminarFotoartigoFrontend);
+        //FOTOARTIGOCONTROLLER FO
+
+        //LINHASCARRINHOCONTROLLER FO
+        $eliminarLinhacarrinhoFrontend = $auth->createPermission('eliminarLinhacarrinhoFrontend');
+        $eliminarLinhacarrinhoFrontend->description = 'Eliminar Linhacarrinho Frontend';
+        $auth->add($eliminarLinhacarrinhoFrontend);
+        //LINHASCARRINHOCONTROLLER FO
+
+        //LINHASVENDACONTROLLER FO
+        $verLinhavendaFrontend = $auth->createPermission('verLinhavendaFrontend');
+        $verLinhavendaFrontend->description = 'Ver Linhavenda Frontend';
+        $auth->add($verLinhavendaFrontend);
+
+        $criarLinhavendaFrontend = $auth->createPermission('criarLinhavendaFrontend');
+        $criarLinhavendaFrontend->description = 'Criar Linhavenda Frontend';
+        $auth->add($criarLinhavendaFrontend);
+
+        $confirmarEnvioEncomendaFrontend = $auth->createPermission('confirmarEnvioEncomendaFrontend');
+        $confirmarEnvioEncomendaFrontend->description = 'Confirmar Envio Encomenda Frontend';
+        $auth->add($confirmarEnvioEncomendaFrontend);
+
+        $confirmarRecebimentoEncomendaFrontend = $auth->createPermission('confirmarRecebimentoEncomendaFrontend');
+        $confirmarRecebimentoEncomendaFrontend->description = 'Confirmar Recebimento Encomenda Frontend';
+        $auth->add($confirmarRecebimentoEncomendaFrontend);
+        //LINHASVENDACONTROLLER FO
 
         // member permission #4
         $adicionarArtigoCarrinho = $auth->createPermission('adicionarArtigoCarrinho');
@@ -489,7 +552,6 @@ class RbacController extends Controller
         $auth->add($verChat);
 
 
-
         //CRIAÇÃO DAS ROLES
         $admin = $auth->createRole('admin');
         $moderador = $auth->createRole('moderador');
@@ -500,11 +562,41 @@ class RbacController extends Controller
         $auth->add($membro);
 
 
-
         //ASSOCIAR PERMISSÕES AO MEMBRO
+        //ARTIGOCONTROLLER FO
         $auth->addChild($membro, $criarArtigoMarketplaceFrontend);
         $auth->addChild($membro, $alterarArtigoMarketplaceFrontend);
         $auth->addChild($membro, $eliminarArtigoMarketplaceFrontend);
+        //ARTIGOCONTROLLER FO
+
+        //CARRINHOCONTROLLER FO
+        $auth->addChild($membro, $verCarrinhoFrontend);
+        $auth->addChild($membro, $criarCarrinhoFrontend);
+        //CARRINHOCONTROLLER FO
+
+        //CHATCONTROLLER FO
+        $auth->addChild($membro, $verChatFrontend);
+        $auth->addChild($membro, $verDetalhesChatFrontend);
+        $auth->addChild($membro, $criarChatFrontend);
+        //CHATCONTROLLER FO
+
+        //FOTOARTIGOCONTROLLER FO
+        $auth->addChild($membro, $criarFotoartigoFrontend);
+        $auth->addChild($membro, $alterarFotoartigoFrontend);
+        $auth->addChild($membro, $eliminarFotoartigoFrontend);
+        //FOTOARTIGOCONTROLLER FO
+
+        //LINHASCARRINHOCONTROLLER FO
+        $auth->addChild($membro, $eliminarLinhacarrinhoFrontend);
+        //LINHASCARRINHOCONTROLLER FO
+
+        //LINHASVENDACONTROLLER FO
+        $auth->addChild($membro, $verLinhavendaFrontend);
+        $auth->addChild($membro, $criarLinhavendaFrontend);
+        $auth->addChild($membro, $confirmarEnvioEncomendaFrontend);
+        $auth->addChild($membro, $confirmarRecebimentoEncomendaFrontend);
+        //LINHASVENDACONTROLLER FO
+
         $auth->addChild($membro, $adicionarArtigoCarrinho);
         $auth->addChild($membro, $eliminarArtigoCarrinho);
         $auth->addChild($membro, $alterarDetalhesPerfil);
@@ -667,5 +759,7 @@ class RbacController extends Controller
         // ASSOCIAR AS ROLES A UTILIZADORES (ID)
         $auth->assign($admin, 1);
         $auth->assign($moderador, 2);
+        $auth->assign($membro, 21);
+        $auth->assign($membro, 20);
     }
 }

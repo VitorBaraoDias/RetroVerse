@@ -54,7 +54,7 @@ class SiteController extends Controller
                     if (!Yii::$app->user->isGuest) {
                         return Yii::$app->response->redirect(['site/index']);
                     }
-                    throw new \yii\web\ForbiddenHttpException('Você não tem permissão para realizar esta ação.');
+                    return Yii::$app->response->redirect(['site/login']);
                 },
             ],
             'verbs' => [
@@ -81,46 +81,34 @@ class SiteController extends Controller
 
     public function beforeAction($action)
     {
-        // Verifica se o usuário está logado
         if (!Yii::$app->user->isGuest) {
             $user = Yii::$app->user->identity;
 
-            // Verifica se o perfil do usuário está banido
             if ($user && $user->perfil && $user->perfil->banido) {
-                // Desconecta o usuário
                 Yii::$app->user->logout();
 
-                // Define uma mensagem de erro
-                Yii::$app->session->setFlash('error', 'Sua conta foi banida. Você não pode acessar esta página.');
+                Yii::$app->session->setFlash('error', 'Your account has been banned. You cannot access this page.');
 
-                // Redireciona para a página de login
                 return $this->redirect(['site/login']);
             }
         }
 
-        // Caso contrário, o fluxo normal continua
         return parent::beforeAction($action);
     }
 
 
-    /**
-     * Displays homepage.
-     *
-     * @return mixed
-     */
     public function actionIndex()
     {
 
         $userId = Yii::$app->user->id;
         $perfil = Perfil::findOne(['id' => $userId]);
 
-        //verificar se ele tem premium
         $isPremiumActive = $perfil ? $perfil->hasActivePremiumPlano() : false;
 
         $dataProvider1 = new ActiveDataProvider([
             'query' => Artigo::find()
                 ->with('fotosartigos')
-                ->where(['not in', 'id', (new Query())->select('id')->from('artigospremium')]) // exclui os artigos premium
+                ->where(['not in', 'id', (new Query())->select('id')->from('artigospremium')])
                 ->andWhere(['ativo' => 1])
                 ->andWhere(['tipoartigo' => 'LOJA'])
                 ->orderBy(['datacriacao' => SORT_DESC])
@@ -151,11 +139,7 @@ class SiteController extends Controller
         ]);
     }
 
-    /**
-     * Logs in a user.
-     *
-     * @return mixed
-     */
+
     public function actionLogin()
     {
 
@@ -177,11 +161,7 @@ class SiteController extends Controller
         ]);
     }
 
-    /**
-     * Logs out the current user.
-     *
-     * @return mixed
-     */
+
     public function actionLogout()
     {
 
@@ -189,11 +169,7 @@ class SiteController extends Controller
         Yii::$app->session->destroy();
         return $this->goHome();
     }
-    /**
-     * Displays contact page.
-     *
-     * @return mixed
-     */
+
     public function actionContact()
     {
         $model = new ContactForm();
@@ -211,20 +187,19 @@ class SiteController extends Controller
             'model' => $model,
         ]);
     }
-    /**
-     * Displays about page.
-     *
-     * @return mixed
-     */
+
+
     public function actionAbout()
     {
         return $this->render('about');
     }
 
+
     public function actionTerms()
     {
         return $this->render('terms');
     }
+
 
     public function actionPremium()
     {
@@ -233,11 +208,8 @@ class SiteController extends Controller
         ]);
     }
 
-    /**
-     * Signs user up.
-     *
-     * @return mixed
-     */
+
+
     public function actionSignup()
     {
         $this->layout = 'blank';
@@ -247,17 +219,13 @@ class SiteController extends Controller
             return $this->goHome();
         }
 
-        Yii::error('Erro no envio do formulário.', __METHOD__);
+        Yii::error('Error submitting the form.', __METHOD__);
         return $this->render('signup', [
             'model' => $model,
         ]);
     }
 
-    /**
-     * Requests password reset.
-     *
-     * @return mixed
-     */
+
     public function actionRequestPasswordReset()
     {
         $model = new PasswordResetRequestForm();
@@ -276,13 +244,7 @@ class SiteController extends Controller
         ]);
     }
 
-    /**
-     * Resets password.
-     *
-     * @param string $token
-     * @return mixed
-     * @throws BadRequestHttpException
-     */
+
     public function actionResetPassword($token)
     {
         try {
@@ -302,13 +264,7 @@ class SiteController extends Controller
         ]);
     }
 
-    /**
-     * Verify email address
-     *
-     * @param string $token
-     * @throws BadRequestHttpException
-     * @return yii\web\Response
-     */
+
     public function actionVerifyEmail($token)
     {
         try {
@@ -325,11 +281,7 @@ class SiteController extends Controller
         return $this->goHome();
     }
 
-    /**
-     * Resend verification email
-     *
-     * @return mixed
-     */
+
     public function actionResendVerificationEmail()
     {
         $model = new ResendVerificationEmailForm();
