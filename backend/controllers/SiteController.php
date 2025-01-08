@@ -32,7 +32,12 @@ class SiteController extends Controller
                         'roles' => ['?', "@"],
                     ],
                     [
-                        'actions' => ['index'],
+                        'actions' => ['index', 'getdenunciaspendentes'],
+                        'allow' => true,
+                        'roles' => ['admin', 'moderador'],
+                    ],
+                    [
+                        'actions' => ['getsalesdata'],
                         'allow' => true,
                         'roles' => ['admin', 'moderador'],
                     ],
@@ -40,7 +45,6 @@ class SiteController extends Controller
                 'denyCallback' => function ($rule, $action) {
                     return Yii::$app->response->redirect(['site/login']);
                 }
-
             ],
             'verbs' => [
                 'class' => VerbFilter::class,
@@ -59,6 +63,7 @@ class SiteController extends Controller
         return [
             'error' => [
                 'class' => \yii\web\ErrorAction::class,
+                'layout' => 'blank',
             ],
         ];
     }
@@ -71,48 +76,65 @@ class SiteController extends Controller
 
     public function actionIndex()
     {
-        $userCount = User::find()->count();
-        $marketplaceSales = Linhavenda::getVendasMensaisPorTipoArtigo('MARKETPLACE');
-        $lojaSales = Linhavenda::getVendasMensaisPorTipoArtigo('LOJA');
-        $marcasData = Linhavenda::getMarcasMaisVendidas();
+        //aqui so acede moderador e admin, dentro disto validar o que cada pode fazer
+        if (Yii::$app->user->can('verDashboardCompletaBackend')) {
+
+            //para o admin
+            $userCount = User::find()->count();
+            $marketplaceSales = Linhavenda::getVendasMensaisPorTipoArtigo('MARKETPLACE');
+            $lojaSales = Linhavenda::getVendasMensaisPorTipoArtigo('LOJA');
+            $marcasData = Linhavenda::getMarcasMaisVendidas();
 
 
+            $lojaSalesCount = $this->getSalesData("LOJA");
+            $marketplaceSalesCount = $this->getSalesData("MARKETPLACE");
+            $denunciasPendentes = $this->getDenunciasPendentes();
 
-        $lojaSalesCount = $this->getSalesData("LOJA");
-        $marketplaceSalesCount = $this->getSalesData("MARKETPLACE");
-        $denunciasPendentes = $this->getDenunciasPendentes();
+            return $this->render('index', [
+                'marketplaceSales' => json_encode($marketplaceSales),
+                'lojaSales' => json_encode($lojaSales),
+                'userCount' => $userCount,
+                'marcas' => json_encode($marcasData['marcas']),
+                'quantidadeVendas' => json_encode($marcasData['quantidade_vendas']),
+                'lojaSalesCount' => $lojaSalesCount,
+                'marketplaceSalesCount' => $marketplaceSalesCount,
+                'denunciasPendentes' => $denunciasPendentes,
+            ]);
+        } else {
+            //para o moderador
+            $denunciasPendentes = $this->getDenunciasPendentes();
 
-        return $this->render('index', [
-            'marketplaceSales' => json_encode($marketplaceSales),
-            'lojaSales' => json_encode($lojaSales),
-            'userCount' => $userCount,
-            'marcas' => json_encode($marcasData['marcas']),
-            'quantidadeVendas' => json_encode($marcasData['quantidade_vendas']),
-            'lojaSalesCount' => $lojaSalesCount,
-            'marketplaceSalesCount' => $marketplaceSalesCount,
-            'denunciasPendentes' => $denunciasPendentes,
-        ]);
+            return $this->render('index', [
+                'denunciasPendentes' => $denunciasPendentes,
+            ]);
+        }
     }
 
     private function getSalesData($type)
     {
+        if (Yii::$app->user->can('getInformacoesVendasBackend')) {
+            $salesCount = Linhavenda::find()
+                ->joinWith('idartigo0')
+                ->where(['artigos.tipoartigo' => $type])
+                ->count();
 
-        $salesCount = Linhavenda::find()
-            ->joinWith('idartigo0')
-            ->where(['artigos.tipoartigo' => $type])
-            ->count();
-
-        return $salesCount ?: 0;
+            return $salesCount ?: 0;
+        } else {
+            throw new \yii\web\ForbiddenHttpException('You do not have permission to use this function.');
+        }
     }
 
     private function getDenunciasPendentes()
     {
-
+        if (Yii::$app->user->can('getInformacoesDenunciasBackend')) {
         $denunciasCount = Denuncia::find()
             ->where(['estado' => 0])
             ->count();
 
         return $denunciasCount ?: 0;
+        } else {
+            throw new \yii\web\ForbiddenHttpException('You do not have permission to use this function.');
+        }
     }
 
     /**
@@ -145,30 +167,16 @@ class SiteController extends Controller
         }
         Yii::$app->session->setFlash('error', 'Você não tem permissão para acessar esta área.');
         $model->password = '';
-        // Renderiza a página de login
 
-        return $this->render('login', ['model' => $model,]);
+        return $this->render('login',
+            ['model' => $model,]);
     }
-    /**
-     * Logout action.
-     *
-     * @return Response
-     */
+
+
     public function actionLogout()
     {
         Yii::$app->user->logout();
         return $this->goHome();
     }
-
-    public function actionError()
-    {
-        $exception = Yii::$app->errorHandler->exception;
-        if ($exception !== null) {
-            return $this->render('error', ['exception' => $exception]);
-        }
-    }
-
-
-
 
 }

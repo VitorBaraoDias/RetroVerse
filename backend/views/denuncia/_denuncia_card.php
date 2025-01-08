@@ -85,7 +85,7 @@ use yii\helpers\Html;
 
             <!-- Botão para banir user -->
             <?php if (!$model->estado): ?>
-                <?= Html::a('Ban User', ['denuncia/ban-user', 'id' => $model->id], [
+                <?= Html::a('Ban User', ['denuncia/banuser', 'id' => $model->id], [
                     'class' => 'btn btn-danger btn-sm w-100 mt-2 mb-2',
                     'data-confirm' => 'Are you sure you want to ban this user?',
                     'data-method' => 'post',

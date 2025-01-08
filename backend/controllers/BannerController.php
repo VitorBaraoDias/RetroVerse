@@ -6,6 +6,7 @@ use Yii;
 use common\models\Banner;
 use common\models\BannerSearch;
 use common\models\UploadSingleForm;
+use yii\filters\AccessControl;
 use yii\web\UploadedFile;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -21,17 +22,22 @@ class BannerController extends Controller
      */
     public function behaviors()
     {
-        return array_merge(
-            parent::behaviors(),
-            [
-                'verbs' => [
-                    'class' => VerbFilter::className(),
-                    'actions' => [
-                        'delete' => ['POST'],
+        return [
+            'access' => [
+                'class' => AccessControl::class,
+                'rules' => [
+                    [
+                        'actions' => ['index', 'view', 'create', 'update', 'delete'],
+                        'allow' => true,
+                        'roles' => ['admin'],
                     ],
                 ],
-            ]
-        );
+                'denyCallback' => function ($rule, $action) {
+                    throw new \yii\web\ForbiddenHttpException('You do not have permission to access this page.');
+                },
+
+            ],
+        ];
     }
 
     /**
@@ -41,13 +47,17 @@ class BannerController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new BannerSearch();
-        $dataProvider = $searchModel->search($this->request->queryParams);
+        if (\Yii::$app->user->can('verBannerLojaBackend')) {
 
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
+            $searchModel = new BannerSearch();
+            $dataProvider = $searchModel->search($this->request->queryParams);
+
+            return $this->render('index', [
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
+            ]);
+        }
+        return die('ola');
     }
 
     /**
@@ -58,9 +68,13 @@ class BannerController extends Controller
      */
     public function actionView($id)
     {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
+        if (\Yii::$app->user->can('verDetalhesBannerLojaBackend')) {
+
+            return $this->render('view', [
+                'model' => $this->findModel($id),
+            ]);
+        }
+        return die('ola');
     }
 
     /**
@@ -70,29 +84,33 @@ class BannerController extends Controller
      */
     public function actionCreate()
     {
-        $model = new Banner();
-        $uploadModel = new UploadSingleForm();
+        if (\Yii::$app->user->can('criarBannerLojaBackend')) {
 
-        if ($model->load(Yii::$app->request->post())) {
-            // Processa o upload da imagem
-            $uploadModel->imageFile = UploadedFile::getInstance($uploadModel, 'imageFile');
-            $uploadModel->backendUploadDir = Yii::getAlias('@imageurl/img-banners/');
-            $uploadModel->frontendUploadDir = Yii::getAlias('@frontend/web/uploads/img-banners/');
+            $model = new Banner();
+            $uploadModel = new UploadSingleForm();
 
-            if ($uploadModel->upload()) {
-                // Se o upload for bem-sucedido, salva o caminho da imagem no banco de dados
-                $model->caminhoimagem = $uploadModel->imagePaths[0]; // Considera o primeiro arquivo carregado
+            if ($model->load(Yii::$app->request->post())) {
+                // Processa o upload da imagem
+                $uploadModel->imageFile = UploadedFile::getInstance($uploadModel, 'imageFile');
+                $uploadModel->backendUploadDir = Yii::getAlias('@imageurl/img-banners/');
+                $uploadModel->frontendUploadDir = Yii::getAlias('@frontend/web/uploads/img-banners/');
+
+                if ($uploadModel->upload()) {
+                    // Se o upload for bem-sucedido, salva o caminho da imagem no banco de dados
+                    $model->caminhoimagem = $uploadModel->imagePaths[0]; // Considera o primeiro arquivo carregado
+                }
+
+                if ($model->save()) {
+                    return $this->redirect(['view', 'id' => $model->id]);
+                }
             }
 
-            if ($model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
-            }
+            return $this->render('create', [
+                'model' => $model,
+                'uploadModel' => $uploadModel,
+            ]);
         }
-
-        return $this->render('create', [
-            'model' => $model,
-            'uploadModel' => $uploadModel,
-        ]);
+        return die('ola');
     }
 
     /**
@@ -104,41 +122,45 @@ class BannerController extends Controller
      */
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
-        $uploadModel = new UploadSingleForm();
-        $uploadModel->backendUploadDir = Yii::getAlias('@imageurl/img-banners/');
-        $uploadModel->frontendUploadDir = Yii::getAlias('@frontend/web/uploads/img-banners/');
+        if (\Yii::$app->user->can('alterarBannerLojaBackend')) {
 
-        if ($this->request->isPost && $model->load($this->request->post())) {
-            // Verificar se há uma nova imagem para upload
-            $uploadModel->imageFile = UploadedFile::getInstance($uploadModel, 'imageFile');
+            $model = $this->findModel($id);
+            $uploadModel = new UploadSingleForm();
+            $uploadModel->backendUploadDir = Yii::getAlias('@imageurl/img-banners/');
+            $uploadModel->frontendUploadDir = Yii::getAlias('@frontend/web/uploads/img-banners/');
 
-            if ($uploadModel->imageFile) {
-                // Remover a imagem antiga, se existir
-                if ($model->caminhoimagem) {
-                    $uploadModel->deleteImageIfExist($model->caminhoimagem);
+            if ($this->request->isPost && $model->load($this->request->post())) {
+                // Verificar se há uma nova imagem para upload
+                $uploadModel->imageFile = UploadedFile::getInstance($uploadModel, 'imageFile');
+
+                if ($uploadModel->imageFile) {
+                    // Remover a imagem antiga, se existir
+                    if ($model->caminhoimagem) {
+                        $uploadModel->deleteImageIfExist($model->caminhoimagem);
+                    }
+
+                    // Definir os diretórios de upload
+                    $uploadModel->backendUploadDir = Yii::getAlias('@imageurl/img-banners/');
+                    $uploadModel->frontendUploadDir = Yii::getAlias('@frontend/web/uploads/img-banners/');
+                    // Fazer o upload da nova imagem
+                    if ($uploadModel->upload()) {
+                        // Atualiza o campo 'caminhoimagem' com o nome da nova imagem
+                        $model->caminhoimagem = $uploadModel->imagePaths[0];
+                    }
                 }
 
-                // Definir os diretórios de upload
-                $uploadModel->backendUploadDir = Yii::getAlias('@imageurl/img-banners/');
-                $uploadModel->frontendUploadDir = Yii::getAlias('@frontend/web/uploads/img-banners/');
-                // Fazer o upload da nova imagem
-                if ($uploadModel->upload()) {
-                    // Atualiza o campo 'caminhoimagem' com o nome da nova imagem
-                    $model->caminhoimagem = $uploadModel->imagePaths[0];
+                // Salva o modelo de Banner (com ou sem imagem)
+                if ($model->save()) {
+                    return $this->redirect(['view', 'id' => $model->id]);
                 }
             }
 
-            // Salva o modelo de Banner (com ou sem imagem)
-            if ($model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
-            }
+            return $this->render('update', [
+                'model' => $model,
+                'uploadModel' => $uploadModel,
+            ]);
         }
-
-        return $this->render('update', [
-            'model' => $model,
-            'uploadModel' => $uploadModel,
-        ]);
+        return die('ola');
     }
 
 
@@ -151,9 +173,12 @@ class BannerController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        if (\Yii::$app->user->can('eliminarBannerLojaBackend')) {
 
-        return $this->redirect(['index']);
+            $this->findModel($id)->delete();
+            return $this->redirect(['index']);
+        }
+        die('ola');
     }
 
     /**

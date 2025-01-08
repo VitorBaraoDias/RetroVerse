@@ -10,6 +10,7 @@ use common\models\DenunciaSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
 
 /**
  * DenunciaController implements the CRUD actions for Denuncia model.
@@ -24,6 +25,19 @@ class DenunciaController extends Controller
         return array_merge(
             parent::behaviors(),
             [
+                'access' => [
+                    'class' => AccessControl::class,
+                    'rules' => [
+                        [
+                            'actions' => ['index','view', 'banuser', 'markasresolved'],
+                            'allow' => true,
+                            'roles' => ['admin', 'moderador'],
+                        ],
+                    ],
+                    'denyCallback' => function ($rule, $action) {
+                        throw new \yii\web\ForbiddenHttpException('You do not have permission to access this page.');
+                    },
+                ],
                 'verbs' => [
                     'class' => VerbFilter::className(),
                     'actions' => [
@@ -34,13 +48,10 @@ class DenunciaController extends Controller
         );
     }
 
-    /**
-     * Lists all Denuncia models.
-     *
-     * @return string
-     */
+
     public function actionIndex()
     {
+        if (Yii::$app->user->can('verDenunciaBackend')) {
         $searchModel = new DenunciaSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
 
@@ -48,84 +59,22 @@ class DenunciaController extends Controller
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
+        } else {
+            throw new \yii\web\ForbiddenHttpException('You do not have permission to access this resource.');
+        }
     }
 
-    /**
-     * Displays a single Denuncia model.
-     * @param int $id ID
-     * @return string
-     * @throws NotFoundHttpException if the model cannot be found
-     */
     public function actionView($id)
     {
+        if (Yii::$app->user->can('verDetalhesDenunciaBackend')) {
         return $this->render('view', [
             'model' => $this->findModel($id),
-        ]);
-    }
-
-    /**
-     * Creates a new Denuncia model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return string|\yii\web\Response
-     */
-    public function actionCreate()
-    {
-        $model = new Denuncia();
-
-        if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
-            }
-        } else {
-            $model->loadDefaultValues();
+        ]); } else {
+            throw new \yii\web\ForbiddenHttpException('You do not have permission to access this resource.');
         }
-
-        return $this->render('create', [
-            'model' => $model,
-        ]);
     }
 
-    /**
-     * Updates an existing Denuncia model.
-     * If update is successful, the browser will be redirected to the 'view' page.
-     * @param int $id ID
-     * @return string|\yii\web\Response
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    public function actionUpdate($id)
-    {
-        $model = $this->findModel($id);
 
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        }
-
-        return $this->render('update', [
-            'model' => $model,
-        ]);
-    }
-
-    /**
-     * Deletes an existing Denuncia model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param int $id ID
-     * @return \yii\web\Response
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    public function actionDelete($id)
-    {
-        $this->findModel($id)->delete();
-
-        return $this->redirect(['index']);
-    }
-
-    /**
-     * Finds the Denuncia model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param int $id ID
-     * @return Denuncia the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
-     */
     protected function findModel($id)
     {
         if (($model = Denuncia::findOne(['id' => $id])) !== null) {
@@ -137,6 +86,7 @@ class DenunciaController extends Controller
 
     public function actionMarkasresolved($id)
     {
+        if (Yii::$app->user->can('marcarDenunciaResolvidaBackend')) {
         $model = $this->findModel($id);
 
         if (!$model->estado) { // Apenas se ainda não estiver resolvido
@@ -151,37 +101,35 @@ class DenunciaController extends Controller
         }
 
         return $this->redirect(['index']);
+        } else {
+            throw new \yii\web\ForbiddenHttpException('You do not have permission to access this resource.');
+        }
     }
 
-    public function actionBanUser($id)
+    public function actionBanuser($id)
     {
-        // Encontrar a denúncia com o id fornecido
+        if (Yii::$app->user->can('banirMembroBackend')) {
         $model = $this->findModel($id);
 
-        // Verificar se a denúncia está resolvida
         if ($model->estado != 1) {
-            // Alterar o estado da denúncia para resolvido
             $model->estado = 1;
             $model->save();
         }
 
-        // Buscar o usuário denunciado
         $user = User::findOne($model->iddenunciado);
 
         if ($user) {
-            // Verificar se o perfil do usuário existe
+
             if ($user->perfil) {
-                // Marcar o usuário como banido no perfil
                 $user->perfil->banido = 1;
 
-                // Desativar todos os artigos do usuário
+
                 $artigos = Artigo::find()->where(['idperfil' => $user->id])->all();
                 foreach ($artigos as $artigo) {
-                    $artigo->ativo = 0;  // Desativar o artigo
-                    $artigo->save();  // Salvar as mudanças
+                    $artigo->ativo = 0;
+                    $artigo->save();
                 }
 
-                // Salvar as alterações no perfil do usuário
                 if ($user->perfil->save()) {
                     Yii::$app->session->setFlash('success', 'User has been banned and all articles have been deactivated.');
                 } else {
@@ -195,6 +143,9 @@ class DenunciaController extends Controller
         }
 
         return $this->redirect(['index']);
+        } else {
+            throw new \yii\web\ForbiddenHttpException('You do not have permission to access this resource.');
+        }
     }
 
 

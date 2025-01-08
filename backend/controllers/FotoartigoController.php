@@ -5,6 +5,7 @@ use backend\models\UploadMultipleForm;
 use common\models\Fotosartigo;
 use Yii;
 use yii\data\ActiveDataProvider;
+use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -20,16 +21,22 @@ class FotoartigoController extends Controller
      */
     public function behaviors()
     {
-        return array_merge(
-            parent::behaviors(),
-            [
-                'verbs' => [
-                    'class' => VerbFilter::className(),
-                    'actions' => [
+        return [
+            'access' => [
+                'class' => AccessControl::class,
+                'rules' => [
+                    [
+                        'actions' => ['create', 'delete'],
+                        'allow' => true,
+                        'roles' => ['admin'],
                     ],
                 ],
-            ]
-        );
+                'denyCallback' => function ($rule, $action) {
+                    throw new \yii\web\ForbiddenHttpException('You do not have permission to access this page.');
+                },
+
+            ],
+        ];
     }
 
     /**
@@ -37,26 +44,6 @@ class FotoartigoController extends Controller
      *
      * @return string
      */
-    public function actionIndex()
-    {
-        $dataProvider = new ActiveDataProvider([
-            'query' => Fotosartigo::find(),
-            /*
-            'pagination' => [
-                'pageSize' => 50
-            ],
-            'sort' => [
-                'defaultOrder' => [
-                    'id' => SORT_DESC,
-                ]
-            ],
-            */
-        ]);
-
-        return $this->render('index', [
-            'dataProvider' => $dataProvider,
-        ]);
-    }
 
     /**
      * Displays a single Fotosartigo model.
@@ -64,12 +51,6 @@ class FotoartigoController extends Controller
      * @return string
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionView($id)
-    {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
-    }
 
     /**
      * Creates a new Fotosartigo model.
@@ -78,40 +59,25 @@ class FotoartigoController extends Controller
      */
     public function actionCreate($id)
     {
-        $model = new UploadMultipleForm();
-        $model->backendUploadDir = Yii::getAlias('@imageurl/img-artigos/');
-        $model->frontendUploadDir = Yii::getAlias('@frontend/web/uploads/img-artigos/');
-        if (Yii::$app->request->isPost && $model->load($this->request->post())) {
-            $model->imageFiles = UploadedFile::getInstances($model, 'imageFiles');
-            if ($model->upload($id)) {
-                // file is uploaded successfully
-                return $this->redirect(['artigo/view', 'id' => $id]);
+        if (\Yii::$app->user->can('criarfotoArtigoLojaBackend')) {
+
+            $model = new UploadMultipleForm();
+            $model->backendUploadDir = Yii::getAlias('@imageurl/img-artigos/');
+            $model->frontendUploadDir = Yii::getAlias('@frontend/web/uploads/img-artigos/');
+            if (Yii::$app->request->isPost && $model->load($this->request->post())) {
+                $model->imageFiles = UploadedFile::getInstances($model, 'imageFiles');
+                if ($model->upload($id)) {
+                    // file is uploaded successfully
+                    return $this->redirect(['artigo/view', 'id' => $id]);
+                }
             }
+            return $this->render('create', [
+                'model' => $model,
+            ]);
         }
-        return $this->render('create', [
-            'model' => $model,
-        ]);
+        return die('ola');
     }
 
-    /**
-     * Updates an existing Fotosartigo model.
-     * If update is successful, the browser will be redirected to the 'view' page.
-     * @param int $id ID
-     * @return string|\yii\web\Response
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    public function actionUpdate($id)
-    {
-        $model = $this->findModel($id);
-
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        }
-
-        return $this->render('update', [
-            'model' => $model,
-        ]);
-    }
 
     /**
      * Deletes an existing Fotosartigo model.
@@ -122,24 +88,28 @@ class FotoartigoController extends Controller
      */
     public function actionDelete($id)
     {
-        $model = $this->findModel($id);
-        $modelForm = new UploadMultipleForm();
-        $modelForm->backendUploadDir = Yii::getAlias('@imageurl/img-artigos/');
-        $modelForm->frontendUploadDir = Yii::getAlias('@frontend/web/uploads/img-artigos/');
+        if (\Yii::$app->user->can('eliminarfotoArtigoLojaBackend')) {
 
-        $transaction = Yii::$app->db->beginTransaction();
-        try {
-            $this->findModel($id)->delete();
+            $model = $this->findModel($id);
+            $modelForm = new UploadMultipleForm();
+            $modelForm->backendUploadDir = Yii::getAlias('@imageurl/img-artigos/');
+            $modelForm->frontendUploadDir = Yii::getAlias('@frontend/web/uploads/img-artigos/');
 
-            if (!$modelForm->removeFoto($model->caminhofoto)) {
+            $transaction = Yii::$app->db->beginTransaction();
+            try {
+                $this->findModel($id)->delete();
+
+                if (!$modelForm->removeFoto($model->caminhofoto)) {
+                    $transaction->rollBack();
+                }
+                $transaction->commit();
+                return $this->redirect(['artigo/view', 'id' => $model->idartigo]);
+            } catch (\Exception $e) {
                 $transaction->rollBack();
+                return $this->redirect(['artigo/view', 'id' => $model->idartigo]);
             }
-            $transaction->commit();
-            return $this->redirect(['artigo/view', 'id' => $model->idartigo]);
-        } catch (\Exception $e) {
-            $transaction->rollBack();
-            return $this->redirect(['artigo/view', 'id' => $model->idartigo]);
         }
+        return die('ola');
     }
 
     /**

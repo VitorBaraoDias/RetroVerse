@@ -4,6 +4,7 @@ namespace backend\controllers;
 
 use backend\models\SearchComissao;
 use common\models\comissao;
+use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -18,17 +19,22 @@ class ComissaoController extends Controller
      */
     public function behaviors()
     {
-        return array_merge(
-            parent::behaviors(),
-            [
-                'verbs' => [
-                    'class' => VerbFilter::className(),
-                    'actions' => [
-                        'delete' => ['POST'],
+        return [
+            'access' => [
+                'class' => AccessControl::class,
+                'rules' => [
+                    [
+                        'actions' => ['index', 'view', 'create', 'update', 'delete'],
+                        'allow' => true,
+                        'roles' => ['admin'],
                     ],
                 ],
-            ]
-        );
+                'denyCallback' => function ($rule, $action) {
+                    throw new \yii\web\ForbiddenHttpException('You do not have permission to access this page.');
+                },
+
+            ],
+        ];
     }
 
     /**
@@ -38,13 +44,17 @@ class ComissaoController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new SearchComissao();
-        $dataProvider = $searchModel->search($this->request->queryParams);
+        if (\Yii::$app->user->can('verComissaoLojaBackend')) {
 
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
+            $searchModel = new SearchComissao();
+            $dataProvider = $searchModel->search($this->request->queryParams);
+
+            return $this->render('index', [
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
+            ]);
+        }
+        return die('ola');
     }
 
     /**
@@ -55,9 +65,13 @@ class ComissaoController extends Controller
      */
     public function actionView($id)
     {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
+        if (\Yii::$app->user->can('verDetalhesComissaoLojaBackend')) {
+
+            return $this->render('view', [
+                'model' => $this->findModel($id),
+            ]);
+        }
+        return die('ola');
     }
 
     /**
@@ -67,19 +81,24 @@ class ComissaoController extends Controller
      */
     public function actionCreate()
     {
-        $model = new comissao();
 
-        if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
+        if (\Yii::$app->user->can('criarComissaoLojaBackend')) {
+
+            $model = new comissao();
+            if ($this->request->isPost) {
+                if ($model->load($this->request->post()) && $model->save()) {
+                    return $this->redirect(['view', 'id' => $model->id]);
+                }
+            } else {
+                $model->loadDefaultValues();
             }
-        } else {
-            $model->loadDefaultValues();
-        }
 
-        return $this->render('create', [
-            'model' => $model,
-        ]);
+            return $this->render('create', [
+                'model' => $model,
+            ]);
+        }
+        return die('ola');
+
     }
 
     /**
@@ -91,15 +110,18 @@ class ComissaoController extends Controller
      */
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
+        if (\Yii::$app->user->can('alterarComissaoLojaBackend')) {
 
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            $model = $this->findModel($id);
+            if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
+
+            return $this->render('update', [
+                'model' => $model,
+            ]);
         }
-
-        return $this->render('update', [
-            'model' => $model,
-        ]);
+        return die('ola');
     }
 
     /**
@@ -111,9 +133,11 @@ class ComissaoController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
-
-        return $this->redirect(['index']);
+        if (\Yii::$app->user->can('alterarComissaoLojaBackend')) {
+            $this->findModel($id)->delete();
+            return $this->redirect(['index']);
+        }
+        return die('eliminarComissaoLojaBackend');
     }
 
     /**

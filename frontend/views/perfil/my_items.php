@@ -1,6 +1,8 @@
 <?php
 use yii\helpers\Html;
 use yii\widgets\ListView;
+
+$userId = Yii::$app->user->id;
 ?>
     <!-- Card para cada artigo -->
         <div class="card">
@@ -49,19 +51,28 @@ use yii\widgets\ListView;
                 <?= Html::encode($model->precoanuncio) ?>€
             </span>
                     </div>
-
                     <!-- Botões (Edit e Disable ficam à direita) -->
-                    <div class="d-flex gap-2">
-                        <?= Html::a('EDIT NOW', ['artigo/update', 'id' => $model->id], [
-                            'class' => 'retroverse-btn',
-                            'style' => 'font-size: x-small; padding: 5px 10px;',
-                        ]) ?>
-
-                        <?= Html::a('DISABLE NOW', ['artigo/disable', 'id' => $model->id], [
-                            'class' => 'btn-disable',  /* Aplique a classe btn-disable aqui */
-                            'style' => 'font-size: x-small; padding: 5px 10px;',
-                        ]) ?>
-                    </div>
+                   <?php
+                   if (!Yii::$app->user->isGuest) {
+                       if ($model->idperfil === $userId) {
+                           echo '<div class="d-flex gap-2">';
+                           echo Html::a('EDIT NOW', ['artigo/update', 'id' => $model->id], [
+                               'class' => 'retroverse-btn',
+                               'style' => 'font-size: x-small; padding: 5px 10px;',
+                           ]);
+                           echo Html::a('DISABLE NOW', ['artigo/disable', 'id' => $model->id], [
+                               'class' => 'btn-disable',
+                               'style' => 'font-size: x-small; padding: 5px 10px;',
+                           ]);
+                           echo '</div>';
+                       } else {
+                           echo Html::a('VIEW', ['artigo/view-marketplace', 'id' => $model->id], [
+                               'class' => 'retroverse-btn',
+                               'style' => 'font-size: x-small; padding: 5px 10px;',
+                           ]);
+                       }
+                   }
+                   ?>
                 </div>
             </div>
 

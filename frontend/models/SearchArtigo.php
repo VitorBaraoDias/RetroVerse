@@ -66,7 +66,7 @@ class SearchArtigo extends Artigo
         }
 
         // Exclui artigos do próprio perfil do usuário logado
-        $query->andWhere(['!=', 'idperfil', Yii::$app->user->id]);
+        $query->andWhere(['!=', 'idperfil', Yii::$app->user->id ?? 0]);
 
         // Filtros existentes para os campos do artigo
         $query->andFilterWhere([

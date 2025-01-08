@@ -13,6 +13,7 @@ $isFavorito = Favorito::isFavorito($userId, $artigoId);
     <div class="image-container bg-secondary position-relative">
         <div class="container-info-type-item"><?= $model->tipoartigo ?></div>
 
+
         <!-- Botão de favoritos -->
         <div class="rounded-circle container-like d-flex justify-content-center align-items-center">
             <?php if ($isFavorito): ?>

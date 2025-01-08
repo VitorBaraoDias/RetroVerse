@@ -4,6 +4,7 @@ namespace backend\controllers;
 
 use backend\models\UserForm;
 use common\models\User;
+use common\models\Perfil;
 use Yii;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
@@ -27,15 +28,14 @@ class UserController extends Controller
                     'class' => AccessControl::class,
                     'rules' => [
                         [
-                            'actions' => ['index','create','view','delete', 'demote','promote'],
+                            'actions' => ['index','create','view','delete', 'demote','promote', 'ban'],
                             'allow' => true,
                             'roles' => ['admin'],
                         ],
                     ],
                     'denyCallback' => function ($rule, $action) {
-                        throw new \Exception('Você não está autorizado a acessar esta página');
-                    }
-
+                        throw new \yii\web\ForbiddenHttpException('You do not have permission to access this page.');
+                    },
                 ],
                 'verbs' => [
                     'class' => VerbFilter::class,
@@ -56,9 +56,11 @@ class UserController extends Controller
     {
         $searchQuery = Yii::$app->request->get('searchQuery', null);
 
-        $query = User::find();
+        $query = User::find()
+            ->joinWith('perfil')
+            ->where(['banido' => 0]);
 
-        // Se tiver parametros na url, aplica o filtro por nome ou email
+
         if (!empty($searchQuery)) {
             $query->andFilterWhere(['or',
                 ['like', 'username', $searchQuery],
@@ -156,6 +158,8 @@ class UserController extends Controller
 
         return $this->redirect('index');
     }
+
+
     public function actionPromote($id){
         $model = $this->findModel($id);
         $auth = Yii::$app->authManager;
@@ -163,18 +167,37 @@ class UserController extends Controller
         $auth->revokeAll($model->id);
         $moderator = $auth->getRole('moderador');
 
-        // Atribui o papel 'moderador' ao usuário
         $auth->assign($moderator, $model->id);
 
         return $this->redirect('index');
     }
-    /**
-     * Finds the User model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param int $id
-     * @return User the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
-     */
+
+    public function actionBan($id)
+    {
+        $perfil = Perfil::findOne(['id' => $id]);
+
+        if (!$perfil) {
+            Yii::$app->response->statusCode = 404;
+            return [
+                'status' => 'error',
+                'message' => 'User profile not found',
+            ];
+        }
+
+        $perfil->banido = 1;
+
+        if ($perfil->save()) {
+            return $this->redirect('index');
+        } else {
+            Yii::$app->response->statusCode = 500;
+            return [
+                'status' => 'error',
+                'message' => 'Error banning user',
+                'errors' => $perfil->errors,
+            ];
+        }
+    }
+
     protected function findModel($id)
     {
         if (($model = User::findOne(['id' => $id])) !== null) {
@@ -183,4 +206,6 @@ class UserController extends Controller
 
         throw new NotFoundHttpException('The requested page does not exist.');
     }
+
+
 }

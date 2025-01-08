@@ -38,6 +38,7 @@ class ArtigoController extends ActiveController
     public function authCustom($token)
     {
         $user_ = \common\models\User::findIdentityByAccessToken($token);
+
         if($user_) {
             $this->user=$user_;
             return $user_;
