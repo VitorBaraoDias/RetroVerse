@@ -3,8 +3,6 @@
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 
-/** @var yii\web\View $this */
-/** @var \common\models\Faqs $model */
 
 $this->title = $model->questao;
 

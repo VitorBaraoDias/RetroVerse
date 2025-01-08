@@ -2,9 +2,6 @@
 
 use yii\helpers\Html;
 use yii\widgets\ListView;
-/** @var yii\web\View $this */
-/** @var array $orders */
-/** @var string $month */
 
 $this->title = "Sales Report - Month " . date('F', mktime(0, 0, 0, $month, 10));  // Mês por extenso
 ?>
@@ -27,9 +24,9 @@ $this->title = "Sales Report - Month " . date('F', mktime(0, 0, 0, $month, 10));
         </thead>
         <tbody>
         <?= ListView::widget([
-            'dataProvider' => $dataProvider,  // Passa o DataProvider
-            'itemView' => '_report_items',  // Define a view parcial para cada item
-            'layout' => '{items}{pager}',  // Exibe os itens seguidos da paginação
+            'dataProvider' => $dataProvider,
+            'itemView' => '_report_items',
+            'layout' => '{items}{pager}',
             'options' => ['class' => 'list-view'],
             'pager' => [
                 'class' => \yii\bootstrap5\LinkPager::class,

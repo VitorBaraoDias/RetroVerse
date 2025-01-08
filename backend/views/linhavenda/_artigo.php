@@ -7,7 +7,6 @@ $statusColor = $model->idestadoencomenda0->isFinalState() ? 'green' : 'grey';
     <div class="card-body">
         <div class="d-flex align-items-center flex-column">
             <?php
-            // Exibir a primeira foto do artigo, se disponível
             $firstPhoto = $model->idartigo0->fotosartigos[0] ?? null;
             if ($firstPhoto && file_exists('../../common/uploads/img-artigos/' . $firstPhoto->caminhofoto)) {
                 echo Html::img(('../../../common/uploads/img-artigos/') . $firstPhoto->caminhofoto, [
@@ -16,7 +15,6 @@ $statusColor = $model->idestadoencomenda0->isFinalState() ? 'green' : 'grey';
                     'style' => 'width: 370px; height: 270px; object-fit: cover;',
                 ]);
             } else {
-                // Se não houver imagem, exibir uma div cinza
                 echo Html::tag('div', '', [
                     'class' => 'img-thumbnail',
                     'style' => 'width: 150px; height: 150px; background-color: grey; display: flex; align-items: center; justify-content: center;',
@@ -25,7 +23,6 @@ $statusColor = $model->idestadoencomenda0->isFinalState() ? 'green' : 'grey';
             ?>
         </div>
         <hr>
-        <!-- Nome do artigo -->
         <h5 class="text-start"><?= Html::encode($model->idartigo0->nome) ?></h5>
         <p class="text-center d-flex justify-content-between mt-4">
             <strong>Order Number:</strong>
@@ -46,7 +43,6 @@ $statusColor = $model->idestadoencomenda0->isFinalState() ? 'green' : 'grey';
             <?= Html::tag('span', $model->idvenda0->morada, ['class' => 'text-primary']) ?>
         </p>
         <hr>
-        <!-- Preço do artigo -->
         <p class="text-center d-flex justify-content-between mt-4">
             <strong>Price:</strong>
             <?= Html::tag('span', number_format($model->idartigo0->precoanuncio, 2) . '€', ['class' => 'text-primary']) ?>
@@ -68,11 +64,11 @@ $statusColor = $model->idestadoencomenda0->isFinalState() ? 'green' : 'grey';
         <?php if ($model->idestadoencomenda0->isFirstState()): ?>
             <?= Html::a(
                 'ORDER ALREADY SHIPPED',
-                ['linhavenda/ordersent', 'id' => $model->id], // Substitua 'venda' pelo controlador correto
+                ['linhavenda/ordersent', 'id' => $model->id],
                 [
                     'class' => 'btn btn-primary history-order-details btn-sm w-100',
                     'style' => 'font-size: small; gap: 10px',
-                    'data-confirm' => 'Are you sure you want to mark this item as sent?', // Mensagem de confirmação opcional
+                    'data-confirm' => 'Are you sure you want to mark this item as sent?',
                 ]
             ) ?>
         <?php endif; ?>

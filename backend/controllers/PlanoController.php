@@ -31,7 +31,7 @@ class PlanoController extends Controller
                         ],
                     ],
                     'denyCallback' => function ($rule, $action) {
-                        throw new \Exception('Você não está autorizado a acessar esta página');
+                        throw new \Exception('You are not authorized to access this page.');
                     }
 
                 ],

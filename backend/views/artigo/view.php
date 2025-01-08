@@ -18,24 +18,22 @@ $this->title = "Item: ".$model->nome;
 
     <?php $form = ActiveForm::begin([
         'action' => ['fotoartigo/create', 'id' => $model->id],
-        'options' => ['enctype' => 'multipart/form-data'], // para permitir upload de arquivos
+        'options' => ['enctype' => 'multipart/form-data'],
     ]); ?>
-    <!-- Campo de upload usando FileInput -->
     <?= $form->field($uploadForm, 'imageFiles[]')->widget(FileInput::classname(), [
         'options' => [
-            'multiple' => true, // Permitir múltiplos uploads
-            'accept' => 'image/*', // Restringir para arquivos de imagem
+            'multiple' => true,
+            'accept' => 'image/*',
         ],
         'pluginOptions' => [
-            'showUpload' => false, //
-            'browseOnZoneClick' => true, // Permitir abrir o seletor clicando na área
+            'showUpload' => false,
+            'browseOnZoneClick' => true,
             'initialPreviewAsData' => true,
             'maxFileSize' => 2000,
             'previewFileType' => 'image',
         ],
     ]); ?>
 
-    <!-- Botão de envio -->
     <div class="form-group">
         <?= Html::submitButton('Upload Photos', ['class' => 'btn btn-success']) ?>
     </div>
@@ -47,7 +45,7 @@ $this->title = "Item: ".$model->nome;
         <div class="mt-4">
             <?php
             $dataProvider = new \yii\data\ArrayDataProvider([
-                'allModels' => $model->fotosartigos, // O array de fotos
+                'allModels' => $model->fotosartigos,
             ]);
             ?>
 
@@ -66,7 +64,6 @@ $this->title = "Item: ".$model->nome;
                         'template' => '{delete}',
                         'buttons' => [
                             'delete' => function($url, $model, $key) {
-                                // Formulário para exclusão
                                 return \yii\helpers\Html::a('Delete', ['fotoartigo/delete', 'id' => $model->id], [
                                     'class' => 'btn btn-danger btn-sm w-100 mt-2',
                                     'data-confirm' => 'Are you sure you want to delete this photo?',
@@ -101,23 +98,23 @@ $this->title = "Item: ".$model->nome;
             ],
             [
                 'label' => 'Condition',
-                'value' => $model->idestado0->descricao ?? 'N/A', // Exibe o nome do estado
+                'value' => $model->idestado0->descricao ?? 'N/A',
             ],
             [
                 'label' => 'Brand',
-                'value' => $model->idmarca0->nome ?? 'N/A', // Exibe o nome da marca
+                'value' => $model->idmarca0->nome ?? 'N/A',
             ],
             [
                 'label' => 'Category',
-                'value' => $model->idcategoria0->nome ?? 'N/A', // Exibe o nome da categoria
+                'value' => $model->idcategoria0->nome ?? 'N/A',
             ],
             [
                 'label' => 'Size',
-                'value' => $model->idtamanho0->tamanho ?? 'N/A', // Exibe a descrição do tamanho
+                'value' => $model->idtamanho0->tamanho ?? 'N/A',
             ],
             [
                 'label' => 'Profile',
-                'value' => $model->idperfil0->nome ?? 'N/A', // Exibe o nome do perfil
+                'value' => $model->idperfil0->nome ?? 'N/A',
             ],
 
             [
@@ -126,7 +123,7 @@ $this->title = "Item: ".$model->nome;
             ],
             [
                 'label' => 'Active Status',
-                'value' => $model->ativo ? 'Active' : 'Inactive', // Mostra "Sim" ou "Não" para ativo
+                'value' => $model->ativo ? 'Active' : 'Inactive',
             ],
         ],
     ]) ?>

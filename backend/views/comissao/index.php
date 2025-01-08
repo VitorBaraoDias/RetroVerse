@@ -6,9 +6,6 @@ use yii\grid\GridView;
 use yii\helpers\Html;
 use yii\helpers\Url;
 
-/** @var yii\web\View $this */
-/** @var backend\models\SearchComissao $searchModel */
-/** @var yii\data\ActiveDataProvider $dataProvider */
 
 $this->title = 'Comissions';
 ?>
@@ -37,7 +34,7 @@ $this->title = 'Comissions';
             ],
             [
                 'attribute' => 'ativo',
-                'format' => 'raw', // Exibir HTML se necessário
+                'format' => 'raw',
                 'value' => function($model) {
                     return $model->ativo
                         ? Html::tag('span', 'Ativo', ['class' => 'badge bg-success'])

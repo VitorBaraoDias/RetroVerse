@@ -2,8 +2,6 @@
 
 use yii\helpers\Html;
 
-/** @var yii\web\View $this */
-/** @var \common\models\Tamanho $model */
 
 $this->title = 'Update Size: ' . $model->tamanho;
 

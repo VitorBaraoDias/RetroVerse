@@ -3,8 +3,6 @@
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 
-/** @var yii\web\View $this */
-/** @var \common\models\Marca $model */
 
 $this->title = $model->nome;
 
@@ -35,7 +33,7 @@ $this->title = $model->nome;
             [
                 'attribute' => 'ativo',
                 'label' => 'Active Status',
-                'format' => 'raw', // Exibir HTML se necessário
+                'format' => 'raw',
                 'value' => function($model) {
                     return $model->ativo
                         ? Html::tag('span', 'Active', ['class' => 'badge bg-success'])

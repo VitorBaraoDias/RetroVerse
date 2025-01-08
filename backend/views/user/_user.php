@@ -9,14 +9,13 @@ use yii\helpers\Html;
                 <?php
 
                 if ($model->perfil && !is_null($model->perfil->caminhofotoperfil) && file_exists(Yii::getAlias('../../common/uploads/img-profile/') . $model->perfil->caminhofotoperfil)) {
-                    // Se a imagem existir, exibe a imagem
+
                     echo Html::img(('../../../common/uploads/img-profile/') . $model->perfil->caminhofotoperfil, [
                         'alt' => 'User Image',
                         'class' => 'rounded-circle img-thumbnail',
                         'style' => 'width: 100px; height: 100px; object-fit: cover;',
                     ]);
                 } else {
-                    // Se não existir, exibe uma div redonda e cinza
                     echo Html::tag('div', '', [
                         'class' => 'rounded-circle',
                         'style' => 'width: 100px; height: 100px; background-color: gray; display: flex; align-items: center; justify-content: center;',
@@ -28,14 +27,14 @@ use yii\helpers\Html;
                 <p class="text-secondary">Member ID: <?= Html::encode($model->id) ?></p>
             </div>
             <hr>
-            <!-- Mostra o papel do usuário -->
+
             <p class="d-flex justify-content-between">
                 <strong>Role:</strong>
                 <?php
                 $authManager = Yii::$app->authManager;
 
                 $roles = $authManager->getRolesByUser($model->id);
-                $roleNames = array_keys($roles); // Obtem apenas os nomes dos papéis
+                $roleNames = array_keys($roles);
                 echo Html::tag('span', implode(', ', $roleNames), ['class' => 'badge bg-dark text-dark']);
                 ?>
             </p>
@@ -65,7 +64,6 @@ use yii\helpers\Html;
 
             $userRoles = array_keys($authManager->getRolesByUser($model->id));
 
-            // Se o usuário for um 'moderador'
             if (in_array('moderador', $userRoles)): ?>
                 <?= Html::a('Remove', ['demote', 'id' => $model->id], [
                     'class' => 'btn btn-danger btn-sm w-100',

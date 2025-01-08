@@ -89,15 +89,15 @@ class DenunciaController extends Controller
         if (Yii::$app->user->can('marcarDenunciaResolvidaBackend')) {
         $model = $this->findModel($id);
 
-        if (!$model->estado) { // Apenas se ainda não estiver resolvido
+        if (!$model->estado) {
             $model->estado = 1;
             if ($model->save()) {
-                Yii::$app->session->setFlash('success', 'Denúncia marcada como resolvida.');
+                Yii::$app->session->setFlash('success', 'Report marked as resolved.');
             } else {
-                Yii::$app->session->setFlash('error', 'Não foi possível marcar a denúncia como resolvida.');
+                Yii::$app->session->setFlash('error', 'Unable to mark report as resolved.');
             }
         } else {
-            Yii::$app->session->setFlash('info', 'Esta denúncia já está marcada como resolvida.');
+            Yii::$app->session->setFlash('info', 'This report is now marked as resolved.');
         }
 
         return $this->redirect(['index']);

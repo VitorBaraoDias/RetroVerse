@@ -8,7 +8,6 @@ use yii\helpers\Html;
     <div class="card-body">
         <div class="d-flex align-items-center flex-column">
             <?php
-            // Verificar se o banner tem uma imagem
             if ($model->caminhoimagem && file_exists('../../common/uploads/img-banners/' . $model->caminhoimagem)) {
                 echo Html::img('../../../common/uploads/img-banners/' . $model->caminhoimagem, [
                     'alt' => 'Banner Image',
@@ -16,7 +15,6 @@ use yii\helpers\Html;
                     'style' => 'width: 370px; height: 270px; object-fit: cover;',
                 ]);
             } else {
-                // Se não houver imagem, exibir uma div cinza
                 echo Html::tag('div', '', [
                     'class' => 'img-thumbnail',
                     'style' => 'width: 370px; height: 270px; background-color: grey; display: flex; align-items: center; justify-content: center;',
@@ -46,7 +44,6 @@ use yii\helpers\Html;
 
     </div>
     <div class="card-footer">
-        <!-- Botões de ação -->
         <?= Html::a('View Details', ['view', 'id' => $model->id], ['class' => 'btn btn-secondary btn-sm w-100']) ?>
 
         <?= Html::a('Edit', ['update', 'id' => $model->id], [

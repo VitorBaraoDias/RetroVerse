@@ -2,10 +2,6 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-
-/** @var yii\web\View $this */
-/** @var \common\models\LinhavendaSearch $model */
-/** @var yii\widgets\ActiveForm $form */
 ?>
 
 <div class="linhavenda-search">

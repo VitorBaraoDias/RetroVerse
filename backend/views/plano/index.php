@@ -6,9 +6,6 @@ use yii\grid\GridView;
 use yii\helpers\Html;
 use yii\helpers\Url;
 
-/** @var yii\web\View $this */
-/** @var app\models\SearchPlano $searchModel */
-/** @var yii\data\ActiveDataProvider $dataProvider */
 
 $this->title = 'Plans';
 ?>
@@ -35,7 +32,7 @@ $this->title = 'Plans';
                 'value' => function ($model) {
                     return $model->iva ? $model->iva->percentagem . '%' : null;
                 },
-                'label' => 'IVA (%)', // Rótulo personalizado para a coluna
+                'label' => 'IVA (%)',
             ],
             [
                     'attribute' => 'descricao',
@@ -43,7 +40,7 @@ $this->title = 'Plans';
                 ],
             [
                 'attribute' => 'ativo',
-                'format' => 'raw', // Exibir HTML se necessário
+                'format' => 'raw',
                 'value' => function($model) {
                     return $model->ativo
                         ? Html::tag('span', 'Active', ['class' => 'badge bg-success'])

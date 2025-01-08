@@ -2,8 +2,6 @@
 
 use yii\helpers\Html;
 
-/** @var yii\web\View $this */
-/** @var common\models\Banner $model */
 
 $this->title = 'Update Banner: ' . $model->titulo;
 ?>
