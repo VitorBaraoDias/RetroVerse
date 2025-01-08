@@ -5,6 +5,7 @@ namespace frontend\controllers;
 use common\models\Favorito;
 use Yii;
 use yii\data\ActiveDataProvider;
+use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -19,119 +20,89 @@ class FavoritoController extends Controller
      */
     public function behaviors()
     {
-        return array_merge(
-            parent::behaviors(),
-            [
-                'verbs' => [
-                    'class' => VerbFilter::className(),
-                    'actions' => [
+        return [
+            'access' => [
+                'class' => AccessControl::class,
+                'rules' => [
+                    [
+                        'actions' => ['index', 'create', 'delete'],
+                        'allow' => true,
+                        'roles' => ['@'],
                     ],
                 ],
-            ]
-        );
+                'denyCallback' => function ($rule, $action) {
+                    return Yii::$app->response->redirect('site/login');
+                },
+            ],
+        ];
     }
 
     /**
      * Lists all Favorito models.
      *
-     * @return string
+     * @return string|\yii\console\Response|\yii\web\Response
      */
     public function actionIndex()
     {
 
-        // Verifica se o utilizador está logado
-        if (Yii::$app->user->isGuest) {
-            Yii::$app->session->setFlash('error', 'Inicie sessão ou registe-se para ver adicionar artigos aos favoritos');
-            return $this->redirect(['site/login']); // Redireciona para a página de login
+        if (\Yii::$app->user->can('verTodosFavoritosFrontend')) {
+
+            // Verifica se o utilizador está logado
+            if (Yii::$app->user->isGuest) {
+                Yii::$app->session->setFlash('error', 'Log in or register to add articles to your favourites');
+                return $this->redirect(['site/login']);
+            }
+
+            $userId = Yii::$app->user->id;
+            $dataProvider = new ActiveDataProvider([
+                'query' => Favorito::find()->where(['idperfil' => $userId]),
+            ]);
+            $idperfil = Yii::$app->user->id;
+            $favoritos = [];
+            if ($idperfil) {
+                $favoritos = Favorito::find()
+                    ->select('idartigo')
+                    ->where(['idperfil' => $idperfil])
+                    ->column();
+            }
+
+            return $this->render('index', [
+                'dataProvider' => $dataProvider,
+                'favoritos' => $favoritos,
+            ]);
+        }else{
+            return Yii::$app->response->redirect('site/login');
         }
-
-        $userId = Yii::$app->user->id;
-
-        $dataProvider = new ActiveDataProvider([
-            'query' => Favorito::find()->where(['idperfil' => $userId]), // Filtra pelos favoritos do utilizador
-        ]);
-
-        // obter favoritos do user atual
-        $idperfil = Yii::$app->user->id;
-        $favoritos = [];
-        if ($idperfil) {
-            $favoritos = Favorito::find()
-                ->select('idartigo')
-                ->where(['idperfil' => $idperfil])
-                ->column();
-        }
-
-
-        return $this->render('index', [
-            'dataProvider' => $dataProvider,
-            'favoritos' => $favoritos,
-        ]);
-
     }
-
-    /**
-     * Displays a single Favorito model.
-     * @param int $id ID
-     * @return string
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    public function actionView($id)
-    {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
-    }
-
-    /**
-     * Creates a new Favorito model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return string|\yii\web\Response
-     */
 
     public function actionCreate($id)
     {
-        $userId = Yii::$app->user->id;  // Recupera o ID do usuário logado
+        if (\Yii::$app->user->can('criarFavoritoFrontend')) {
 
-        // Tenta encontrar ou criar um favorito para o usuário
-        $favorito = Favorito::findOne(['idperfil' => $userId]) ?? new Favorito(['idperfil' => $userId]);
+            $userId = Yii::$app->user->id;
+            $favorito = Favorito::findOne(['idperfil' => $userId]) ?? new Favorito(['idperfil' => $userId]);
 
-        // Verifica se o artigo já está nos favoritos
-        if (Favorito::findOne(['idperfil' => $userId, 'idartigo' => $id])) {
-            Yii::$app->session->setFlash('info', 'Artigo já está nos favoritos.');
-        } else {
-            // Adiciona o artigo aos favoritos
-            $novoFavorito = new Favorito(['idperfil' => $userId, 'idartigo' => $id]);
-            if ($novoFavorito->save()) {
-                Yii::$app->session->setFlash('success', 'Artigo adicionado aos favoritos com sucesso!');
+            // Verifica se o artigo já está nos favoritos
+            if (Favorito::findOne(['idperfil' => $userId, 'idartigo' => $id])) {
+                Yii::$app->session->setFlash('info', 'Item already bookmarked.');
             } else {
-                Yii::$app->session->setFlash('error', 'Erro ao adicionar o artigo aos favoritos.');
+                // Adiciona o artigo aos favoritos
+                $novoFavorito = new Favorito(['idperfil' => $userId, 'idartigo' => $id]);
+                if ($novoFavorito->save()) {
+                    Yii::$app->session->setFlash('success', 'Item successfully added to favourites!');
+                } else {
+                    Yii::$app->session->setFlash('error', 'Error adding item to favourites.');
+                }
             }
+            return $this->redirect(Yii::$app->request->referrer ?: ['artigo/index']);
         }
-
-        return $this->redirect(Yii::$app->request->referrer ?: ['artigo/index']);
+        else{
+            return Yii::$app->response->redirect('site/login');
+        }
     }
 
 
 
-    /**
-     * Updates an existing Favorito model.
-     * If update is successful, the browser will be redirected to the 'view' page.
-     * @param int $id ID
-     * @return string|\yii\web\Response
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    public function actionUpdate($id)
-    {
-        $model = $this->findModel($id);
-
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        }
-
-        return $this->render('update', [
-            'model' => $model,
-        ]);
-    }
 
     /**
      * Deletes an existing Favorito model.
@@ -142,22 +113,29 @@ class FavoritoController extends Controller
      */
     public function actionDelete($id)
     {
-        $userId = Yii::$app->user->id;
+        if (\Yii::$app->user->can('eliminarFavoritoFrontend')) {
 
-        $favorito = Favorito::findOne(['idperfil' => $userId, 'idartigo' => $id]);
+            $userId = Yii::$app->user->id;
 
-        if ($favorito) {
-            if ($favorito->delete()) {
-                Yii::$app->session->setFlash('success', 'Artigo removido dos favoritos com sucesso!');
+            $favorito = Favorito::findOne(['idperfil' => $userId, 'idartigo' => $id]);
+
+            if ($favorito) {
+                if ($favorito->delete()) {
+                    Yii::$app->session->setFlash('success', 'Item successfully removed from favourites!');
+                } else {
+                    Yii::$app->session->setFlash('error', 'Error removing item from favourites.');
+                }
             } else {
-                Yii::$app->session->setFlash('error', 'Erro ao remover o artigo dos favoritos.');
+                Yii::$app->session->setFlash('info', 'Item not found in favourites.');
             }
-        } else {
-            Yii::$app->session->setFlash('info', 'Artigo não encontrado nos favoritos.');
+
+
+            return $this->redirect(Yii::$app->request->referrer ?: ['artigo/index']);
         }
+        else{
+            return Yii::$app->response->redirect('site/login');
 
-
-        return $this->redirect(Yii::$app->request->referrer ?: ['artigo/index']);
+        }
     }
 
 

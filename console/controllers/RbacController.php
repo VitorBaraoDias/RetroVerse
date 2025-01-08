@@ -85,9 +85,6 @@ class RbacController extends Controller
         $alterarArtigosLojaBackEnd->description = 'Alterar artigos loja Backend';
         $auth->add($alterarArtigosLojaBackEnd);
 
-        $eliminarArtigosLojaBackEnd = $auth->createPermission('eliminarArtigosLojaBackend');
-        $eliminarArtigosLojaBackEnd->description = 'Eliminar artigos loja Backend';
-        $auth->add($eliminarArtigosLojaBackEnd);
         ///ARTIGO CONTROLLER BO
 
         //IvaController BO
@@ -188,27 +185,10 @@ class RbacController extends Controller
         $auth->add($eliminarFaqsBackend);
         //FIM FAQS BACKEND
 
-        $alterarFaqLoja = $auth->createPermission('alterarFaqLoja');
-        $alterarFaqLoja->description = 'Alterar FAQ loja';
-        $auth->add($alterarFaqLoja);
-
-        $eliminarFaqLoja = $auth->createPermission('eliminarFaqLoja');
-        $eliminarFaqLoja->description = 'Eliminar FAQ loja';
-        $auth->add($eliminarFaqLoja);
 
         $alterarInformacoesMembro = $auth->createPermission('alterarInformacoesMembro');
         $alterarInformacoesMembro->description = 'Alterar informacoes membro';
         $auth->add($alterarInformacoesMembro);
-
-
-        $alterarEstadoEncomendaLoja = $auth->createPermission('alterarEstadoEncomendaLoja');
-        $alterarEstadoEncomendaLoja->description = 'Alterar estado encomenda loja';
-        $auth->add($alterarEstadoEncomendaLoja);
-
-
-        $editarEstadoEncomendaLoja = $auth->createPermission('editarEstadoEncomendaLoja');
-        $editarEstadoEncomendaLoja->description = 'Editar estado encomenda loja';
-        $auth->add($editarEstadoEncomendaLoja);
 
         $verEncomendasLoja = $auth->createPermission('verListaEncomendasLoja');
         $verEncomendasLoja->description = 'Ver lista de encomendas da Loja';
@@ -277,11 +257,9 @@ class RbacController extends Controller
         $criarEstadosBackend->description = 'Criar estados Backend';
         $auth->add($criarEstadosBackend);
 
-
         $alterarEstadosBackend = $auth->createPermission('alterarEstadosBackend');
         $alterarEstadosBackend->description = 'Alterar estados Backend';
         $auth->add($alterarEstadosBackend);
-
 
         $eliminarEstadosBackend = $auth->createPermission('eliminarEstadosBackend');
         $eliminarEstadosBackend->description = 'Eliminar estados Backend';
@@ -335,10 +313,6 @@ class RbacController extends Controller
         //TamanhoControllerBO
 
 
-        $verTodosFavoritos = $auth->createPermission('verTodosFavoritos');
-        $verTodosFavoritos->description = 'Ver Todos os Favoritos';
-        $auth->add($verTodosFavoritos);
-
         //METODOS EXPEDICAO BACKEND
         $verMetodosExpedicaoBackend = $auth->createPermission('verMetodosExpedicaoBackend');
         $verMetodosExpedicaoBackend->description = 'Ver Métodos de Expedição Backend';
@@ -381,15 +355,11 @@ class RbacController extends Controller
         $auth->add($marcarDenunciaResolvidaBackend);
         //DENUNCIA CONTROLLER BO
 
+
+        //FRONT END
+
+
         //ArtigoController FO
-        $verProdutosCollectionFrontend = $auth->createPermission('verProdutosCollectionFrontend');
-        $verProdutosCollectionFrontend->description = 'Ver coleção de produtos';
-        $auth->add($verProdutosCollectionFrontend);
-
-        $verDetalheProdutoFrontend = $auth->createPermission('verDetalheProdutoFrontend');
-        $verDetalheProdutoFrontend->description = 'Ver detalhes do produto';
-        $auth->add($verDetalheProdutoFrontend);
-
         $criarArtigoMarketplaceFrontend = $auth->createPermission('criarArtigoMarketplaceFrontend');
         $criarArtigoMarketplaceFrontend->description = 'Criar Artigo Marketplace';
         $auth->add($criarArtigoMarketplaceFrontend);
@@ -403,6 +373,11 @@ class RbacController extends Controller
         $auth->add($eliminarArtigoMarketplaceFrontend);
         //ArtigoController FO
 
+        //AvaliacaoController FO
+        $criarAvaliacaoMarketplaceFrontend = $auth->createPermission('criarAvaliacaoMarketplaceFrontend');
+        $criarAvaliacaoMarketplaceFrontend->description = 'Criar avalicao a artigo Marketplace';
+        $auth->add($criarAvaliacaoMarketplaceFrontend);
+        //AvaliacaoController FO
 
         //CARRINHOCONTROLLER FO
         $verCarrinhoFrontend = $auth->createPermission('verCarrinhoFrontend');
@@ -467,89 +442,62 @@ class RbacController extends Controller
         $auth->add($confirmarRecebimentoEncomendaFrontend);
         //LINHASVENDACONTROLLER FO
 
-        // member permission #4
-        $adicionarArtigoCarrinho = $auth->createPermission('adicionarArtigoCarrinho');
-        $adicionarArtigoCarrinho->description = 'Adicionar Artigo Carrinho';
-        $auth->add($adicionarArtigoCarrinho);
 
-        // member permission #5
-        $eliminarArtigoCarrinho = $auth->createPermission('eliminarArtigoCarrinho');
-        $eliminarArtigoCarrinho->description = 'Eliminar Artigo Carrinho';
-        $auth->add($eliminarArtigoCarrinho);
+        //FavortioController FO
 
-        // member permission #6
-        $alterarDetalhesPerfil = $auth->createPermission('alterarDetalhesPerfil');
-        $alterarDetalhesPerfil->description = 'Alterar Detalhes Perfil';
-        $auth->add($alterarDetalhesPerfil);
+        $verTodosFavoritosFrontend = $auth->createPermission('verTodosFavoritosFrontend');
+        $verTodosFavoritosFrontend->description = 'Ver Todos os Favoritos';
+        $auth->add($verTodosFavoritosFrontend);
 
-        // member permission #7
-        $adicionarDetalhesPerfil = $auth->createPermission('adicionarDetalhesPerfil');
-        $adicionarDetalhesPerfil->description = 'Adicionar Detalhes Perfil';
-        $auth->add($adicionarDetalhesPerfil);
+        $criarFavoritoFrontend = $auth->createPermission('criarFavoritoFrontend');
+        $criarFavoritoFrontend->description = 'Criar favorito';
+        $auth->add($criarFavoritoFrontend);
+
+        $eliminarFavoritoFrontend = $auth->createPermission('eliminarFavoritoFrontend');
+        $eliminarFavoritoFrontend->description = 'Eliminar favorito';
+        $auth->add($eliminarFavoritoFrontend);
+        //FavortioController FO
+
+        //ConversaController FO
+        $criarConversaFrontend = $auth->createPermission('CriarConversaFrontend');
+        $criarConversaFrontend->description = 'Criar conversa';
+        $auth->add($criarConversaFrontend);
+        //ConversaController FO
+
+        //DenunciaController FO
+        $criarDenunciaFrontend = $auth->createPermission('CriarDenunciaFrontend');
+        $criarDenunciaFrontend->description = 'Criar denuncia';
+        $auth->add($criarDenunciaFrontend);
+        //DenunciaController FO
+
+        //MensagempropostaController FO
+        $criarMensagemPropostaFrontend = $auth->createPermission('CriarMensagemPropostaFrontend');
+        $criarMensagemPropostaFrontend->description = 'Criar mensagem proposta';
+        $auth->add($criarMensagemPropostaFrontend);
+
+        $alterarMensagemPropostaFrontend = $auth->createPermission('alterarMensagemPropostaFrontend');
+        $alterarMensagemPropostaFrontend->description = 'Criar mensagem proposta';
+        $auth->add($alterarMensagemPropostaFrontend);
+        //MensagempropostaController FO
 
 
-        //VIEW PERMISSIONS
-        // member permission
-        $verMeuPrefil = $auth->createPermission('verMeuPrefil');
-        $verMeuPrefil->description = 'Ver o Meu Perfil';
-        $auth->add($verMeuPrefil);
+        //VendaController FO
+        $criarVendaFrontend = $auth->createPermission('CriarVendaFrontend');
+        $criarVendaFrontend->description = 'Criar venda';
+        $auth->add($criarVendaFrontend);
 
-        // member permission
-        $verPerfilMembro = $auth->createPermission('verPerfilMembro');
-        $verPerfilMembro->description = 'Ver Perfil Membro';
-        $auth->add($verPerfilMembro);
+        $verVendasFrontend = $auth->createPermission('verVendasFrontend');
+        $verVendasFrontend->description = 'Ver vendas';
+        $auth->add($verVendasFrontend);
 
-        // member permission
-        $verArtigosCarrinho = $auth->createPermission('verArtigosCarrinho');
-        $verArtigosCarrinho->description = 'Ver Artigos Carrinho';
-        $auth->add($verArtigosCarrinho);
+        $verDetalhesVendaFrontend = $auth->createPermission('verDetalhesVendaFrontend');
+        $verDetalhesVendaFrontend->description = 'Ver detalhe venda';
+        $auth->add($verDetalhesVendaFrontend);
 
-        //member permission
-        $verHistoricoCompras = $auth->createPermission('verHistoricoCompras');
-        $verHistoricoCompras->description = 'Ver Historico Compras';
-        $auth->add($verHistoricoCompras);
-
-        //member permission
-        $verHistoricoVendas = $auth->createPermission('verHistoricoVendas');
-        $verHistoricoVendas->description = 'Ver Historico Vendas';
-        $auth->add($verHistoricoVendas);
-
-        //member permission
-        $verDetalhesVenda = $auth->createPermission('verDetalhesVenda');
-        $verDetalhesVenda->description = 'Ver Detalhes Venda';
-        $auth->add($verDetalhesVenda);
-
-        //member permission
-        $verDetalhesCompra = $auth->createPermission('verDetalhesCompra');
-        $verDetalhesCompra->description = 'Ver Detalhes compra';
-        $auth->add($verDetalhesCompra);
-
-        //member permission
-        $verArtigosFavoritos = $auth->createPermission('verArtigosFavoritos');
-        $verArtigosFavoritos->description = 'Ver Artigos Favoritos';
-        $auth->add($verArtigosFavoritos);
-
-        //member permission
-        $verPlanosPremium = $auth->createPermission('verPlanosPremium');
-        $verPlanosPremium->description = 'Ver Plano Premium';
-        $auth->add($verPlanosPremium);
-
-        //member permission
-        $verFaq = $auth->createPermission('verFaq');
-        $verFaq->description = 'Ver FAQ';
-        $auth->add($verFaq);
-
-        $verCheckout = $auth->createPermission('verCheckout');
-        $verCheckout->description = 'Ver Checkout';
-        $auth->add($verCheckout);
-
-        $verListaChats = $auth->createPermission('verListaChats');
-        $verListaChats->description = 'Ver Lista Chats';
-        $auth->add($verListaChats);
-
-        $verChat = $auth->createPermission('verChat');
-        $verChat->description = 'Ver Chat';
-        $auth->add($verChat);
+        $verFaturaVendaFrontend = $auth->createPermission('verFaturaVendaFrontend');
+        $verFaturaVendaFrontend->description = 'Ver fatura';
+        $auth->add($verFaturaVendaFrontend);
+        //VendaController FO
 
 
         //CRIAÇÃO DAS ROLES
@@ -597,28 +545,39 @@ class RbacController extends Controller
         $auth->addChild($membro, $confirmarRecebimentoEncomendaFrontend);
         //LINHASVENDACONTROLLER FO
 
-        $auth->addChild($membro, $adicionarArtigoCarrinho);
-        $auth->addChild($membro, $eliminarArtigoCarrinho);
-        $auth->addChild($membro, $alterarDetalhesPerfil);
-        $auth->addChild($membro, $adicionarDetalhesPerfil);
-        $auth->addChild($membro, $verMeuPrefil);
-        $auth->addChild($membro, $verPerfilMembro);
-        $auth->addChild($membro, $verArtigosCarrinho);
-        $auth->addChild($membro, $verHistoricoCompras);
-        $auth->addChild($membro, $verHistoricoVendas);
-        $auth->addChild($membro, $verDetalhesVenda);
-        $auth->addChild($membro, $verDetalhesCompra);
-        $auth->addChild($membro, $verArtigosFavoritos);
-        $auth->addChild($membro, $verPlanosPremium);
-        $auth->addChild($membro, $verFaq);
-        $auth->addChild($membro, $verCheckout);
-        $auth->addChild($membro, $verListaChats);
-        $auth->addChild($membro, $verChat);
+        //AvaliacaoController FO
+        $auth->addChild($membro, $criarAvaliacaoMarketplaceFrontend);
+        //AvaliacaoController FO
+
+        //ConversaController FO
+        $auth->addChild($membro, $criarConversaFrontend);
+        //ConversaController FO
+
+        //FavoritoController FO
+        $auth->addChild($membro, $criarFavoritoFrontend);
+        $auth->addChild($membro, $verTodosFavoritosFrontend);
+        $auth->addChild($membro, $eliminarFavoritoFrontend);
+        //FavoritoController FO
+
+        //DenunciaController FO
+        $auth->addChild($membro, $criarDenunciaFrontend);
+        //DenunciaController FO
+
+        //MensagemPropostaController FO
+        $auth->addChild($membro, $criarMensagemPropostaFrontend);
+        $auth->addChild($membro, $alterarMensagemPropostaFrontend);
+        //MensagemPropostaController FO
+
+        //VendaController FO
+        $auth->addChild($membro, $criarVendaFrontend);
+        $auth->addChild($membro, $verDetalhesVendaFrontend);
+        $auth->addChild($membro, $verVendasFrontend);
+        $auth->addChild($membro, $verFaturaVendaFrontend);
+        //VendaController FO
 
 
         //ASSOCIAR PERMISSÕES AO MODERADOR
         $auth->addChild($moderador, $membro);
-
 
         //DENUNCIA CONTROLLER BO
         $auth->addChild($moderador, $verDenunciaBackend);
@@ -654,13 +613,11 @@ class RbacController extends Controller
         $auth->addChild($admin, $verAbaGeneralBackend);
         //SIDEBAR BO
 
-
         //ArtigoController Bo
         $auth->addChild($admin, $criarArtigosLojaBackEnd);
         $auth->addChild($admin, $verArtigosLojaBackEnd);
         $auth->addChild($admin, $verDetalhesArtigosLojaBackEnd);
         $auth->addChild($admin, $alterarArtigosLojaBackEnd);
-        $auth->addChild($admin, $eliminarArtigosLojaBackEnd);
         //ArtigoController BO
 
         //BannerController BO
@@ -670,7 +627,6 @@ class RbacController extends Controller
         $auth->addChild($admin, $alterarBannerLojaBackend);
         $auth->addChild($admin, $eliminarBannerLojaBackend);
         //BannerController BO
-
 
         //Marcas Backend
         $auth->addChild($admin, $verMarcasBackend);
@@ -751,10 +707,6 @@ class RbacController extends Controller
         $auth->addChild($admin, $criarFotoArtigoLojaBackend);
         $auth->addChild($admin, $eliminarFotoArtigoLojaBackend);
         //FotoArtigoLojaController BO
-
-
-        $auth->addChild($admin, $verTodosFavoritos);
-
 
         // ASSOCIAR AS ROLES A UTILIZADORES (ID)
         $auth->assign($admin, 1);

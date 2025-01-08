@@ -10,6 +10,7 @@ use common\models\Venda;
 use common\models\VendaSearch;
 use Yii;
 use yii\data\ActiveDataProvider;
+use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -27,11 +28,21 @@ class VendaController extends Controller
         return array_merge(
             parent::behaviors(),
             [
-                'verbs' => [
-                    'class' => VerbFilter::className(),
-                    'actions' => [
-                        'delete' => ['POST'],
+                'access' => [
+                    'class' => AccessControl::class,
+                    'rules' => [
+                        [
+                            'actions' => ['index', 'view', 'viewinvoice', 'create'],
+                            'allow' => true,
+                            'roles' => ['@'],
+                        ],
                     ],
+                    'denyCallback' => function ($rule, $action) {
+                        return Yii::$app->response->redirect(['site/index']);
+                    },
+                ],
+                'verbs' => [
+                    'class' => VerbFilter::class,
                 ],
             ]
         );
@@ -44,33 +55,35 @@ class VendaController extends Controller
      */
     public function actionIndex()
     {
-        $queryParams = Yii::$app->request->queryParams;
+        if (\Yii::$app->user->can('verVendasFrontend')) {
 
-        $tipoVenda = $queryParams['VendaSearch']['tipoVenda'] ?? 'purchases';
-        $statusFilter = $queryParams['status'] ?? null;
+            $queryParams = Yii::$app->request->queryParams;
 
-        if ($tipoVenda === 'sales') {
-            $searchModel = new LinhaVendaSearch();
-            $queryParams['LinhavendaSearch']['statusFilter'] = $statusFilter; // Filtro para sales
-            $viewType = 'sales'; // Parcial para vendas
-        } else {
-            $searchModel = new VendaSearch();
-            $queryParams['VendaSearch']['statusFilter'] = $statusFilter; // Filtro para purchases
-            $viewType = 'purchases'; // Parcial para compras
+            $tipoVenda = $queryParams['VendaSearch']['tipoVenda'] ?? 'purchases';
+            $statusFilter = $queryParams['status'] ?? null;
+
+            if ($tipoVenda === 'sales') {
+                $searchModel = new LinhaVendaSearch();
+                $queryParams['LinhavendaSearch']['statusFilter'] = $statusFilter; // Filtro para sales
+                $viewType = 'sales'; // Parcial para vendas
+            } else {
+                $searchModel = new VendaSearch();
+                $queryParams['VendaSearch']['statusFilter'] = $statusFilter; // Filtro para purchases
+                $viewType = 'purchases'; // Parcial para compras
+            }
+
+            $dataProvider = $searchModel->search($queryParams);
+
+            return $this->render('index', [
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
+                'viewType' => $viewType,
+            ]);
         }
-
-        $dataProvider = $searchModel->search($queryParams);
-
-        return $this->render( 'index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-            'viewType' => $viewType,
-        ]);
+        else{
+            return Yii::$app->response->redirect(['site/index']);
+        }
     }
-
-
-
-
 
     /**
      * Displays a single Venda model.
@@ -80,32 +93,41 @@ class VendaController extends Controller
      */
     public function actionView($id)
     {
-        $model = $this->findModel($id);
+        if (\Yii::$app->user->can('verDetalhesVendaFrontend')) {
 
+            $model = $this->findModel($id);
+            $dataProvider = new ActiveDataProvider([
+                'query' => $model->getLinhavendas(),
+            ]);
 
-        $dataProvider = new ActiveDataProvider([
-            'query' => $model->getLinhavendas(),
-        ]);
-
-        return $this->render('view', [
-            'model' => $model,
-            'dataProvider' => $dataProvider,
-        ]);
+            return $this->render('view', [
+                'model' => $model,
+                'dataProvider' => $dataProvider,
+            ]);
+        }
+        else{
+            return Yii::$app->response->redirect(['site/index']);
+        }
     }
 
     public function actionViewinvoice($id)
     {
-        $model = $this->findModel($id);
+        if (\Yii::$app->user->can('verFaturaVendaFrontend')) {
+
+            $model = $this->findModel($id);
 
 
-        $dataProvider = new ActiveDataProvider([
-            'query' => $model->getLinhavendas(),
-        ]);
+            $dataProvider = new ActiveDataProvider([
+                'query' => $model->getLinhavendas(),
+            ]);
 
-        return $this->render('viewinvoice', [
-            'model' => $model,
-            'dataProvider' => $dataProvider,
-        ]);
+            return $this->render('viewinvoice', [
+                'model' => $model,
+                'dataProvider' => $dataProvider,
+            ]);
+        }else{
+            return Yii::$app->response->redirect(['site/index']);
+        }
     }
 
     /**
@@ -115,107 +137,77 @@ class VendaController extends Controller
      */
     public function actionCreate()
     {
-        $model = new Venda();
+        if (\Yii::$app->user->can('verFaturaVendaFrontend')) {
 
-        $userId = Yii::$app->user->id;
-        $carrinho = Carrinho::findOne(['iduser' => $userId]);
-        $transaction = Yii::$app->db->beginTransaction();
+            $model = new Venda();
 
-        if(!$carrinho->ifExistsCart()){
-            Yii::$app->session->setFlash('error', 'Não existe o carrinho');
-            return $this->redirect(['site/index']);
-        }
-        try {
-            if ($carrinho->ifExistsCart() && $this->request->isPost) {
-                $model->idcomprador = $userId;
-                $model->total = $carrinho->getTotalVenda();
-                $model->idestadoencomenda = Estadoencomenda::getIdByStatusCode1();
+            $userId = Yii::$app->user->id;
+            $carrinho = Carrinho::findOne(['iduser' => $userId]);
+            $transaction = Yii::$app->db->beginTransaction();
 
-
-                if ($model->load($this->request->post()) && $model->save()) {
-                    $linhasCarrinho = $carrinho->getLinhascarrinhos()->all();
-                    foreach ($linhasCarrinho as $linha) {
-                        $linhaVenda = new Linhavenda();
-                        $linhaVenda->idvenda = $model->id;
-                        $linhaVenda->idartigo = $linha->idartigo;
-                        $linhaVenda->idvendedor = $linha->artigo->idperfil;
-                        $linhaVenda->idestadoencomenda = Estadoencomenda::getIdByStatusCode1();
-
-                        if (!$linhaVenda->save()) {
-                            throw new \Exception('Erro ao salvar linha de venda: ' . json_encode($linhaVenda->errors));
-                        }
+            if (!$carrinho->ifExistsCart()) {
+                Yii::$app->session->setFlash('error', 'Não existe o carrinho');
+                return $this->redirect(['site/index']);
+            }
+            try {
+                if ($carrinho->ifExistsCart() && $this->request->isPost) {
+                    $model->idcomprador = $userId;
+                    $model->total = $carrinho->getTotalVenda();
+                    $model->idestadoencomenda = Estadoencomenda::getIdByStatusCode1();
 
 
-                        $vendedorPerfil = $linhaVenda->idvendedor0;
-                        if ($vendedorPerfil) {
-                            $vendedorPerfil->saldopendente += $linha->artigo->getPriceFromSoldAcceptedProposal($linhaVenda->idvenda0->idcomprador); // Adiciona o valor da linha ao saldo pendente
-                            if (!$vendedorPerfil->save(false)) {
-                                throw new \Exception('Erro ao atualizar saldo pendente: ' . json_encode($vendedorPerfil->errors));
+                    if ($model->load($this->request->post()) && $model->save()) {
+                        $linhasCarrinho = $carrinho->getLinhascarrinhos()->all();
+                        foreach ($linhasCarrinho as $linha) {
+                            $linhaVenda = new Linhavenda();
+                            $linhaVenda->idvenda = $model->id;
+                            $linhaVenda->idartigo = $linha->idartigo;
+                            $linhaVenda->idvendedor = $linha->artigo->idperfil;
+                            $linhaVenda->idestadoencomenda = Estadoencomenda::getIdByStatusCode1();
+
+                            if (!$linhaVenda->save()) {
+                                throw new \Exception('Erro ao salvar linha de venda: ' . json_encode($linhaVenda->errors));
+                            }
+
+
+                            $vendedorPerfil = $linhaVenda->idvendedor0;
+                            if ($vendedorPerfil) {
+                                $vendedorPerfil->saldopendente += $linha->artigo->getPriceFromSoldAcceptedProposal($linhaVenda->idvenda0->idcomprador); // Adiciona o valor da linha ao saldo pendente
+                                if (!$vendedorPerfil->save(false)) {
+                                    throw new \Exception('Erro ao atualizar saldo pendente: ' . json_encode($vendedorPerfil->errors));
+                                }
                             }
                         }
-                    }
 
 
-                    foreach ($linhasCarrinho as $linha) {
-                        if (!$linha->delete()) {
-                            throw new \Exception('Erro ao eliminar linha do carrinho: ' . json_encode($linha->errors));
+                        foreach ($linhasCarrinho as $linha) {
+                            if (!$linha->delete()) {
+                                throw new \Exception('Erro ao eliminar linha do carrinho: ' . json_encode($linha->errors));
+                            }
                         }
+
+                        $linhaVenda->idartigo0->ativo = 0;
+                        $linhaVenda->idartigo0->save();
+                        $transaction->commit();
+                        Yii::$app->session->setFlash('success', 'Venda criada com sucesso!');
+                        return $this->redirect(['view', 'id' => $model->id]);
                     }
-
-                    $linhaVenda->idartigo0->ativo = 0;
-                    $linhaVenda->idartigo0->save();
-                    $transaction->commit();
-                    Yii::$app->session->setFlash('success', 'Venda criada com sucesso!');
-                    return $this->redirect(['view', 'id' => $model->id]);
                 }
+                $model->loadDefaultValues();
+            } catch (\Exception $e) {
+                Yii::error('Erro ao criar a venda: ' . $e->getMessage() . "\n" . $e->getTraceAsString(), __METHOD__);
+                $transaction->rollBack();
+                Yii::$app->session->setFlash('error', 'Ocorreu um erro ao criar a venda: ' . $e->getMessage());
             }
-            $model->loadDefaultValues();
-        } catch (\Exception $e) {
-            Yii::error('Erro ao criar a venda: ' . $e->getMessage() . "\n" . $e->getTraceAsString(), __METHOD__);
-            $transaction->rollBack();
-            Yii::$app->session->setFlash('error', 'Ocorreu um erro ao criar a venda: ' . $e->getMessage());
+            return $this->render('create', [
+                'carrinho' => $carrinho,
+                'model' => $model
+            ]);
         }
-        return $this->render('create', [
-            'carrinho' => $carrinho,
-            'model' => $model
-        ]);
-    }
-
-
-    /**
-     * Updates an existing Venda model.
-     * If update is successful, the browser will be redirected to the 'view' page.
-     * @param int $id ID
-     * @return string|\yii\web\Response
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    public function actionUpdate($id)
-    {
-        $model = $this->findModel($id);
-
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        else{
+            return Yii::$app->response->redirect(['site/login']);
         }
-
-        return $this->render('update', [
-            'model' => $model,
-        ]);
     }
-
-    /**
-     * Deletes an existing Venda model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param int $id ID
-     * @return \yii\web\Response
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    public function actionDelete($id)
-    {
-        $this->findModel($id)->delete();
-
-        return $this->redirect(['index']);
-    }
-
 
     /**
      * Finds the Venda model based on its primary key value.
