@@ -4,4 +4,12 @@ bootstrap: false
 modules:
     enabled:
         - Yii2:
-            part: fixtures
+            part: ORM
+        - Asserts
+        - Db:
+            dsn: 'mysql:host=127.0.0.1;dbname=retroverse'
+            user: 'root'
+            password: 'root'
+            cleanup: true
+    #    - \Helper\Unit
+

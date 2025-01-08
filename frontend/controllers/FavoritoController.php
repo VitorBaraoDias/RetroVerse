@@ -31,7 +31,7 @@ class FavoritoController extends Controller
                     ],
                 ],
                 'denyCallback' => function ($rule, $action) {
-                    return Yii::$app->response->redirect('site/login');
+                    return Yii::$app->response->redirect(['site/login']);
                 },
             ],
         ];
@@ -71,7 +71,7 @@ class FavoritoController extends Controller
                 'favoritos' => $favoritos,
             ]);
         }else{
-            return Yii::$app->response->redirect('site/login');
+            return Yii::$app->response->redirect(['site/login']);
         }
     }
 
@@ -97,7 +97,7 @@ class FavoritoController extends Controller
             return $this->redirect(Yii::$app->request->referrer ?: ['artigo/index']);
         }
         else{
-            return Yii::$app->response->redirect('site/login');
+            return Yii::$app->response->redirect(['site/login']);
         }
     }
 
@@ -133,7 +133,7 @@ class FavoritoController extends Controller
             return $this->redirect(Yii::$app->request->referrer ?: ['artigo/index']);
         }
         else{
-            return Yii::$app->response->redirect('site/login');
+            return Yii::$app->response->redirect(['site/login']);
 
         }
     }
