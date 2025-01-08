@@ -184,7 +184,7 @@ class ArtigoController extends Controller
                             return $this->redirect(['perfil/index', 'id' => $model->idperfil]);
                         } else {
 
-                            Yii::$app->session->setFlash('error', 'The item has been saved, but the images cannot be saved.');
+                            Yii::$app->session->setFlash('error', 'Image format not accepted. Try again.');
 
                             $transaction->rollBack();
                         }

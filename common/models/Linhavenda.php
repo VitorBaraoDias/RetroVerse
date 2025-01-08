@@ -158,7 +158,7 @@ class Linhavenda extends \yii\db\ActiveRecord
     }
 
 
-    public function afterSave($insert, $changedAttributes)
+    /*public function afterSave($insert, $changedAttributes)
     {
         parent::afterSave($insert, $changedAttributes);
 
@@ -183,6 +183,6 @@ class Linhavenda extends \yii\db\ActiveRecord
             $mqtt->close();
         }
         else { file_put_contents("debug.output","Time out!"); }
-    }
+    }*/
 
 }

@@ -64,6 +64,7 @@ class PerfilController extends Controller
         return $this->render('index', [
             'model' => $perfil,
         ]);
+
     }
 
     /**
@@ -146,19 +147,6 @@ class PerfilController extends Controller
         ]); } else {
                 return Yii::$app->response->redirect(['site/login']);
             }
-    }
-
-    /**
-     * Deletes an existing Perfil model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param int $id ID
-     * @return \yii\web\Response
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    public function actionDelete($id)
-    {
-        $this->findModel($id)->delete();
-        return $this->redirect(['perfil/index', 'id' => $id]);
     }
 
     /**

@@ -740,7 +740,6 @@ class RbacController extends Controller
         // ASSOCIAR AS ROLES A UTILIZADORES (ID)
         $auth->assign($admin, 1);
         $auth->assign($moderador, 2);
-        $auth->assign($membro, 32);
 
     }
 }
