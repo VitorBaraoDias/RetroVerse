@@ -46,48 +46,25 @@ use yii\data\ActiveDataProvider;
     </div>
 </article>
 
-<section class="hero" style="margin-top: 45px;">
-    <div class="hero__slider owl-carousel">
-        <div class="hero__items set-bg" data-setbg="<?= Yii::getAlias('@web') ?>/img/banner_home_1.jpg">
-            <div class="container">
-                <div class="row">
-                    <div class="col-xl-5 col-lg-7 col-md-8">
-                        <div class="hero__text">
-                            <h6>Summer Collection</h6>
-                            <h2>Fall - Winter Collections 2030</h2>
-                            <p>A specialist label creating luxury essentials. Ethically crafted with an unwavering
-                                commitment to exceptional quality.</p>
-                            <a href="#" class="primary-btn">Shop now <span class="arrow_right"></span></a>
-                            <div class="hero__social">
-                                <a href="#"><i class="fa fa-facebook"></i></a>
-                                <a href="#"><i class="fa fa-twitter"></i></a>
-                                <a href="#"><i class="fa fa-pinterest"></i></a>
-                                <a href="#"><i class="fa fa-instagram"></i></a>
+<section class="hero">
+    <div class="hero__slider owl-carousel owl-loaded owl-drag">
+        <?php foreach ($banners as $banner): ?>
+            <div class="hero__items set-bg" data-setbg="<?= Yii::getAlias('@web/uploads/img-banners/') . $banner['caminhoimagem'] ?>" style="background-image: url('<?= Yii::getAlias('@web/uploads/img-banners/') . $banner['caminhoimagem'] ?>');">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-xl-5 col-lg-7 col-md-8">
+                            <div class="hero__text">
+                                <h2><?= $banner['titulo']; ?></h2>
+                                <p><?=$banner['descricao']; ?></p>
+                                <?php if ($banner['link']): ?>
+                                    <a href="<?= Yii::getAlias('@web') . '/' . ltrim($banner['link'], '/') ?>" class="primary-btn btn_banner"><?= Html::encode($banner['textobotao'] ?: 'SHOP NOW') ?><span class="arrow_right"></span></a>
+                                <?php endif; ?>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="hero__items set-bg" data-setbg="<?= Yii::getAlias('@web') ?>/img/banner_home_2.jpg">
-            <div class="container">
-                <div class="row">
-                    <div class="col-xl-5 col-lg-7 col-md-8">
-                        <div class="hero__text">
-                            <h2>ADIDAS VINTAGE WINDBREAKERS</h2>
-                            <p>Our new Adidas Vintage Windbreakers are now available in our store!</p>
-                            <a href="#" class="primary-btn btn_banner">SHOW NOW <span class="arrow_right"></span></a>
-                            <div class="hero__social">
-                                <a href="#"><i class="fa fa-facebook"></i></a>
-                                <a href="#"><i class="fa fa-twitter"></i></a>
-                                <a href="#"><i class="fa fa-pinterest"></i></a>
-                                <a href="#"><i class="fa fa-instagram"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <?php endforeach; ?>
     </div>
 </section>
 

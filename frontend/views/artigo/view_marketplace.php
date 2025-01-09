@@ -145,19 +145,13 @@ $isFavorito = Favorito::isFavorito($userId, $artigoId);
 
                     <div class="mt-4 row d-flex flex-column justify-content-center p-0 m-0">
                         <?php
-                        if ($model->idperfil === $userId) {
-                            echo Html::a('EDIT ITEM', ['artigo/update', 'id' => $model->id], [
-                                'class' => 'retroverse-btn active col-md-9',
-                                'id' => 'retroverse-btn-active',
-                                'style' => 'font-size: x-small; gap: 10px',
-                            ]);
-                        } else {
+
                             echo Html::a('ADD TO CART', ['carrinho/create', 'id' => $model->id], [
-                                'class' => 'retroverse-btn active col-md-9',
+                                'class' => 'retroverse-btn active add-to-cart-button',
                                 'id' => 'retroverse-btn-active',
                                 'style' => 'font-size: x-small; gap: 10px',
                             ]);
-                        }
+
                         ?>
 
 

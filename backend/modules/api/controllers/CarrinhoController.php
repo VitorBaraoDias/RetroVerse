@@ -3,6 +3,7 @@
 namespace backend\modules\api\controllers;
 
 use common\models\Carrinho;
+use common\models\User;
 use common\models\Linhascarrinho;
 use Yii;
 use yii\filters\auth\QueryParamAuth;
@@ -71,19 +72,32 @@ class CarrinhoController extends ActiveController
             throw new \yii\web\ForbiddenHttpException('User not authenticated.');
         }
     }
-    public function actionUser($id)
+
+    public function actionUser()
     {
-        $carrinho = Carrinho::find()->where(['iduser' => $id])->one();
-
-        $this->checkAccess('view', $carrinho);
-
-        if (!$carrinho) {
-            Yii::$app->response->statusCode = 404;
+        if (!$this->user) {
+            Yii::$app->response->statusCode = 401;
             return [
                 'success' => false,
-                'message' => 'Could not find a cart for this user.',
+                'message' => 'Invalid authorization token.',
             ];
         }
+
+        $carrinho = Carrinho::find()->where(['iduser' => $this->user->id])->one();
+        if (!$carrinho) {
+            $carrinho = new Carrinho();
+            $carrinho->iduser = $user->id;
+            if (!$carrinho->save()) {
+                Yii::$app->response->statusCode = 500;
+                return [
+                    'success' => false,
+                    'message' => 'Failed to create a cart for the user.',
+                    'errors' => $carrinho->getErrors(),
+                ];
+            }
+        }
+
+        $this->checkAccess('view', $carrinho);
 
         $linhasCarrinho = Linhascarrinho::find()
             ->with([
@@ -98,7 +112,6 @@ class CarrinhoController extends ActiveController
             ->where(['idcarrinho' => $carrinho->id])
             ->all();
 
-
         if (!$linhasCarrinho) {
             return [
                 'success' => true,
@@ -108,7 +121,6 @@ class CarrinhoController extends ActiveController
         }
 
         $linhasCarrinhoFormatted = [];
-
         foreach ($linhasCarrinho as $linha) {
             $artigo = $linha->artigo;
 
@@ -132,7 +144,6 @@ class CarrinhoController extends ActiveController
                     'username' =>  $artigo->idperfil0->user->username,
                     'tipoartigo' => $artigo->tipoartigo,
                     'fotos' => $fotos,
-
                 ] : null,
             ];
         }
@@ -146,7 +157,7 @@ class CarrinhoController extends ActiveController
     public function actionCreatecarrinho()
     {
         $request = Yii::$app->request->post();
-        $carrinho = Carrinho::findOne(['iduser' => $request['iduser']]) ?? new Carrinho(['iduser' => $request['iduser']]);
+        $carrinho = Carrinho::findOne(['iduser' => $this->user->id]) ?? new Carrinho(['iduser' => $this->user->id]);
 
         $this->checkAccess('create', $carrinho);
 
@@ -161,9 +172,62 @@ class CarrinhoController extends ActiveController
             $linhaCarrinho = new Linhascarrinho(['idcarrinho' => $carrinho->id, 'idartigo' => $request['idartigo']]);
             $linhaCarrinho->save();
         }
+
+        //todas as linhas ja existentes no cart do user
+        $linhasCarrinho = Linhascarrinho::find()
+            ->with(['artigo', 'artigo.idcomissao0', 'artigo.idestado0', 'artigo.idmarca0', 'artigo.idcategoria0', 'artigo.idtamanho0', 'artigo.idperfil0'])
+            ->where(['idcarrinho' => $carrinho->id])
+            ->all();
+
+        $result = [];
+        foreach ($linhasCarrinho as $linha) {
+            $artigo = $linha->artigo;
+
+            //fotos do artigo
+            $fotos = [];
+            foreach ($artigo->fotosartigos as $foto) {
+                $fotos[] = $foto->caminhofoto;
+            }
+
+
+            $isPremium = (bool)\common\models\Artigospremium::find()
+                ->where(['id' => $artigo->id])
+                ->exists();
+
+
+            $isLiked = (bool)\common\models\Favorito::find()
+                ->where(['idartigo' => $artigo->id, 'idperfil' => $this->user->id])
+                ->exists();
+
+
+            $result[] = [
+                'id' => $artigo->id,
+                'datacriacao' => Yii::$app->formatter->asDate($artigo->datacriacao, 'dd/MM/yyyy'),
+                'nome' => $artigo->nome,
+                'descricao' => $artigo->descricao,
+                'precoanuncio' => $artigo->precoanuncio,
+                'comissao' => $artigo->idcomissao0 ? $artigo->idcomissao0->comissao : null,
+                'estado' => $artigo->idestado0 ? $artigo->idestado0->descricao : null,
+                'marca' => $artigo->idmarca0 ? $artigo->idmarca0->nome : null,
+                'categoria' => $artigo->idcategoria0 ? $artigo->idcategoria0->nome : null,
+                'tamanho' => $artigo->idtamanho0 ? $artigo->idtamanho0->tamanho : null,
+                'tipoartigo' => $artigo->tipoartigo,
+                'fotos' => $fotos,
+                'perfil' => $artigo->idperfil0 ? [
+                    'id' => $artigo->idperfil0->id,
+                    'descricao' => $artigo->idperfil0->descricao,
+                    'caminhofotoperfil' => $artigo->idperfil0->caminhofotoperfil,
+                    'morada' => $artigo->idperfil0->morada,
+                ] : null,
+                'premium' => $isPremium,
+                'isLiked' => $isLiked,
+            ];
+        }
+
         return [
-            'status' => 'success',
-            'message' => 'Item added to cart!',
+            'id' => $carrinho->id,
+            'iduser' => $carrinho->iduser,
+            'linhascarrinho' => $result,
         ];
     }
 

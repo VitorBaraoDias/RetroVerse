@@ -16,7 +16,7 @@ class EfetuarCompraCest
     {
         // sign-in userteste
         $I->amOnPage('login');
-        $I->fillField('#login-username', 'userteste');
+        $I->fillField('#login-username', 'defesaplsi');
         $I->fillField('#login-password', '12345678');
         $I->click('.btn-login');
 
@@ -30,11 +30,11 @@ class EfetuarCompraCest
         $I->waitForElementVisible('.card', 7);
         $I->seeElement('.card');
 
-        //adiciona/remove aos favoritos
-        $I->click('.favorite-button');
+/*        //adiciona/remove aos favoritos
+       // $I->click('.favorite-button');
         $I->wait(2);
         $I->click('.btn-close');
-        $I->wait(2);
+        $I->wait(2);*/
 
         //clica para ver o artigo
         $I->click('.view-item-button');
@@ -42,7 +42,7 @@ class EfetuarCompraCest
 
         //adicona artigo ao carrinho
         $I->seeInCurrentUrl('artigo/view');
-        $I->click('.add-to-cart-button');
+        $I->click('ADD TO CART');
         $I->wait(2);
 
         //entre no carrinho
@@ -66,7 +66,7 @@ class EfetuarCompraCest
         $I->waitForElementVisible('.checkout-finish-order', 10);
         $I->wait(2);
         $I->executeJS('document.querySelector(".checkout-finish-order").click();');
-
+        $I->wait(5);
         //verifica que chegou aos detalhes da venda (venda concluida)
         $I->seeInCurrentUrl('venda/view');
         $I->wait(5);

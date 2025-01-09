@@ -71,9 +71,6 @@ class FotoartigoController extends Controller
                     return $this->redirect(['artigo/view', 'id' => $id]);
                 }
             }
-            return $this->render('create', [
-                'model' => $model,
-            ]);
         } else {
             throw new \yii\web\ForbiddenHttpException('You do not have permission to access this resource.');
         }

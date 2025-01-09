@@ -25,30 +25,29 @@ class ArtigospremiumController extends Controller
         return array_merge(
             parent::behaviors(),
             [
-                [
-                    'access' => [
-                        'class' => AccessControl::class,
-                        'rules' => [
-                            [
-                                'actions' => ['create','delete'],
-                                'allow' => true,
-                                'roles' => ['admin'],
-                            ],
+                'access' => [
+                    'class' => AccessControl::class,
+                    'rules' => [
+                        [
+                            'actions' => ['create', 'delete'],
+                            'allow' => true,
+                            'roles' => ['admin'],
                         ],
-                        'denyCallback' => function ($rule, $action) {
-                            throw new \yii\web\ForbiddenHttpException('You do not have permission to access this page.');
-                        },
                     ],
+                    'denyCallback' => function ($rule, $action) {
+                        throw new \yii\web\ForbiddenHttpException('You do not have permission to access this page.');
+                    },
+                ],
                 'verbs' => [
-                    'class' => VerbFilter::className(),
+                    'class' => VerbFilter::class,
                     'actions' => [
                         'delete' => ['POST'],
                     ],
                 ],
-                    ]
-                ]
+            ]
         );
     }
+
 
 
 

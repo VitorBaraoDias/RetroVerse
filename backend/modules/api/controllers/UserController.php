@@ -72,22 +72,17 @@ class UserController extends ActiveController
             $perfil->banido = 0;
             if (!$perfil->save(false)) {
                 $transaction->rollBack();
-<<<<<<< HEAD
-                throw new \yii\web\ForbiddenHttpException('Invalid');
-=======
+
                 return [
                     'status' => 'error',
                     'message' => 'Error creating profile'
                 ];
->>>>>>> fb8c35293734b8de0ef64d9624f06cb291b4ea7d
             }
             $transaction->commit();
             return ['auth_key' => $user->auth_key];
         } catch (\Exception $e) {
             $transaction->rollBack();
-<<<<<<< HEAD
-            throw new \yii\web\ForbiddenHttpException('Invalid');
-=======
+
             Yii::error($e->getMessage(), __METHOD__);
 
 
@@ -96,7 +91,6 @@ class UserController extends ActiveController
                 'message' => 'Error creating profile',
                 'errorDetails' => $e->getMessage(),
             ];
->>>>>>> fb8c35293734b8de0ef64d9624f06cb291b4ea7d
         }
     }
 }

@@ -13,7 +13,7 @@ use yii\helpers\Url;
                     <h2><?= Html::encode($model->titulo) ?></h2>
                     <p><?= Html::encode($model->descricao) ?></p>
                     <?php if ($model->link): ?>
-                        <a href="<?= Url::to($model->link) ?>" class="primary-btn btn_banner"><?= Html::encode($banner->textobotao ?: 'SHOP NOW') ?><span class="arrow_right"></span></a>
+                        <a href="<?= Url::to($model->link) ?>" class="primary-btn btn_banner"><?= Html::encode($banner->textobotao ?: 'SHOP NOW') ?></a>
                     <?php endif; ?>
                 </div>
             </div>
