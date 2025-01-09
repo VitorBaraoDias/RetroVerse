@@ -98,7 +98,17 @@ return [
                     'controller' => 'api/carrinho',
                     'extraPatterns' => [
                         'GET' => 'user',
-                        'POST' => 'createcarrinho'
+                        'POST' => 'createcarrinho',
+                    ],
+                ],
+                [
+                    'class' => 'yii\rest\UrlRule',
+                    'controller' => 'api/linhacarrinho',
+                    'extraPatterns' => [
+                        'DELETE {idartigo}' => 'deletelinhacarrinho'
+                    ], 'tokens' => [
+                    '{id}' => '<id:\\d+>',
+                    '{idartigo}' => '<idartigo:\\d+>',
                     ],
                 ],
                 [
