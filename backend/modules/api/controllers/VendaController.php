@@ -139,10 +139,9 @@ class VendaController extends ActiveController
         $modelClass = new Venda();
 
         $request = Yii::$app->request->post();
-        $userId = $request['iduser'];
-        $carrinho = Carrinho::findOne(['iduser' => $userId]);
+        $carrinho = Carrinho::findOne(['iduser' => $this->user->id]);
 
-        $this->checkAccess('create', $carrinho, ['id' => $userId]);
+        $this->checkAccess('create', $carrinho, ['id' => $this->user->id]);
 
         $transaction = Yii::$app->db->beginTransaction();
         if (!$carrinho->ifExistsCart()) {
@@ -150,63 +149,63 @@ class VendaController extends ActiveController
         }
 
 
-            if ($carrinho->ifExistsCart() && Yii::$app->request->isPost)
-            {
-                $modelClass->idcomprador = $userId;
-                $modelClass->total = $carrinho->getTotalVenda();
-                $modelClass->idestadoencomenda = Estadoencomenda::getIdByStatusCode1();
-                $modelClass->idmetodoexpedicao = $request['idmetodoexpedicao'] ?? null;
-                $modelClass->idtipopagamento = $request['idtipopagamento'] ?? null;
-                $modelClass->nome = $request['nome'] ?? null;
-                $modelClass->codigopostal = $request['codigopostal'] ?? null;
-                $modelClass->morada = $request['morada'] ?? null;
-                $modelClass->pais = $request['pais'] ?? null;
-                $modelClass->cidade = $request['cidade'] ?? null;
+        if ($carrinho->ifExistsCart() && Yii::$app->request->isPost)
+        {
+            $modelClass->idcomprador = $this->user->id;
+            $modelClass->total = $carrinho->getTotalVenda();
+            $modelClass->idestadoencomenda = Estadoencomenda::getIdByStatusCode1();
+            $modelClass->idmetodoexpedicao = $request['idmetodoexpedicao'] ?? null;
+            $modelClass->idtipopagamento = $request['idtipopagamento'] ?? null;
+            $modelClass->nome = $request['nome'] ?? null;
+            $modelClass->codigopostal = $request['codigopostal'] ?? null;
+            $modelClass->morada = $request['morada'] ?? null;
+            $modelClass->pais = $request['pais'] ?? null;
+            $modelClass->cidade = $request['cidade'] ?? null;
 
-                    if (!$modelClass->save()) {
-                        throw new \Exception('ERROR: Could not save this purchase. ' . json_encode($modelClass->errors));
-                    }
-
-                    $linhasCarrinho = $carrinho->getLinhascarrinhos()->all();
-
-                    foreach ($linhasCarrinho as $linha) {
-                        $linhaVenda = new Linhavenda();
-                        $linhaVenda->idvenda = $modelClass->id;
-                        $linhaVenda->idartigo = $linha->idartigo;
-                        $linhaVenda->idvendedor = $linha->artigo->idperfil;
-                        $linhaVenda->idestadoencomenda = Estadoencomenda::getIdByStatusCode1();
-
-                        if (!$linhaVenda->save()) {
-                            throw new \Exception('ERROR: Could not save this purchase' . json_encode($linhaVenda->errors));
-                        }
-
-                        $vendedorPerfil = $linhaVenda->idvendedor0;
-                        if ($vendedorPerfil) {
-                            $vendedorPerfil->saldopendente += $linha->artigo->getPriceFromSoldAcceptedProposal($linhaVenda->idvenda0->idcomprador);
-                            if (!$vendedorPerfil->save(false)) {
-                                throw new \Exception('ERROR: Could not save pending balance: ' . json_encode($vendedorPerfil->errors));
-                            }
-                        }
-                    }
-
-                    foreach ($linhasCarrinho as $linha) {
-                        if (!$linha->delete()) {
-                            throw new \Exception('ERROR: Could not save this purchase' . json_encode($linha->errors));
-                        }
-                    }
-
-                    // Desativar artigo após a venda
-                    $linhaVenda->idartigo0->ativo = 0;
-                    $linhaVenda->idartigo0->save();
-
-                    $transaction->commit();
-
-                    return [
-                        'status' => 'success',
-                        'message' => 'Purchase completed.',
-                    ];
-
+            if (!$modelClass->save()) {
+                throw new \Exception('ERROR: Could not save this purchase. ' . json_encode($modelClass->errors));
             }
+
+            $linhasCarrinho = $carrinho->getLinhascarrinhos()->all();
+
+            foreach ($linhasCarrinho as $linha) {
+                $linhaVenda = new Linhavenda();
+                $linhaVenda->idvenda = $modelClass->id;
+                $linhaVenda->idartigo = $linha->idartigo;
+                $linhaVenda->idvendedor = $linha->artigo->idperfil;
+                $linhaVenda->idestadoencomenda = Estadoencomenda::getIdByStatusCode1();
+
+                if (!$linhaVenda->save()) {
+                    throw new \Exception('ERROR: Could not save this purchase' . json_encode($linhaVenda->errors));
+                }
+
+                $vendedorPerfil = $linhaVenda->idvendedor0;
+                if ($vendedorPerfil) {
+                    $vendedorPerfil->saldopendente += $linha->artigo->getPriceFromSoldAcceptedProposal($linhaVenda->idvenda0->idcomprador);
+                    if (!$vendedorPerfil->save(false)) {
+                        throw new \Exception('ERROR: Could not save pending balance: ' . json_encode($vendedorPerfil->errors));
+                    }
+                }
+            }
+
+            foreach ($linhasCarrinho as $linha) {
+                if (!$linha->delete()) {
+                    throw new \Exception('ERROR: Could not save this purchase' . json_encode($linha->errors));
+                }
+            }
+
+            // Desativar artigo após a venda
+            $linhaVenda->idartigo0->ativo = 0;
+            $linhaVenda->idartigo0->save();
+
+            $transaction->commit();
+
+            return [
+                'status' => 'success',
+                'message' => 'Purchase completed.',
+            ];
+
+        }
 
     }
 
@@ -311,7 +310,7 @@ class VendaController extends ActiveController
                         'fotos' => $fotos,
 
                     ]
-            ]];
+                ]];
         }
 
         return [
