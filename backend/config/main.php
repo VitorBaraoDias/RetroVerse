@@ -127,6 +127,14 @@ return [
                 ],
                 [
                     'class' => 'yii\rest\UrlRule',
+                    'controller' => 'api/tipopagamento',
+                ],
+                [
+                    'class' => 'yii\rest\UrlRule',
+                    'controller' => 'api/metodoexpedicao',
+                ],
+                [
+                    'class' => 'yii\rest\UrlRule',
                     'controller' => 'api/categoriaartigo',
                     'extraPatterns' => [
                         'GET' => 'categoriasativas'
@@ -145,6 +153,7 @@ return [
                     'class' => 'yii\rest\UrlRule',
                     'controller' => 'api/perfil',
                     'extraPatterns' => [
+                        'GET' => 'verperfiluser',
                         'PUT {id}/editar' => 'editarperfil',
                     ],
                 ],

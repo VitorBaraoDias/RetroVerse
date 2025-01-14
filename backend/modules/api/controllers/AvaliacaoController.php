@@ -8,6 +8,7 @@ use yii\rest\ActiveController;
 use backend\modules\api\components\CustomAuth;
 use yii\web\ForbiddenHttpException;
 
+use yii\web\NotFoundHttpException;
 /**
  * Default controller for the `api` module
  */

@@ -4,6 +4,8 @@ namespace backend\modules\api\controllers;
 
 use common\models\Favorito;
 use common\models\Perfil;
+use common\models\Artigo;
+use common\models\Linhavenda;
 use Yii;
 use yii\filters\auth\QueryParamAuth;
 use yii\rest\ActiveController;
@@ -58,12 +60,11 @@ class PerfilController extends ActiveController
     public function checkAccess($action, $model = null, $params = [])
     {
         if ($this->user) {
-            //proibir get de todos os perfis existentes exceto ao admin
             if ($action === 'index' && $this->user->id != 1) {
                 throw new ForbiddenHttpException('You don´t have permission to do this action!');
             }
 
-            if ($action === 'update' && $model->id !== $this->user->id) {
+            if ($action === 'update' && $model->id !== $this->user->id ) {
                 throw new ForbiddenHttpException('You do not have permission to do this action!');
             }
 
@@ -71,6 +72,74 @@ class PerfilController extends ActiveController
             throw new ForbiddenHttpException('User not authenticated.');
         }
     }
+
+    public function actionVerperfiluser()
+    {
+        $perfil = Perfil::findOne($this->user->id);
+
+        if (!$perfil) {
+            throw new NotFoundHttpException('Profile not found.');
+        }
+
+        $artigosPublicados = $perfil->hasMany(Artigo::class, ['idperfil' => 'id'])
+            ->andWhere(['ativo' => 1])
+            ->all();
+
+        $linhasVenda = \common\models\LinhaVenda::find()
+            ->where(['idvendedor' => $perfil->id])
+            ->all();
+
+        $artigosVendidosData = [];
+        foreach ($linhasVenda as $linhaVenda) {
+            $artigo = $linhaVenda->idartigo0;
+            if ($artigo) {
+                $artigosVendidosData[] = [
+                    'id' => $artigo->id,
+                    'datacriacao' => Yii::$app->formatter->asDate($artigo->datacriacao, 'dd/MM/yyyy'),
+                    'nome' => $artigo->nome,
+                    'descricao' => $artigo->descricao,
+                    'precoanuncio' => $artigo->precoanuncio,
+                    'comissao' => $artigo->idcomissao0 ? $artigo->idcomissao0->comissao : null,
+                    'estado' => $artigo->idestado0 ? $artigo->idestado0->descricao : null,
+                    'marca' => $artigo->idmarca0 ? $artigo->idmarca0->nome : null,
+                    'categoria' => $artigo->idcategoria0 ? $artigo->idcategoria0->nome : null,
+                    'tamanho' => $artigo->idtamanho0 ? $artigo->idtamanho0->tamanho : null,
+                    'tipoartigo' => $artigo->tipoartigo,
+                ];
+            }
+        }
+
+        $artigosPublicadosData = [];
+        foreach ($artigosPublicados as $artigo) {
+            $artigosPublicadosData[] = [
+                'id' => $artigo->id,
+                'datacriacao' => Yii::$app->formatter->asDate($artigo->datacriacao, 'dd/MM/yyyy'),
+                'nome' => $artigo->nome,
+                'descricao' => $artigo->descricao,
+                'precoanuncio' => $artigo->precoanuncio,
+                'comissao' => $artigo->idcomissao0 ? $artigo->idcomissao0->comissao : null,
+                'estado' => $artigo->idestado0 ? $artigo->idestado0->descricao : null,
+                'marca' => $artigo->idmarca0 ? $artigo->idmarca0->nome : null,
+                'categoria' => $artigo->idcategoria0 ? $artigo->idcategoria0->nome : null,
+                'tamanho' => $artigo->idtamanho0 ? $artigo->idtamanho0->tamanho : null,
+                'tipoartigo' => $artigo->tipoartigo,
+            ];
+        }
+
+        return [
+            'id' => $perfil->id,
+            'descricao' => $perfil->descricao,
+            'caminhofotoperfil' => $perfil->caminhofotoperfil,
+            'morada' => $perfil->morada,
+            'saldo' => $perfil->saldo,
+            'saldopendente' => $perfil->saldopendente,
+            'banido' => $perfil->banido,
+            'artigospublicados' => !empty($artigosPublicadosData) ? $artigosPublicadosData : null,
+            'artigosvendidos' => !empty($artigosVendidosData) ? $artigosVendidosData : null,
+        ];
+    }
+
+
 
     public function actionEditarperfil($id)
     {
