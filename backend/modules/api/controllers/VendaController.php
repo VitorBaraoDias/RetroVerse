@@ -218,14 +218,12 @@ class VendaController extends ActiveController
                 }
             }
 
-
             $linhaVenda->idartigo0->ativo = 0;
             $linhaVenda->idartigo0->save();
 
             $transaction->commit();
 
-
-            $detalhes = [
+            return [
                 'idvenda' => $modelClass->id,
                 'codigo' => $modelClass->codigo ?? null,
                 'total' => $modelClass->total,
@@ -239,10 +237,6 @@ class VendaController extends ActiveController
                 'pais' => $modelClass->pais ?? null,
                 'cidade' => $modelClass->cidade ?? null,
                 'linhasvenda' => $linhasVenda,
-            ];
-
-            return [
-                $detalhes
             ];
         }
     }
