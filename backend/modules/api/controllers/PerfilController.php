@@ -75,20 +75,24 @@ class PerfilController extends ActiveController
 
     public function actionVerperfiluser()
     {
+        // Buscar o perfil do usuário autenticado
         $perfil = Perfil::findOne($this->user->id);
 
         if (!$perfil) {
-            throw new NotFoundHttpException('Profile not found.');
+            throw new NotFoundHttpException('Perfil não encontrado.');
         }
 
+        // Buscar os artigos publicados pelo usuário
         $artigosPublicados = $perfil->hasMany(Artigo::class, ['idperfil' => 'id'])
             ->andWhere(['ativo' => 1])
             ->all();
 
+        // Buscar as linhas de venda relacionadas ao vendedor (usuário)
         $linhasVenda = \common\models\LinhaVenda::find()
             ->where(['idvendedor' => $perfil->id])
             ->all();
 
+        // Preparar os dados dos artigos vendidos
         $artigosVendidosData = [];
         foreach ($linhasVenda as $linhaVenda) {
             $artigo = $linhaVenda->idartigo0;
@@ -116,9 +120,9 @@ class PerfilController extends ActiveController
             }
         }
 
+        // Preparar os dados dos artigos publicados
         $artigosPublicadosData = [];
         foreach ($artigosPublicados as $artigo) {
-
             $fotos = [];
             foreach ($artigo->fotosartigos as $foto) {
                 $fotos[] = $foto->caminhofoto;
@@ -140,6 +144,23 @@ class PerfilController extends ActiveController
             ];
         }
 
+        // Buscar as avaliações feitas ao perfil (como destinatário)
+        $avaliacoes = \common\models\Avaliacao::find()
+            ->where(['iddestinatario' => $perfil->id])
+            ->all();
+
+        // Calcular a média e quantidade de avaliações
+        $avaliacoesCount = count($avaliacoes);
+        $mediaAvaliacoes = 0;
+        if ($avaliacoesCount > 0) {
+            $totalEscala = 0;
+            foreach ($avaliacoes as $avaliacao) {
+                $totalEscala += $avaliacao->escala;
+            }
+            $mediaAvaliacoes = $totalEscala / $avaliacoesCount;
+        }
+
+        // Retornar os dados do perfil com as informações solicitadas
         return [
             'id' => $perfil->id,
             'username' => $perfil->user->username,
@@ -149,10 +170,14 @@ class PerfilController extends ActiveController
             'saldo' => $perfil->saldo,
             'saldopendente' => $perfil->saldopendente,
             'banido' => $perfil->banido,
+            'quantidadeAvaliacoes' => $avaliacoesCount, // Quantidade de avaliações
+            'mediaAvaliacoes' => $mediaAvaliacoes, // Média das avaliações
             'artigospublicados' => !empty($artigosPublicadosData) ? $artigosPublicadosData : null,
             'artigosvendidos' => !empty($artigosVendidosData) ? $artigosVendidosData : null,
+
         ];
     }
+
 
 
 

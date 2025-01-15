@@ -2,6 +2,7 @@
 
 namespace backend\modules\api\controllers;
 use common\models\Artigo;
+use common\models\Avaliacao;
 use common\models\ArtigosPremium;
 use common\models\User;
 use common\models\Categoriaartigo;
@@ -187,6 +188,15 @@ class ArtigoController extends ActiveController
             ->where(['idartigo' => $artigo->id, 'idperfil' => $this->user->id])
             ->exists();
 
+        $mediaAvaliacoes = null;
+        $quantidadeAvaliacoes = 0;
+        if ($artigo->idperfil0) {
+            $avaliacoesQuery = \common\models\Avaliacao::find()
+                ->where(['iddestinatario' => $artigo->idperfil0->id]);
+            $mediaAvaliacoes = $avaliacoesQuery->average('escala');
+            $quantidadeAvaliacoes = $avaliacoesQuery->count();
+        }
+
         return [
             'id' => $artigo->id,
             'datacriacao' => Yii::$app->formatter->asDate($artigo->datacriacao, 'dd/MM/yyyy'),
@@ -203,14 +213,16 @@ class ArtigoController extends ActiveController
             'fotos' => $fotos,
             'perfil' => $artigo->idperfil0 ? [
                 'id' => $artigo->idperfil0->id,
-                'descricao' => $artigo->idperfil0->descricao,
                 'caminhofotoperfil' => $artigo->idperfil0->caminhofotoperfil,
-                'morada' => $artigo->idperfil0->morada,
+                'username' => $artigo->idperfil0->user->username,
+                'mediaAvaliacoes' => $mediaAvaliacoes ? round($mediaAvaliacoes, 2) : null,
+                'quantidadeAvaliacoes' => $quantidadeAvaliacoes ? $quantidadeAvaliacoes : null,
             ] : null,
             'premium' => $isPremium,
             'isLiked' => $isLiked
         ];
     }
+
 
 
     public function actionUserartigos($userid)
