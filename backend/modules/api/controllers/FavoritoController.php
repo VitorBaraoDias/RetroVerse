@@ -245,7 +245,8 @@ class FavoritoController extends ActiveController
 
         }
             return [
-                'artigos' => $favoritosFormatted];
+                'artigos' => $favoritosFormatted]
+                ;
 
 
     }
