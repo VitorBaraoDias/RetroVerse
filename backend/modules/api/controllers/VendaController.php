@@ -227,12 +227,18 @@ class VendaController extends ActiveController
 
             $detalhes = [
                 'idvenda' => $modelClass->id,
+                'codigo' => $modelClass->codigo ?? null,
                 'total' => $modelClass->total,
                 'datavenda' => Yii::$app->formatter->asDate(date('Y-m-d H:i:s'), 'php:d/m/Y'),
                 'estadoencomenda' => $modelClass->estadoEncomenda->descricao,
                 'metodoexpedicao' => $modelClass->metodoExpedicao->nome ?? null,
                 'tipopagamento' => $modelClass->tipoPagamento->descricao ?? null,
-                'linhas_venda' => $linhasVenda,
+                'nome' => $modelClass->nome ?? null,
+                'codigopostal' => $modelClass->codigopostal ?? null,
+                'morada' => $modelClass->morada ?? null,
+                'pais' => $modelClass->pais ?? null,
+                'cidade' => $modelClass->cidade ?? null,
+                'linhasvenda' => $linhasVenda,
             ];
 
             return [
@@ -288,7 +294,7 @@ class VendaController extends ActiveController
 
             $historico[] = [
                 'idvenda' => $venda->id,
-                'total' => $venda->total  . '€',
+                'total' => $venda->total,
                 'datavenda' => $venda->datavenda,
                 'estadoencomenda' => $venda->estadoEncomenda->descricao,
                 'idmetodoexpedicao' => $venda->metodoExpedicao->nome,
