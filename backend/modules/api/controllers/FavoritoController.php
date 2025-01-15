@@ -182,8 +182,14 @@ class FavoritoController extends ActiveController
 
 
 
-    public function actionUser($id)
+    public function actionFavoritos()
     {
+        if (!$this->user) {
+            throw new ForbiddenHttpException('User not authenticated.');
+        }
+
+        $idperfil = $this->user->id;
+
         $favoritos = Favorito::find()
             ->with([
                 'artigo',
@@ -194,11 +200,10 @@ class FavoritoController extends ActiveController
                 'artigo.idtamanho0',
                 'artigo.idperfil0',
             ])
-            ->where(['idperfil' => $id])
+            ->where(['idperfil' => $idperfil])
             ->all();
 
-        $this->checkAccess('view', $favoritos, ['id' => $id]);
-
+        $this->checkAccess('view', $favoritos, ['id' => $idperfil]);
 
         if (!$favoritos) {
             Yii::$app->response->statusCode = 404;
@@ -208,38 +213,41 @@ class FavoritoController extends ActiveController
             ];
         }
 
-
         $favoritosFormatted = [];
         foreach ($favoritos as $favorito) {
 
-            $fotos = [];
-            foreach ($favorito->artigo->fotosartigos as $foto) {
-                $fotos[] = $foto->caminhofoto;
-            }
-            $artigo = $favorito->artigo;
-            $favoritosFormatted[] = [
-                'id' => $favorito->id,
-                'idartigo' => $favorito->idartigo,
-                'artigo' => $artigo ? [
-                    'nome' => $artigo->nome,
-                    'descricao' => $artigo->descricao,
-                    'precoanuncio' => $artigo->precoanuncio,
-                    'comissao' => $artigo->idcomissao0->comissao,
-                    'estado' => $artigo->idestado0->descricao,
-                    'marca' => $artigo->idmarca0->nome,
-                    'categoria' => $artigo->idcategoria0->nome,
-                    'tamanho' => $artigo->idtamanho0->tamanho,
-                    'username' => $artigo->idperfil0->user->username,
-                    'tipoartigo' => $artigo->tipoartigo,
-                    'fotos' => $fotos,
-                ] : null,
-            ];
-        }
+            $favoritosFormatted = [];
+            foreach ($favoritos as $favorito) {
 
-        return [
-            'success' => true,
-            'favoritos' => $favoritosFormatted,
-        ];
+                $fotos = [];
+                foreach ($favorito->artigo->fotosartigos as $foto) {
+                    $fotos[] = $foto->caminhofoto;
+                }
+                $artigo = $favorito->artigo;
+                $favoritosFormatted[] = [
+                    'id' => $favorito->id,
+                    'idartigo' => $favorito->idartigo,
+                    'artigo' => $artigo ? [
+                        'nome' => $artigo->nome,
+                        'descricao' => $artigo->descricao,
+                        'precoanuncio' => $artigo->precoanuncio,
+                        'comissao' => $artigo->idcomissao0->comissao,
+                        'estado' => $artigo->idestado0->descricao,
+                        'marca' => $artigo->idmarca0->nome,
+                        'categoria' => $artigo->idcategoria0->nome,
+                        'tamanho' => $artigo->idtamanho0->tamanho,
+                        'username' => $artigo->idperfil0->user->username,
+                        'tipoartigo' => $artigo->tipoartigo,
+                        'fotos' => $fotos,
+                    ] : null,
+                ];
+            }
+
+        }
+            return [
+                'artigos' => $favoritosFormatted];
+
+
     }
 
 }
