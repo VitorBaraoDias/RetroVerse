@@ -92,6 +92,12 @@ class PerfilController extends ActiveController
         $artigosVendidosData = [];
         foreach ($linhasVenda as $linhaVenda) {
             $artigo = $linhaVenda->idartigo0;
+
+            $fotos = [];
+            foreach ($artigo->fotosartigos as $foto) {
+                $fotos[] = $foto->caminhofoto;
+            }
+
             if ($artigo) {
                 $artigosVendidosData[] = [
                     'id' => $artigo->id,
@@ -105,12 +111,19 @@ class PerfilController extends ActiveController
                     'categoria' => $artigo->idcategoria0 ? $artigo->idcategoria0->nome : null,
                     'tamanho' => $artigo->idtamanho0 ? $artigo->idtamanho0->tamanho : null,
                     'tipoartigo' => $artigo->tipoartigo,
+                    'fotos' => $fotos,
                 ];
             }
         }
 
         $artigosPublicadosData = [];
         foreach ($artigosPublicados as $artigo) {
+
+            $fotos = [];
+            foreach ($artigo->fotosartigos as $foto) {
+                $fotos[] = $foto->caminhofoto;
+            }
+
             $artigosPublicadosData[] = [
                 'id' => $artigo->id,
                 'datacriacao' => Yii::$app->formatter->asDate($artigo->datacriacao, 'dd/MM/yyyy'),
@@ -123,11 +136,13 @@ class PerfilController extends ActiveController
                 'categoria' => $artigo->idcategoria0 ? $artigo->idcategoria0->nome : null,
                 'tamanho' => $artigo->idtamanho0 ? $artigo->idtamanho0->tamanho : null,
                 'tipoartigo' => $artigo->tipoartigo,
+                'fotos' => $fotos,
             ];
         }
 
         return [
             'id' => $perfil->id,
+            'username' => $perfil->user->username,
             'descricao' => $perfil->descricao,
             'caminhofotoperfil' => $perfil->caminhofotoperfil,
             'morada' => $perfil->morada,
