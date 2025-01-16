@@ -144,7 +144,7 @@ return [
                     'class' => 'yii\rest\UrlRule',
                     'controller' => 'api/favorito',
                     'extraPatterns' => [
-                        'GET user' => 'user',
+                        'GET ' => 'favoritos',
                         'POST' => 'createfavorito',
                         'DELETE {id}' => 'deletefavorito'
                     ],

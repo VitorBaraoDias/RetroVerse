@@ -225,8 +225,15 @@ class FavoritoController extends ActiveController
 
 
 
-    public function actionUser()
+
+    public function actionFavoritos()
     {
+        if (!$this->user) {
+            throw new ForbiddenHttpException('User not authenticated.');
+        }
+
+        $idperfil = $this->user->id;
+
         $favoritos = Favorito::find()
             ->with([
                 'artigo',
@@ -243,6 +250,7 @@ class FavoritoController extends ActiveController
         $this->checkAccess('view', $favoritos, ['id' => $this->user->id]);
 
 
+
         if (!$favoritos) {
             Yii::$app->response->statusCode = 404;
             return [
@@ -251,10 +259,8 @@ class FavoritoController extends ActiveController
             ];
         }
 
-
         $favoritosFormatted = [];
         foreach ($favoritos as $favorito) {
-
             $fotos = [];
             foreach ($favorito->artigo->fotosartigos as $foto) {
                 $fotos[] = $foto->caminhofoto;
@@ -292,6 +298,7 @@ class FavoritoController extends ActiveController
                 'artigo' => $artigo ? [
                     'idartigo' => $favorito->idartigo,
                     'nome' => $artigo->nome,
+                    'datacriacao' => $artigo->datacriacao,
                     'descricao' => $artigo->descricao,
                     'precoanuncio' => $artigo->precoanuncio,
                     'comissao' => $artigo->idcomissao0->comissao ?? null,
@@ -314,9 +321,8 @@ class FavoritoController extends ActiveController
                     'isPremium' => $isPremium,
                 ] : null,
             ];
+
         }
-
-        return $favoritosFormatted;
+            return $favoritosFormatted;
     }
-
 }

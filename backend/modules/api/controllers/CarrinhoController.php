@@ -128,29 +128,44 @@ class CarrinhoController extends ActiveController
             foreach ($artigo->fotosartigos as $foto) {
                 $fotos[] = $foto->caminhofoto;
             }
+
+            $isPremium = (bool)\common\models\Artigospremium::find()
+                ->where(['id' => $artigo->id])
+                ->exists();
+
+
+            $isLiked = (bool)\common\models\Favorito::find()
+                ->where(['idartigo' => $artigo->id, 'idperfil' => $this->user->id])
+                ->exists();
+
             $linhasCarrinhoFormatted[] = [
-                'id' => $linha->id,
-                'idcarrinho' => $linha->idcarrinho,
-                'idartigo' => $linha->idartigo,
-                'artigo' => $artigo ? [
-                    'nome' => $artigo->nome,
-                    'descricao' => $artigo->descricao,
-                    'precoanuncio' => $artigo->precoanuncio,
-                    'comissao' => $artigo->idcomissao0->comissao,
-                    'estado' => $artigo->idestado0->descricao,
-                    'marca' => $artigo->idmarca0->nome,
-                    'categoria' => $artigo->idcategoria0->nome,
-                    'tamanho' => $artigo->idtamanho0->tamanho,
-                    'username' =>  $artigo->idperfil0->user->username,
-                    'tipoartigo' => $artigo->tipoartigo,
-                    'fotos' => $fotos,
+                'id' => $artigo->id,
+                'datacriacao' => Yii::$app->formatter->asDate($artigo->datacriacao, 'dd/MM/yyyy'),
+                'nome' => $artigo->nome,
+                'descricao' => $artigo->descricao,
+                'precoanuncio' => $artigo->precoanuncio,
+                'comissao' => $artigo->idcomissao0 ? $artigo->idcomissao0->comissao : null,
+                'estado' => $artigo->idestado0 ? $artigo->idestado0->descricao : null,
+                'marca' => $artigo->idmarca0 ? $artigo->idmarca0->nome : null,
+                'categoria' => $artigo->idcategoria0 ? $artigo->idcategoria0->nome : null,
+                'tamanho' => $artigo->idtamanho0 ? $artigo->idtamanho0->tamanho : null,
+                'tipoartigo' => $artigo->tipoartigo,
+                'fotos' => $fotos,
+                'perfil' => $artigo->idperfil0 ? [
+                    'id' => $artigo->idperfil0->id,
+                    'descricao' => $artigo->idperfil0->descricao,
+                    'caminhofotoperfil' => $artigo->idperfil0->caminhofotoperfil,
+                    'morada' => $artigo->idperfil0->morada,
                 ] : null,
+                'premium' => $isPremium,
+                'isLiked' => $isLiked,
             ];
         }
 
         return [
-            'success' => true,
-            'carrinho' => $linhasCarrinhoFormatted,
+            'id' => $carrinho->id,
+            'iduser' => $carrinho->iduser,
+            'linhascarrinho' => $linhasCarrinhoFormatted,
         ];
     }
 
