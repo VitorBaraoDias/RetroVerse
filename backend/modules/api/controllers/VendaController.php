@@ -186,7 +186,6 @@ class VendaController extends ActiveController
                 }
 
                 $linhasVenda[] = [
-                    'artigo' => [
                         'idartigo' => $linhaVenda->idartigo,
                         'idvendedor' => $linhaVenda->idvendedor,
                         'nome' => $artigo ? $artigo->nome : null,
@@ -198,8 +197,7 @@ class VendaController extends ActiveController
                         'tipo' => $artigo ? $artigo->tipoartigo : null,
                         'idperfil' => $artigo ? $artigo->idperfil : null,
                         'fotos' => $fotos,
-                        'estadoencomenda' => $linhaVenda->idestadoencomenda0->descricao
-                    ],
+                        'estadoencomenda' => $linhaVenda->idestadoencomenda0->descricaogi
                 ];
 
 

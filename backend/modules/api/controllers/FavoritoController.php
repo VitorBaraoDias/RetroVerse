@@ -224,29 +224,50 @@ class FavoritoController extends ActiveController
                     $fotos[] = $foto->caminhofoto;
                 }
                 $artigo = $favorito->artigo;
+
+                $isPremium = (bool)\common\models\Artigospremium::find()
+                    ->where(['id' => $artigo->id])
+                    ->exists();
+
+                $isLiked = (bool)\common\models\Favorito::find()
+                    ->where(['idartigo' => $artigo->id, 'idperfil' => $this->user->id])
+                    ->exists();
+                if ($artigo->idperfil0) {
+                    $avaliacoesQuery = \common\models\Avaliacao::find()
+                        ->where(['iddestinatario' => $artigo->idperfil0->id]);
+                    $mediaAvaliacoes = $avaliacoesQuery->average('escala');
+                    $quantidadeAvaliacoes = $avaliacoesQuery->count();
+                }
                 $favoritosFormatted[] = [
                     'id' => $favorito->id,
                     'idartigo' => $favorito->idartigo,
-                    'artigo' => $artigo ? [
-                        'nome' => $artigo->nome,
-                        'descricao' => $artigo->descricao,
-                        'precoanuncio' => $artigo->precoanuncio,
-                        'comissao' => $artigo->idcomissao0->comissao,
-                        'estado' => $artigo->idestado0->descricao,
-                        'marca' => $artigo->idmarca0->nome,
-                        'categoria' => $artigo->idcategoria0->nome,
-                        'tamanho' => $artigo->idtamanho0->tamanho,
+                    'nome' => $artigo->nome,
+                    'datacriacao' => $artigo->datacriacao,
+                    'descricao' => $artigo->descricao,
+                    'precoanuncio' => $artigo->precoanuncio,
+                    'comissao' => $artigo->idcomissao0->comissao,
+                    'estado' => $artigo->idestado0->descricao,
+                    'marca' => $artigo->idmarca0->nome,
+                    'categoria' => $artigo->idcategoria0->nome,
+                    'tamanho' => $artigo->idtamanho0->tamanho,
+                    'username' => $artigo->idperfil0->user->username,
+                    'tipoartigo' => $artigo->tipoartigo,
+                    'fotos' => $fotos,
+                    'perfil' => $artigo->idperfil0 ? [
+                        'id' => $artigo->idperfil0->id,
+                        'caminhofotoperfil' => $artigo->idperfil0->caminhofotoperfil,
                         'username' => $artigo->idperfil0->user->username,
-                        'tipoartigo' => $artigo->tipoartigo,
-                        'fotos' => $fotos,
+                        'mediaAvaliacoes' => $mediaAvaliacoes ? round($mediaAvaliacoes, 2) : null,
+                        'quantidadeAvaliacoes' => $quantidadeAvaliacoes ? $quantidadeAvaliacoes : null,
                     ] : null,
+                    'premium' => $isPremium,
+                    'isLiked' => $isLiked // Aqui o problema foi corrigido
                 ];
+
             }
 
         }
-            return [
-                'artigos' => $favoritosFormatted]
-                ;
+            return $favoritosFormatted;
 
 
     }
