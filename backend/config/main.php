@@ -117,7 +117,7 @@ return [
                     'extraPatterns' => [
                         'POST efetuarcompra' => 'comprar',
                         'GET detalhes/{id}' => 'detalhesvenda',
-                        'GET compras/{id}' => 'historicocompras', //historico de compras do user x
+                        'GET compras' => 'historicocompras', //historico de compras do user x
                         'GET historico/{id}' => 'historicovendas',  //historico de vendas do user x
                     ],
                 ],
@@ -144,7 +144,7 @@ return [
                     'class' => 'yii\rest\UrlRule',
                     'controller' => 'api/favorito',
                     'extraPatterns' => [
-                        'GET user/{id}' => 'user',
+                        'GET user' => 'user',
                         'POST' => 'createfavorito',
                         'DELETE {id}' => 'deletefavorito'
                     ],
@@ -154,7 +154,7 @@ return [
                     'controller' => 'api/perfil',
                     'extraPatterns' => [
                         'GET' => 'verperfiluser',
-                        'PUT {id}/editar' => 'editarperfil',
+                        'PUT editar' => 'editarperfil',
                     ],
                 ],
                 [

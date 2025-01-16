@@ -75,24 +75,21 @@ class PerfilController extends ActiveController
 
     public function actionVerperfiluser()
     {
-        // Buscar o perfil do usuário autenticado
         $perfil = Perfil::findOne($this->user->id);
 
         if (!$perfil) {
             throw new NotFoundHttpException('Perfil não encontrado.');
         }
 
-        // Buscar os artigos publicados pelo usuário
+
         $artigosPublicados = $perfil->hasMany(Artigo::class, ['idperfil' => 'id'])
             ->andWhere(['ativo' => 1])
             ->all();
 
-        // Buscar as linhas de venda relacionadas ao vendedor (usuário)
         $linhasVenda = \common\models\LinhaVenda::find()
             ->where(['idvendedor' => $perfil->id])
             ->all();
 
-        // Preparar os dados dos artigos vendidos
         $artigosVendidosData = [];
         foreach ($linhasVenda as $linhaVenda) {
             $artigo = $linhaVenda->idartigo0;
@@ -120,7 +117,6 @@ class PerfilController extends ActiveController
             }
         }
 
-        // Preparar os dados dos artigos publicados
         $artigosPublicadosData = [];
         foreach ($artigosPublicados as $artigo) {
             $fotos = [];
@@ -144,12 +140,10 @@ class PerfilController extends ActiveController
             ];
         }
 
-        // Buscar as avaliações feitas ao perfil (como destinatário)
         $avaliacoes = \common\models\Avaliacao::find()
             ->where(['iddestinatario' => $perfil->id])
             ->all();
 
-        // Calcular a média e quantidade de avaliações
         $avaliacoesCount = count($avaliacoes);
         $mediaAvaliacoes = 0;
         if ($avaliacoesCount > 0) {
@@ -160,7 +154,6 @@ class PerfilController extends ActiveController
             $mediaAvaliacoes = $totalEscala / $avaliacoesCount;
         }
 
-        // Retornar os dados do perfil com as informações solicitadas
         return [
             'id' => $perfil->id,
             'username' => $perfil->user->username,
@@ -170,8 +163,8 @@ class PerfilController extends ActiveController
             'saldo' => $perfil->saldo,
             'saldopendente' => $perfil->saldopendente,
             'banido' => $perfil->banido,
-            'quantidadeAvaliacoes' => $avaliacoesCount, // Quantidade de avaliações
-            'mediaAvaliacoes' => $mediaAvaliacoes, // Média das avaliações
+            'quantidadeAvaliacoes' => $avaliacoesCount,
+            'mediaAvaliacoes' => $mediaAvaliacoes,
             'artigospublicados' => !empty($artigosPublicadosData) ? $artigosPublicadosData : null,
             'artigosvendidos' => !empty($artigosVendidosData) ? $artigosVendidosData : null,
 
@@ -181,9 +174,9 @@ class PerfilController extends ActiveController
 
 
 
-    public function actionEditarperfil($id)
+    public function actionEditarperfil()
     {
-        $perfil = Perfil::findOne($id);
+        $perfil = Perfil::findOne($this->user->id);
 
         $this->checkAccess('update', $perfil);
 
@@ -191,18 +184,111 @@ class PerfilController extends ActiveController
             throw new NotFoundHttpException('Profile not found.');
         }
 
-
+        // Set the scenario for updating profile
         $perfil->setScenario('updateProfile');
 
+        // Load data from the request body into the profile model
         $perfil->load(Yii::$app->getRequest()->getBodyParams(), '');
 
+        // If the profile is saved successfully
         if ($perfil->save()) {
+            // Fetch the updated profile data
+            $perfil = Perfil::findOne($this->user->id);
+
+            // Fetch published articles
+            $artigosPublicados = $perfil->hasMany(Artigo::class, ['idperfil' => 'id'])
+                ->andWhere(['ativo' => 1])
+                ->all();
+
+            // Fetch sold articles data
+            $linhasVenda = \common\models\LinhaVenda::find()
+                ->where(['idvendedor' => $perfil->id])
+                ->all();
+
+            $artigosVendidosData = [];
+            foreach ($linhasVenda as $linhaVenda) {
+                $artigo = $linhaVenda->idartigo0;
+
+                $fotos = [];
+                foreach ($artigo->fotosartigos as $foto) {
+                    $fotos[] = $foto->caminhofoto;
+                }
+
+                if ($artigo) {
+                    $artigosVendidosData[] = [
+                        'id' => $artigo->id,
+                        'datacriacao' => Yii::$app->formatter->asDate($artigo->datacriacao, 'dd/MM/yyyy'),
+                        'nome' => $artigo->nome,
+                        'descricao' => $artigo->descricao,
+                        'precoanuncio' => $artigo->precoanuncio,
+                        'comissao' => $artigo->idcomissao0 ? $artigo->idcomissao0->comissao : null,
+                        'estado' => $artigo->idestado0 ? $artigo->idestado0->descricao : null,
+                        'marca' => $artigo->idmarca0 ? $artigo->idmarca0->nome : null,
+                        'categoria' => $artigo->idcategoria0 ? $artigo->idcategoria0->nome : null,
+                        'tamanho' => $artigo->idtamanho0 ? $artigo->idtamanho0->tamanho : null,
+                        'tipoartigo' => $artigo->tipoartigo,
+                        'fotos' => $fotos,
+                    ];
+                }
+            }
+
+            // Fetch published articles data
+            $artigosPublicadosData = [];
+            foreach ($artigosPublicados as $artigo) {
+                $fotos = [];
+                foreach ($artigo->fotosartigos as $foto) {
+                    $fotos[] = $foto->caminhofoto;
+                }
+
+                $artigosPublicadosData[] = [
+                    'id' => $artigo->id,
+                    'datacriacao' => Yii::$app->formatter->asDate($artigo->datacriacao, 'dd/MM/yyyy'),
+                    'nome' => $artigo->nome,
+                    'descricao' => $artigo->descricao,
+                    'precoanuncio' => $artigo->precoanuncio,
+                    'comissao' => $artigo->idcomissao0 ? $artigo->idcomissao0->comissao : null,
+                    'estado' => $artigo->idestado0 ? $artigo->idestado0->descricao : null,
+                    'marca' => $artigo->idmarca0 ? $artigo->idmarca0->nome : null,
+                    'categoria' => $artigo->idcategoria0 ? $artigo->idcategoria0->nome : null,
+                    'tamanho' => $artigo->idtamanho0 ? $artigo->idtamanho0->tamanho : null,
+                    'tipoartigo' => $artigo->tipoartigo,
+                    'fotos' => $fotos,
+                ];
+            }
+
+            // Fetch evaluations
+            $avaliacoes = \common\models\Avaliacao::find()
+                ->where(['iddestinatario' => $perfil->id])
+                ->all();
+
+            $avaliacoesCount = count($avaliacoes);
+            $mediaAvaliacoes = 0;
+            if ($avaliacoesCount > 0) {
+                $totalEscala = 0;
+                foreach ($avaliacoes as $avaliacao) {
+                    $totalEscala += $avaliacao->escala;
+                }
+                $mediaAvaliacoes = $totalEscala / $avaliacoesCount;
+            }
+
+            // Return the updated profile and associated data
             return [
-                'success' => true,
-                'message' => 'Profile updated successfully!',
+                'id' => $perfil->id,
+                'username' => $perfil->user->username,
+                'descricao' => $perfil->descricao,
+                'caminhofotoperfil' => $perfil->caminhofotoperfil,
+                'morada' => $perfil->morada,
+                'saldo' => $perfil->saldo,
+                'saldopendente' => $perfil->saldopendente,
+                'banido' => $perfil->banido,
+                'quantidadeAvaliacoes' => $avaliacoesCount,
+                'mediaAvaliacoes' => $mediaAvaliacoes,
+                'artigospublicados' => !empty($artigosPublicadosData) ? $artigosPublicadosData : null,
+                'artigosvendidos' => !empty($artigosVendidosData) ? $artigosVendidosData : null,
             ];
         } else {
             return $this->asJson(['errors' => $perfil->errors]);
         }
     }
+
 }

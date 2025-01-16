@@ -84,7 +84,7 @@ class FavoritoController extends ActiveController
 
         $request = Yii::$app->request;
         $idartigo = $request->post('idartigo');
-        $idperfil =$request->post('idperfil');
+        $idperfil = $this->user->id;
 
         if (!$idartigo) {
             Yii::$app->response->statusCode = 400;
@@ -94,7 +94,6 @@ class FavoritoController extends ActiveController
             ];
         }
 
-        // Check if the article exists
         $artigo = Artigo::findOne($idartigo);
         if (!$artigo) {
             Yii::$app->response->statusCode = 404;
@@ -104,21 +103,8 @@ class FavoritoController extends ActiveController
             ];
         }
 
-
-        $favorito = new Favorito();
-        $favorito->idperfil = $idperfil;
-        $favorito->idartigo = $idartigo;
-
-
-        $this->checkAccess('create', $favorito);
-
-
         if ($artigo->idperfil == $idperfil) {
-            Yii::$app->response->statusCode = 403;
-            return [
-                'success' => false,
-                'message' => 'You cannot add your own item to favorites.',
-            ];
+            throw new ForbiddenHttpException('You cannot add your own item to favorites.');
         }
 
         $existingFavorito = Favorito::find()
@@ -126,20 +112,76 @@ class FavoritoController extends ActiveController
             ->one();
 
         if ($existingFavorito) {
-            Yii::$app->response->statusCode = 409;
-            return [
-                'success' => false,
-                'message' => 'This item is already in your favorites.',
-            ];
+            throw new ForbiddenHttpException('This item is already in your favorites.');
         }
 
+        $favorito = new Favorito();
+        $favorito->idperfil = $idperfil;
+        $favorito->idartigo = $idartigo;
+
+        $this->checkAccess('create', $favorito);
 
         if ($favorito->save()) {
+            $fotos = [];
+            foreach ($artigo->fotosartigos as $foto) {
+                $fotos[] = $foto->caminhofoto;
+            }
+
+            $perfil = $artigo->idperfil0;
+            $quantidadeAvaliacoes = 0;
+            $mediaAvaliacoes = 0.0;
+
+            if ($perfil) {
+                $avaliacoes = \common\models\Avaliacao::find()
+                    ->where(['iddestinatario' => $perfil->id])
+                    ->all();
+
+                $quantidadeAvaliacoes = count($avaliacoes);
+
+                if ($quantidadeAvaliacoes > 0) {
+                    $mediaAvaliacoes = array_sum(array_column($avaliacoes, 'escala')) / $quantidadeAvaliacoes;
+                }
+            }
+
+            $isPremium = (bool)\common\models\Artigospremium::find()
+                ->where(['id' => $artigo->id])
+                ->exists();
+
+            $isLiked = (bool)\common\models\Favorito::find()
+                ->where(['idartigo' => $artigo->id, 'idperfil' => $this->user->id])
+                ->exists();
+
+            $favoritoFormatted = [
+                'id' => $favorito->id,
+                'artigo' => $artigo ? [
+                    'idartigo' => $favorito->idartigo,
+                    'nome' => $artigo->nome,
+                    'descricao' => $artigo->descricao,
+                    'precoanuncio' => $artigo->precoanuncio,
+                    'comissao' => $artigo->idcomissao0->comissao ?? null,
+                    'estado' => $artigo->idestado0->descricao ?? null,
+                    'marca' => $artigo->idmarca0->nome ?? null,
+                    'categoria' => $artigo->idcategoria0->nome ?? null,
+                    'tamanho' => $artigo->idtamanho0->tamanho ?? null,
+                    'tipoartigo' => $artigo->tipoartigo,
+                    'fotos' => $fotos,
+                    'perfil' => $perfil ? [
+                        'id' => $perfil->id,
+                        'username' => $artigo->idperfil0->user->username ?? null,
+                        'descricao' => $perfil->descricao,
+                        'caminhofotoperfil' => $perfil->caminhofotoperfil,
+                        'morada' => $perfil->morada,
+                        'quantidadeAvaliacoes' => $quantidadeAvaliacoes,
+                        'mediaAvaliacoes' => round($mediaAvaliacoes, 2),
+                    ] : null,
+                    'isLiked' => $isLiked,
+                    'isPremium' => $isPremium,
+                ] : null,
+            ];
+
             Yii::$app->response->statusCode = 201;
             return [
-                'success' => true,
-                'message' => 'Item added to favorites successfully.',
-                'favorito' => $favorito,
+                $favoritoFormatted
             ];
         } else {
             Yii::$app->response->statusCode = 500;
@@ -150,6 +192,7 @@ class FavoritoController extends ActiveController
             ];
         }
     }
+
 
     public function actionDeletefavorito($id)
     {
@@ -182,7 +225,7 @@ class FavoritoController extends ActiveController
 
 
 
-    public function actionUser($id)
+    public function actionUser()
     {
         $favoritos = Favorito::find()
             ->with([
@@ -194,10 +237,10 @@ class FavoritoController extends ActiveController
                 'artigo.idtamanho0',
                 'artigo.idperfil0',
             ])
-            ->where(['idperfil' => $id])
+            ->where(['idperfil' => $this->user->id])
             ->all();
 
-        $this->checkAccess('view', $favoritos, ['id' => $id]);
+        $this->checkAccess('view', $favoritos, ['id' => $this->user->id]);
 
 
         if (!$favoritos) {
@@ -216,30 +259,64 @@ class FavoritoController extends ActiveController
             foreach ($favorito->artigo->fotosartigos as $foto) {
                 $fotos[] = $foto->caminhofoto;
             }
+
             $artigo = $favorito->artigo;
+            $perfil = $artigo->idperfil0;
+
+            $isPremium = (bool)\common\models\Artigospremium::find()
+                ->where(['id' => $artigo->id])
+                ->exists();
+
+
+            $isLiked = (bool)\common\models\Favorito::find()
+                ->where(['idartigo' => $artigo->id, 'idperfil' => $this->user->id])
+                ->exists();
+
+            $quantidadeAvaliacoes = 0;
+            $mediaAvaliacoes = 0.0;
+
+            if ($perfil) {
+                $avaliacoes = \common\models\Avaliacao::find()
+                    ->where(['iddestinatario' => $perfil->id])
+                    ->all();
+
+                $quantidadeAvaliacoes = count($avaliacoes);
+
+                if ($quantidadeAvaliacoes > 0) {
+                    $mediaAvaliacoes = array_sum(array_column($avaliacoes, 'escala')) / $quantidadeAvaliacoes;
+                }
+            }
+
             $favoritosFormatted[] = [
                 'id' => $favorito->id,
-                'idartigo' => $favorito->idartigo,
                 'artigo' => $artigo ? [
+                    'idartigo' => $favorito->idartigo,
                     'nome' => $artigo->nome,
                     'descricao' => $artigo->descricao,
                     'precoanuncio' => $artigo->precoanuncio,
-                    'comissao' => $artigo->idcomissao0->comissao,
-                    'estado' => $artigo->idestado0->descricao,
-                    'marca' => $artigo->idmarca0->nome,
-                    'categoria' => $artigo->idcategoria0->nome,
-                    'tamanho' => $artigo->idtamanho0->tamanho,
-                    'username' => $artigo->idperfil0->user->username,
+                    'comissao' => $artigo->idcomissao0->comissao ?? null,
+                    'estado' => $artigo->idestado0->descricao ?? null,
+                    'marca' => $artigo->idmarca0->nome ?? null,
+                    'categoria' => $artigo->idcategoria0->nome ?? null,
+                    'tamanho' => $artigo->idtamanho0->tamanho ?? null,
                     'tipoartigo' => $artigo->tipoartigo,
                     'fotos' => $fotos,
+                    'perfil' => $perfil ? [
+                        'id' => $perfil->id,
+                        'username' => $artigo->idperfil0->user->username ?? null,
+                        'descricao' => $perfil->descricao,
+                        'caminhofotoperfil' => $perfil->caminhofotoperfil,
+                        'morada' => $perfil->morada,
+                        'quantidadeAvaliacoes' => $quantidadeAvaliacoes,
+                        'mediaAvaliacoes' => round($mediaAvaliacoes, 2),
+                    ] : null,
+                    'isLiked' => $isLiked,
+                    'isPremium' => $isPremium,
                 ] : null,
             ];
         }
 
-        return [
-            'success' => true,
-            'favoritos' => $favoritosFormatted,
-        ];
+        return $favoritosFormatted;
     }
 
 }

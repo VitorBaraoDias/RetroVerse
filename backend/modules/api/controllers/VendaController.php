@@ -242,14 +242,14 @@ class VendaController extends ActiveController
     }
 
 
-    public function actionHistoricocompras($id)
+    public function actionHistoricocompras()
     {
         $vendas = Venda::find()
-            ->where(['idcomprador' => $id])
-            ->with('linhavendas.idartigo0')  //
+            ->where(['idcomprador' => $this->user->id])
+            ->with('linhavendas.idartigo0')
             ->all();
 
-        $this->checkAccess('view', $vendas, ['id' => $id]);
+        $this->checkAccess('view', $vendas, ['id' => $this->user->id]);
 
         if (empty($vendas)) {
             return [
@@ -262,27 +262,33 @@ class VendaController extends ActiveController
         foreach ($vendas as $venda) {
             $linhasVenda = [];
             foreach ($venda->linhavendas as $linha) {
-                $artigo = $linha->idartigo0; //
+                $artigo = $linha->idartigo0;
 
                 $fotos = [];
                 foreach ($artigo->fotosartigos as $foto) {
                     $fotos[] = $foto->caminhofoto;
                 }
+
+                $nomeVendedor = $artigo && $artigo->tipoartigo === 'LOJA'
+                    ? 'LOJA'
+                    : ($linha->idvendedor0->user->username ?? null);
+
                 $linhasVenda[] = [
-                    'artigo' =>[
+                    'id' => $linha->id,
+                    'nomevendedor' => $nomeVendedor,
+                    'artigo' => [
                         'idartigo' => $linha->idartigo,
-                        'idvendedor' => $linha->idvendedor,
                         'nome' => $artigo ? $artigo->nome : null,
                         'preco' => $artigo ? $artigo->precoanuncio . '€' : null,
                         'descricao' => $artigo ? $artigo->descricao : null,
                         'marca' => $artigo ? $artigo->idmarca0->nome : null,
                         'tamanho' => $artigo ? $artigo->idtamanho0->tamanho : null,
-                        'categoria' => $artigo ? $artigo->idcategoria0->nome: null,
+                        'categoria' => $artigo ? $artigo->idcategoria0->nome : null,
                         'tipo' => $artigo ? $artigo->tipoartigo : null,
                         'idperfil' => $artigo ? $artigo->idperfil : null,
                         'fotos' => $fotos,
-                    ],
-                    'estadoencomenda' => $linha->idestadoencomenda0->descricao
+                        'estadoencomenda' => $linha->idestadoencomenda0->descricao,
+                    ]
                 ];
             }
 
@@ -291,16 +297,22 @@ class VendaController extends ActiveController
                 'total' => $venda->total,
                 'datavenda' => $venda->datavenda,
                 'estadoencomenda' => $venda->estadoEncomenda->descricao,
-                'idmetodoexpedicao' => $venda->metodoExpedicao->nome,
-                'idtipopagamento' => $venda->tipoPagamento->descricao,
-                'linhas_venda' => $linhasVenda,
+                'metodoexpedicao' => [
+                    'id' => $venda->metodoExpedicao->id,
+                    'nome' => $venda->metodoExpedicao->nome,
+                ],
+                'metodopagamento' => [
+                    'id' => $venda->tipoPagamento->id,
+                    'descricao' => $venda->tipoPagamento->descricao,
+                ],
+                'linhaVenda' => $linhasVenda,
             ];
         }
-        return [
-            'status' => 'success',
-            'historicocompras' => $historico,
-        ];
+
+        return $historico;
+
     }
+
 
     public function actionHistoricovendas($id)
     {

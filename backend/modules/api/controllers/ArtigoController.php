@@ -132,6 +132,21 @@ class ArtigoController extends ActiveController
                 ->where(['idartigo' => $artigo->id, 'idperfil' => $this->user->id])
                 ->exists();
 
+            $perfil = $artigo->idperfil0;
+            $quantidadeAvaliacoes = 0;
+            $mediaAvaliacoes = 0.0;
+
+            if ($perfil) {
+                $avaliacoes = \common\models\Avaliacao::find()
+                    ->where(['iddestinatario' => $perfil->id])
+                    ->all();
+
+                $quantidadeAvaliacoes = count($avaliacoes);
+
+                if ($quantidadeAvaliacoes > 0) {
+                    $mediaAvaliacoes = array_sum(array_column($avaliacoes, 'escala')) / $quantidadeAvaliacoes;
+                }
+            }
 
             $result[] = [
                 'id' => $artigo->id,
@@ -146,17 +161,18 @@ class ArtigoController extends ActiveController
                 'tamanho' => $artigo->idtamanho0 ? $artigo->idtamanho0->tamanho : null,
                 'tipoartigo' => $artigo->tipoartigo,
                 'fotos' => $fotos,
-                'perfil' => $artigo->idperfil0 ? [
-                    'id' => $artigo->idperfil0->id,
-                    'descricao' => $artigo->idperfil0->descricao,
-                    'caminhofotoperfil' => $artigo->idperfil0->caminhofotoperfil,
-                    'morada' => $artigo->idperfil0->morada,
+                'perfil' => $perfil ? [
+                    'id' => $perfil->id,
+                    'descricao' => $perfil->descricao,
+                    'caminhofotoperfil' => $perfil->caminhofotoperfil,
+                    'morada' => $perfil->morada,
+                    'quantidadeAvaliacoes' => $quantidadeAvaliacoes,
+                    'mediaAvaliacoes' => round($mediaAvaliacoes, 2),
                 ] : null,
                 'premium' => $isPremium,
                 'isLiked' => $isLiked
             ];
         }
-
 
         return $result;
     }
