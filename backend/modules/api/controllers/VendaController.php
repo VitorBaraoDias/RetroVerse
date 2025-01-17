@@ -185,19 +185,35 @@ class VendaController extends ActiveController
                     $fotos[] = $foto->caminhofoto;
                 }
 
+                $nomeVendedor = $artigo && $artigo->tipoartigo === 'LOJA'
+                    ? 'LOJA'
+                    : ($linhaVenda->idvendedor0->user->username ?? null);
+
                 $linhasVenda[] = [
-                        'idartigo' => $linhaVenda->idartigo,
-                        'idvendedor' => $linhaVenda->idvendedor,
-                        'nome' => $artigo ? $artigo->nome : null,
-                        'preco' => $artigo ? $artigo->precoanuncio : null,
-                        'descricao' => $artigo ? $artigo->descricao : null,
-                        'marca' => $artigo ? $artigo->idmarca0->nome : null,
-                        'tamanho' => $artigo ? $artigo->idtamanho0->tamanho : null,
-                        'categoria' => $artigo ? $artigo->idcategoria0->nome : null,
-                        'tipo' => $artigo ? $artigo->tipoartigo : null,
-                        'idperfil' => $artigo ? $artigo->idperfil : null,
-                        'fotos' => $fotos,
-                        'estadoencomenda' => $linhaVenda->idestadoencomenda0->descricaogi
+                        'id' => $linhaVenda->id,
+                        'nomevendedor' => $nomeVendedor,
+                        'estadoencomenda' => $linhaVenda->idestadoencomenda0->descricao,
+                        'artigo' =>[
+                            'id' => $linhaVenda->idartigo,
+                            'datacriacao' => Yii::$app->formatter->asDate($artigo->datacriacao, 'dd/MM/yyyy'),
+                            'idvendedor' => $linhaVenda->idvendedor,
+                            'nome' => $artigo ? $artigo->nome : null,
+                            'preco' => $artigo ? $artigo->precoanuncio : null,
+                            'descricao' => $artigo ? $artigo->descricao : null,
+                            'marca' => $artigo ? $artigo->idmarca0->nome : null,
+                            'tamanho' => $artigo ? $artigo->idtamanho0->tamanho : null,
+                            'categoria' => $artigo ? $artigo->idcategoria0->nome : null,
+                            'tipo' => $artigo ? $artigo->tipoartigo : null,
+                            'precoanuncio' => $artigo->precoanuncio,
+                            'tipoartigo' => $artigo->tipoartigo,
+                            'estado' => $artigo->idestado0 ? $artigo->idestado0->descricao : null,
+                            'perfil' => $artigo->idperfil0 ? [
+                                'id' => $artigo->idperfil0->id,
+                                'caminhofotoperfil' => $artigo->idperfil0->caminhofotoperfil,
+                                'username' => $artigo->idperfil0->user->username
+                            ] : [],
+                            'fotos' => $fotos,
+                        ]
                 ];
 
 
@@ -274,10 +290,11 @@ class VendaController extends ActiveController
                 $linhasVenda[] = [
                     'id' => $linha->id,
                     'nomevendedor' => $nomeVendedor,
+                    'estadoencomenda' => $linha->idestadoencomenda0->descricao,
                     'artigo' => [
-                        'idartigo' => $linha->idartigo,
+                        'id' => $linha->idartigo,
                         'nome' => $artigo ? $artigo->nome : null,
-                        'preco' => $artigo ? $artigo->precoanuncio . '€' : null,
+                        'precoanuncio' => $artigo ? $artigo->precoanuncio : null,
                         'descricao' => $artigo ? $artigo->descricao : null,
                         'marca' => $artigo ? $artigo->idmarca0->nome : null,
                         'tamanho' => $artigo ? $artigo->idtamanho0->tamanho : null,
@@ -285,25 +302,24 @@ class VendaController extends ActiveController
                         'tipo' => $artigo ? $artigo->tipoartigo : null,
                         'idperfil' => $artigo ? $artigo->idperfil : null,
                         'fotos' => $fotos,
-                        'estadoencomenda' => $linha->idestadoencomenda0->descricao,
                     ]
                 ];
             }
 
             $historico[] = [
                 'idvenda' => $venda->id,
+                'codigo' => $venda->codigo,
                 'total' => $venda->total,
                 'datavenda' => $venda->datavenda,
                 'estadoencomenda' => $venda->estadoEncomenda->descricao,
-                'metodoexpedicao' => [
-                    'id' => $venda->metodoExpedicao->id,
-                    'nome' => $venda->metodoExpedicao->nome,
-                ],
-                'metodopagamento' => [
-                    'id' => $venda->tipoPagamento->id,
-                    'descricao' => $venda->tipoPagamento->descricao,
-                ],
-                'linhaVenda' => $linhasVenda,
+                'metodoexpedicao' => $venda->metodoExpedicao->nome,
+                'tipopagamento' => $venda->tipoPagamento->descricao,
+                'nome' => $venda->nome,
+                'codigopostal' => $venda->codigopostal ?? null,
+                'morada' => $venda->morada ?? null,
+                'pais' => $venda->pais ?? null,
+                'cidade' => $venda->cidade ?? null,
+                'linhasvenda' => $linhasVenda,
             ];
         }
 
