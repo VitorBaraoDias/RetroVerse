@@ -305,6 +305,7 @@ class VendaController extends ActiveController
                     ]
                 ];
             }
+            $perfil = $venda->comprador;
 
             $historico[] = [
                 'idvenda' => $venda->id,
@@ -320,6 +321,7 @@ class VendaController extends ActiveController
                 'pais' => $venda->pais ?? null,
                 'cidade' => $venda->cidade ?? null,
                 'linhasvenda' => $linhasVenda,
+                'email' => $perfil->user->email
             ];
         }
 
