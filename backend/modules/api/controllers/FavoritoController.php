@@ -86,21 +86,10 @@ class FavoritoController extends ActiveController
         $idartigo = $request->post('idartigo');
         $idperfil = $this->user->id;
 
-        if (!$idartigo) {
-            Yii::$app->response->statusCode = 400;
-            return [
-                'success' => false,
-                'message' => 'Item ID is required.',
-            ];
-        }
-
         $artigo = Artigo::findOne($idartigo);
         if (!$artigo) {
-            Yii::$app->response->statusCode = 404;
-            return [
-                'success' => false,
-                'message' => 'Item not found.',
-            ];
+            throw new ForbiddenHttpException('Item not found');
+
         }
 
         if ($artigo->idperfil == $idperfil) {
@@ -152,8 +141,6 @@ class FavoritoController extends ActiveController
                 ->exists();
 
             $favoritoFormatted = [
-                'id' => $favorito->id,
-                'artigo' => $artigo ? [
                     'idartigo' => $favorito->idartigo,
                     'nome' => $artigo->nome,
                     'descricao' => $artigo->descricao,
@@ -176,13 +163,11 @@ class FavoritoController extends ActiveController
                     ] : null,
                     'isLiked' => $isLiked,
                     'isPremium' => $isPremium,
-                ] : null,
             ];
 
             Yii::$app->response->statusCode = 201;
-            return [
-                $favoritoFormatted
-            ];
+            return
+                $favoritoFormatted;
         } else {
             Yii::$app->response->statusCode = 500;
             return [
@@ -196,30 +181,24 @@ class FavoritoController extends ActiveController
 
     public function actionDeletefavorito($id)
     {
-        $favorito = Favorito::findOne($id);
+        $favorito = Favorito::find()->where(['idperfil' => $this->user->id, 'idartigo' => $id])->one();
+
+
 
         if (!$favorito) {
             Yii::$app->response->statusCode = 404;
-            return [
-                'success' => false,
-                'message' => 'Favorito not found.',
-            ];
+            throw new ForbiddenHttpException('Favorito not found.');
         }
 
         $this->checkAccess('delete', $favorito);
 
         if ($favorito->delete()) {
             Yii::$app->response->statusCode = 200;
-            return [
-                'success' => true,
-                'message' => 'Favorite removed successfully.',
-            ];
+            return [];
+
         } else {
             Yii::$app->response->statusCode = 500;
-            return [
-                'success' => false,
-                'message' => 'An error occurred while removing the favorite.',
-            ];
+            throw new ForbiddenHttpException('An error occurred while removing the favorite.');
         }
     }
 
@@ -248,17 +227,7 @@ class FavoritoController extends ActiveController
             ->all();
 
         $this->checkAccess('view', $favoritos, ['id' => $this->user->id]);
-
-
-
-        if (!$favoritos) {
-            Yii::$app->response->statusCode = 404;
-            return [
-                'success' => false,
-                'message' => 'No favourites found for this user',
-            ];
-        }
-
+        
         $favoritosFormatted = [];
         foreach ($favoritos as $favorito) {
             $fotos = [];
@@ -294,9 +263,7 @@ class FavoritoController extends ActiveController
             }
 
             $favoritosFormatted[] = [
-                'id' => $favorito->id,
-                'artigo' => $artigo ? [
-                    'idartigo' => $favorito->idartigo,
+                    'id' => $favorito->idartigo,
                     'nome' => $artigo->nome,
                     'datacriacao' => $artigo->datacriacao,
                     'descricao' => $artigo->descricao,
@@ -319,10 +286,9 @@ class FavoritoController extends ActiveController
                     ] : null,
                     'isLiked' => $isLiked,
                     'isPremium' => $isPremium,
-                ] : null,
             ];
 
         }
-            return $favoritosFormatted;
+        return $favoritosFormatted;
     }
 }
