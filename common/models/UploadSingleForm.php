@@ -22,12 +22,10 @@ class UploadSingleForm extends Model
     }
     public function upload()
     {
-        // Certifica-se de que os diretórios estão configurados
         if (!$this->backendUploadDir || !$this->frontendUploadDir) {
             throw new \Exception('Os diretórios de upload não foram configurados.');
         }
 
-        // Certifica-se de que os diretórios existem
         if (!is_dir($this->backendUploadDir)) {
             mkdir($this->backendUploadDir, 0775, true);
         }
@@ -36,7 +34,6 @@ class UploadSingleForm extends Model
         }
 
         $files = is_array($this->imageFile) ? $this->imageFile : [$this->imageFile];
-
         foreach ($files as $file) {
             $fileName = uniqid() . '.' . $file->extension;
             $frontendFilePath = $this->frontendUploadDir . $fileName;
@@ -46,7 +43,7 @@ class UploadSingleForm extends Model
                 copy($frontendFilePath, $backendFilePath);
                 $this->imagePaths[] = $fileName; // Adiciona o caminho ao array de imagens
             } else {
-                return false; // Se qualquer upload falhar, retorna falso
+                return "O PROBLEMA ESTA AQUI"; // Se qualquer upload falhar, retorna falso
             }
         }
 

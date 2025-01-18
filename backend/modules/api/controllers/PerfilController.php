@@ -184,23 +184,48 @@ class PerfilController extends ActiveController
             throw new NotFoundHttpException('Profile not found.');
         }
 
-        // Set the scenario for updating profile
         $perfil->setScenario('updateProfile');
 
-        // Load data from the request body into the profile model
-        $perfil->load(Yii::$app->getRequest()->getBodyParams(), '');
 
-        // If the profile is saved successfully
+        $request = Yii::$app->request->post();
+
+        $perfil->descricao = $request['descricao'];
+        $perfil->morada = $request['morada'];
+
+        //PARA SALVAR A FOTO
+        if (!empty($request['fotoperfil'])) {
+            if (base64_decode($request['fotoperfil'], true) !== false) {
+                try {
+                    $time = time();
+                    $tempFilePath = base64_decode($request['fotoperfil']); // Decodificar os dados base64
+                    $filename = "IMG" . $time . ".jpg";
+
+                    file_put_contents(Yii::getAlias('@frontend/web/uploads/img-profile/') . $filename, $tempFilePath);
+
+                    $perfil->caminhofotoperfil = $filename;
+
+                } catch (\Exception $e) {
+                    Yii::error("Erro ao salvar a imagem do perfil: " . $e->getMessage());
+                }
+            } else {
+
+                $perfil->caminhofotoperfil = $perfil->caminhofotoperfil;
+            }
+        } else {
+            $perfil->caminhofotoperfil = $perfil->caminhofotoperfil;
+        }
+
+
+
+
         if ($perfil->save()) {
-            // Fetch the updated profile data
             $perfil = Perfil::findOne($this->user->id);
 
-            // Fetch published articles
+
             $artigosPublicados = $perfil->hasMany(Artigo::class, ['idperfil' => 'id'])
                 ->andWhere(['ativo' => 1])
                 ->all();
 
-            // Fetch sold articles data
             $linhasVenda = \common\models\LinhaVenda::find()
                 ->where(['idvendedor' => $perfil->id])
                 ->all();
@@ -232,7 +257,6 @@ class PerfilController extends ActiveController
                 }
             }
 
-            // Fetch published articles data
             $artigosPublicadosData = [];
             foreach ($artigosPublicados as $artigo) {
                 $fotos = [];
@@ -256,7 +280,6 @@ class PerfilController extends ActiveController
                 ];
             }
 
-            // Fetch evaluations
             $avaliacoes = \common\models\Avaliacao::find()
                 ->where(['iddestinatario' => $perfil->id])
                 ->all();
@@ -271,7 +294,6 @@ class PerfilController extends ActiveController
                 $mediaAvaliacoes = $totalEscala / $avaliacoesCount;
             }
 
-            // Return the updated profile and associated data
             return [
                 'id' => $perfil->id,
                 'username' => $perfil->user->username,
@@ -290,5 +312,4 @@ class PerfilController extends ActiveController
             return $this->asJson(['errors' => $perfil->errors]);
         }
     }
-
 }
