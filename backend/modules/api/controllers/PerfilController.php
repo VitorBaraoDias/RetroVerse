@@ -157,16 +157,16 @@ class PerfilController extends ActiveController
         return [
             'id' => $perfil->id,
             'username' => $perfil->user->username,
-            'descricao' => $perfil->descricao,
-            'caminhofotoperfil' => $perfil->caminhofotoperfil,
-            'morada' => $perfil->morada,
+            'descricao' => $perfil->descricao ? $perfil->descricao : "",
+            'caminhofotoperfil' => $perfil->caminhofotoperfil ? $perfil->caminhofotoperfil : "",
+            'morada' => $perfil->morada ? $perfil->morada : "",
             'saldo' => $perfil->saldo,
             'saldopendente' => $perfil->saldopendente,
             'banido' => $perfil->banido,
             'quantidadeAvaliacoes' => $avaliacoesCount,
             'mediaAvaliacoes' => $mediaAvaliacoes,
-            'artigospublicados' => !empty($artigosPublicadosData) ? $artigosPublicadosData : null,
-            'artigosvendidos' => !empty($artigosVendidosData) ? $artigosVendidosData : null,
+            'artigospublicados' => !empty($artigosPublicadosData) ? $artigosPublicadosData : [],
+            'artigosvendidos' => !empty($artigosVendidosData) ? $artigosVendidosData : [],
 
         ];
     }
