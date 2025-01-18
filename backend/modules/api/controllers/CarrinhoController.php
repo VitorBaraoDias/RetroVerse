@@ -86,7 +86,7 @@ class CarrinhoController extends ActiveController
         $carrinho = Carrinho::find()->where(['iduser' => $this->user->id])->one();
         if (!$carrinho) {
             $carrinho = new Carrinho();
-            $carrinho->iduser = $user->id;
+            $carrinho->iduser = $this->user->id;
             if (!$carrinho->save()) {
                 Yii::$app->response->statusCode = 500;
                 return [
@@ -242,7 +242,7 @@ class CarrinhoController extends ActiveController
         return [
             'id' => $carrinho->id,
             'iduser' => $carrinho->iduser,
-            'linhascarrinho' => $result,
+            'linhascarrinho' => $result ? $result : [],
         ];
     }
 

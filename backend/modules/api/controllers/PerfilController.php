@@ -167,7 +167,6 @@ class PerfilController extends ActiveController
             'mediaAvaliacoes' => $mediaAvaliacoes,
             'artigospublicados' => !empty($artigosPublicadosData) ? $artigosPublicadosData : [],
             'artigosvendidos' => !empty($artigosVendidosData) ? $artigosVendidosData : [],
-
         ];
     }
 
