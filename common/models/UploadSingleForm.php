@@ -41,13 +41,13 @@ class UploadSingleForm extends Model
 
             if ($file->saveAs($frontendFilePath)) {
                 copy($frontendFilePath, $backendFilePath);
-                $this->imagePaths[] = $fileName; // Adiciona o caminho ao array de imagens
+                $this->imagePaths[] = $fileName;
             } else {
-                return "O PROBLEMA ESTA AQUI"; // Se qualquer upload falhar, retorna falso
+                return "O PROBLEMA ESTA AQUI";
             }
         }
 
-        return true; // Todos os uploads foram bem-sucedidos
+        return true;
     }
 
     /**

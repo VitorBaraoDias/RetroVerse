@@ -91,7 +91,7 @@ class SearchArtigo extends Artigo
             $query->andWhere(['artigospremium.id' => null]);
         }
 
-
+        $query->andFilterWhere(['like', 'tipoartigo', $this->tipoartigo]);
 
         return $dataProvider;
     }

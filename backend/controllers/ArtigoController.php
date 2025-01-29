@@ -3,7 +3,6 @@
 namespace backend\controllers;
 
 use app\models\SearchArtigo;
-use backend\models\UploadForm;
 use backend\models\UploadMultipleForm;
 use common\models\Artigo;
 use Yii;
@@ -144,6 +143,7 @@ class ArtigoController extends Controller
         }
     }
 
+
     public function actionPromotepremium($id)
     {
         if (\Yii::$app->user->can('alterarArtigosLojaBackend')) {
@@ -177,7 +177,6 @@ class ArtigoController extends Controller
             $model->ativo = 0;
             $model->save();
 
-            // Redirecionar para a página que fez a solicitação, ou para 'index' se não houver referrer
             return $this->redirect(Yii::$app->request->referrer ?: ['index']);
         } else {
         throw new \yii\web\ForbiddenHttpException('You do not have permission to access this resource.');

@@ -1,100 +1,106 @@
 <?php
 
-
 namespace common\tests\Unit;
 
 use common\models\Artigo;
+use common\models\Mensagemproposta;
+use common\models\Comissao;
+use common\models\Categoriaartigo;
+use common\models\Estado;
+use common\models\Marca;
+use common\models\Perfil;
+use common\models\Tamanho;
 use common\tests\UnitTester;
-use function PHPUnit\Framework\assertTrue;
+use Yii;
 
 class ArtigoTest extends \Codeception\Test\Unit
 {
-
     protected UnitTester $tester;
 
-    public function testValidArtigo()
+    protected function _before()
+    {
+        // Configuração inicial antes de cada teste, se necessário
+    }
+
+    /**
+     * Testa a criação de um artigo válido e sua persistência na base de dados.
+     */
+    public function testCreateValidArtigo()
     {
         $artigo = new Artigo([
-            'nome' => 'Teste Artigo',
-            'descricao' => 'Descrição de teste',
-            'precoanuncio' => 50.00,
+            'nome' => 'Artigo de Teste',
+            'descricao' => 'Descrição do artigo de teste',
+            'precoanuncio' => 100.00,
             'idcomissao' => 1,
             'idestado' => 1,
-            'idmarca' => 2,
+            'idmarca' => 1,
             'idcategoria' => 1,
             'idtamanho' => 1,
             'idperfil' => 1,
             'tipoartigo' => 'LOJA',
             'ativo' => true,
         ]);
-        if (!$artigo->validate()) {
-            var_dump($artigo->errors);  // Exibe os erros de validação no console.
-        }
-        $this->assertTrue($artigo->validate(), 'O modelo Artigo deveria ser válido.');
 
-    }
-    public function testRequiredFields()
-    {
-        $artigo = new Artigo();
-        $this->assertFalse($artigo->validate(), 'O modelo Artigo não deve ser válido sem os campos obrigatórios.');
+        $this->assertTrue($artigo->save(), 'O artigo não foi salvo com sucesso.');
+        //$this->tester->seeInDatabase('artigos', ['nome' => 'Artigo de Teste']);
     }
 
     /**
-     * Testa validação do preço do anúncio (deve ser maior que zero).
+     * Testa a validação do campo 'precoanuncio' para garantir que não aceite valores negativos.
      */
-    public function testPrecoAnuncioValidation()
+    public function testPrecoAnuncioNaoAceitaNegativo()
     {
         $artigo = new Artigo([
-            'nome' => 'Teste Artigo',
-            'descricao' => 'Descrição de teste',
-            'precoanuncio' => -10.00,
+            'nome' => 'Artigo Inválido',
+            'descricao' => 'Descrição inválida',
+            'precoanuncio' => -50.00,
             'idcomissao' => 1,
             'idestado' => 1,
-            'idmarca' => 2,
+            'idmarca' => 1,
             'idcategoria' => 1,
             'idtamanho' => 1,
             'idperfil' => 1,
             'tipoartigo' => 'LOJA',
-            'ativo' => 1,
+            'ativo' => true,
         ]);
-        $this->assertFalse($artigo->validate(['precoanuncio']), 'O preço do anúncio não deve ser válido se for negativo.');
+
+        $this->assertFalse($artigo->validate(), 'O modelo Artigo não deve ser válido com preço negativo.');
+        $this->assertArrayHasKey('precoanuncio', $artigo->errors, 'Deve haver um erro de validação para o campo precoanuncio.');
     }
 
     /**
-     * Testa se o método getPriceWithCommissionOrProposal retorna o preço esperado.
+     * Testa o cálculo do preço com comissão.
      */
-    public function testPriceWithCommissionOrProposal()
+    public function testCalculoPrecoComComissao()
     {
+        $comissao = new Comissao(['comissao' => 10]); // 10% de comissão
         $artigo = new Artigo([
-            'precoanuncio' => 100.00,
+            'precoanuncio' => 200.00,
             'idcomissao' => 1,
         ]);
+        $artigo->populateRelation('idcomissao0', $comissao);
 
-        // Mock da relação idcomissao0
-        $artigo->populateRelation('idcomissao0', (object)['comissao' => 10]); // 10%
-
-        $this->assertEquals(110.00, $artigo->getPriceWithCommissionOrProposal(), 'O preço com comissão deve ser 110.00.');
+        $precoComComissao = $artigo->getPriceWithCommissionOrProposal();
+        $this->assertEquals(220.00, $precoComComissao, 'O preço com comissão deve ser 220.00.');
     }
 
     /**
-     * Testa se o método getPriceWithProposalIfExist retorna o preço correto.
+     * Testa a relação entre Artigo e Mensagemproposta.
      */
-    public function testPriceWithProposalIfExist()
+    public function testRelacaoComMensagemProposta()
     {
-        $artigo = $this->getMockBuilder(Artigo::class)
-            ->onlyMethods(['getPriceWithMyLastAcceptedProposal'])
-            ->getMock();
-
-        // Simula a última proposta aceita com preço de 90.00
-        $artigo->method('getPriceWithMyLastAcceptedProposal')
-            ->willReturn((object)['preco' => 90.00]);
-
-        // Testa se o método retorna o preço correto
-        $this->assertEquals(90.00, $artigo->getPriceWithProposalIfExist(), 'O preço com proposta deve ser 90.00.');
+        $artigo = Artigo::findOne(106);
+        $this->assertNotEmpty($artigo->mensagempropostas, 'O artigo deve ter mensagens de proposta associadas.');
     }
 
-
     /**
-     * Testa se o método isVendedor retorna corretamente.
+     * Testa a validação dos campos obrigatórios.
      */
+    public function testCamposObrigatorios()
+    {
+        $artigo = new Artigo();
+        $this->assertFalse($artigo->validate(), 'O modelo Artigo não deve ser válido sem os campos obrigatórios.');
+        $this->assertArrayHasKey('nome', $artigo->errors, 'Deve haver um erro de validação para o campo nome.');
+        $this->assertArrayHasKey('descricao', $artigo->errors, 'Deve haver um erro de validação para o campo descricao.');
+    }
 }

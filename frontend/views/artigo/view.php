@@ -1,13 +1,6 @@
 <?php
-
-use common\models\Favorito;
 use yii\helpers\Html;
 use yii\widgets\ListView;
-
-$userId = Yii::$app->user->id;
-$artigoId = $model->id;
-
-$isFavorito = Favorito::isFavorito($userId, $artigoId);
 ?>
 <div class="artigo-view container-lg">
 
@@ -70,26 +63,37 @@ $isFavorito = Favorito::isFavorito($userId, $artigoId);
             </span>
             <div class="d-flex align-items-center justify-content-between mt-2 gap-5">
 
-                <?php
+                <?php if ($model->idperfil !== Yii::$app->user->id) {
                     echo Html::a('ADD TO CART', ['carrinho/create', 'id' => $model->id], [
                         'class' => 'retroverse-btn active add-to-cart-button',
                         'id' => 'retroverse-btn-active',
                         'style' => 'font-size: x-small; gap: 10px',
                     ]);
+                } else {
+                    echo Html::a('EDIT ITEM', ['artigo/update', 'id' => $model->id], [
+                        'class' => 'retroverse-btn active add-to-cart-button',
+                        'id' => 'retroverse-btn-active',
+                        'style' => 'font-size: x-small; gap: 10px',
+                    ]);
+                    }
                 ?>
-                <?php if ($isFavorito): ?>
-                    <a class="favourite-button" href="<?= \yii\helpers\Url::to(['favorito/delete', 'id' => $artigoId]) ?>">
-                        <img height="40"
-                             src="<?= Yii::getAlias('@web/img/vector_liked.svg') ?>"
-                             alt="Remove from favorites">
-                    </a>
-                <?php else: ?>
-                    <a class="favourite-button" href="<?= \yii\helpers\Url::to(['favorito/create', 'id' => $artigoId]) ?>">
-                        <img height="40"
-                             src="<?= Yii::getAlias('@web/img/vector_like.svg') ?>"
-                             alt="Add to favorites">
-                    </a>
-                <?php endif; ?>
+
+                <?php
+                if ($model->idperfil !== Yii::$app->user->id) {
+                    if ($isFavorito): ?>
+                        <a class="favourite-button" href="<?= \yii\helpers\Url::to(['favorito/delete', 'id' => $model->id]) ?>">
+                            <img height="40"
+                                 src="<?= Yii::getAlias('@web/img/vector_liked.svg') ?>"
+                                 alt="Remove from favorites">
+                        </a>
+                    <?php else: ?>
+                        <a class="favourite-button" href="<?= \yii\helpers\Url::to(['favorito/create', 'id' => $model->id]) ?>">
+                            <img height="40"
+                                 src="<?= Yii::getAlias('@web/img/vector_like.svg') ?>"
+                                 alt="Add to favorites">
+                        </a>
+                    <?php endif;
+                } ?>
             </div>
             <hr>
             <div class="bg-light outline p-2">

@@ -22,7 +22,7 @@ use yii\helpers\Url;
         <div class="premium-label">PREMIUM PLAN</div>
         <h2>PREMIUM</h2>
         <div class="d-flex justify-content-center align-items-center gap-2 position-relative mb-4">
-            <p class="premium-price">€<?= $plano->precomensal * (1 + ($plano->iva->percentagem / 100)) ?></p>
+            <p class="premium-price">€<?= round($plano->precomensal * (1 + ($plano->iva->percentagem / 100)), 2) ?></p>
             <span class="position-absolute" style="top: 70px">With IVA</span>
             <h3 class="">€<?= Html::encode($plano->precomensal) ?></h3>
         </div>

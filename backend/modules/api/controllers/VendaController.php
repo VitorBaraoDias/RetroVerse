@@ -103,6 +103,7 @@ class VendaController extends ActiveController
             }
             $linhasVenda[] = [
                 'idvendedor' => $linha->idvendedor,
+                'precolinhavenda' => $linhaVenda->precolinhavenda,
                 'artigo' => [
                     'idartigo' => $linha->idartigo,
                     'nome' => $artigo ? $artigo->nome : null,
@@ -173,6 +174,11 @@ class VendaController extends ActiveController
                 $linhaVenda->idartigo = $linha->idartigo;
                 $linhaVenda->idvendedor = $linha->artigo->idperfil;
                 $linhaVenda->idestadoencomenda = Estadoencomenda::getIdByStatusCode1();
+                if ($linha->artigo->tipoartigo === "MARKETPLACE") {
+                    $linhaVenda->precolinhavenda = $isPremium ? $linha->artigo->getPriceWithProposalIfExist() : $linha->artigo->getPriceWithComissionFormated();
+                } else {
+                    $linhaVenda->precolinhavenda = $linha->artigo->precoanuncio;
+                }
 
                 if (!$linhaVenda->save()) {
                     throw new \Exception('ERROR: Could not save this purchase' . json_encode($linhaVenda->errors));
@@ -193,6 +199,7 @@ class VendaController extends ActiveController
                         'id' => $linhaVenda->id,
                         'nomevendedor' => $nomeVendedor,
                         'estadoencomenda' => $linhaVenda->idestadoencomenda0->descricao,
+                        'precolinhavenda' => $linhaVenda->precolinhavenda,
                         'artigo' =>[
                             'id' => $linhaVenda->idartigo,
                             'datacriacao' => Yii::$app->formatter->asDate($artigo->datacriacao, 'dd/MM/yyyy'),
@@ -291,6 +298,7 @@ class VendaController extends ActiveController
                     'id' => $linha->id,
                     'nomevendedor' => $nomeVendedor,
                     'estadoencomenda' => $linha->idestadoencomenda0->descricao,
+                    'precolinhavenda' => $linhaVenda->precolinhavenda,
                     'artigo' => [
                         'id' => $linha->idartigo,
                         'nome' => $artigo ? $artigo->nome : null,

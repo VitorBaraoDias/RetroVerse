@@ -67,15 +67,17 @@ if (Yii::$app->user->can('verAbaGeneralBackend')) {
     <!-- Sidebar -->
     <div class="sidebar">
         <!-- Sidebar user panel (optional) -->
-        <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+        <div class="user-panel mt-3 pb-3 mb-3 d-flex flex-row align-items-center">
             <div class="image">
                 <?php if (!empty($perfil->caminhofotoperfil)): ?>
-                    <img src="<?= Yii::getAlias('@web') ?>/../../common/uploads/img-profile/<?= $perfil->caminhofotoperfil ?>" class="img-circle elevation-2" alt="User Image">
+                    <img src="../../../common/uploads/img-profile/<?= $perfil->caminhofotoperfil ?>"  class="img-circle elevation-2"
+                         style="width: 50px; height: 50px; object-fit: cover; border-radius: 50%;"
+                         alt="User Image">>
                 <?php else: ?>
                     <img src="<?= $assetDir ?>/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
                 <?php endif; ?>
             </div>
-            <div class="info">
+            <div class="info ">
                 <a href="#" class="d-block"><?= Yii::$app->user->identity->username ?></a>
             </div>
         </div>

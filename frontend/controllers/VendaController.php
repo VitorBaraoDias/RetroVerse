@@ -3,6 +3,7 @@
 namespace frontend\controllers;
 
 use common\models\Carrinho;
+use common\models\Perfil;
 use common\models\Estadoencomenda;
 use common\models\Linhavenda;
 use common\models\LinhavendaSearch;
@@ -142,8 +143,18 @@ class VendaController extends Controller
             $model = new Venda();
 
             $userId = Yii::$app->user->id;
+            $perfil = Perfil::findOne(['id' => $userId]);
             $carrinho = Carrinho::findOne(['iduser' => $userId]);
             $transaction = Yii::$app->db->beginTransaction();
+            $isPremium = $perfil ? $perfil->hasActivePremiumPlano() : false;
+
+            if ($perfil) {
+                $model->nome = $perfil->nome ?? '';
+                $model->morada = $perfil->morada ?? '';
+                $model->codigopostal = $perfil->codigopostal ?? '';
+                $model->pais = $perfil->pais ?? '';
+                $model->cidade = $perfil->cidade ?? '';
+            }
 
             if (!$carrinho->ifExistsCart()) {
                 Yii::$app->session->setFlash('error', 'Não existe o carrinho');
@@ -155,7 +166,6 @@ class VendaController extends Controller
                     $model->total = $carrinho->getTotalVenda();
                     $model->idestadoencomenda = Estadoencomenda::getIdByStatusCode1();
 
-
                     if ($model->load($this->request->post()) && $model->save()) {
                         $linhasCarrinho = $carrinho->getLinhascarrinhos()->all();
                         foreach ($linhasCarrinho as $linha) {
@@ -164,6 +174,11 @@ class VendaController extends Controller
                             $linhaVenda->idartigo = $linha->idartigo;
                             $linhaVenda->idvendedor = $linha->artigo->idperfil;
                             $linhaVenda->idestadoencomenda = Estadoencomenda::getIdByStatusCode1();
+                            if ($linha->artigo->tipoartigo === "MARKETPLACE") {
+                                $linhaVenda->precolinhavenda = $isPremium ? $linha->artigo->getPriceWithProposalIfExist() : $linha->artigo->getPriceWithComissionFormated();
+                            } else {
+                                $linhaVenda->precolinhavenda = $linha->artigo->precoanuncio;
+                            }
 
                             if (!$linhaVenda->save()) {
                                 throw new \Exception('Erro ao salvar linha de venda: ' . json_encode($linhaVenda->errors));
@@ -172,7 +187,7 @@ class VendaController extends Controller
 
                             $vendedorPerfil = $linhaVenda->idvendedor0;
                             if ($vendedorPerfil) {
-                                $vendedorPerfil->saldopendente += $linha->artigo->getPriceFromSoldAcceptedProposal($linhaVenda->idvenda0->idcomprador); // Adiciona o valor da linha ao saldo pendente
+                                $vendedorPerfil->saldopendente += $linha->artigo->getPriceFromSoldAcceptedProposal($linhaVenda->idvenda0->idcomprador);
                                 if (!$vendedorPerfil->save(false)) {
                                     throw new \Exception('Erro ao atualizar saldo pendente: ' . json_encode($vendedorPerfil->errors));
                                 }

@@ -1,16 +1,8 @@
 <div class="artigo-view container-lg">
 </div>
 <?php
-
-use common\models\Favorito;
 use yii\helpers\Html;
 use yii\widgets\ListView;
-use common\models\Perfil;
-
-$userId = Yii::$app->user->id;
-$artigoId = $model->id;
-
-$isFavorito = Favorito::isFavorito($userId, $artigoId);
 ?>
 <div class="artigo-view container-lg">
 
@@ -42,13 +34,13 @@ $isFavorito = Favorito::isFavorito($userId, $artigoId);
                             <span>(<?= $model->idperfil0->getCountRates() ?>)</span>
                         </div>
                     </div>
-                    <?php if ($model->idperfil !== $userId): ?>
+                    <?php if ($model->idperfil !== Yii::$app->user->id): ?>
                         <a href="<?= Yii::$app->urlManager->createUrl(['perfil/index', 'id' => $model->idperfil]) ?>"
                            id="retroverse-btn-active" class="btn retroverse-btn active w-auto py-2"
                            style="font-size: 14px !important; font-weight: bold; margin-left: 20px;">VIEW PROFILE</a>
                     <?php endif; ?>
                 </div>
-                <?php if ($model->idperfil !== $userId): ?>
+                <?php if ($model->idperfil !== Yii::$app->user->id): ?>
                     <a href="<?= Yii::$app->urlManager->createUrl(['denuncia/create', 'id' => $model->id]) ?>"
                        class="btn btn-danger w-auto py-2"
                        style="font-size: 14px !important; font-weight: bold;">REPORT AD</a>
@@ -142,42 +134,48 @@ $isFavorito = Favorito::isFavorito($userId, $artigoId);
                       <img src="<?php echo Yii::getAlias('@web') ?>/img/check_icon.svg" height="20">
                         This item will be shipped to our HQ in order to be autenticated before being shipped to you.
                     </span>
+                    <div class="main-buttons">
 
-                    <div class="mt-4 row d-flex flex-column justify-content-center p-0 m-0">
-                        <?php
+                    </div>
+                    <div class="mt-4 d-flex flex-row align-items-center justify-content-start gap-3 p-0 m-0">
 
-                            echo Html::a('ADD TO CART', ['carrinho/create', 'id' => $model->id], [
+                        <?php if ($model->idperfil !== Yii::$app->user->id): ?>
+                            <?= Html::a('ADD TO CART', ['carrinho/create', 'id' => $model->id], [
+                                'class' => 'w-100 col-md-9 mb-2 retroverse-btn active add-to-cart-button',
+                                'id' => 'retroverse-btn-active',
+                                'style' => 'font-size: x-small; gap: 10px;',
+                            ]) ?>
+                        <?php else: ?>
+                            <?= Html::a('EDIT ITEM', ['artigo/update', 'id' => $model->id], [
                                 'class' => 'retroverse-btn active add-to-cart-button',
                                 'id' => 'retroverse-btn-active',
-                                'style' => 'font-size: x-small; gap: 10px',
-                            ]);
+                                'style' => 'font-size: x-small; gap: 10px;',
+                            ]) ?>
+                        <?php endif; ?>
 
-                        ?>
-
-
-                        <?php
-                        if ($model->idperfil !== $userId) {
-                            if ($isFavorito): ?>
+                        <?php if ($model->idperfil !== Yii::$app->user->id): ?>
+                            <?php if ($isFavorito): ?>
                                 <a id="favorite-button" class="w-auto"
-                                   href="<?= \yii\helpers\Url::to(['favorito/delete', 'id' => $artigoId]) ?>">
+                                   href="<?= \yii\helpers\Url::to(['favorito/delete', 'id' => $model->id]) ?>">
                                     <img height="40"
                                          src="<?= Yii::getAlias('@web/img/vector_liked.svg') ?>"
-                                         alt="Remover from favorites">
+                                         alt="Remove from favorites">
                                 </a>
                             <?php else: ?>
                                 <a id="favorite-button" class="w-auto"
-                                   href="<?= \yii\helpers\Url::to(['favorito/create', 'id' => $artigoId]) ?>">
+                                   href="<?= \yii\helpers\Url::to(['favorito/create', 'id' => $model->id]) ?>">
                                     <img height="40"
                                          src="<?= Yii::getAlias('@web/img/vector_like.svg') ?>"
                                          alt="Add to favorites">
                                 </a>
-                            <?php endif;
-                        } ?>
+                            <?php endif; ?>
+                        <?php endif; ?>
                     </div>
+
 
                     <?php
 
-                    if ($model->idperfil !== $userId) {
+                    if ($model->idperfil !== Yii::$app->user->id) {
                         echo Html::a('SEND MESSAGE TO SELLER', ['chat/create', 'id' => $model->id],
                             ['class' => 'btn history-button  w-100 col-md-9 mb-2 text-white rounded-0 ', 'id' => 'retroverse-btn-active',
                                 'style' => 'font-size: x-small; background: #121619; font-weight: bold',]);

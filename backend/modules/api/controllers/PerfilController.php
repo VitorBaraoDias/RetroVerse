@@ -196,10 +196,11 @@ class PerfilController extends ActiveController
             if (base64_decode($request['fotoperfil'], true) !== false) {
                 try {
                     $time = time();
-                    $tempFilePath = base64_decode($request['fotoperfil']); // Decodificar os dados base64
+                    $tempFilePath = base64_decode($request['fotoperfil']);
                     $filename = "IMG" . $time . ".jpg";
 
                     file_put_contents(Yii::getAlias('@frontend/web/uploads/img-profile/') . $filename, $tempFilePath);
+                    file_put_contents(Yii::getAlias('@common/web/uploads/img-profile/') . $filename, $tempFilePath);
 
                     $perfil->caminhofotoperfil = $filename;
 

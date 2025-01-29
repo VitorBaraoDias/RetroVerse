@@ -12,6 +12,7 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]); ?>
 
+    <!-- Seção de Foto de Perfil -->
     <div class="row">
         <div class="col-md-6 text-center">
             <div id="image-container" style="cursor: pointer;">
@@ -31,6 +32,7 @@ use yii\widgets\ActiveForm;
             ])->label(false); ?>
         </div>
 
+        <!-- Seção de Descrição e Localização -->
         <div class="col-md-6">
             <div class="input-details">
                 <?= $form->field($model, 'descricao')->textInput([
@@ -38,18 +40,21 @@ use yii\widgets\ActiveForm;
                     'placeholder' => 'Enter your description'
                 ])->label('Description'); ?>
             </div>
-            <div class="input-details">
-                <?= $form->field($model, 'morada')->textInput([
-                    'autofocus' => true,
-                    'placeholder' => 'Enter your address'
-                ])->label('Location'); ?>
-            </div>
         </div>
     </div>
 
-    <div class="form-group d-flex justify-content-end mt-4">
-        <?= Html::submitButton('CONFIRM', ['class' => 'btn retroverse-btn active w-auto px-5 py-2', 'id' => "retroverse-btn-active"]) ?>
 
+
+
+    <!-- Botão de Confirmação -->
+    <div class="form-group d-flex justify-content-end mt-4">
+
+        <?= Html::a('EDIT MY SHIPPING DETAILS', ['perfil/edit-shipping', 'id' => Yii::$app->user->id], [
+            'class' => 'outline-retroverse-btn rounded-2 mr-3',
+            'style' => 'font-size: x; margin-left: 0',
+        ]) ?>
+
+        <?= Html::submitButton('CONFIRM', ['class' => 'btn retroverse-btn active w-auto px-5 py-2', 'id' => "retroverse-btn-active"]) ?>
     </div>
 
     <?php ActiveForm::end(); ?>
