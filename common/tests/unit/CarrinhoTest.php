@@ -4,6 +4,7 @@
 namespace common\tests\Unit;
 
 use common\models\Artigo;
+use common\models\Estado;
 use common\models\Carrinho;
 use common\models\Linhascarrinho;
 use common\models\Perfil;
