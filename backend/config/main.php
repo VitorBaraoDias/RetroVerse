@@ -116,6 +116,7 @@ return [
                     'controller' => 'api/venda',
                     'extraPatterns' => [
                         'POST efetuarcompra' => 'comprar',
+                        'PUT orderokay/{id}' => 'editstateorder',
                         'GET detalhes/{id}' => 'detalhesvenda',
                         'GET compras' => 'historicocompras', //historico de compras do user x
                         'GET historico/{id}' => 'historicovendas',  //historico de vendas do user x

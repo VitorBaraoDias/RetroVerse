@@ -66,6 +66,11 @@ class Estadoencomenda extends \yii\db\ActiveRecord
         $finalState = self::find()->orderBy(['status' => SORT_DESC])->one();
         return $this->status === $finalState->status;
     }
+    public static function getFinalStatus()
+    {
+        $finalState = self::find()->orderBy(['status' => SORT_DESC])->one();
+        return $finalState->id;
+    }
 
     public function isFirstState()
     {

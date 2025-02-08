@@ -141,7 +141,7 @@ class FavoritoController extends ActiveController
                 ->exists();
 
             $favoritoFormatted = [
-                    'idartigo' => $favorito->idartigo,
+                    'id' => $favorito->idartigo,
                     'nome' => $artigo->nome,
                     'descricao' => $artigo->descricao,
                     'precoanuncio' => $artigo->precoanuncio,

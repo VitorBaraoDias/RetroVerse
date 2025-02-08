@@ -4,6 +4,8 @@ namespace backend\modules\api\controllers;
 use common\models\Artigo;
 use common\models\Avaliacao;
 use common\models\ArtigosPremium;
+use common\models\Comissao;
+use common\models\Fotosartigo;
 use common\models\User;
 use common\models\Categoriaartigo;
 use common\models\Estado;
@@ -163,6 +165,7 @@ class ArtigoController extends ActiveController
                 'fotos' => $fotos,
                 'perfil' => $perfil ? [
                     'id' => $perfil->id,
+                    'username' => $perfil->user->username,
                     'descricao' => $perfil->descricao,
                     'caminhofotoperfil' => $perfil->caminhofotoperfil,
                     'morada' => $perfil->morada,
@@ -292,13 +295,13 @@ class ArtigoController extends ActiveController
             $model->nome = $request['nome'] ?? null;
             $model->descricao = $request['descricao'] ?? null;
             $model->precoanuncio = $request['precoanuncio'] ?? null;
-            $model->idcomissao = $request['idcomissao'] ?? null;
             $model->idestado = $request['idestado'] ?? null;
             $model->idmarca = $request['idmarca'] ?? null;
             $model->idcategoria = $request['idcategoria'] ?? null;
             $model->idtamanho = $request['idtamanho'] ?? null;
-            $model->tipoartigo = $request['tipoartigo'] ?? 'LOJA';
-            $model->ativo = $request['ativo'] ?? 1;
+            $model->tipoartigo = 'MARKETPLACE';
+            $model->idcomissao = Comissao::getIdActiveComissao();
+            $model->ativo =  1;
 
             $this->checkAccess('create', $model);
 
@@ -306,11 +309,37 @@ class ArtigoController extends ActiveController
 
                 $transaction = Yii::$app->db->beginTransaction();
                 try {
-
                     if ($model->save()) {
+                        if (!empty($request['base64Images']) && is_array($request['base64Images'])) {
+                            foreach ($request['base64Images'] as $base64Image) {
+                                if (base64_decode($base64Image, true) !== false) {
+                                    try {
+                                        $time = time() . rand(1000, 9999);
+                                        $imageData = base64_decode($base64Image);
+                                        $filename = "IMG" . $time . ".jpg";
+                                        $filePath = Yii::getAlias('@frontend/web/uploads/img-artigos/') . $filename;
+                                        $filePathCommon = Yii::getAlias('@common/uploads/img-artigos/') . $filename;
+
+                                        file_put_contents($filePath, $imageData);
+                                        file_put_contents($filePathCommon, $imageData);
+
+                                        $fotoModel = new Fotosartigo();
+                                        $fotoModel->idartigo = $model->id;
+                                        $fotoModel->caminhofoto = $filename;
+                                        $fotoModel->save(false);
+
+                                    } catch (\Exception $e) {
+                                        Yii::error("Erro ao salvar imagem: " . $e->getMessage());
+                                        $transaction->rollBack();
+                                    }
+                                } else {
+                                    Yii::error("Imagem inválida recebida.");
+                                }
+                            }
+                        }
+
 
                         $transaction->commit();
-
                         return [
                             'status' => 'success',
                             'message' => 'Item saved with success!',

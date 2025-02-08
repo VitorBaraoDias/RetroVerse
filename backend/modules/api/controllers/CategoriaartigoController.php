@@ -48,10 +48,7 @@ class CategoriaartigoController extends ActiveController
             ->where(['ativo' => 1])
             ->all();
 
-        return [
-            'status' => 'success',
-            'data' => $categorias,
-        ];
+        return $categorias;
     }
 
 }

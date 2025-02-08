@@ -109,7 +109,6 @@ class LinhavendaController extends Controller
             if ($linhaVenda->save()) {
                 Yii::$app->session->setFlash('success', 'Item state updated to the next state successfully.');
 
-
                 $linhaVenda->idvenda0->checkAndSetNextState();
             } else {
                 Yii::$app->session->setFlash('error', 'Failed to update item state.');

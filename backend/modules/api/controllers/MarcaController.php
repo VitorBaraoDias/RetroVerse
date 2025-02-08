@@ -43,10 +43,7 @@ class MarcaController extends ActiveController
             ->where(['ativo' => 1])
             ->all();
 
-        return [
-            'status' => 'success',
-            'data' => $marcas,
-        ];
+        return $marcas;
     }
 
 }
