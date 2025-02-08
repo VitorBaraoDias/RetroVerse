@@ -267,3 +267,5 @@ class ArtigoTest extends \Codeception\Test\Unit
         $this->assertArrayHasKey('tipoartigo', $artigo->errors, 'Deve haver um erro de validação para o campo tipoartigo.');
     }
 }
+
+

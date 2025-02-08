@@ -70,7 +70,6 @@ class ArtigoController extends Controller
      * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionView($id)
-
     {
         if (\Yii::$app->user->can('verDetalhesArtigosLojaBackend')) {
 
@@ -82,7 +81,6 @@ class ArtigoController extends Controller
         } else {
             throw new \yii\web\ForbiddenHttpException('You do not have permission to access this resource.');
         }
-
     }
 
     /**
@@ -115,7 +113,6 @@ class ArtigoController extends Controller
         } else {
             throw new \yii\web\ForbiddenHttpException('You do not have permission to access this resource.');
         }
-
     }
 
     /**

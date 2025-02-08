@@ -32,9 +32,8 @@ class CategoriaartigoController extends Controller
                         ],
                     ],
                     'denyCallback' => function ($rule, $action) {
-                        throw new \Exception('You do not have permission to access this resource.');
+                        throw new \yii\web\ForbiddenHttpException('You do not have permission to access this resource.');
                     }
-
                 ],
             ]
         );

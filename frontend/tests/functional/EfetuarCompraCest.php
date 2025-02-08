@@ -15,6 +15,9 @@ class EfetuarCompraCest
 
     public function _before(FunctionalTester $I)
     {
+        //autentica-se com o user 2 (moderadoer)
+        $I->amLoggedInAs(2);
+
         $estado = new Estado(['descricao' => 'Novo']);
         $estado->save();
 
@@ -48,9 +51,6 @@ class EfetuarCompraCest
 
     public function efetuarCompra(FunctionalTester $I)
     {
-        //autentica-se com o user 2 (moderadoer)
-        $I->amLoggedInAs(2);
-
         //ir para a pagina do artigo criado
         $I->amOnPage("/artigo/view-marketplace?id={$this->artigoId}");
         $I->see('Descrição do artigo de teste');
