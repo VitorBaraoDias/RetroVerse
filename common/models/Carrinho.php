@@ -72,10 +72,8 @@ class Carrinho extends \yii\db\ActiveRecord
 
             if ($artigo->tipoartigo === 'MARKETPLACE' && $artigo->idcomissao0) {
                 if ($isPremium) {
-
                     $totalVenda += $artigo->getPriceWithProposalIfExist();
                 } else {
-
                     $precoComComissao = $artigo->getPriceWithCommissionOrProposal();
                     $totalVenda += $precoComComissao;
                 }

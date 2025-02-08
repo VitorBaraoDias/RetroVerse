@@ -6,6 +6,7 @@ use backend\modules\api\components\CustomAuth;
 use common\models\Carrinho;
 use common\models\Estadoencomenda;
 use common\models\Linhavenda;
+use common\models\Perfil;
 use common\models\Venda;
 use Yii;
 use yii\filters\auth\QueryParamAuth;
@@ -66,9 +67,11 @@ class VendaController extends ActiveController
 
         if ($this->user) {
             if ($action === 'update' || $action === 'create' || $action === 'view') {
+                if ($model) {
                     if ($params['id'] != $this->user->id) {
                         throw new ForbiddenHttpException('You don´t have permission to view this item!');
                     }
+                }
             }
         } else {
             throw new ForbiddenHttpException('User not authenticated.');
@@ -101,6 +104,7 @@ class VendaController extends ActiveController
             }
             $linhasVenda[] = [
                 'idvendedor' => $linha->idvendedor,
+                'precolinhavenda' => $linha->precolinhavenda,
                 'artigo' => [
                     'idartigo' => $linha->idartigo,
                     'nome' => $artigo ? $artigo->nome : null,
@@ -137,123 +141,129 @@ class VendaController extends ActiveController
         $modelClass = new Venda();
         $request = Yii::$app->request->post();
         $carrinho = Carrinho::findOne(['iduser' => $this->user->id]);
-        $this->checkAccess('create', $carrinho, ['id' => $this->user->id]);
+
+        $perfil = Perfil::findOne(['id' => $this->user->id]);
+        $isPremium = $perfil ? $perfil->hasActivePremiumPlano() : false;
 
         $transaction = Yii::$app->db->beginTransaction();
-        try {
-            //verifica a existencia do carrinho
-            if (!$carrinho->ifExistsCart()) {
-                throw new \yii\web\ForbiddenHttpException('CART NOT FOUND');
+
+        if (!$carrinho->ifExistsCart()) {
+            throw new \yii\web\ForbiddenHttpException('CART NOT FOUND');
+        }
+
+        if ($carrinho->ifExistsCart() && Yii::$app->request->isPost) {
+            $modelClass->idcomprador = $this->user->id;
+            $modelClass->total = $carrinho->getTotalVenda();
+            $modelClass->idestadoencomenda = Estadoencomenda::getIdByStatusCode1();
+            $modelClass->idmetodoexpedicao = $request['idmetodoexpedicao'] ?? null;
+            $modelClass->idtipopagamento = $request['idtipopagamento'] ?? null;
+            $modelClass->nome = $request['nome'] ?? null;
+            $modelClass->codigopostal = $request['codigopostal'] ?? null;
+            $modelClass->morada = $request['morada'] ?? null;
+            $modelClass->pais = $request['pais'] ?? null;
+            $modelClass->cidade = $request['cidade'] ?? null;
+
+            if (!$modelClass->save()) {
+                throw new \Exception('ERROR: Could not save this purchase. ' . json_encode($modelClass->errors));
             }
 
-            if ($carrinho->ifExistsCart() && Yii::$app->request->isPost) {
-                $modelClass->idcomprador = $this->user->id;
-                $modelClass->total = $carrinho->getTotalVenda();
-                $modelClass->idestadoencomenda = Estadoencomenda::getIdByStatusCode1();
-                $modelClass->idmetodoexpedicao = $request['idmetodoexpedicao'] ?? null;
-                $modelClass->idtipopagamento = $request['idtipopagamento'] ?? null;
-                $modelClass->nome = $request['nome'] ?? null;
-                $modelClass->codigopostal = $request['codigopostal'] ?? null;
-                $modelClass->morada = $request['morada'] ?? null;
-                $modelClass->pais = $request['pais'] ?? null;
-                $modelClass->cidade = $request['cidade'] ?? null;
+            $linhasCarrinho = $carrinho->getLinhascarrinhos()->all();
+            $linhasVenda = [];
 
-                if (!$modelClass->save()) {
-                    throw new \Exception('ERROR: Could not save this purchase. ' . json_encode($modelClass->errors));
+            foreach ($linhasCarrinho as $linha) {
+                $linhaVenda = new Linhavenda();
+                $linhaVenda->idvenda = $modelClass->id;
+                $linhaVenda->idartigo = $linha->idartigo;
+                $linhaVenda->idvendedor = $linha->artigo->idperfil;
+                $linhaVenda->idestadoencomenda = Estadoencomenda::getIdByStatusCode1();
+                if ($linha->artigo->tipoartigo === "MARKETPLACE") {
+                    $linhaVenda->precolinhavenda = $isPremium ? $linha->artigo->getPriceWithProposalIfExist() : $linha->artigo->getPriceWithComissionFormated();
+                } else {
+                    $linhaVenda->precolinhavenda = $linha->artigo->precoanuncio;
                 }
 
-                $linhasCarrinho = $carrinho->getLinhascarrinhos()->all();
-                $linhasVenda = [];
-                //percorre o carrinho  para inserir as linhas de venda
-                foreach ($linhasCarrinho as $linha) {
-                    $linhaVenda = new Linhavenda();
-                    $linhaVenda->idvenda = $modelClass->id;
-                    $linhaVenda->idartigo = $linha->idartigo;
-                    $linhaVenda->idvendedor = $linha->artigo->idperfil;
-                    $linhaVenda->idestadoencomenda = Estadoencomenda::getIdByStatusCode1();
-
-                    if (!$linhaVenda->save()) {
-                        throw new \Exception('ERROR: Could not save this purchase' . json_encode($linhaVenda->errors));
-                    }
-
-
-                    $artigo = $linhaVenda->idartigo0;
-                    $fotos = [];
-                    foreach ($artigo->fotosartigos as $foto) {
-                        $fotos[] = $foto->caminhofoto;
-                    }
-
-                    $nomeVendedor = $artigo && $artigo->tipoartigo === 'LOJA'
-                        ? 'LOJA'
-                        : ($linhaVenda->idvendedor0->user->username ?? null);
-
-                    $linhasVenda[] = [
-                        'id' => $linhaVenda->id,
-                        'nomevendedor' => $nomeVendedor,
-                        'estadoencomenda' => $linhaVenda->idestadoencomenda0->descricao,
-                        'artigo' => [
-                            'id' => $linhaVenda->idartigo,
-                            'datacriacao' => Yii::$app->formatter->asDate($artigo->datacriacao, 'dd/MM/yyyy'),
-                            'idvendedor' => $linhaVenda->idvendedor,
-                            'nome' => $artigo ? $artigo->nome : null,
-                            'preco' => $artigo ? $artigo->precoanuncio : null,
-                            'descricao' => $artigo ? $artigo->descricao : null,
-                            'marca' => $artigo ? $artigo->idmarca0->nome : null,
-                            'tamanho' => $artigo ? $artigo->idtamanho0->tamanho : null,
-                            'categoria' => $artigo ? $artigo->idcategoria0->nome : null,
-                            'tipo' => $artigo ? $artigo->tipoartigo : null,
-                            'precoanuncio' => $artigo->precoanuncio,
-                            'tipoartigo' => $artigo->tipoartigo,
-                            'estado' => $artigo->idestado0 ? $artigo->idestado0->descricao : null,
-                            'perfil' => $artigo->idperfil0 ? [
-                                'id' => $artigo->idperfil0->id,
-                                'caminhofotoperfil' => $artigo->idperfil0->caminhofotoperfil,
-                                'username' => $artigo->idperfil0->user->username
-                            ] : [],
-                            'fotos' => $fotos,
-                        ]
-                    ];
-
-                    $vendedorPerfil = $linhaVenda->idvendedor0;
-                    if ($vendedorPerfil) {
-                        $vendedorPerfil->saldopendente += $linha->artigo->getPriceFromSoldAcceptedProposal($linhaVenda->idvenda0->idcomprador);
-                        if (!$vendedorPerfil->save(false)) {
-                            throw new \Exception('ERROR: Could not save pending balance: ' . json_encode($vendedorPerfil->errors));
-                        }
-                    }
-                }
-                //apaga o carrinho por inteiro
-                foreach ($linhasCarrinho as $linha) {
-                    if (!$linha->delete()) {
-                        throw new \Exception('ERROR: Could not save this purchase' . json_encode($linha->errors));
-                    }
+                if (!$linhaVenda->save()) {
+                    throw new \Exception('ERROR: Could not save this purchase' . json_encode($linhaVenda->errors));
                 }
 
-                $linhaVenda->idartigo0->ativo = 0;
-                $linhaVenda->idartigo0->save();
-                $transaction->commit();
-                return [
-                    'idvenda' => $modelClass->id,
-                    'codigo' => $modelClass->codigo ?? null,
-                    'total' => $modelClass->total,
-                    'datavenda' => Yii::$app->formatter->asDate(date('Y-m-d H:i:s'), 'php:d/m/Y'),
-                    'estadoencomenda' => $modelClass->estadoEncomenda->descricao,
-                    'metodoexpedicao' => $modelClass->metodoExpedicao->nome ?? null,
-                    'tipopagamento' => $modelClass->tipoPagamento->descricao ?? null,
-                    'nome' => $modelClass->nome ?? null,
-                    'codigopostal' => $modelClass->codigopostal ?? null,
-                    'morada' => $modelClass->morada ?? null,
-                    'pais' => $modelClass->pais ?? null,
-                    'cidade' => $modelClass->cidade ?? null,
-                    'linhasvenda' => $linhasVenda,
+
+                $artigo = $linhaVenda->idartigo0;
+                $fotos = [];
+                foreach ($artigo->fotosartigos as $foto) {
+                    $fotos[] = $foto->caminhofoto;
+                }
+
+                $nomeVendedor = $artigo && $artigo->tipoartigo === 'LOJA'
+                    ? 'LOJA'
+                    : ($linhaVenda->idvendedor0->user->username ?? null);
+
+                $linhasVenda[] = [
+                    'id' => $linhaVenda->id,
+                    'nomevendedor' => $nomeVendedor,
+                    'estadoencomenda' => $linhaVenda->idestadoencomenda0->descricao,
+                    'precolinhavenda' => $linhaVenda->precolinhavenda,
+                    'artigo' =>[
+                        'id' => $linhaVenda->idartigo,
+                        'datacriacao' => Yii::$app->formatter->asDate($artigo->datacriacao, 'dd/MM/yyyy'),
+                        'idvendedor' => $linhaVenda->idvendedor,
+                        'nome' => $artigo ? $artigo->nome : null,
+                        'preco' => $artigo ? $artigo->precoanuncio : null,
+                        'descricao' => $artigo ? $artigo->descricao : null,
+                        'marca' => $artigo ? $artigo->idmarca0->nome : null,
+                        'tamanho' => $artigo ? $artigo->idtamanho0->tamanho : null,
+                        'categoria' => $artigo ? $artigo->idcategoria0->nome : null,
+                        'tipo' => $artigo ? $artigo->tipoartigo : null,
+                        'precoanuncio' => $artigo->precoanuncio,
+                        'tipoartigo' => $artigo->tipoartigo,
+                        'estado' => $artigo->idestado0 ? $artigo->idestado0->descricao : null,
+                        'perfil' => $artigo->idperfil0 ? [
+                            'id' => $artigo->idperfil0->id,
+                            'caminhofotoperfil' => $artigo->idperfil0->caminhofotoperfil,
+                            'username' => $artigo->idperfil0->user->username
+                        ] : [],
+                        'fotos' => $fotos,
+                    ]
                 ];
+
+
+                $vendedorPerfil = $linhaVenda->idvendedor0;
+                if ($vendedorPerfil) {
+                    $vendedorPerfil->saldopendente += $linha->artigo->getPriceFromSoldAcceptedProposal($linhaVenda->idvenda0->idcomprador);
+                    if (!$vendedorPerfil->save(false)) {
+                        throw new \Exception('ERROR: Could not save pending balance: ' . json_encode($vendedorPerfil->errors));
+                    }
+                }
             }
-        } catch (\Exception $e) {
-            $transaction->rollBack();
-            Yii::error($e->getMessage(), __METHOD__);
-            return null;
+
+            foreach ($linhasCarrinho as $linha) {
+                if (!$linha->delete()) {
+                    throw new \Exception('ERROR: Could not save this purchase' . json_encode($linha->errors));
+                }
+            }
+
+            $linhaVenda->idartigo0->ativo = 0;
+            $linhaVenda->idartigo0->save();
+
+            $transaction->commit();
+
+            return [
+                'idvenda' => $modelClass->id,
+                'codigo' => $modelClass->codigo ?? null,
+                'total' => $modelClass->total,
+                'datavenda' => Yii::$app->formatter->asDate(date('Y-m-d H:i:s'), 'php:d/m/Y'),
+                'estadoencomenda' => $modelClass->estadoEncomenda->descricao,
+                'metodoexpedicao' => $modelClass->metodoExpedicao->nome ?? null,
+                'tipopagamento' => $modelClass->tipoPagamento->descricao ?? null,
+                'nome' => $modelClass->nome ?? null,
+                'codigopostal' => $modelClass->codigopostal ?? null,
+                'morada' => $modelClass->morada ?? null,
+                'pais' => $modelClass->pais ?? null,
+                'cidade' => $modelClass->cidade ?? null,
+                'linhasvenda' => $linhasVenda,
+            ];
         }
     }
+
 
     public function actionHistoricocompras()
     {
@@ -266,13 +276,13 @@ class VendaController extends ActiveController
 
         if (empty($vendas)) {
             return [
+                'status' => 'error',
+                'message' => 'No purchases found.',
             ];
         }
 
         $historico = [];
         foreach ($vendas as $venda) {
-
-            //percorre as linhas de venda associadas à venda
             $linhasVenda = [];
             foreach ($venda->linhavendas as $linha) {
                 $artigo = $linha->idartigo0;
@@ -290,6 +300,7 @@ class VendaController extends ActiveController
                     'id' => $linha->id,
                     'nomevendedor' => $nomeVendedor,
                     'estadoencomenda' => $linha->idestadoencomenda0->descricao,
+                    'precolinhavenda' => $linha->precolinhavenda,
                     'artigo' => [
                         'id' => $linha->idartigo,
                         'nome' => $artigo ? $artigo->nome : null,
@@ -304,8 +315,8 @@ class VendaController extends ActiveController
                     ]
                 ];
             }
-            //perfil do vendedor
             $perfil = $venda->comprador;
+
             $historico[] = [
                 'idvenda' => $venda->id,
                 'codigo' => $venda->codigo,
@@ -325,19 +336,6 @@ class VendaController extends ActiveController
         }
 
         return $historico;
-
-    }
-
-    public function actionEditstateorder($id)
-    {
-        $this->checkAccess('update', null, ['id' => $this->user->id]);
-
-        $linha = Linhavenda::findOne(['id' => $id]);
-        $linha->idestadoencomenda = Estadoencomenda::getFinalStatus();
-        if(!$linha->save()){
-            throw new \yii\web\ForbiddenHttpException('erro');
-        }
-        $linha->idvenda0->checkAndSetNextState();
 
     }
 

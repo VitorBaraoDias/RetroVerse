@@ -77,6 +77,18 @@ use yii\widgets\ListView;
                 ]
             )->label(false) ?>
 
+
+                <?= $form->field($searchModel, 'tipoartigo')->dropDownList(
+                    ['marketplace' => 'MARKETPLACE', 'loja' => 'LOJA'],
+                    [
+                        'prompt' => 'SELECT THE SECTION',
+                        'class' => 'ml-3 mb-3 filter-dropdown',
+                        'options' => [
+                            '' => ['disabled' => true, 'selected' => true],
+                            ],
+                    ]
+                )->label(false) ?>
+
             <div class="preco_range-container rounded p-3 mb-3">
                 <label class="collection-span-texts  w-100" for="preco_range">PRICE</label>
                 <div class="range-filter-card ">

@@ -3,6 +3,7 @@ $this->title = 'Home';
 $this->registerJsFile('https://cdn.jsdelivr.net/npm/chart.js', ['position' => \yii\web\View::POS_HEAD]);
 
 ?>
+
 <div class="container-fluid">
     <div class="row">
         <!-- ./col -->
@@ -75,7 +76,7 @@ $this->registerJsFile('https://cdn.jsdelivr.net/npm/chart.js', ['position' => \y
                     <!-- Gráfico de Barras com duas séries: Marketplace e Loja -->
                     <canvas id="comparisonChart" style="height: 230px;"></canvas>
 
-                    <?php // Código para gerar o gráfico de barras com duas séries
+                    <?php // gráfico de barras
                     $script = <<<JS
 
                     var ctx = document.getElementById('comparisonChart').getContext('2d');
@@ -136,7 +137,7 @@ $this->registerJsFile('https://cdn.jsdelivr.net/npm/chart.js', ['position' => \y
                     <!-- Gráfico Pie -->
                     <canvas id="pieChart" style="height: 230px;"></canvas>
 
-                    <?php // Código para gerar o gráfico Pie Chart
+                    <?php // gerar o gráfico circular
                     $script = <<<JS
 
                     var ctx = document.getElementById('pieChart').getContext('2d');

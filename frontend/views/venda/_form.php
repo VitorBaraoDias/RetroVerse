@@ -86,14 +86,6 @@ use yii\widgets\ActiveForm;
                 ]
             )->label('Select the payment method:', ['class' => 'custom-label-class']) ?>
         </div>
-        <div class="col-md-12 card outline mt-4 px-4 py-2">
-            <h2><strong>COUPON CODE</strong></h2>
-            <div class="input-details col-12 mb-2">
-                <label class="form-label" for="login-username"></label>
-                <input type="text" id="checkout-coupon-code" class="form-control" name="LoginForm[username]" autofocus="" placeholder="Add a coupon code here" aria-required="true">  <!-- Adiciona um ID para facilitar o teste -->
-                <div class="invalid-feedback"></div>
-            </div>
-        </div>
         <div class="form-group">
             <?= Html::submitButton('FINISH ORDER', [
                 'class' => 'checkout-finish-order btn retroverse-btn active mt-4',

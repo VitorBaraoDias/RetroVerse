@@ -12,23 +12,6 @@ $isFavorito = Favorito::isFavorito($userId, $artigoId);
             <div class="image-container bg-secondary position-relative">
                 <div class="container-info-type-item"><?= $model->tipoartigo ?></div>
 
-                <div class="rounded-circle container-like d-flex justify-content-center align-items-center">
-                    <?php if ($isFavorito): ?>
-                        <a href="<?= \yii\helpers\Url::to(['favorito/delete', 'id' => $artigoId]) ?>">
-                            <img class="icon-like"
-                                 src="<?= Yii::getAlias('@web/img/vector_liked.svg') ?>"
-                                 alt="Remove from favorites">
-                        </a>
-                    <?php else: ?>
-                        <a href="<?= \yii\helpers\Url::to(['favorito/create', 'id' => $artigoId]) ?>">
-                            <img class="icon-like"
-                                 src="<?= Yii::getAlias('@web/img/vector_like.svg') ?>"
-                                 alt="Add to favorites">
-                        </a>
-                    <?php endif; ?>
-                </div>
-
-
                 <?php
                 $firstPhoto = $model->fotosartigos[0] ?? null;
 

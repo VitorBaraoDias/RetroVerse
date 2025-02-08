@@ -8,6 +8,7 @@ use yii\web\UploadedFile;
 use common\models\Comissao;
 use Yii;
 use common\models\Artigospremium;
+use common\models\Favorito;
 use common\models\Perfil;
 use common\models\Artigo;
 use frontend\models\SearchArtigo;
@@ -34,7 +35,7 @@ class ArtigoController extends Controller
                         'roles' => ['?'],
                     ],
                     [
-                        'actions' => ['index', 'create','update', 'view-marketplace', 'view'],
+                        'actions' => ['index', 'create','update', 'view-marketplace', 'view', 'disable'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -114,11 +115,14 @@ class ArtigoController extends Controller
 
             $isPremium = Artigospremium::find()->where(['id' => $id])->exists();
 
+            $isFavorito = Favorito::isFavorito(Yii::$app->user->id,  $model->id);
+
             $relatedDataProviderToUse = $isPremium ? $relatedDataProviderPremium : $relatedDataProviderNormal;
 
             return $this->render('view', [
                 'model' => $model,
                 'relatedDataProvider' => $relatedDataProviderToUse,
+                'isFavorito' => $isFavorito,
             ]);
     }
 
@@ -143,13 +147,19 @@ class ArtigoController extends Controller
             ]);
 
             $userId = Yii::$app->user->id;
+
             $perfil = Perfil::findOne(['id' => $userId]);
+
             $isPremium = $perfil ? $perfil->hasActivePremiumPlano() : false;
 
+            $isFavorito = Favorito::isFavorito($userId, $model->id);
 
-            return $this->render('view_marketplace', [
+
+
+        return $this->render('view_marketplace', [
                 'model' => $model,
                 'isPremium' => $isPremium,
+                'isFavorito' => $isFavorito,
                 'relatedDataProvider' => $relatedDataProvider,
             ]);
     }

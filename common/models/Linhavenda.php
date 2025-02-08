@@ -36,6 +36,7 @@ class Linhavenda extends \yii\db\ActiveRecord
         return [
             [['idvenda', 'idartigo', 'idvendedor'], 'required'],
             [['idvenda', 'idartigo', 'idvendedor', 'idestadoencomenda'], 'integer'],
+            [['precolinhavenda'], 'double'],
             [['idartigo'], 'exist', 'skipOnError' => true, 'targetClass' => Artigo::class, 'targetAttribute' => ['idartigo' => 'id']],
             [['idvenda'], 'exist', 'skipOnError' => true, 'targetClass' => Venda::class, 'targetAttribute' => ['idvenda' => 'id']],
             [['idvendedor'], 'exist', 'skipOnError' => true, 'targetClass' => Perfil::class, 'targetAttribute' => ['idvendedor' => 'id']],
@@ -54,6 +55,7 @@ class Linhavenda extends \yii\db\ActiveRecord
             'idartigo' => 'Idartigo',
             'idvendedor' => 'Idvendedor',
             'idestadoencomenda' => 'Idestadoencomenda',
+            'precolinhavenda' => 'Precolinhavenda'
         ];
     }
 

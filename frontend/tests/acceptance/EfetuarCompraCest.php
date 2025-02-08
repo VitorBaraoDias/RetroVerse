@@ -3,12 +3,46 @@
 
 namespace frontend\tests\Acceptance;
 
+use common\models\Artigo;
+use common\models\Categoriaartigo;
+use common\models\Estado;
+use common\models\Marca;
+use common\models\Tamanho;
 use frontend\tests\AcceptanceTester;
 
 class EfetuarCompraCest
 {
     public function _before(AcceptanceTester $I)
     {
+        $estado = new Estado(['descricao' => 'Novo']);
+        $estado->save();
+
+        $marca = new Marca(['nome' => 'Marca Teste', 'ativo' => true]);
+        $marca->save();
+
+        $categoria = new Categoriaartigo(['nome' => 'Categoria Teste', 'ativo' => true]);
+        $categoria->save();
+
+        $tamanho = new Tamanho(['tamanho' => 'M']);
+        $tamanho->save();
+
+        //publica um artigo com o perfil da LOJA para poder ser comprado
+        $artigo = new Artigo([
+            'nome' => 'Artigo de Teste',
+            'descricao' => 'Descrição do artigo de teste',
+            'precoanuncio' => 100.00,
+            'idcomissao' => 1,
+            'idestado' => $estado->id,
+            'idmarca' => $marca->id,
+            'idcategoria' => $categoria->id,
+            'idtamanho' => $tamanho->id,
+            'idperfil' => 1,
+            'tipoartigo' => 'LOJA',
+            'ativo' => true,
+        ]);
+        $artigo->save();
+
+        $this->artigoId = $artigo->id;
     }
 
     // tests

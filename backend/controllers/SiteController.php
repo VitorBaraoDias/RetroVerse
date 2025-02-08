@@ -76,7 +76,6 @@ class SiteController extends Controller
 
     public function actionIndex()
     {
-        //aqui so acede moderador e admin, dentro disto validar o que cada pode fazer
         if (Yii::$app->user->can('verDashboardCompletaBackend')) {
 
             //para o admin

@@ -11,15 +11,7 @@ use common\models\Estadoencomenda;
     <td><?= Html::encode($model->idartigo0->nome) ?></td>
     <td><?= Html::encode($model->idartigo0->idtamanho0->tamanho ?? 'Unknown Size') ?></td>
     <td><?= Html::encode($model->idartigo0->descricao ?? 'Unknown Description') ?></td>
-    <td><?php if ($model->idartigo0->tipoartigo === 'MARKETPLACE'): ?>
-            <strong>
-                <?= $isPremium
-                    ? Yii::$app->formatter->asCurrency($model->idartigo0->getPriceWithProposalIfExist(), 'EUR')
-                    : $model->idartigo0->getPriceWithComissionFormated();
-                ?>€
-            </strong>
-        <?php endif; ?>
-    </td>
+    <td><strong><?php echo $model->precolinhavenda . "€" ?></strong></td>
 </tr>
 
 

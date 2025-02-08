@@ -45,16 +45,57 @@ $dataProvider = new ActiveDataProvider([
                                 'class' => 'outline-retroverse-btn rounded-2',
                                 'style' => 'font-size: x-small; margin-left: 0',
                             ]) ?>
+
                         <?php endif; ?>
+
+
                     <?php endif; ?>
                 </div>
-                <div class="mt-1" style="word-break: break-all;"><?= $model->morada ?></div>
                 <div class="mt-1" style="word-break: break-all;"><?= $model->descricao ?></div>
+
                 <?= Html::a(
                     $model->getCountRates() . ' Reviews',
                     ['avaliacao/index', 'id' => $model->id],
                     ['class' => 'font-size: x-small text-warning cursor']
                 ) ?>
+                <div class="followers-info d-flex flex-row align-items-center">
+                    <div class="followers-box">
+                        <?= Html::a(
+                            '<img src="' . Yii::getAlias('@web') . '/img/followers.png" alt="Followers Logo" class="followers-logo"> ' . $quantidadeSeguidores . ' FOLLOWERS',
+                            ['perfil/followers', 'id' => $model->id],
+                            ['class' => 'btn followers-btn']
+                        ) ?>
+                    </div>
+                    <div class="followers-box">
+                        <?= Html::a(
+                            '<img src="' . Yii::getAlias('@web') . '/img/followers.png" alt="Followers Logo" class="followers-logo"> ' . $quantidadeSeguir . ' FOLLOWING',
+                            ['perfil/following', 'id' => $model->id],
+                            ['class' => 'btn followers-btn']
+                        ) ?>
+                    </div>
+                    <?php if (Yii::$app->user->id !== $model->user->id): ?>
+                        <div class="follow-buttons">
+                            <?php if ($isFollowing): ?>
+                                <?= Html::a('FOLLOWING', ['seguidor/delete', 'id' => $model->id], [
+                                    'class' => 'following-button',
+                                ]) ?>
+                            <?php else: ?>
+                                <?php
+                                $form = \yii\widgets\ActiveForm::begin([
+                                    'action' => ['seguidor/create'],
+                                    'method' => 'post',
+                                ]);
+                                echo Html::hiddenInput('idperfil', $model->id);
+                                echo Html::submitButton('FOLLOW', [
+                                    'class' => 'btn follow-button',
+                                ]);
+                                \yii\widgets\ActiveForm::end();
+                                ?>
+                            <?php endif; ?>
+                        </div>
+                    <?php endif; ?>
+                </div>
+
             </div>
         </div>
         <?php if (Yii::$app->user->id === $model->user->id): ?>
@@ -82,7 +123,7 @@ $dataProvider = new ActiveDataProvider([
         <div class="d-flex justify-content-between">
             <h2><strong>MY ITEMS</strong></h2>
             <?php if (Yii::$app->user->id === $model->user->id): ?>
-                <?= Html::a('+ PUBLISH AN ITEM', ['perfil/update'], [
+                <?= Html::a('+ PUBLISH AN ITEM', ['artigo/create'], [
                     'class' => 'btn retroverse-btn w-auto px-3 py-2 rounded-0',
                     'id' => 'retroverse-btn-active',
                     'style' => 'font-size: x-small; gap: 10px',

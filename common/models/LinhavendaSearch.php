@@ -11,7 +11,7 @@ use yii\data\ActiveDataProvider;
 class LinhavendaSearch extends Linhavenda
 {
 
-    public $statusFilter;
+    public $statusFilter, $orderNumber;
 
     /**
      * {@inheritdoc}
@@ -20,7 +20,7 @@ class LinhavendaSearch extends Linhavenda
     {
         return [
             [['id', 'idvenda', 'idartigo', 'idvendedor', 'idestadoencomenda'], 'integer'],
-            [['statusFilter'], 'safe'],
+            [['statusFilter', 'orderNumber'], 'safe'],
         ];
     }
 
@@ -94,6 +94,10 @@ class LinhavendaSearch extends Linhavenda
             if ($ultimoEstado) {
                 $query->andWhere(['linhavendas.idestadoencomenda' => $ultimoEstado->id]);
             }
+        }
+
+        if (!empty($this->orderNumber)) {
+            $query->andFilterWhere(['like', 'vendas.codigo', $this->orderNumber]);
         }
 
         return $dataProvider;

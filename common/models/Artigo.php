@@ -271,7 +271,6 @@ class Artigo extends \yii\db\ActiveRecord
     //retorna a última proposta aceita pelo user autenticado.
     public function getPriceWithMyLastAcceptedProposal()
     {
-
         if (Yii::$app->user->isGuest) {
             return null;
         }

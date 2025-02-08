@@ -29,7 +29,7 @@ $this->title = "Plano de Assinatura - " . $model->id;
                     </div>
                     <div class="d-flex justify-content-start align-items-center mb-3">
                         <h5 class="mb-0 mr-2"><strong>Monthly Payment:</strong></h5>
-                        <p class="text-muted mb-0"><?=  Html::encode($model->plano->precomensal) ?>€</p>
+                        <p class="text-muted mb-0"><?=  round($model->plano->precomensal * (1 + ($model->plano->iva->percentagem / 100)), 2) ?>€</p>
                     </div>
                     <div class="d-flex justify-content-start align-items-center">
                         <h5 class="mb-0 mr-2"><strong>Expiration Date:</strong></h5>

@@ -54,16 +54,18 @@ $isPremium = $perfil ? $perfil->hasActivePremiumPlano() : false;
                 <div class="d-flex flex-column align-items-start">
                     <h2 style="font-size: 24px">
                         <strong><?php
-
-                            echo $isPremium
-                                ? Yii::$app->formatter->asCurrency($model->idartigo0->getPriceWithProposalIfExist(), 'EUR')
-                                : $model->idartigo0->getPriceWithComissionFormated();
-                            ?></strong>
+                            if ($model->idartigo0->tipoartigo === 'MARKETPLACE') {
+                            echo "€" . $model->precolinhavenda
+                            ?>
+                            <?php } else {
+                                echo "€" . $model->idartigo0->precoanuncio;
+                            } ?>
+                        </strong>
                     </h2>
                     <h3 style="font-size: 18px">
                         <?php if ($model->idartigo0->tipoartigo === 'MARKETPLACE'): ?>
                             <h2 style="font-size: 20px">
-                                <?= $model->idartigo0->getPriceWithProposalIfExist() . " EUR" ?>
+                                <?= "€" . $model->idartigo0->getPriceWithProposalIfExist() ?>
                             </h2>
                         <?php endif; ?>
                     </h3>

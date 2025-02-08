@@ -3,7 +3,6 @@
 namespace backend\controllers;
 
 use app\models\SearchArtigo;
-use backend\models\UploadForm;
 use backend\models\UploadMultipleForm;
 use common\models\Artigo;
 use Yii;
@@ -71,7 +70,6 @@ class ArtigoController extends Controller
      * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionView($id)
-
     {
         if (\Yii::$app->user->can('verDetalhesArtigosLojaBackend')) {
 
@@ -83,7 +81,6 @@ class ArtigoController extends Controller
         } else {
             throw new \yii\web\ForbiddenHttpException('You do not have permission to access this resource.');
         }
-
     }
 
     /**
@@ -116,7 +113,6 @@ class ArtigoController extends Controller
         } else {
             throw new \yii\web\ForbiddenHttpException('You do not have permission to access this resource.');
         }
-
     }
 
     /**
@@ -143,6 +139,7 @@ class ArtigoController extends Controller
             throw new \yii\web\ForbiddenHttpException('You do not have permission to access this resource.');
         }
     }
+
 
     public function actionPromotepremium($id)
     {
@@ -177,7 +174,6 @@ class ArtigoController extends Controller
             $model->ativo = 0;
             $model->save();
 
-            // Redirecionar para a página que fez a solicitação, ou para 'index' se não houver referrer
             return $this->redirect(Yii::$app->request->referrer ?: ['index']);
         } else {
         throw new \yii\web\ForbiddenHttpException('You do not have permission to access this resource.');

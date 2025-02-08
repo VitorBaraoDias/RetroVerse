@@ -3,6 +3,7 @@
 namespace frontend\controllers;
 
 use common\models\Perfil;
+use common\models\Seguidor;
 use common\models\UploadSingleForm;
 use Yii;
 use yii\filters\AccessControl;
@@ -39,7 +40,7 @@ class PerfilController extends Controller
                             'roles' => ['?'],
                         ],
                         [
-                            'actions' => ['index','view','update'],
+                            'actions' => ['index','view','update', 'followers', 'following', 'edit-shipping'],
                             'allow' => true,
                             'roles' => ['@'],
                         ],
@@ -61,11 +62,26 @@ class PerfilController extends Controller
     {
         $perfil = Perfil::findOne(['id' => $id]);
 
+        $quantidadeSeguidores = Seguidor::find()
+            ->where(['idperfil' => $id])
+            ->count();
+
+        $quantidadeSeguir = Seguidor::find()
+            ->where(['idseguidor' => $id])
+            ->count();
+
+        $isFollowing = Seguidor::find()
+            ->where(['idperfil' => $id, 'idseguidor' => Yii::$app->user->id])
+            ->exists();
+
         return $this->render('index', [
             'model' => $perfil,
+            'quantidadeSeguidores' => $quantidadeSeguidores,
+            'quantidadeSeguir' => $quantidadeSeguir,
+            'isFollowing' => $isFollowing,
         ]);
-
     }
+
 
     /**
      * Displays a single Perfil model.
@@ -131,7 +147,6 @@ class PerfilController extends Controller
                     Yii::$app->session->setFlash('error', 'Error uploading this image.');
                 }
             } else {
-                // Se não houver foto, validar e salvar apenas os outros campos
                 if ($perfil->validate() && $perfil->save()) {
                     Yii::$app->session->setFlash('success', 'Profile updated with success.');
                     return $this->redirect(['perfil/index', 'id' => $perfil->id]);
@@ -163,5 +178,46 @@ class PerfilController extends Controller
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
+    public function actionFollowers($id)
+    {
+        $perfil = Perfil::findOne($id);
+        $dataProvider = new \yii\data\ActiveDataProvider([
+            'query' => Seguidor::find()->where(['idperfil' => $id]),
+        ]);
+
+        return $this->render('followers', [
+            'perfil' => $perfil,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    public function actionFollowing($id)
+    {
+        $perfil = Perfil::findOne($id);
+        $dataProvider = new \yii\data\ActiveDataProvider([
+            'query' => Seguidor::find()->where(['idseguidor' => $id]),
+        ]);
+
+
+        return $this->render('following', [
+            'perfil' => $perfil,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    public function actionEditShipping()
+    {
+        $model = Perfil::findOne(Yii::$app->user->id);
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            Yii::$app->session->setFlash('success', 'Shipping details updated successfully!');
+            return $this->redirect(['perfil/update', 'id' => $model->id]);
+        }
+
+        return $this->render('edit-shipping', [
+            'model' => $model,
+        ]);
     }
 }

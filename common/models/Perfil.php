@@ -42,8 +42,9 @@ class Perfil extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['saldo', 'saldopendente'], 'integer'],
-            [['descricao', 'caminhofotoperfil', 'morada'], 'string', 'max' => 150],
+            [['saldo', 'saldopendente'], 'double'],
+            [['descricao', 'caminhofotoperfil', 'morada', 'nome', 'codigopostal', 'pais', 'cidade'], 'string', 'max' => 150],
+            [['codigopostal'], 'match', 'pattern' => '/^\d{4}-\d{3}$/', 'message' => 'The postcode must be in the format 1234-567.'],
             [['id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['id' => 'id']],
             [['banido'], 'boolean'],
         ];
@@ -52,7 +53,7 @@ class Perfil extends \yii\db\ActiveRecord
     public function scenarios()
     {
         $scenarios = parent::scenarios();
-        $scenarios['updateProfile'] = ['descricao', 'caminhofotoperfil', 'morada'];
+        $scenarios['updateProfile'] = ['descricao', 'caminhofotoperfil', 'morada', 'nome', 'codigopostal', 'pais', 'cidade'];
         return $scenarios;
     }
 
@@ -68,7 +69,11 @@ class Perfil extends \yii\db\ActiveRecord
             'morada' => 'Morada',
             'saldo' => 'Saldo',
             'saldopendente' => 'Saldo Pendente',
-            'banido' => 'Ban'
+            'banido' => 'Ban',
+            'nome' => 'Nome',
+            'codigopostal' => 'Código Postal',
+            'pais' => 'País',
+            'cidade' => 'Cidade',
         ];
     }
 

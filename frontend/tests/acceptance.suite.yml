@@ -6,7 +6,7 @@ modules:
         user: 'root'
         password: 'root'
     - WebDriver:
-        url: http://localhost/retroverse-new/RetroVerse/frontend/web/site/
+        url: http://localhost/RetroVerse/frontend/web/site/
         browser: firefox
         window_size: maximize
     - Yii2:
