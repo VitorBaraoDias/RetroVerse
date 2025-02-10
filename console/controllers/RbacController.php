@@ -85,6 +85,10 @@ class RbacController extends Controller
         $alterarArtigosLojaBackEnd->description = 'Alterar artigos loja Backend';
         $auth->add($alterarArtigosLojaBackEnd);
 
+        $eliminarArtigosLojaBackend = $auth->createPermission('eliminarArtigosLojaBackend');
+        $eliminarArtigosLojaBackend->description = 'Eliminar artigos loja Backend';
+        $auth->add($eliminarArtigosLojaBackend);
+
         ///ARTIGO CONTROLLER BO
 
         //IvaController BO
@@ -636,6 +640,7 @@ class RbacController extends Controller
         $auth->addChild($admin, $verArtigosLojaBackEnd);
         $auth->addChild($admin, $verDetalhesArtigosLojaBackEnd);
         $auth->addChild($admin, $alterarArtigosLojaBackEnd);
+        $auth->addChild($admin, $eliminarArtigosLojaBackend);
         //ArtigoController BO
 
         //BannerController BO
@@ -740,6 +745,6 @@ class RbacController extends Controller
         // ASSOCIAR AS ROLES A UTILIZADORES (ID)
         $auth->assign($admin, 1);
         $auth->assign($moderador, 2);
-
+        $auth->assign($membro, 37);
     }
 }

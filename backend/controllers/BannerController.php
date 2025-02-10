@@ -149,7 +149,6 @@ class BannerController extends Controller
                         $model->caminhoimagem = $uploadModel->imagePaths[0];
                     }
                 }
-
                 // Salva o modelo de Banner (com ou sem imagem)
                 if ($model->save()) {
                     return $this->redirect(['view', 'id' => $model->id]);

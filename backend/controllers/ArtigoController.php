@@ -167,7 +167,8 @@ class ArtigoController extends Controller
      * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionDelete($id)
-    {   if (\Yii::$app->user->can('eliminarArtigosLojaBackend')) {
+    {
+        if (\Yii::$app->user->can('eliminarArtigosLojaBackend')) {
 
             $model = $this->findModel($id);
 
@@ -175,9 +176,10 @@ class ArtigoController extends Controller
             $model->save();
 
             return $this->redirect(Yii::$app->request->referrer ?: ['index']);
-        } else {
+        }
+        else {
         throw new \yii\web\ForbiddenHttpException('You do not have permission to access this resource.');
-    }
+        }
     }
 
 

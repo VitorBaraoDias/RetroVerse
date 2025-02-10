@@ -153,7 +153,7 @@ class UserController extends Controller
         $auth->revokeAll($model->id);
         $moderator = $auth->getRole('membro');
 
-        // Atribui o papel 'moderador' ao usuário
+        // Atribui o papel 'moderador' ao utilizador
         $auth->assign($moderator, $model->id);
 
         return $this->redirect('index');
