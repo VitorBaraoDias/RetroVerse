@@ -87,10 +87,7 @@ class VendaController extends ActiveController
         $this->checkAccess('view', $venda, ['id' => $venda->idcomprador]);
 
         if (!$venda) {
-            return [
-                'status' => 'error',
-                'message' => 'Sale not found',
-            ];
+            return [];
         }
 
         $linhasVenda = [];
@@ -275,10 +272,7 @@ class VendaController extends ActiveController
         $this->checkAccess('view', $vendas, ['id' => $this->user->id]);
 
         if (empty($vendas)) {
-            return [
-                'status' => 'error',
-                'message' => 'No purchases found.',
-            ];
+            return [];
         }
 
         $historico = [];
