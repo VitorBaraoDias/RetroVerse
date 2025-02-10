@@ -200,7 +200,7 @@ class PerfilController extends ActiveController
                     $filename = "IMG" . $time . ".jpg";
 
                     file_put_contents(Yii::getAlias('@frontend/web/uploads/img-profile/') . $filename, $tempFilePath);
-                    file_put_contents(Yii::getAlias('@common/web/uploads/img-profile/') . $filename, $tempFilePath);
+                    file_put_contents(Yii::getAlias('@common/uploads/img-profile/') . $filename, $tempFilePath);
 
                     $perfil->caminhofotoperfil = $filename;
 
